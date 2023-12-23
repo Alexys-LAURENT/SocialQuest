@@ -55,3 +55,24 @@
   transform: scale(4);
   transition: transform 1s ease-in-out;
 }
+
+*::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #676767;
+  border-radius: 0.25rem;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #8f8f8f;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background: #676767;
+}
