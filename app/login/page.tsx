@@ -22,6 +22,7 @@ export default function Login({
     })
 
     if (error) {
+      console.error(error)
       return redirect('/login?message=Could not authenticate user')
     }
 
@@ -46,6 +47,7 @@ export default function Login({
     })
 
     if (error) {
+      console.error(error)
       return redirect('/login?message=Could not authenticate user')
     }
 

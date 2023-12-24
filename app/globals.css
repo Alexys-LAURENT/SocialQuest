@@ -76,3 +76,8 @@
 *::-webkit-scrollbar-thumb:active {
   background: #676767;
 }
+
+#BannersWrapper::-webkit-scrollbar,
+#BadgesWrapper::-webkit-scrollbar {
+  display: none;
+}
