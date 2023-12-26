@@ -1,9 +1,10 @@
 import './globals.css'
+import NavBar from '@/components/NavBar/NavBar'
+import { cookies } from 'next/headers'
 import { GeistSans } from 'geist/font/sans'
 import { Providers } from "./providers";
 import { createClient } from '@/utils/supabase/server'
-import { cookies } from 'next/headers'
-import NavBar from '@/components/NavBar/NavBar'
+import { ConfigProvider } from 'antd';
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -25,14 +26,26 @@ export default async function RootLayout({
   const {
     data: { user },
   } = await supabase.auth.getUser()
+
+
   return (
     <html lang="en" className={`${GeistSans.className} dark`} >
-      <body className='bg-[#0a0a0a] dark:bg-[#0a0a0a] overflow-hidden' >
-        <NavBar user={user} />
+      <body className='bg-bgDark dark:bg-bgDark overflow-hidden' >
         <Providers>
-          <main className="h-[calc(100vh-5rem)] flex flex-col items-center overflow-y-auto">
-            {children}
-          </main>
+          <ConfigProvider
+            theme={{
+              token: {
+                // Seed Token
+                colorBgMask: 'rgba(0, 0, 0, 0.8)',
+              },
+            }
+            }
+          >
+            <NavBar user={user} />
+            <main className={`h-screen flex flex-col items-center overflow-y-auto`}>
+              {children}
+            </main>
+          </ConfigProvider >
         </Providers>
       </body>
     </html >

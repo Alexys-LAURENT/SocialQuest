@@ -1,17 +1,18 @@
 import Link from "next/link";
 import React, { useState } from "react";
-import { Badge } from "@nextui-org/react";
-import { Avatar } from "@nextui-org/react";
-import { Progress } from "@nextui-org/react";
-import { Image, Switch } from "@nextui-org/react";
-import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
-import { ArrowRightEndOnRectangleIcon, ArrowsPointingInIcon, ArrowsPointingOutIcon, Cog8ToothIcon, CubeIcon, MoonIcon, UserIcon } from "@heroicons/react/24/outline";
+import { User } from "@supabase/supabase-js";
+import Image from "@/components/Image";
+import { Badge, Avatar, Progress, Switch, Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
+import { ArrowRightEndOnRectangleIcon, Cog8ToothIcon, CubeIcon, MoonIcon, UserIcon } from "@heroicons/react/24/outline";
 
-const PopoverUser = () => {
+
+const PopoverUser = ({ signOut, user }: { signOut: () => void, user: User | null }) => {
     const [isPopoverUserOpen, setIsPopoverUserOpen] = useState(false);
 
+
+
     return (
-        <Popover id="PopoverUser" placement="bottom" offset={15} classNames={{ base: "w-[18.5rem]" }} isOpen={isPopoverUserOpen} onOpenChange={setIsPopoverUserOpen}>
+        <Popover id="PopoverUser" placement="bottom" offset={15} classNames={{ base: "w-[18.5rem]" }} isOpen={isPopoverUserOpen} onOpenChange={setIsPopoverUserOpen} shouldCloseOnBlur={false}>
             <PopoverTrigger>
                 <div className="flex items-center cursor-pointer">
                     <Badge content="5" color="primary" className="text-xs">
@@ -30,56 +31,16 @@ const PopoverUser = () => {
                     </div>
                     <div className="flex justify-end items-center gap-1 text-end text-[#979797]">
                         <div className="text-sm">Suivant : Bannière Squelettes</div>
-                        <div className="flex relative h-9 items-center justify-center">
-                            {/* <Image
-                                                    id="NextRewardImage"
-                                                    className="sticky rounded-md h-full max-h-10 w-full transition-all ease-in-out transform"
-                                                    src="/assets/Lee.png"
-                                                    alt="Bannière Squelettes"
-                                                    width={60}
-                                                    height={60}
-                                                /> */}
+                        <div className="flex relative h-9 items-center justify-center rounded-md">
                             <Image
-                                id="NextRewardImage"
-                                className="sticky rounded-md h-full transition-all ease-in-out transform"
-                                classNames={{ wrapper: "h-full" }}
                                 src="/assets/Dragon.png"
                                 alt="Bannière Squelettes"
                             />
-                            <div id="NextRewardImageToggle" className="flex items-center justify-center absolute w-full h-full left-0 bottom-0 z-10 hover:bg-[#000000] opacity-0 hover:opacity-100 hover:bg-opacity-75 transition-all ease-in-out rounded-md cursor-pointer transform"
-                                onClick={() => {
-                                    const RewardImage = document.getElementById("NextRewardImage") as HTMLImageElement;
-                                    const ExpandNextRewardImage = document.getElementById("ExpandNextRewardImage") as HTMLElement;
-                                    const ShrinkNextRewardImage = document.getElementById("ShrinkNextRewardImage") as HTMLElement;
-                                    const NextRewardImageToggle = document.getElementById("NextRewardImageToggle") as HTMLElement;
-                                    RewardImage.classList.toggle("scale-[4.6]");
-                                    RewardImage.classList.toggle("translate-x-[-160%]");
-                                    RewardImage.classList.toggle("translate-y-[35%]");
-                                    RewardImage.classList.toggle("rounded-md");
-                                    RewardImage.classList.toggle("rounded-sm");
-                                    ShrinkNextRewardImage.classList.toggle("transform");
-                                    NextRewardImageToggle.classList.toggle("translate-y-[-135%]");
-                                    NextRewardImageToggle.classList.toggle("translate-x-[10%]");
-                                    NextRewardImageToggle.classList.toggle("bg-[#000000]");
-                                    NextRewardImageToggle.classList.toggle("bg-opacity-75");
-                                    NextRewardImageToggle.classList.toggle("opacity-0");
-                                    ExpandNextRewardImage.classList.toggle("hidden");
-                                    ShrinkNextRewardImage.classList.toggle("hidden");
-                                }}>
-                                <div className="flex justify-center items-center h-full"
-
-                                >
-                                    <div className="text-sm">
-                                        <ArrowsPointingOutIcon id="ExpandNextRewardImage" className="w-6 h-6" />
-                                        <ArrowsPointingInIcon id="ShrinkNextRewardImage" className="w-6 h-6 hidden" />
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div className="flex flex-col text-lg select-none">
                         <Link
-                            href="/profil"
+                            href={`/${user?.user_metadata?.username}`}
                             className="px-1 py-1 flex gap-2 items-center hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md"
                             onClick={() => {
                                 setIsPopoverUserOpen(false);
@@ -117,20 +78,20 @@ const PopoverUser = () => {
                                 <Switch aria-label="Mode sombre" classNames={{ wrapper: "mr-1 bg-[#d9d9d9]" }} />
                             </div>
                         </div>
-                        <Link
-                            href="/deconnexion"
-                            className="px-1 py-1 flex gap-2 items-center hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md"
+                        <div
+                            className="px-1 py-1 flex gap-2 items-center hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md cursor-pointer"
                             onClick={() => {
                                 setIsPopoverUserOpen(false);
+                                signOut();
                             }}
                         >
                             <ArrowRightEndOnRectangleIcon className="w-6 h-6" />
                             <div className="">Déconnexion</div>
-                        </Link>
+                        </div>
                     </div>
                 </div>
             </PopoverContent>
-        </Popover>
+        </Popover >
     );
 };
 
