@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Button, Avatar, Popover, PopoverTrigger, PopoverContent } from '@nextui-org/react'
 import { HeartIcon, ChatBubbleLeftIcon, EllipsisVerticalIcon, ShareIcon, TrashIcon, FlagIcon } from '@heroicons/react/24/outline'
 
-const Posts = ({ isUserProfil }: { isUserProfil: boolean }) => {
+const Posts = ({ isUserProfil, data }: { isUserProfil: boolean, data: any }) => {
     return (
         <div className="w-full max-w-2xl" >
             <div className="flex flex-col border border-gray-500 rounded-md p-2 gap-2">

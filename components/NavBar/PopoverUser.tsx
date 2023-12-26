@@ -9,14 +9,12 @@ import { ArrowRightEndOnRectangleIcon, Cog8ToothIcon, CubeIcon, MoonIcon, UserIc
 const PopoverUser = ({ signOut, user }: { signOut: () => void, user: User | null }) => {
     const [isPopoverUserOpen, setIsPopoverUserOpen] = useState(false);
 
-
-
     return (
         <Popover id="PopoverUser" placement="bottom" offset={15} classNames={{ base: "w-[18.5rem]" }} isOpen={isPopoverUserOpen} onOpenChange={setIsPopoverUserOpen} shouldCloseOnBlur={false}>
             <PopoverTrigger>
                 <div className="flex items-center cursor-pointer">
                     <Badge content="5" color="primary" className="text-xs">
-                        <Avatar isBordered src="https://i.pravatar.cc/150?u=a042581f4e29026024d" className="cursor-pointer w-[2.75rem] h-[2.75rem]" />
+                        <Avatar isBordered src={user?.user_metadata?.avatar_url} className="cursor-pointer w-[2.75rem] h-[2.75rem]" />
                     </Badge>
                 </div>
             </PopoverTrigger>

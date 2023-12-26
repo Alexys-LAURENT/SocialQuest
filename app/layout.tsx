@@ -27,10 +27,20 @@ export default async function RootLayout({
     data: { user },
   } = await supabase.auth.getUser()
 
+  if (user) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('avatar_url')
+      .eq('id_user', user.id)
+      .single()
+
+    user.user_metadata = { ...user.user_metadata, ...profile }
+  }
+
 
   return (
     <html lang="en" className={`${GeistSans.className} dark`} >
-      <body className='bg-bgDark dark:bg-bgDark overflow-hidden' >
+      <body className='bg-bgDark dark:bg-bgDark overflow-x-hidden' >
         <Providers>
           <ConfigProvider
             theme={{
@@ -42,7 +52,7 @@ export default async function RootLayout({
             }
           >
             <NavBar user={user} />
-            <main className={`h-screen flex flex-col items-center overflow-y-auto`}>
+            <main className={`h-screen w-full flex flex-col items-center overflow-y-auto`}>
               {children}
             </main>
           </ConfigProvider >
