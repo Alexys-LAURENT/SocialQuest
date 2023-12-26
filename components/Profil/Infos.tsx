@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link, Image, Button, Progress } from '@nextui-org/react'
+import { Link, Button, Progress } from '@nextui-org/react'
+import Image from '@/components/Image';
 
-const Infos = () => {
+const Infos = ({ isUserProfil }: { isUserProfil: boolean }) => {
     return (
         <div className="flex flex-col w-full h-[35rem] lg:w-4/6 gap-6 rounded-md transition-all">
 
@@ -28,9 +29,6 @@ const Infos = () => {
                         <div className="text-sm">Suivant : Bannière Squelettes</div>
                         <div className="flex relative h-8 items-center justify-center">
                             <Image
-                                id="NextRewardImageProfil"
-                                className="sticky rounded-md h-full transition-all ease-in-out transform"
-                                classNames={{ wrapper: "h-full" }}
                                 src="/assets/Squelettes.png"
                                 alt="Bannière Squelettes"
                             />
@@ -44,8 +42,8 @@ const Infos = () => {
             <div className="flex flex-col gap-6 h-[60%]">
 
                 <div className='flex flex-col gap-2 h-1/2'>
-                    <Button as={Link} href={`#`} variant='flat' color='primary' className='w-max rounded-sm text-white'>
-                        Mes bannières
+                    <Button as={Link} href={`#`} variant='flat' color='primary' className='w-max rounded-sm text-textLight'>
+                        {isUserProfil ? ("Mes bannières") : ("Bannières")}
                     </Button>
                     <div className='relative flex h-full gap-6 bg-[#1c1c1c] rounded-md py-2 px-3 overflow-x-auto'>
                         <div id='BannersWrapper' className="overflow-x-auto flex w-full h-full gap-6 scroll-smooth">
@@ -61,8 +59,8 @@ const Infos = () => {
 
 
                 <div className='flex flex-col gap-2 h-1/2'>
-                    <Button as={Link} href={`#`} variant='flat' color='primary' className='w-max rounded-sm text-white'>
-                        Mes badges
+                    <Button as={Link} href={`#`} variant='flat' color='primary' className='w-max rounded-sm text-textLight'>
+                        {isUserProfil ? ("Mes badges") : ("Badges")}
                     </Button>
                     <div className='relative flex h-full gap-6 bg-[#1c1c1c] rounded-md py-2 px-3'>
                         <div id='BadgesWrapper' className="overflow-x-auto flex w-full h-full gap-6 scroll-smooth">
