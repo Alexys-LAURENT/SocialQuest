@@ -42,6 +42,15 @@
   }
 }
 
+#PopoverUser {
+  z-index: 100 !important;
+}
+
+.ant-upload {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 #nextRewardImage:hover::after {
   content: '';
   position: sticky;
