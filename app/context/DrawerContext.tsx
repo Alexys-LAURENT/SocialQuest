@@ -11,6 +11,7 @@ type Content = "User" | "NavMenu";
 // create a context
 export const DrawerContext = createContext({
     showDrawer: (content: Content) => { },
+    closeDrawer: () => { },
 });
 
 // create a provider function
@@ -38,23 +39,23 @@ const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: U
         setOpen(true);
     };
 
-    const onClose = () => {
+    const closeDrawer = () => {
         setOpen(false);
     };
 
     return (
-        <DrawerContext.Provider value={{ showDrawer }}>
+        <DrawerContext.Provider value={{ showDrawer, closeDrawer }}>
             <Drawer
                 contentWrapperStyle={{ height: "auto" }}
                 closeIcon={<XMarkIcon className='w-6 h-6 text-textLight' />}
                 title={content === "NavMenu" ? <p className='text-textLight'>Menu</p> : <></>}
                 placement={content === "User" ? "bottom" : "left"}
-                onClose={onClose} open={open}
+                onClose={closeDrawer} open={open}
                 classNames={{ header: `${content === "User" ? "hidden" : "bg-bgDark text-textLight"}`, body: "bg-bgDark text-textLight", mask: "flex sm:hidden" }}
                 className='flex sm:hidden'>
 
-                {content === "User" && <PopOverUserContent customFunction={onClose} user={user} signOut={signOut} />}
-                {content === "NavMenu" && <NavBarMenu customFunction={onClose} />}
+                {content === "User" && <PopOverUserContent customFunction={closeDrawer} user={user} signOut={signOut} />}
+                {content === "NavMenu" && <NavBarMenu customFunction={closeDrawer} />}
 
             </Drawer>
             {children}

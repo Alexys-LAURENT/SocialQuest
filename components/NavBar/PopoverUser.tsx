@@ -7,10 +7,10 @@ import { Badge, Avatar, Popover, PopoverTrigger, PopoverContent } from "@nextui-
 
 const PopoverUser = ({ signOut, user }: { signOut: () => void, user: User | null }) => {
     const [isPopoverUserOpen, setIsPopoverUserOpen] = useState(false);
-    const { showDrawer } = useContext(DrawerContext);
+    const { showDrawer, closeDrawer } = useContext(DrawerContext);
 
     return (
-        <Popover id="PopoverUser" placement="bottom" offset={15} classNames={{ base: "hidden sm:flex w-[18.5rem]" }} isOpen={isPopoverUserOpen} onOpenChange={setIsPopoverUserOpen} shouldCloseOnBlur={false}
+        <Popover id="PopoverUser" placement="bottom" offset={15} classNames={{ base: "hidden sm:flex w-[18.5rem]" }} isOpen={isPopoverUserOpen} onOpenChange={setIsPopoverUserOpen} shouldCloseOnBlur={false} onClose={() => closeDrawer()}
             shouldCloseOnInteractOutside={(e) => !(e as HTMLElement).classList.contains("ant-image-preview-wrap")
                 && !(e as HTMLElement).classList.contains("ant-image-preview-img")
                 && !(e as HTMLElement).classList.contains("ant-image-preview-close")
