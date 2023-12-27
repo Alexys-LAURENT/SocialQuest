@@ -45,6 +45,7 @@ const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: U
     return (
         <DrawerContext.Provider value={{ showDrawer }}>
             <Drawer
+                contentWrapperStyle={{ height: "auto" }}
                 closeIcon={<XMarkIcon className='w-6 h-6 text-textLight' />}
                 title={content === "NavMenu" ? <p className='text-textLight'>Menu</p> : <></>}
                 placement={content === "User" ? "bottom" : "left"}
