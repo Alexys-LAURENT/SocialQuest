@@ -7,19 +7,6 @@ export default async function Index() {
   const {
     data: { user },
   } = await supabase.auth.getUser()
-  // console.log(user)
-  // const canInitSupabaseClient = () => {
-  //   // This function is just for the interactive tutorial.
-  //   // Feel free to remove it once you have Supabase connected.
-  //   try {
-  //     createClient(cookieStore)
-  //     return true
-  //   } catch (e) {
-  //     return false
-  //   }
-  // }
-
-  // const isSupabaseConnected = canInitSupabaseClient()
 
   return (
     <div className=""></div>
