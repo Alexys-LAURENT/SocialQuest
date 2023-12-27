@@ -42,6 +42,13 @@
   }
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #ffffff;
+}
+
 #PopoverUser {
   z-index: 100 !important;
 }

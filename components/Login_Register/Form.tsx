@@ -1,9 +1,17 @@
 'use client'
-import React from 'react';
-import { Tabs, Tab } from "@nextui-org/react";
+import React, { useState } from 'react';
+import { Tabs, Tab, Input } from "@nextui-org/react";
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
 const Form = ({ signIn, signUp, searchParams }: { signIn: (arg1: FormData) => void, signUp: (arg1: FormData) => void, searchParams: { message: string } }) => {
 
+    const [isVisibleLogin, setIsVisibleLogin] = useState(false);
+    const [isVisibleRegister1, setIsVisibleRegister1] = useState(false);
+    const [isVisibleRegister2, setIsVisibleRegister2] = useState(false);
+
+    const toggleVisibilityLogin = () => setIsVisibleLogin(!isVisibleLogin);
+    const toggleVisibilityRegister1 = () => setIsVisibleRegister1(!isVisibleRegister1);
+    const toggleVisibilityRegister2 = () => setIsVisibleRegister2(!isVisibleRegister2);
 
     return (
         <div className="flex flex-col items-center justify-center w-full h-full gap-4">
@@ -15,18 +23,23 @@ const Form = ({ signIn, signUp, searchParams }: { signIn: (arg1: FormData) => vo
                         className="animate-in flex flex-col w-full justify-center gap-6 text-foreground items-center"
                         action={signIn}
                     >
-                        <input
-                            className="py-3 w-full rounded-md px-4 bg-[#2e2e2e]  placeholder:text-textLight placeholder:font-semibold"
-                            name="email"
-                            placeholder="Email"
-                            required
-                        />
-                        <input
-                            className="w-full rounded-md px-4 py-3 bg-[#2e2e2e]  placeholder:text-textLight placeholder:font-semibold"
-                            type="password"
-                            name="password"
+                        <Input type="email" placeholder='Email' name='email' label='Email' labelPlacement='outside' required />
+                        <Input
                             placeholder="Mot de passe"
-                            required
+                            id='password'
+                            label='Mot de passe'
+                            labelPlacement='outside'
+                            name="password"
+                            endContent={
+                                <button className="focus:outline-none h-5 w-5" type="button" onClick={toggleVisibilityLogin}>
+                                    {isVisibleLogin ? (
+                                        <EyeSlashIcon className="text-2xl text-default-400 pointer-events-none" />
+                                    ) : (
+                                        <EyeIcon className="text-2xl text-default-400 pointer-events-none" />
+                                    )}
+                                </button>
+                            }
+                            type={isVisibleLogin ? "text" : "password"}
                         />
                         <button className="bg-[#0070f0] rounded-md px-4 py-3 mt-4 text-2xl font-bold text-foreground mb-2 w-[90%]">
                             Se connecter
@@ -43,43 +56,43 @@ const Form = ({ signIn, signUp, searchParams }: { signIn: (arg1: FormData) => vo
                         className="animate-in flex flex-col w-full justify-center gap-6 text-foreground items-center"
                         action={signUp}
                     >
-                        <input
-                            className="w-full rounded-md px-4 py-3 bg-[#2e2e2e]  placeholder:text-textLight placeholder:font-semibold"
-                            name="nom"
-                            placeholder="Nom"
-                            required
-                        />
-                        <input
-                            className="w-full rounded-md px-4 py-3 bg-[#2e2e2e]  placeholder:text-textLight placeholder:font-semibold"
-                            name="prenom"
-                            placeholder="Prénom"
-                            required
-                        />
-                        <input
-                            className="w-full rounded-md px-4 py-3 bg-[#2e2e2e]  placeholder:text-textLight placeholder:font-semibold"
-                            name="email"
-                            placeholder="Email"
-                            required
-                        />
-                        <input
-                            className="w-full rounded-md px-4 py-3 bg-[#2e2e2e]  placeholder:text-textLight placeholder:font-semibold"
-                            type="password"
-                            name="password"
+                        <Input placeholder='Nom' name='nom' label='Nom' labelPlacement='outside' required />
+                        <Input placeholder='Prénom' name='prenom' label='Prénom' labelPlacement='outside' required />
+                        <Input type="email" placeholder='Email' name='email' label='Email' labelPlacement='outside' required />
+                        <Input placeholder='Username' name='username' label='Username' labelPlacement='outside' required />
+                        <Input
                             placeholder="Mot de passe"
-                            required
+                            id='passwordReg1'
+                            name="password"
+                            label='Mot de passe'
+                            labelPlacement='outside'
+                            endContent={
+                                <button className="focus:outline-none h-5 w-5" type="button" onClick={toggleVisibilityRegister1}>
+                                    {isVisibleRegister1 ? (
+                                        <EyeSlashIcon className="text-2xl text-default-400 pointer-events-none" />
+                                    ) : (
+                                        <EyeIcon className="text-2xl text-default-400 pointer-events-none" />
+                                    )}
+                                </button>
+                            }
+                            type={isVisibleRegister1 ? "text" : "password"}
                         />
-                        <input
-                            className="w-full rounded-md px-4 py-3 bg-[#2e2e2e]  placeholder:text-textLight placeholder:font-semibold"
-                            type="password"
-                            name="password2"
+                        <Input
                             placeholder="Confirmer le mot de passe"
-                            required
-                        />
-                        <input
-                            className="w-full rounded-md px-4 py-3 bg-[#2e2e2e]  placeholder:text-textLight placeholder:font-semibold"
-                            name="username"
-                            placeholder="Username"
-                            required
+                            id='passwordReg2'
+                            name="password2"
+                            label='Confirmer le mot de passe'
+                            labelPlacement='outside'
+                            endContent={
+                                <button className="focus:outline-none h-5 w-5" type="button" onClick={toggleVisibilityRegister2}>
+                                    {isVisibleRegister2 ? (
+                                        <EyeSlashIcon className="text-2xl text-default-400 pointer-events-none" />
+                                    ) : (
+                                        <EyeIcon className="text-2xl text-default-400 pointer-events-none" />
+                                    )}
+                                </button>
+                            }
+                            type={isVisibleRegister2 ? "text" : "password"}
                         />
                         <button className="bg-[#0070f0] rounded-md px-4 py-3 mt-4 text-2xl font-bold text-foreground mb-2 w-[90%]">
                             S'inscrire
@@ -94,44 +107,6 @@ const Form = ({ signIn, signUp, searchParams }: { signIn: (arg1: FormData) => vo
             </Tabs>
 
         </div>
-        // <form
-        //     className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground"
-        //     action={signIn}
-        // >
-        //     <label className="text-md" htmlFor="email">
-        //         Email
-        //     </label>
-        //     <input
-        //         className="rounded-md px-4 py-3 bg-[#2e2e2e]  placeholder:text-textLight placeholder:font-semibold  border mb-6"
-        //         name="email"
-        //         placeholder="you@example.com"
-        //         required
-        //     />
-        //     <label className="text-md" htmlFor="password">
-        //         Password
-        //     </label>
-        //     <input
-        //         className="rounded-md px-4 py-3 bg-[#2e2e2e]  placeholder:text-textLight placeholder:font-semibold  border mb-6"
-        //         type="password"
-        //         name="password"
-        //         placeholder="••••••••"
-        //         required
-        //     />
-        //     <button className="bg-green-700 rounded-md px-4 py-3 text-foreground mb-2">
-        //         Sign In
-        //     </button>
-        //     <button
-        //         formAction={signUp}
-        //         className="border border-foreground/20 rounded-md px-4 py-3 text-foreground mb-2"
-        //     >
-        //         Sign Up
-        //     </button>
-        //     {searchParams?.message && (
-        //         <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
-        //             {searchParams.message}
-        //         </p>
-        //     )}
-        // </form>
     );
 };
 
