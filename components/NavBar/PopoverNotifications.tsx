@@ -8,7 +8,7 @@ import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
 
 const PopoverNotifications = () => {
     return (
-        <Popover placement="bottom" offset={20} classNames={{ base: "w-[18.5rem]" }}>
+        <Popover placement="bottom" offset={20} classNames={{ base: " w-[18.5rem]" }}>
             <PopoverTrigger>
                 <div className="flex items-center cursor-pointer">
                     <Badge content="5" color="danger" className="text-xs">
