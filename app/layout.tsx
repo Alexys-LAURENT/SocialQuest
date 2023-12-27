@@ -5,6 +5,7 @@ import { GeistSans } from 'geist/font/sans'
 import { Providers } from "./providers";
 import { createClient } from '@/utils/supabase/server'
 import { ConfigProvider } from 'antd';
+import DrawerProvider from './context/DrawerContext';
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -51,10 +52,12 @@ export default async function RootLayout({
             }
             }
           >
-            <NavBar user={user} />
-            <main className={`h-screen w-full flex flex-col items-center overflow-y-auto`}>
-              {children}
-            </main>
+            <DrawerProvider user={user}>
+              <NavBar user={user} />
+              <main className={`h-screen w-full flex flex-col items-center overflow-y-auto`}>
+                {children}
+              </main>
+            </DrawerProvider>
           </ConfigProvider >
         </Providers>
       </body>
