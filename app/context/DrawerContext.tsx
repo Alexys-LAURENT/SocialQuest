@@ -1,8 +1,8 @@
 "use client"
 import React, { createContext, useState } from 'react';
+import { Profile } from '@/app/types/entities';
 import { Drawer } from 'antd';
 import PopOverUserContent from '@/components/NavBar/PopOverUserContent';
-import { User } from '@supabase/supabase-js';
 import { createBrowserClient } from '@supabase/ssr';
 import NavBarMenu from '@/components/NavBar/NavBarMenu';
 import { XMarkIcon } from '@heroicons/react/24/outline';
@@ -15,7 +15,7 @@ export const DrawerContext = createContext({
 });
 
 // create a provider function
-const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: User | null }) => {
+const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: Profile | null }) => {
     const [open, setOpen] = useState(false);
     const [content, setContent] = useState<Content>("User");
 

@@ -4,7 +4,7 @@ import SearchBar from "@/components/NavBar/SearchBar";
 import PopoverUser from "@/components/NavBar/PopoverUser";
 import PopoverNotifications from "@/components/NavBar/PopoverNotifications";
 import React, { useEffect, useContext } from "react";
-import { User } from "@supabase/supabase-js";
+import { Profile } from "@/app/types/entities";
 import { Button } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 import { createBrowserClient } from '@supabase/ssr'
@@ -17,7 +17,7 @@ import {
     NavbarItem
 } from "@nextui-org/react";
 
-const NavBar = ({ user }: { user: User | null }) => {
+const NavBar = ({ user }: { user: Profile | null }) => {
     const { showDrawer } = useContext(DrawerContext);
     const activePath = usePathname();
     const supabase = createBrowserClient(

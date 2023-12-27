@@ -1,11 +1,11 @@
 'use client';
 import PopOverUserContent from "./PopOverUserContent";
 import React, { useState, useContext } from "react";
-import { User } from "@supabase/supabase-js";
+import { Profile } from "@/app/types/entities";
 import { DrawerContext } from "@/app/context/DrawerContext";
 import { Badge, Avatar, Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
 
-const PopoverUser = ({ signOut, user }: { signOut: () => void, user: User | null }) => {
+const PopoverUser = ({ signOut, user }: { signOut: () => void, user: Profile | null }) => {
     const [isPopoverUserOpen, setIsPopoverUserOpen] = useState(false);
     const { showDrawer, closeDrawer } = useContext(DrawerContext);
 
@@ -19,11 +19,11 @@ const PopoverUser = ({ signOut, user }: { signOut: () => void, user: User | null
             <PopoverTrigger>
                 <div className="flex items-center cursor-pointer" onClick={() => showDrawer("User")} >
                     <Badge content="5" color="primary" className="text-xs hidden sm:flex">
-                        <Avatar isBordered src={user?.user_metadata?.avatar_url} className="cursor-pointer w-[2.75rem] h-[2.75rem] hidden sm:flex" />
+                        <Avatar isBordered src={user?.avatar_url} className="cursor-pointer w-[2.75rem] h-[2.75rem] hidden sm:flex" />
                     </Badge>
                     {/* mobile : */}
                     <Badge content="5" color="primary" className="text-xs flex sm:hidden">
-                        <Avatar isBordered src={user?.user_metadata?.avatar_url} className="cursor-pointer w-[2rem] h-[2rem] flex sm:hidden" />
+                        <Avatar isBordered src={user?.avatar_url} className="cursor-pointer w-[2rem] h-[2rem] flex sm:hidden" />
                     </Badge>
                 </div>
             </PopoverTrigger>
