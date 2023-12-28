@@ -3,12 +3,13 @@ import Link from "next/link";
 import SearchBar from "@/components/NavBar/SearchBar";
 import PopoverUser from "@/components/NavBar/PopoverUser";
 import PopoverNotifications from "@/components/NavBar/PopoverNotifications";
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { User } from "@supabase/supabase-js";
 import { Button } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 import { createBrowserClient } from '@supabase/ssr'
-import { BuildingStorefrontIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { DrawerContext } from "@/app/context/DrawerContext";
+import { BuildingStorefrontIcon, MagnifyingGlassIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import {
     Navbar,
     NavbarBrand,
@@ -17,8 +18,8 @@ import {
 } from "@nextui-org/react";
 
 const NavBar = ({ user }: { user: User | null }) => {
+    const { showDrawer } = useContext(DrawerContext);
     const activePath = usePathname();
-
     const supabase = createBrowserClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -54,7 +55,10 @@ const NavBar = ({ user }: { user: User | null }) => {
                         SOCIAL QUEST
                     </Link>
                 </NavbarBrand>
-                <NavbarBrand className="md:hidden flex text-3xl font-bold">
+                <NavbarItem className="sm:hidden flex" onClick={() => showDrawer('NavMenu')}>
+                    <Bars3Icon className="w-6 h-6" />
+                </NavbarItem>
+                <NavbarBrand className="md:hidden flex text-2xl font-bold">
                     <Link
                         href="/"
                     >
@@ -62,20 +66,26 @@ const NavBar = ({ user }: { user: User | null }) => {
                     </Link>
                 </NavbarBrand>
                 <NavbarItem>
-                    <MagnifyingGlassIcon className="flex md:hidden w-6 h-6" />
+                    <MagnifyingGlassIcon className="flex sm:hidden w-6 h-6" />
                 </NavbarItem>
             </NavbarContent>
 
 
-            <NavbarContent className="w-full max-w-2xl md:px-8 xl:px-0" justify="center">
-                <NavbarItem className="hidden md:flex w-full">
+            <NavbarContent className="w-full max-w-2xl sm:px-8 xl:px-0" justify="center">
+                <NavbarItem className="hidden sm:flex w-full">
                     <SearchBar />
                 </NavbarItem>
             </NavbarContent>
 
 
-            <NavbarContent justify="end">
-                <NavbarItem>
+            <NavbarContent justify="end" className="">
+                <NavbarItem className="flex min-w-fit items-center rounded-md px-2 py-1 bg-secondary/30">
+                    <div className="flex gap-1">
+                        <img src="/assets/Solidium.png" className="h-4 w-4" alt="" />
+                        <p className="text-xs">154</p>
+                    </div>
+                </NavbarItem>
+                <NavbarItem className="hidden sm:flex">
                     <Link
                         href="/shop"
                     >

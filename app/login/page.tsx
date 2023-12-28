@@ -36,6 +36,11 @@ export default function Login({
     const origin = headers().get('origin')
     const email = formData.get('email') as string
     const password = formData.get('password') as string
+
+    const nom = formData.get('nom') as string
+    const prenom = formData.get('prenom') as string
+    const username = formData.get('username') as string
+
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 
@@ -44,9 +49,9 @@ export default function Login({
       password,
       options: {
         data: {
-          nom: formData.get('nom') as string,
-          prenom: formData.get('prenom') as string,
-          username: formData.get('username') as string,
+          nom,
+          prenom,
+          username,
         },
         emailRedirectTo: `${origin}/auth/callback`,
       },

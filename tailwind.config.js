@@ -13,6 +13,8 @@ const config = {
       colors: {
         textLight: "#e0e0e0",
         bgDark: "#0a0a0a",
+        secondary: "#0070F0",
+        darkSecondary: "#1C1C1C",
       },
     },
   },
