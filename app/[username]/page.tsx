@@ -6,33 +6,32 @@ import { createClient } from '@/utils/supabase/server'
 import { Avatar } from '@nextui-org/react'
 import { notFound } from 'next/navigation'
 import ProfilPicture from '@/components/Profil/ProfilPicture'
+import { Post } from '../types/entities'
 
 export default async function Profil({ params }: { params: { username: string } }) {
   const cookieStore = cookies()
   const supabase = createClient(cookieStore)
+
   const {
     data: { user },
   } = await supabase.auth.getUser()
 
   const { data: userProfile, error: erroruserProfile } = await supabase
     .from('profiles')
-    .select()
+    .select("*")
     .eq('username', params.username)
     .single()
 
   const { data: posts, error: errorPosts } = await supabase
     .from('posts')
-    .select()
+    .select("*")
     .eq('id_user', userProfile?.id_user)
-    .single()
 
   if (userProfile === null) {
     notFound()
   }
 
   const isUserProfil = userProfile?.id_user === (user?.id ?? '');
-
-
 
   return (
     <div className="h-full w-full flex flex-col overflow-y-auto overflow-x-hidden items-center">
@@ -72,7 +71,7 @@ export default async function Profil({ params }: { params: { username: string } 
           <div className="text-2xl w-full font-semibold text-start">
             {isUserProfil ? "Mes Posts" : "Posts"}
           </div>
-          <Posts isUserProfil={isUserProfil} posts={posts} />
+          <Posts userProfile={userProfile} isUserProfil={isUserProfil} posts={posts as Post[]} />
         </div>
       </div>
     </div >

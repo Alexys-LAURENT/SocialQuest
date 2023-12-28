@@ -29,15 +29,12 @@ export default async function RootLayout({
     data: { user },
   } = await supabase.auth.getUser()
 
-  if (user) {
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('avatar_url')
-      .eq('id_user', user.id)
-      .single()
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id_user', user?.id)
+    .single()
 
-    user.user_metadata = { ...user.user_metadata, ...profile }
-  }
 
 
   return (
@@ -46,12 +43,11 @@ export default async function RootLayout({
         <Providers>
           <ConfigProvider theme={{ token: { colorBgMask: 'rgba(0, 0, 0, 0.8)', }, }}>
             <ToasterProvider>
-              <DrawerProvider user={user}>
-                <NavBar user={user} />
+              <DrawerProvider user={profile}>
+                <NavBar user={profile} />
                 <main className={`h-screen w-full flex flex-col items-center overflow-y-auto`}>
                   {children}
                 </main>
-
               </DrawerProvider>
             </ToasterProvider>
           </ConfigProvider >

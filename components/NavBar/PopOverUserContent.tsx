@@ -1,11 +1,11 @@
 import Image from "@/components/Image";
-import { User } from '@supabase/supabase-js';
+import { Profile } from "@/app/types/entities";
 import { Progress, Switch } from '@nextui-org/react';
 import { ArrowRightEndOnRectangleIcon, Cog8ToothIcon, CubeIcon, MoonIcon, UserIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 
-const PopOverUserContent = ({ user, customFunction, signOut }: { user: User | null, customFunction: () => void, signOut: () => void }) => {
+const PopOverUserContent = ({ user, customFunction, signOut }: { user: Profile | null, customFunction: () => void, signOut: () => void }) => {
     return (
         <div className="w-full px-1 py-2 gap-2 flex flex-col">
             <div>
@@ -26,7 +26,7 @@ const PopOverUserContent = ({ user, customFunction, signOut }: { user: User | nu
             </div>
             <div className="flex flex-col text-lg select-none">
                 <Link
-                    href={`/${user?.user_metadata?.username}`}
+                    href={`/${user?.username}`}
                     className="px-1 py-1 flex gap-2 items-center hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md"
                     onClick={() =>
                         customFunction()
