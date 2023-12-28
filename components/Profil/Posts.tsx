@@ -21,11 +21,49 @@ const Posts = ({ userProfile, isUserProfil, posts }: { userProfile: Profile, isU
                                         <Link href={`#`} className="text-sm text-textLight font-semibold">
                                             Japan •
                                         </Link>
-                                        <Link href={`/${userProfile.username}`} className="text-sm text-textLight font-semibold">
-                                            @{userProfile?.username}
-                                        </Link>
+                                        <Popover placement="top" offset={10} shouldBlockScroll={true} className='w-[95%] max-w-sm'>
+                                            <PopoverTrigger>
+                                                <div className="cursor-pointer text-textLight">
+                                                    @{userProfile?.username}
+                                                </div>
+                                            </PopoverTrigger>
+                                            <PopoverContent className='p-0 bg-darkSecondary'>
+                                                <div className="flex flex-col w-full h-full">
+                                                    <div className="w-full min-h-[5rem] bg-white bg-cover bg-center transition-all rounded-t-md" style={{ backgroundImage: "url('/assets/Jane.png')" }}></div>
+                                                    <div className="relative w-full min-h-[3rem]">
+                                                        <div className="flex absolute -top-10 left-5 gap-2 transition-all duration-500">
+                                                            <Avatar src={userProfile?.avatar_url} className="flex h-20 w-20 rounded-full text-large transition-all" />
+                                                        </div>
+                                                        <div className="flex absolute bottom-2 -top-6 right-5 gap-2 md:transition-all">
+                                                            <div className="h-5 w-5 rounded-full bg-green-500"></div>
+                                                            <div className="h-5 w-5 rounded-full bg-yellow-500"></div>
+                                                            <div className="h-5 w-5 rounded-full bg-pink-500"></div>
+                                                            <div className="h-5 w-5 rounded-full bg-blue-500"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex flex-col p-4 gap-4">
+                                                        <div className="text-3xl text-textLight font-bold">
+                                                            Weexo
+                                                        </div>
+                                                        <div className="flex flex-col bg-[#2e2e2e] text-textLight gap-2 py-2 px-4 min-h-[10rem] rounded-md">
+                                                            <div className="text-lg font-semibold">
+                                                                A propos
+                                                            </div>
+                                                            <div className="text-base">
+                                                                {userProfile?.a_propos}
+                                                            </div>
+                                                        </div>
+                                                        <Button as={Link} variant='flat' color='primary' className='text-textLight text-lg font-semibold rounded-sm'
+                                                            href={`/${userProfile?.username}`}
+                                                        >
+                                                            Voir le profil
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                            </PopoverContent>
+                                        </Popover>
                                     </div>
-                                    <Popover placement="top" showArrow={true} offset={10} shouldBlockScroll={true}>
+                                    <Popover placement="top" offset={10} shouldBlockScroll={true}>
                                         <PopoverTrigger>
                                             <EllipsisVerticalIcon className="w-5 h-5 text-textLight cursor-pointer" />
                                         </PopoverTrigger>
