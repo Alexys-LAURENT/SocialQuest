@@ -28,7 +28,10 @@ const PopoverUser = ({ signOut, user }: { signOut: () => void, user: Profile | n
                 </div>
             </PopoverTrigger>
             <PopoverContent className="bg-[#3b3b3b]">
-                <PopOverUserContent user={user} customFunction={() => setIsPopoverUserOpen(false)} signOut={signOut} />
+                <PopOverUserContent user={user} customFunction={() => {
+                    setIsPopoverUserOpen(false);
+                    closeDrawer();
+                }} signOut={signOut} />
             </PopoverContent>
         </Popover >
     );

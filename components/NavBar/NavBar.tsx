@@ -56,7 +56,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
                     </Link>
                 </NavbarBrand>
                 <NavbarItem className="sm:hidden flex" onClick={() => showDrawer('NavMenu')}>
-                    <Bars3Icon className="w-6 h-6" />
+                    <Bars3Icon className="w-6 h-6 cursor-pointer" />
                 </NavbarItem>
                 <NavbarBrand className="md:hidden flex text-2xl font-bold">
                     <Link

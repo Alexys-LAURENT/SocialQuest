@@ -21,7 +21,7 @@ const Posts = ({ userProfile, isUserProfil, posts }: { userProfile: Profile, isU
                                         <Link href={`#`} className="text-sm text-textLight font-semibold">
                                             Japan •
                                         </Link>
-                                        <Popover placement="top" offset={10} shouldBlockScroll={true} className='w-[95%] max-w-sm'>
+                                        <Popover placement="top" offset={10} shouldBlockScroll={true} className='mr-3 max-w-sm'>
                                             <PopoverTrigger>
                                                 <div className="cursor-pointer text-textLight">
                                                     @{userProfile?.username}

@@ -8,14 +8,6 @@ export default async function Index() {
     data: { user },
   } = await supabase.auth.getUser()
 
-  const { data, error } = await supabase
-    .from('posts')
-    .insert(
-      {
-        contenu: 'test',
-      }
-    )
-
   return (
     <div className=""></div>
   )

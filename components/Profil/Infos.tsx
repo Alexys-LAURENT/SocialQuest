@@ -37,7 +37,7 @@ const Infos = ({ isUserProfil, data }: { isUserProfil: boolean, data: any }) => 
     }
 
     return (
-        <div className="flex flex-col w-full h-[35rem] lg:w-4/6 gap-6 rounded-md transition-all">
+        <div className="flex flex-col w-full h-[35rem] lg:w-4/6 gap-0 sm:gap-6 rounded-md transition-all">
 
 
             <div className="flex flex-col gap-6 h-[40%]">
@@ -57,7 +57,7 @@ const Infos = ({ isUserProfil, data }: { isUserProfil: boolean, data: any }) => 
                             )
                         )}
                     </div>
-                    <div className="font-light text-sm h-full">
+                    <div className="font-light text-sm h-full overflow-y-auto">
                         {!isEditingAPropos ? (
                             (data?.a_propos !== null && data?.a_propos !== undefined && data?.a_propos !== ""
                                 ? data?.a_propos
@@ -69,18 +69,6 @@ const Infos = ({ isUserProfil, data }: { isUserProfil: boolean, data: any }) => 
                                     className="p-1 resize-none w-full h-full bg-[#2e2e2e] rounded-md text-textLight focus:outline-none"
                                     defaultValue={data?.a_propos}
                                     maxLength={150}
-                                    onChange={() => {
-                                        const textArea = document.getElementById('textAreaEditAPropos') as HTMLTextAreaElement;
-                                        const textAreaLength = document.getElementById('textAreaEditAProposLength');
-                                        if (textArea && textAreaLength) {
-                                            textAreaLength.innerHTML = textArea.value.length.toString();
-                                        }
-                                        if (textArea.value.length > 150) {
-                                            textArea.style.color = 'red';
-                                        } else {
-                                            textArea.style.color = 'rgb(224 224 224)';
-                                        }
-                                    }}
                                 />
                                 <div className="absolute flex gap-1 bottom-1 right-1 text-[10px] text-gray-300">
                                     <span id='textAreaEditAProposLength'>
@@ -116,9 +104,9 @@ const Infos = ({ isUserProfil, data }: { isUserProfil: boolean, data: any }) => 
             </div>
 
 
-            <div className="flex flex-col gap-6 h-[60%]">
+            <div className="flex flex-col gap-6 h-[60%] justify-center">
 
-                <div className='flex flex-col gap-2 h-1/2'>
+                <div className='flex flex-col gap-2 h-[40%] sm:h-1/2'>
                     <Button as={Link} href={`#`} variant='flat' color='primary' className='w-max rounded-sm text-textLight'>
                         {isUserProfil ? ("Mes bannières") : ("Bannières")}
                     </Button>
@@ -134,7 +122,7 @@ const Infos = ({ isUserProfil, data }: { isUserProfil: boolean, data: any }) => 
                 </div>
 
 
-                <div className='flex flex-col gap-2 h-1/2'>
+                <div className='flex flex-col gap-2 h-[40%] sm:h-1/2'>
                     <Button as={Link} href={`#`} variant='flat' color='primary' className='w-max rounded-sm text-textLight'>
                         {isUserProfil ? ("Mes badges") : ("Badges")}
                     </Button>
