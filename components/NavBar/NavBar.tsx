@@ -46,7 +46,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
     }, []);
 
     return activePath !== "/login" ? (
-        <Navbar maxWidth="xl" className="py-2 bg-bgDark" position="static">
+        <Navbar maxWidth="2xl" className="py-2 bg-bgDark" position="static">
             <NavbarContent justify="start">
                 <NavbarBrand className="hidden md:flex text-3xl font-bold">
                     <Link
@@ -55,7 +55,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
                         SOCIAL QUEST
                     </Link>
                 </NavbarBrand>
-                <NavbarItem className="sm:hidden flex" onClick={() => showDrawer('NavMenu')}>
+                <NavbarItem className="md:hidden flex" onClick={() => showDrawer('NavMenu')}>
                     <Bars3Icon className="w-6 h-6 cursor-pointer" />
                 </NavbarItem>
                 <NavbarBrand className="md:hidden flex text-2xl font-bold">
@@ -85,7 +85,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
                         <p className="text-xs">154</p>
                     </div>
                 </NavbarItem>
-                <NavbarItem className="hidden sm:flex">
+                <NavbarItem className="hidden md:flex">
                     <Link
                         href="/shop"
                     >

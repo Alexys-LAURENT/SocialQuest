@@ -8,13 +8,23 @@ export type Profile = {
     avatar_url?: string,
     xp: number,
     social_coin: number
+    banner_url?: string
 }
 
 export type Post = {
     id_post: string,
     id_user: string,
+    id_guilde?: string,
     parent?: string,
     titre?: string,
     contenu: string,
     created_at?: string
+}
+
+export type ExtendedPost = Post & {
+    profiles: {
+        username: string,
+        avatar_url?: string
+        a_propos?: string
+    }
 }
