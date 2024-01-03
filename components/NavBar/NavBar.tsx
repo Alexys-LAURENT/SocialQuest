@@ -46,7 +46,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
     }, []);
 
     return activePath !== "/login" ? (
-        <Navbar maxWidth="2xl" className="py-2 bg-bgDark" position="static">
+        <Navbar maxWidth="2xl" className="py-2 bg-bgDark" position="sticky">
             <NavbarContent justify="start">
                 <NavbarBrand className="hidden md:flex text-3xl font-bold">
                     <Link

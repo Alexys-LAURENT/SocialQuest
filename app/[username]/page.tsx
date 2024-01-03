@@ -6,7 +6,7 @@ import { createClient } from '@/utils/supabase/server'
 import { Avatar } from '@nextui-org/react'
 import { notFound } from 'next/navigation'
 import ProfilPicture from '@/components/Profil/ProfilPicture'
-import { ExtendedPost, Post } from '../types/entities'
+import { ExtendedPost } from '../types/entities'
 
 export default async function Profil({ params }: { params: { username: string } }) {
   const cookieStore = cookies()
@@ -30,8 +30,9 @@ export default async function Profil({ params }: { params: { username: string } 
 
   const { data: posts, error: errorPosts } = await supabase
     .from('posts')
-    .select("*, profiles(username, avatar_url)")
+    .select('*, profiles(username, avatar_url, a_propos),guildes(nom, avatar_url)')
     .eq('id_user', userProfile?.id_user)
+    .order('created_at', { ascending: false }) as { data: ExtendedPost[], error: any };
 
 
   const isUserProfil = userProfile?.id_user === (user?.id ?? '');

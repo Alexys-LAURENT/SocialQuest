@@ -1,8 +1,9 @@
-import { createClient } from '@/utils/supabase/server'
-import { cookies } from 'next/headers'
-import { ExtendedPost, Profile } from '@/app/types/entities'
 import Link from 'next/link'
 import Post from '@/components/Post'
+import TopTabs from '@/components/Home/TopTabs'
+import { cookies } from 'next/headers'
+import { createClient } from '@/utils/supabase/server'
+import { ExtendedPost, Profile } from '@/app/types/entities'
 
 export default async function Index() {
   const cookieStore = cookies()
@@ -20,31 +21,32 @@ export default async function Index() {
 
   const { data: posts, error: postsError } = await supabase
     .from('posts')
-    .select('*, profiles(username, avatar_url, a_propos)') as { data: ExtendedPost[], error: any };
+    .select('*, profiles(username, avatar_url, a_propos),guildes(nom, avatar_url)')
+    .is('parent', null)
+    .order('created_at', { ascending: false }) as { data: ExtendedPost[], error: any };
 
-  console.log(posts);
 
   return (
     <div className="flex max-w-[1280px] w-full p-4 gap-6">
-      <div className="hidden lg:flex min-w-[17rem]">
 
+      <div className="hidden lg:flex min-w-[17rem]">
         <div className="w-full flex flex-col bg-[#11100e] rounded-md text-xl font-semibold h-fit">
-          <Link href={`/${user?.username}`} className='hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>Ma page</Link>
-          <Link href={`#`} className='hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>Mes Compagnons</Link>
-          <Link href={`#`} className='hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>Mes Guildes</Link>
+          <Link href={`/${user?.username}`} className='hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>
+            Ma page
+          </Link>
+          <Link href={`#`} className='hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>
+            Mes Compagnons
+          </Link>
+          <Link href={`#`} className='hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>
+            Mes Guildes
+          </Link>
         </div>
       </div>
 
 
-      <div className="flex flex-col w-full gap-10">
-        <div className="w-full flex flex-col min-h-[10rem]">
-          <div className="h-[80%] w-full bg-[#11100e] rounded-t-md">
+      <div className="flex flex-col w-full gap-6 lg:gap-10">
 
-          </div>
-          <div className="h-[20%] w-full bg-[#1f1e1b] rounded-b-md">
-
-          </div>
-        </div>
+        <TopTabs user={user} />
 
         <div className="w-full flex flex-col gap-4 mb-4">
           {posts?.length !== 0 ? (

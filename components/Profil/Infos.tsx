@@ -59,7 +59,7 @@ const Infos = ({ isUserProfil, data }: { isUserProfil: boolean, data: any }) => 
                     </div>
                     <div className="font-light text-sm h-full overflow-y-auto">
                         {!isEditingAPropos ? (
-                            (data?.a_propos !== null && data?.a_propos !== undefined && data?.a_propos !== ""
+                            (data?.a_propos !== ""
                                 ? data?.a_propos
                                 : isUserProfil ? "Vous n'avez pas encore rempli cette section" : "L'utilisateur n'a pas encore rempli cette section")
                         ) : (
@@ -69,6 +69,9 @@ const Infos = ({ isUserProfil, data }: { isUserProfil: boolean, data: any }) => 
                                     className="p-1 resize-none w-full h-full bg-[#2e2e2e] rounded-md text-textLight focus:outline-none"
                                     defaultValue={data?.a_propos}
                                     maxLength={150}
+                                    onChange={() => {
+                                        (document.getElementById('textAreaEditAProposLength') as HTMLSpanElement).innerText = (document.getElementById('textAreaEditAPropos') as HTMLTextAreaElement).value.length.toString();
+                                    }}
                                 />
                                 <div className="absolute flex gap-1 bottom-1 right-1 text-[10px] text-gray-300">
                                     <span id='textAreaEditAProposLength'>
