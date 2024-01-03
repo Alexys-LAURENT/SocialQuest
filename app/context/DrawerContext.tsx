@@ -51,15 +51,15 @@ const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: P
                 title={content === "NavMenu" ? <p className='text-textLight'>Menu</p> : <></>}
                 placement={content === "User" ? "bottom" : "left"}
                 onClose={closeDrawer} open={open}
-                classNames={{ header: `${content === "User" ? "hidden" : "bg-bgDark text-textLight"}`, body: "bg-bgDark text-textLight", mask: "flex sm:hidden" }}
-                className='flex sm:hidden'>
+                classNames={{ header: `${content === "User" ? "hidden" : "bg-bgDark text-textLight"}`, body: "bg-bgDark text-textLight", mask: `flex ${content === "User" ? "sm:hidden" : "md:hidden"}` }}
+                className={`flex  ${content === "User" ? "sm:hidden" : "md:hidden"}`}>
 
                 {content === "User" && <PopOverUserContent customFunction={closeDrawer} user={user} signOut={signOut} />}
                 {content === "NavMenu" && <NavBarMenu customFunction={closeDrawer} />}
 
             </Drawer>
             {children}
-        </DrawerContext.Provider>
+        </DrawerContext.Provider >
     );
 };
 

@@ -26,5 +26,9 @@ export type ExtendedPost = Post & {
         username: string,
         avatar_url?: string
         a_propos?: string
+    },
+    guildes: {
+        nom: string,
+        avatar_url?: string
     }
 }
