@@ -1,11 +1,11 @@
 import React from 'react';
 import { Avatar, Button, Link, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
 import { ChatBubbleLeftIcon, EllipsisVerticalIcon, FlagIcon, HeartIcon, ShareIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { ExtendedPost } from '@/app/types/entities';
+import { ExtendedPost, Profile } from '@/app/types/entities';
 import PopoverUserProfile from '@/components/PopoverUserProfile';
 
 
-const Post = ({ user, post }: { user: any, post: ExtendedPost }) => {
+const Post = ({ user, post }: { user: Profile, post: ExtendedPost }) => {
     return (
         <div className="flex flex-col border border-gray-500 rounded-md p-2 gap-1">
 
@@ -37,7 +37,7 @@ const Post = ({ user, post }: { user: any, post: ExtendedPost }) => {
                                         Partager
                                     </div>
                                 </Button>
-                                {user.id_user === post.id_user ? (
+                                {user?.id_user === post.id_user ? (
                                     <Button className="flex gap-2 min-w-0 h-7 min-h-0 px-3 rounded-t" variant='light' color='danger'>
                                         <TrashIcon className="w-5 h-5" />
                                         <div className="">

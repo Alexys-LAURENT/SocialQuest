@@ -15,7 +15,7 @@ const Form = ({ signIn, signUp, searchParams }: { signIn: (arg1: FormData) => vo
 
     return (
         <div className="flex flex-col items-center justify-center w-full h-full gap-4">
-            <h1 className='mb-8 text-5xl text-textLight font-bold'>SOCIAL QUEST</h1>
+            <h1 className='mb-8 text-3xl md:text-5xl text-textLight font-bold'>SOCIAL QUEST</h1>
 
             <Tabs aria-label="Options" defaultSelectedKey="Se Connecter" disableAnimation>
                 <Tab key="Se Connecter" title="Se Connecter" className="text-textLight w-full max-w-lg">
