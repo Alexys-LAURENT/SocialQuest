@@ -14,11 +14,11 @@ const Form = ({ signIn, signUp, searchParams }: { signIn: (arg1: FormData) => vo
     const toggleVisibilityRegister2 = () => setIsVisibleRegister2(!isVisibleRegister2);
 
     return (
-        <div className="flex flex-col items-center justify-center w-full h-full gap-4">
+        <div className="flex flex-col items-center w-full h-full gap-4">
             <h1 className='mb-8 text-3xl md:text-5xl text-textLight font-bold'>SOCIAL QUEST</h1>
 
-            <Tabs aria-label="Options" defaultSelectedKey="Se Connecter" disableAnimation>
-                <Tab key="Se Connecter" title="Se Connecter" className="text-textLight w-full max-w-lg">
+            <Tabs aria-label="Options" defaultSelectedKey="Se Connecter">
+                <Tab key="Se Connecter" title="Se Connecter" className="text-textLight w-full max-w-lg correctOutlineNone">
                     <form
                         className="animate-in flex flex-col w-full justify-center gap-6 text-foreground items-center"
                         action={signIn}
