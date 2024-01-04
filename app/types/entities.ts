@@ -30,5 +30,7 @@ export type ExtendedPost = Post & {
     guildes: {
         nom: string,
         avatar_url?: string
-    }
+    },
+    likesCount: number,
+    userLikedPost: boolean
 }

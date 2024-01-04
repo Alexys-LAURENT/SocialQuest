@@ -1,9 +1,10 @@
 import Link from 'next/link'
-import Post from '@/components/Post'
 import TopTabs from '@/components/Home/TopTabs'
 import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { ExtendedPost, Profile } from '@/app/types/entities'
+import PostsWrapper from '@/components/Home/PostsWrapper';
+
 
 export default async function Index() {
   const cookieStore = cookies()
@@ -19,11 +20,19 @@ export default async function Index() {
     .single() as { data: Profile };
 
 
-  const { data: posts, error: postsError } = await supabase
+  const { data: postsWithLikes, error: postsError } = await supabase
     .from('posts')
-    .select('*, profiles(username, avatar_url, a_propos),guildes(nom, avatar_url)')
+    .select(`*, profiles(username, avatar_url, a_propos),guildes(nom, avatar_url), likes(id_like, id_user)`)
     .is('parent', null)
-    .order('created_at', { ascending: false }) as { data: ExtendedPost[], error: any };
+    .order('created_at', { ascending: false });
+
+  // Récupérer le nombre total de likes par post
+  const posts = postsWithLikes?.map(post => {
+    const likesCount = post.likes.length;
+    const userLikedPost = post.likes.some((like: any) => like.id_user === userAuth?.id); // Remplacez currentUserID par l'ID de l'utilisateur actuel
+
+    return { ...post, likesCount, userLikedPost };
+  }) as ExtendedPost[];
 
 
   return (
@@ -48,19 +57,7 @@ export default async function Index() {
 
         <TopTabs user={user} />
 
-        <div className="w-full flex flex-col gap-4 mb-4">
-          {posts?.length !== 0 ? (
-            posts?.map((post: ExtendedPost) => (
-              <Post key={post.id_post} post={post} user={user} />
-            ))
-          ) : (
-            <div className="flex flex-col items-center justify-center gap-2">
-              <div className="text-2xl font-semibold">
-                Aucun post 😢
-              </div>
-            </div>
-          )}
-        </div>
+        <PostsWrapper posts={posts} user={user} />
       </div>
 
       <div className="hidden md:flex flex-col min-w-[17rem] gap-4 h-fit">

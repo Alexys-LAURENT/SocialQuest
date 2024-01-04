@@ -1,11 +1,13 @@
 import React from 'react';
 import { Avatar, Button, Link, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
-import { ChatBubbleLeftIcon, EllipsisVerticalIcon, FlagIcon, HeartIcon, ShareIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { EllipsisVerticalIcon, FlagIcon, ShareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { ExtendedPost, Profile } from '@/app/types/entities';
 import PopoverUserProfile from '@/components/PopoverUserProfile';
+import WrapperLikeAnswer from './WrapperLikeAnswer';
 
 
-const Post = ({ user, post }: { user: Profile, post: ExtendedPost }) => {
+export default async function Post({ user, post }: { user: Profile, post: ExtendedPost }) {
+
     return (
         <div className="flex flex-col border border-gray-500 rounded-md p-2 gap-1">
 
@@ -70,14 +72,7 @@ const Post = ({ user, post }: { user: Profile, post: ExtendedPost }) => {
                 </div>
 
                 <div className="flex md:flex-row gap-2 flex-col-reverse justify-between">
-                    <div className='flex gap-4'>
-                        <Button variant='flat' color='primary' className='min-w-0 h-7 w-max rounded-sm text-textLight px-2'>
-                            <HeartIcon className="w-5 h-5" /> 12
-                        </Button>
-                        <Button variant='flat' color='primary' className='min-w-0 h-7 w-max rounded-sm text-textLight px-2'>
-                            <ChatBubbleLeftIcon className="w-5 h-5" /> 12
-                        </Button>
-                    </div>
+                    <WrapperLikeAnswer post={post} user={user} />
                     <div className="text-slate-400 text-xs flex items-end">
                         {new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(new Date(post.created_at ?? ''))}
                     </div>
@@ -87,5 +82,3 @@ const Post = ({ user, post }: { user: Profile, post: ExtendedPost }) => {
         </div>
     );
 };
-
-export default Post;
