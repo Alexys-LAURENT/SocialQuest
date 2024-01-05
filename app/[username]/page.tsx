@@ -6,7 +6,7 @@ import { createClient } from '@/utils/supabase/server'
 import { Avatar } from '@nextui-org/react'
 import { notFound } from 'next/navigation'
 import ProfilPicture from '@/components/Profil/ProfilPicture'
-import { ExtendedPost } from '../types/entities'
+import { ExtendedPost } from '@/app/types/entities'
 
 export default async function Profil({ params }: { params: { username: string } }) {
   const cookieStore = cookies()

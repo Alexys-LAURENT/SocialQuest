@@ -4,6 +4,7 @@ import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { ExtendedPost, Profile } from '@/app/types/entities'
 import PostsWrapper from '@/components/Home/PostsWrapper';
+import { Children } from 'react'
 
 
 export default async function Index() {
@@ -22,16 +23,18 @@ export default async function Index() {
 
   const { data: postsWithLikes, error: postsError } = await supabase
     .from('posts')
-    .select(`*, profiles(username, avatar_url, a_propos),guildes(nom, avatar_url), likes(id_like, id_user)`)
+    .select(`*, profiles(username, avatar_url, a_propos),guildes(nom, avatar_url), likes(id_like, id_user),
+              children:posts(id_post)`)
     .is('parent', null)
     .order('created_at', { ascending: false });
 
   // Récupérer le nombre total de likes par post
   const posts = postsWithLikes?.map(post => {
     const likesCount = post.likes.length;
+    const answersCount = post.children.length;
     const userLikedPost = post.likes.some((like: any) => like.id_user === userAuth?.id); // Remplacez currentUserID par l'ID de l'utilisateur actuel
 
-    return { ...post, likesCount, userLikedPost };
+    return { ...post, likesCount, answersCount, userLikedPost };
   }) as ExtendedPost[];
 
 

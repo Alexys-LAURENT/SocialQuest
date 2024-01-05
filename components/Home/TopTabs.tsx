@@ -3,6 +3,7 @@ import React from 'react';
 import { Tabs, Tab } from "@nextui-org/react";
 import Link from 'next/link';
 import { Profile } from '@/app/types/entities';
+import PostInput from '../PostInput';
 
 const TopTabs = ({ user }: { user: Profile }) => {
     return (
@@ -21,14 +22,7 @@ const TopTabs = ({ user }: { user: Profile }) => {
             <div className="lg:hidden flex flex-col items-center justify-center">
                 <Tabs aria-label="Options" defaultSelectedKey="NewPost" classNames={{ panel: 'px-0' }}>
                     <Tab key="NewPost" title="Nouveau post" className="w-full">
-                        <div className="w-full h-full flex flex-col min-h-[10rem]">
-                            <div className="h-[80%] w-full bg-[#11100e] rounded-t-md">
-
-                            </div>
-                            <div className="h-[20%] w-full bg-[#1f1e1b] rounded-b-md">
-
-                            </div>
-                        </div>
+                        <PostInput />
                     </Tab>
                     <Tab key="links" title="Liens" className="w-full">
                         <div className="w-full flex flex-col bg-[#11100e] rounded-md text-xl font-semibold h-fit">

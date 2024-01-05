@@ -9,6 +9,7 @@ import { data } from 'autoprefixer';
 
 const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile }) => {
     const [likesCount, setLikesCount] = useState(post.likesCount)
+    const [answersCount, setAnswersCount] = useState(post.answersCount)
     const [userLikedPost, setUserLikedPost] = useState(post.userLikedPost)
 
     const supabase = createBrowserClient(
@@ -20,23 +21,36 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile }
         const like = supabase.channel('realtime:public:likes`$`id_post=eq.`$`' + post.id_post)
             .on(
                 'postgres_changes',
-                { event: '*', schema: 'public', table: 'likes' },
+                { event: '*', schema: 'public', table: 'likes', filter: `id_post=eq.${post.id_post}` },
                 (payload) => {
                     async function getLikesCount() {
                         const { data: likesCount } = await supabase
                             .from('likes')
                             .select('count')
+                            .eq('id_post', post.id_post);
+
+                        const { data: userLikes } = await supabase
+                            .from('likes')
+                            .select()
                             .eq('id_post', post.id_post)
+                            .eq('id_user', user.id_user);
+
+                        const userLikedPost = userLikes && userLikes.length > 0;
 
                         setLikesCount(likesCount && likesCount[0]?.count || 0);
+                        setUserLikedPost(userLikedPost || false);
                     }
                     getLikesCount()
                 }
             )
             .subscribe()
+    }, []);
 
-        // Cleanup function to unsubscribe when the component is unmounted
-    }, []); // Empty dependency array ensures this runs only once when the component is mounted
+
+    const handletoggleLike = () => {
+        toggleLike()
+        setLikesCount(userLikedPost && likesCount > 0 ? likesCount - 1 : likesCount + 1)
+    }
 
     const toggleLike = async () => {
 
@@ -47,25 +61,36 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile }
                 .from('likes')
                 .delete()
                 .match({ id_user: user.id_user, id_post: post.id_post }) // Utiliser l'ID de l'utilisateur connecté
+
         } else {
             // Like
             await supabase
                 .from('likes')
                 .insert({ id_user: user.id_user, id_post: post.id_post }) // Utiliser l'ID de l'utilisateur connecté
+
         }
 
         setUserLikedPost(!userLikedPost)
     }
 
 
+    const formatCount = (count: number) => {
+        if (count >= 1000000) {
+            return (Math.floor(count / 1000000 * 10) / 10).toFixed(1) + 'M'; // convert to M for number from > 1000000
+        } else if (count >= 1000) {
+            return (Math.floor(count / 100) / 10).toFixed(1) + 'k'; // convert to k for number from > 1000 
+        } else {
+            return count;
+        }
+    }
 
     return (
         <div className='flex gap-4'>
-            <Button variant='flat' color='primary' className='min-w-0 h-7 w-max rounded-sm text-textLight px-2' onClick={toggleLike}>
-                <HeartIcon className={`w-5 h-5 ${userLikedPost ? 'text-red-500 fill-red-500' : ''} transition-all ease-in-out`} /> {likesCount}
+            <Button variant='flat' color='primary' className='min-w-0 h-7 w-max rounded-sm text-textLight px-2' onClick={handletoggleLike}>
+                <HeartIcon className={`w-5 h-5 ${userLikedPost ? 'text-red-500 fill-red-500' : ''} transition-all ease-in-out`} /> {formatCount(likesCount)}
             </Button>
             <Button variant='flat' color='primary' className='min-w-0 h-7 w-max rounded-sm text-textLight px-2'>
-                <ChatBubbleLeftIcon className="w-5 h-5" /> 12
+                <ChatBubbleLeftIcon className="w-5 h-5" /> {answersCount}
             </Button>
         </div>
     );

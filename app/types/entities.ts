@@ -32,5 +32,6 @@ export type ExtendedPost = Post & {
         avatar_url?: string
     },
     likesCount: number,
-    userLikedPost: boolean
+    userLikedPost: boolean,
+    answersCount: number
 }
