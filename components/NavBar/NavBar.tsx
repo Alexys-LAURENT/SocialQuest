@@ -45,6 +45,16 @@ const NavBar = ({ user }: { user: Profile | null }) => {
         }
     }, []);
 
+    const formatCount = (count: number) => {
+        if (count >= 1000000) {
+            return (Math.floor(count / 1000000 * 10) / 10).toFixed(1) + 'M'; // convert to M for number from > 1000000
+        } else if (count >= 1000) {
+            return (Math.floor(count / 100) / 10).toFixed(1) + 'k'; // convert to k for number from > 1000 
+        } else {
+            return count;
+        }
+    }
+
     return activePath !== "/login" ? (
         <Navbar maxWidth="2xl" className="py-2 bg-bgDark" position="sticky">
             <NavbarContent justify="start">
@@ -79,12 +89,14 @@ const NavBar = ({ user }: { user: Profile | null }) => {
 
 
             <NavbarContent justify="end" className="">
-                <NavbarItem className="flex min-w-fit items-center rounded-md px-2 py-1 bg-secondary/30">
-                    <div className="flex gap-1">
-                        <img src="/assets/Solidium.png" className="h-4 w-4" alt="" />
-                        <p className="text-xs">154</p>
-                    </div>
-                </NavbarItem>
+                {user && (
+                    <NavbarItem className="flex min-w-fit items-center rounded-md px-1 sm:px-2 py-1 bg-secondary/30">
+                        <div className="flex gap-1">
+                            <img src="/assets/Solidium.png" className="h-4 w-4" alt="" />
+                            <p className="text-xs">{formatCount(user.social_coin)}</p>
+                        </div>
+                    </NavbarItem>
+                )}
                 <NavbarItem className="hidden md:flex">
                     <Link
                         href="/shop"

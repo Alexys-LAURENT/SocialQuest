@@ -4,7 +4,6 @@ import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { ExtendedPost, Profile } from '@/app/types/entities'
 import PostsWrapper from '@/components/Home/PostsWrapper';
-import { Children } from 'react'
 
 
 export default async function Index() {
@@ -43,7 +42,7 @@ export default async function Index() {
 
       <div className="hidden lg:flex min-w-[17rem]">
         <div className="w-full flex flex-col bg-[#11100e] rounded-md text-xl font-semibold h-fit">
-          <Link href={`/${user?.username}`} className='hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>
+          <Link href={`/${user ? user.username : 'login'}`} className='hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>
             Ma page
           </Link>
           <Link href={`#`} className='hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>

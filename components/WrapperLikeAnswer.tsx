@@ -1,13 +1,14 @@
 'use client'
 import React, { useEffect } from 'react';
 import { Button } from '@nextui-org/react';
+import { useState } from 'react';
+import { createBrowserClient } from '@supabase/ssr'
 import { ExtendedPost, Profile } from '@/app/types/entities';
 import { ChatBubbleLeftIcon, HeartIcon } from '@heroicons/react/24/outline';
-import { createBrowserClient } from '@supabase/ssr'
-import { useState } from 'react';
-import { data } from 'autoprefixer';
+import { useRouter } from 'next/navigation';
 
 const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile }) => {
+    const router = useRouter();
     const [likesCount, setLikesCount] = useState(post.likesCount)
     const [answersCount, setAnswersCount] = useState(post.answersCount)
     const [userLikedPost, setUserLikedPost] = useState(post.userLikedPost)
@@ -16,6 +17,7 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile }
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     )
+
 
     useEffect(() => {
         const like = supabase.channel('realtime:public:likes`$`id_post=eq.`$`' + post.id_post)
@@ -32,8 +34,8 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile }
                         const { data: userLikes } = await supabase
                             .from('likes')
                             .select()
-                            .eq('id_post', post.id_post)
-                            .eq('id_user', user.id_user);
+                            .eq('id_post', post?.id_post)
+                            .eq('id_user', user?.id_user);
 
                         const userLikedPost = userLikes && userLikes.length > 0;
 
@@ -48,6 +50,11 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile }
 
 
     const handletoggleLike = () => {
+        if (user === null) {
+            router.push('/login');
+            return;
+        }
+
         toggleLike()
         setLikesCount(userLikedPost && likesCount > 0 ? likesCount - 1 : likesCount + 1)
     }
