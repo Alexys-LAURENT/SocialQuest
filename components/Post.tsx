@@ -1,12 +1,31 @@
-import React from 'react';
+"use client"
+import { useContext } from 'react';
 import { Avatar, Button, Link, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
 import { EllipsisVerticalIcon, FlagIcon, ShareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { ExtendedPost, Profile } from '@/app/types/entities';
 import PopoverUserProfile from '@/components/PopoverUserProfile';
 import WrapperLikeAnswer from './WrapperLikeAnswer';
+import { createClient } from '@/utils/supabase/client';
+import { ToasterContext } from '@/app/context/ToasterContext';
+import { useRouter } from 'next/navigation';
+export default function Post({ user, post }: { user: Profile, post: ExtendedPost }) {
 
+    const router = useRouter()
+    const { success } = useContext(ToasterContext)
 
-export default async function Post({ user, post }: { user: Profile, post: ExtendedPost }) {
+    const supabase = createClient()
+
+    const handleDelete = (id: string) => {
+        console.log(id);
+        supabase.from('posts').delete().eq('id_post', id).then(({ data, error }) => {
+            if (error) {
+                console.error(error);
+                return;
+            }
+            router.refresh()
+            success('Post supprimé')
+        })
+    }
 
     return (
         <div className="flex flex-col border border-gray-500 rounded-md p-2 gap-1">
@@ -40,7 +59,7 @@ export default async function Post({ user, post }: { user: Profile, post: Extend
                                     </div>
                                 </Button>
                                 {user?.id_user === post.id_user ? (
-                                    <Button className="flex gap-2 min-w-0 h-7 min-h-0 px-3 rounded-t" variant='light' color='danger'>
+                                    <Button onClick={() => handleDelete(post.id_post)} className="flex gap-2 min-w-0 h-7 min-h-0 px-3 rounded-t" variant='light' color='danger'>
                                         <TrashIcon className="w-5 h-5" />
                                         <div className="">
                                             Supprimer

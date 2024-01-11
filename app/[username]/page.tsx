@@ -28,11 +28,21 @@ export default async function Profil({ params }: { params: { username: string } 
   }
 
 
-  const { data: posts, error: errorPosts } = await supabase
+  const { data: postsWithLikes, error: errorPosts } = await supabase
     .from('posts')
-    .select('*, profiles(username, avatar_url, a_propos),guildes(nom, avatar_url)')
+    .select(`*, profiles(username, avatar_url, a_propos),guildes(nom, avatar_url), likes(id_like, id_user),
+    children:posts(id_post)`)
     .eq('id_user', userProfile?.id_user)
-    .order('created_at', { ascending: false }) as { data: ExtendedPost[], error: any };
+    .order('created_at', { ascending: false });
+
+  // Récupérer le nombre total de likes par post
+  const posts = postsWithLikes?.map(post => {
+    const likesCount = post.likes.length;
+    const answersCount = post.children.length;
+    const userLikedPost = post.likes.some((like: any) => like.id_user === user?.id); // Remplacez currentUserID par l'ID de l'utilisateur actuel
+
+    return { ...post, likesCount, answersCount, userLikedPost };
+  }) as ExtendedPost[];
 
 
   const isUserProfil = userProfile?.id_user === (user?.id ?? '');

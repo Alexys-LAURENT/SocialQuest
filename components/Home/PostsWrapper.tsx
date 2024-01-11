@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import Post from '@/components/Post';
 import { ExtendedPost, Profile } from '@/app/types/entities';

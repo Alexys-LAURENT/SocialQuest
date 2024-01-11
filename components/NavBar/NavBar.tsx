@@ -16,8 +16,11 @@ import {
     NavbarContent,
     NavbarItem
 } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 const NavBar = ({ user }: { user: Profile | null }) => {
+    const router = useRouter();
+    const pathName = usePathname();
     const { showDrawer } = useContext(DrawerContext);
     const activePath = usePathname();
     const supabase = createBrowserClient(
@@ -59,21 +62,25 @@ const NavBar = ({ user }: { user: Profile | null }) => {
         <Navbar maxWidth="2xl" className="py-2 bg-bgDark" position="sticky">
             <NavbarContent justify="start">
                 <NavbarBrand className="hidden md:flex text-3xl font-bold">
-                    <Link
-                        href="/"
+                    <span className="cursor-pointer"
+                        onClick={() => {
+                            (pathName !== "/") ? router.push("/") : router.refresh()
+                        }}
                     >
                         SOCIAL QUEST
-                    </Link>
+                    </span>
                 </NavbarBrand>
                 <NavbarItem className="md:hidden flex" onClick={() => showDrawer('NavMenu')}>
                     <Bars3Icon className="w-6 h-6 cursor-pointer" />
                 </NavbarItem>
                 <NavbarBrand className="md:hidden flex text-2xl font-bold">
-                    <Link
-                        href="/"
+                    <span className="cursor-pointer"
+                        onClick={() => {
+                            (usePathname() !== "/") ? router.push("/") : router.refresh()
+                        }}
                     >
                         SQ
-                    </Link>
+                    </span>
                 </NavbarBrand>
                 <NavbarItem>
                     <MagnifyingGlassIcon className="flex sm:hidden w-6 h-6" />

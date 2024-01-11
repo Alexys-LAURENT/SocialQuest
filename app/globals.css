@@ -113,3 +113,13 @@ input:-webkit-autofill:active {
 #BadgesWrapper::-webkit-scrollbar {
   display: none;
 }
+
+/* .glow {
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 112, 240, 0.92);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(0, 112, 240, 0.92);
+  box-shadow: 0px 0px 10px 0px rgba(0, 112, 240, 0.92);
+} */
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

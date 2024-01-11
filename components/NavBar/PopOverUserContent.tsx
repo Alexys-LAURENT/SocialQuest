@@ -1,7 +1,7 @@
 import Image from "@/components/Image";
 import { Profile } from "@/app/types/entities";
 import { Progress, Switch } from '@nextui-org/react';
-import { ArrowRightEndOnRectangleIcon, Cog8ToothIcon, CubeIcon, MoonIcon, UserIcon } from "@heroicons/react/24/outline";
+import { ArrowRightEndOnRectangleIcon, Cog8ToothIcon, CubeIcon, MoonIcon, UserIcon, ClipboardDocumentCheckIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 
@@ -34,6 +34,16 @@ const PopOverUserContent = ({ user, customFunction, signOut }: { user: Profile |
                 >
                     <UserIcon className="w-6 h-6" />
                     <div className="">Profil</div>
+                </Link>
+                <Link
+                    href={`/missions`}
+                    className="px-1 py-1 flex gap-2 items-center hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md"
+                    onClick={() =>
+                        customFunction()
+                    }
+                >
+                    <ClipboardDocumentCheckIcon className="w-6 h-6" />
+                    <div className="">Missions</div>
                 </Link>
                 <Link
                     href="/parametres"

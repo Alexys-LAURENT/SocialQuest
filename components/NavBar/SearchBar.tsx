@@ -16,9 +16,9 @@ const SearchBar = () => {
 
     return (
         <Autocomplete
+            aria-label="Rechercher"
             inputProps={{ classNames: { inputWrapper: "h-10" }, startContent: <MagnifyingGlassIcon className="w-5 h-5" /> }}
             classNames={{ selectorButton: "hidden" }}
-            className=""
             selectorIcon={null}
             inputValue={list.filterText}
             isLoading={list.isLoading}
@@ -27,7 +27,7 @@ const SearchBar = () => {
             onInputChange={list.setFilterText}
         >
             {(item: any) => (
-                <AutocompleteItem key={item.name} className="capitalize">
+                <AutocompleteItem aria-label={item.name} key={item.name} className="capitalize">
                     {item.name}
                 </AutocompleteItem>
             )}
