@@ -59,7 +59,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
     }
 
     return activePath !== "/login" ? (
-        <Navbar maxWidth="2xl" className="py-2 bg-bgDark" position="sticky">
+        <Navbar maxWidth="2xl" className="py-2 z-[100001] bg-bgDark" position="sticky">
             <NavbarContent justify="start">
                 <NavbarBrand className="hidden md:flex text-3xl font-bold">
                     <span className="cursor-pointer"
