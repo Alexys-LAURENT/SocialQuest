@@ -7,7 +7,7 @@ import { createClient } from '@/utils/supabase/server'
 import { ConfigProvider } from 'antd';
 import DrawerProvider from './context/DrawerContext';
 import ToasterProvider from './context/ToasterContext';
-
+import DiscussionProvider from './context/DiscussionContext';
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : 'http://localhost:3000'
@@ -44,10 +44,12 @@ export default async function RootLayout({
           <ConfigProvider theme={{ token: { colorBgMask: 'rgba(0, 0, 0, 0.8)', }, }}>
             <ToasterProvider>
               <DrawerProvider user={profile}>
-                <NavBar user={profile} />
-                <main className={`h-screen w-full flex flex-col items-center overflow-y-auto`}>
-                  {children}
-                </main>
+                <DiscussionProvider>
+                  <NavBar user={profile} />
+                  <main className={`h-screen w-full flex flex-col items-center overflow-y-auto`}>
+                    {children}
+                  </main>
+                </DiscussionProvider>
               </DrawerProvider>
             </ToasterProvider>
           </ConfigProvider >
