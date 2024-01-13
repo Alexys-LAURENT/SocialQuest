@@ -13,7 +13,7 @@ export async function getAllDiscussions(userProfil: Profile, user: User) {
 
     const idsDiscussions = await supabase.from('discussions_users').select('id_discussion').eq('id_user', user?.id)
     const ids = idsDiscussions.data!.map((item: any) => item.id_discussion)
-    const discussions = await supabase.from('discussions_users').select('discussions(id_discussion,nom),profiles(id_user, username, avatar_url)').in('id_discussion', ids)
+    const discussions = await supabase.from('discussions_users').select('discussions(id_discussion,nom,is_group,image_url),profiles(id_user, username, avatar_url)').in('id_discussion', ids)
 
 
     // Map pour regrouper les données par id_discussion
@@ -27,6 +27,8 @@ export async function getAllDiscussions(userProfil: Profile, user: User) {
             discussionMap.set(discussionId, {
                 id_discussion: discussionId,
                 nom: item.discussions.nom,
+                is_group: item.discussions.is_group,
+                image_url: item.discussions.image_url,
                 profiles: []
             });
         }
@@ -56,6 +58,8 @@ export async function getAllDiscussions(userProfil: Profile, user: User) {
             item.dernier_message = data![0]
         })
     );
+
+    console.log(resultArray)
 
     return resultArray;
 }

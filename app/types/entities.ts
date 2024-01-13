@@ -41,6 +41,8 @@ export type DiscussionTab = {
 
     id_discussion: string,
     nom: string,
+    is_group: boolean,
+    image_url?: string,
     profiles:
     {
         id_user: string,
@@ -60,4 +62,10 @@ export type Message = {
     id_user: string;
     contenu: string;
     isDeleted: boolean;
+}
+
+export type ProfileInDiscussion = {
+    id_user: string,
+    username: string,
+    avatar_url: string
 }

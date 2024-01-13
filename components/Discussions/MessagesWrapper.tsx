@@ -84,6 +84,17 @@ const MessagesWrapper = () => {
         }
     }
 
+    function getImageUrl() {
+        if (selectedCDiscussion?.is_group && selectedCDiscussion?.image_url) {
+            console.log(selectedCDiscussion?.nom);
+            return selectedCDiscussion?.image_url
+        }
+        if (!selectedCDiscussion?.is_group) {
+            return selectedCDiscussion?.profiles[0]?.avatar_url
+        }
+        return defaultGroup.src
+    }
+
     return (!profileConnected || !selectedCDiscussion) ? (
         <div className={`hidden sm:flex flex-col w-full sm:w-9/12 h-full overflow-hidden `}>
             <div className='w-full h-full flex flex-col items-center '>
@@ -100,13 +111,13 @@ const MessagesWrapper = () => {
 
             <div className='flex sm:flex-col bg-bgDark items-center justify-center w-full h-[50px] sm:h-[100px] gap-2 relative z-[10]'>
                 <ArrowLeftIcon onClick={() => [setMessages(null), setSelectedDiscussion(null), setIsEditingGroup(false)]} className='h-6 w-6 text-white absolute cursor-pointer left-5 block sm:hidden ' />
-                <Avatar src={selectedCDiscussion.profiles.length === 1 ? selectedCDiscussion.profiles[0]?.avatar_url : defaultGroup.src} onClick={() => setIsEditingGroup(true)}
-                    className={`w-8 h-8 sm:h-12 sm:w-12 aspect-square rounded-full ${selectedCDiscussion.profiles.length !== 1 ? 'invert p-1' : ''}`} />
-                <h1 className='text-md font-semibold'>{selectedCDiscussion.profiles.length === 1 ? selectedCDiscussion.profiles[0]?.username : selectedCDiscussion.nom}</h1>
+                <Avatar src={getImageUrl()} onClick={() => { selectedCDiscussion.is_group && setIsEditingGroup(true) }}
+                    className={`w-8 h-8 sm:h-12 sm:w-12 aspect-square rounded-full ${selectedCDiscussion.is_group ? 'invert p-1 cursor-pointer' : ''}`} />
+                <h1 className='text-md font-semibold'>{selectedCDiscussion.is_group ? selectedCDiscussion.nom : selectedCDiscussion.profiles[0]?.username}</h1>
             </div>
             <div className='w-full h-full max-h-[calc(100%-50px)] sm:max-h-[calc(100%-100px)] flex flex-col items-center '>
                 {isEditingGroup ? (
-                    <EditGroup />
+                    <EditGroup profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} />
                 ) : (
                     <>
                         <div id='messages_container' className='w-11/12 h-full overflow-y-auto' onLoad={() => handleScrollLoad()}>
