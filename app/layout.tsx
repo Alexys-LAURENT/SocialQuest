@@ -38,16 +38,16 @@ export default async function RootLayout({
 
 
   return (
-    <html lang="en" className={`${GeistSans.className} dark`} >
+    <html lang="en" className={`${GeistSans.className} dark overflow-hidden`} >
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta>
-      <body className='bg-bgDark dark:bg-bgDark overflow-x-hidden' >
+      <body className='bg-bgDark dark:bg-bgDark overflow-x-hidden h-screen' >
         <Providers>
           <ConfigProvider theme={{ token: { colorBgMask: 'rgba(0, 0, 0, 0.8)', }, }}>
             <ToasterProvider>
               <DrawerProvider user={profile}>
                 <DiscussionProvider>
                   <NavBar user={profile} />
-                  <main className={`h-screen w-full flex flex-col items-center overflow-y-auto`}>
+                  <main className={`h-full w-full flex flex-col items-center overflow-y-auto`}>
                     {children}
                   </main>
                 </DiscussionProvider>

@@ -16,7 +16,6 @@ export default function Post({ user, post }: { user: Profile, post: ExtendedPost
     const supabase = createClient()
 
     const handleDelete = (id: string) => {
-        console.log(id);
         supabase.from('posts').delete().eq('id_post', id).then(({ data, error }) => {
             if (error) {
                 console.error(error);

@@ -66,7 +66,7 @@ export default function Login({
   }
 
   return (
-    <div className="flex-1 flex flex-col w-full px-8 justify-center gap-2">
+    <div className="min-h-screen flex-1 flex flex-col w-full px-8 justify-center gap-2">
       <div className="py-8 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover text-sm">
         <Link
           href="/"

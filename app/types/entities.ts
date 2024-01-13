@@ -43,10 +43,11 @@ export type DiscussionTab = {
     nom: string,
     profiles:
     {
+        id_user: string,
         username: string,
-        avatar_url: string
+        avatar_url?: string
     }[],
-    dernier_message: {
+    dernier_message?: {
         contenu: string,
         created_at: string
     }

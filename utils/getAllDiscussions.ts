@@ -12,11 +12,8 @@ export async function getAllDiscussions(userProfil: Profile, user: User) {
     const supabase = createClient(cookieStore)
 
     const idsDiscussions = await supabase.from('discussions_users').select('id_discussion').eq('id_user', user?.id)
-    // console.log(idsDiscussions);
     const ids = idsDiscussions.data!.map((item: any) => item.id_discussion)
-    // console.log(ids);
-    const discussions = await supabase.from('discussions_users').select('discussions(id_discussion,nom),profiles(username, avatar_url)').in('id_discussion', ids)
-    console.log(discussions);
+    const discussions = await supabase.from('discussions_users').select('discussions(id_discussion,nom),profiles(id_user, username, avatar_url)').in('id_discussion', ids)
 
 
     // Map pour regrouper les données par id_discussion
@@ -37,6 +34,7 @@ export async function getAllDiscussions(userProfil: Profile, user: User) {
         // Ajouter le profil à la liste des profils de la discussion
         if (item.profiles.username !== userProfil.username) {
             discussionMap.get(discussionId).profiles.push({
+                id_user: item.profiles.id_user,
                 username: item.profiles.username,
                 avatar_url: item.profiles.avatar_url
             });
@@ -45,7 +43,6 @@ export async function getAllDiscussions(userProfil: Profile, user: User) {
 
     // Résultat sous forme de tableau d'objets
     const resultArray = Array.from(discussionMap.values());
-    console.log(resultArray);
 
     await Promise.all(
         resultArray.map(async (item: any) => {
@@ -59,7 +56,6 @@ export async function getAllDiscussions(userProfil: Profile, user: User) {
             item.dernier_message = data![0]
         })
     );
-    console.log(resultArray);
 
     return resultArray;
 }

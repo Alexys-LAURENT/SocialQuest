@@ -22,14 +22,18 @@
 
 * {
   outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-input,
-textarea,
-button,
-select,
-a {
-  -webkit-tap-highlight-color: transparent;
+.working-break-words {
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+  text-overflow: unset;
+}
+
+div[id*=":"][id*=":"] {
+  z-index: 5 !important;
 }
 
 .correctOutlineNone {

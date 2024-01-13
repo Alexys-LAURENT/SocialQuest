@@ -19,19 +19,18 @@ const page = async () => {
 
     const discussions = await getAllDiscussions(userProfil, user!)
 
-    const test = async () => {
+    const refetchDiscussions = async () => {
         "use server"
         return await getAllDiscussions(userProfil, user!)
     }
 
-    console.log(discussions);
 
     return (
-        <div className="h-full w-full flex flex-col overflow-y-auto overflow-x-hidden items-center">
+        <div className="h-full w-full flex flex-col overflow-hidden items-center">
 
             <div className="relative w-full h-[100%] max-w-[1280px] bg-red-100/0 flex">
 
-                <ListDiscussions test={test} initDiscussions={discussions as unknown as DiscussionTab[]} />
+                <ListDiscussions refetchDiscussions={refetchDiscussions} initDiscussions={discussions as unknown as DiscussionTab[]} />
 
                 <MessagesWrapper />
 

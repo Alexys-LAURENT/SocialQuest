@@ -3,7 +3,7 @@ import Link from "next/link";
 import SearchBar from "@/components/NavBar/SearchBar";
 import PopoverUser from "@/components/NavBar/PopoverUser";
 import PopoverNotifications from "@/components/NavBar/PopoverNotifications";
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, use } from "react";
 import { Profile } from "@/app/types/entities";
 import { Button } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
@@ -29,24 +29,24 @@ const NavBar = ({ user }: { user: Profile | null }) => {
     )
 
     const signOut = async () => {
-        console.log("signOut");
         const { error } = await supabase.auth.signOut();
         if (error) {
             console.error(error);
             return;
         }
-        window.location.reload();
+        router.push("/")
+        router.refresh()
     }
 
-    useEffect(() => {
-        if (activePath === "/login") {
-            document.getElementsByTagName("main")[0].classList.remove("h-[calc(100vh-5rem)]");
-            document.getElementsByTagName("main")[0].classList.add("h-screen");
-        } else {
-            document.getElementsByTagName("main")[0].classList.remove("h-screen");
-            document.getElementsByTagName("main")[0].classList.add("h-[calc(100vh-5rem)]");
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (activePath === "/login") {
+    //         document.getElementsByTagName("main")[0].classList.remove("h-[calc(100vh-5rem)]");
+    //         document.getElementsByTagName("main")[0].classList.add("h-screen");
+    //     } else {
+    //         document.getElementsByTagName("main")[0].classList.remove("h-screen");
+    //         document.getElementsByTagName("main")[0].classList.add("h-[calc(100vh-5rem)]");
+    //     }
+    // }, []);
 
     const formatCount = (count: number) => {
         if (count >= 1000000) {
@@ -59,7 +59,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
     }
 
     return activePath !== "/login" ? (
-        <Navbar maxWidth="2xl" className="py-2 z-[100001] bg-bgDark" position="sticky">
+        <Navbar maxWidth="2xl" className="py-2 bg-bgDark" position="sticky">
             <NavbarContent justify="start">
                 <NavbarBrand className="hidden md:flex text-3xl font-bold">
                     <span className="cursor-pointer"
@@ -70,13 +70,13 @@ const NavBar = ({ user }: { user: Profile | null }) => {
                         SOCIAL QUEST
                     </span>
                 </NavbarBrand>
-                <NavbarItem className="md:hidden flex" onClick={() => showDrawer('NavMenu')}>
+                <NavbarItem className="flex md:hidden" onClick={() => showDrawer('NavMenu')}>
                     <Bars3Icon className="w-6 h-6 cursor-pointer" />
                 </NavbarItem>
                 <NavbarBrand className="md:hidden flex text-2xl font-bold">
                     <span className="cursor-pointer"
                         onClick={() => {
-                            (usePathname() !== "/") ? router.push("/") : router.refresh()
+                            (pathName !== "/") ? router.push("/") : router.refresh()
                         }}
                     >
                         SQ
