@@ -43,6 +43,7 @@ export type DiscussionTab = {
     nom: string,
     is_group: boolean,
     image_url?: string,
+    created_by: string,
     profiles:
     {
         id_user: string,

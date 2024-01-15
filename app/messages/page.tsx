@@ -1,9 +1,4 @@
 import React from 'react';
-
-import { cookies } from 'next/headers'
-import { createClient } from '@/utils/supabase/server'
-
-
 import ListDiscussions from '@/components/Discussions/ListDiscussions';
 import MessagesWrapper from '@/components/Discussions/MessagesWrapper';
 import { getAllDiscussions } from '@/utils/getAllDiscussions';
@@ -11,9 +6,6 @@ import { DiscussionTab } from '../types/entities';
 import { getUserConnected } from '@/utils/getUserConnected';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 const page = async () => {
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
-
     const user = await getUserConnected()
     const userProfil = await getProfileConnected(user)
 

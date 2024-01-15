@@ -1,6 +1,6 @@
 "use client"
 import { Profile } from '@/app/types/entities';
-import React, { use, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { DiscussionContext } from '../../app/context/DiscussionContext';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { createClient } from '@/utils/supabase/client';
@@ -86,7 +86,6 @@ const MessagesWrapper = () => {
 
     function getImageUrl() {
         if (selectedCDiscussion?.is_group && selectedCDiscussion?.image_url) {
-            console.log(selectedCDiscussion?.nom);
             return selectedCDiscussion?.image_url
         }
         if (!selectedCDiscussion?.is_group) {
@@ -111,8 +110,8 @@ const MessagesWrapper = () => {
 
             <div className='flex sm:flex-col bg-bgDark items-center justify-center w-full h-[50px] sm:h-[100px] gap-2 relative z-[10]'>
                 <ArrowLeftIcon onClick={() => [setMessages(null), setSelectedDiscussion(null), setIsEditingGroup(false)]} className='h-6 w-6 text-white absolute cursor-pointer left-5 block sm:hidden ' />
-                <Avatar src={getImageUrl()} onClick={() => { selectedCDiscussion.is_group && setIsEditingGroup(true) }}
-                    className={`w-8 h-8 sm:h-12 sm:w-12 aspect-square rounded-full ${selectedCDiscussion.is_group ? 'invert p-1 cursor-pointer' : ''}`} />
+                <Avatar src={getImageUrl()} onClick={() => { selectedCDiscussion.is_group && profileConnected.id_user === selectedCDiscussion.created_by && setIsEditingGroup(true) }}
+                    className={`w-8 h-8 sm:h-12 sm:w-12 aspect-square rounded-full ${selectedCDiscussion.is_group ? 'invert p-1' : ''} ${selectedCDiscussion.is_group && profileConnected.id_user === selectedCDiscussion.created_by ? "cursor-pointer" : ""} `} />
                 <h1 className='text-md font-semibold'>{selectedCDiscussion.is_group ? selectedCDiscussion.nom : selectedCDiscussion.profiles[0]?.username}</h1>
             </div>
             <div className='w-full h-full max-h-[calc(100%-50px)] sm:max-h-[calc(100%-100px)] flex flex-col items-center '>

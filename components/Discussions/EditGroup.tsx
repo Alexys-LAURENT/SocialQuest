@@ -1,30 +1,31 @@
 import { DiscussionTab, Profile, ProfileInDiscussion } from '@/app/types/entities';
-import { Card, CardBody, Input, Avatar, Button, Tabs, Tab } from '@nextui-org/react';
-import React, { useEffect } from 'react';
+import { Card, CardBody, Input, Avatar, Button, Tabs, Tab, Listbox, ListboxItem, Chip } from '@nextui-org/react';
+import React, { useContext, useEffect, useState } from 'react';
 import defaultGroup from '@/public/assets/defaultGroup.svg'
 import { TrashIcon } from '@heroicons/react/24/outline';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
+import { Modal, ModalContent, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
 import { createClient } from '@/utils/supabase/client';
-
+import { DiscussionContext } from '@/app/context/DiscussionContext';
 
 const EditGroup = ({ profileConnected, selectedCDiscussion }: {
     profileConnected: Profile, selectedCDiscussion: DiscussionTab
 }) => {
     const [inputValue, setInputValue] = React.useState<string>(selectedCDiscussion.nom)
-    const [usersToDelete, setUsersToDelete] = React.useState<ProfileInDiscussion[]>([])
-    const [usersToAdd, setUsersToAdd] = React.useState<ProfileInDiscussion[]>([])
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { removeUserFromSelectedDiscussion, updateCurrentSelectedDiscussion } = useContext(DiscussionContext)
+
+
     return (
         <div className='w-full h-full flex flex-col items-center'>
-            <ModalComponent isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange} />
+            <ModalComponent isOpen={isOpen} onOpenChange={onOpenChange} defaultsProfiles={selectedCDiscussion.profiles as ProfileInDiscussion[]} profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} />
             <Tabs aria-label="Options" className=''>
                 <Tab key="Général" title="Général" className='w-full flex justify-center'>
-                    <Card className='w-11/12 min-h-[500px]'>
+                    <Card className='w-11/12 min-h-[100px]'>
                         <CardBody className='justify-between'>
                             <div>
 
                                 <div className='w-full py-4 h-auto flex justify-center items-center'>
-                                    <Avatar className='w-14 h-14 sm:w-24 sm:h-24' src={selectedCDiscussion.image_url ? selectedCDiscussion.image_url : defaultGroup.src} />
+                                    <Avatar className={`w-14 h-14 sm:w-24 sm:h-24 ${!selectedCDiscussion.image_url && "invert"}`} src={selectedCDiscussion.image_url ? selectedCDiscussion.image_url : defaultGroup.src} />
                                 </div>
                                 <Input
                                     label='Nom du groupe'
@@ -39,9 +40,9 @@ const EditGroup = ({ profileConnected, selectedCDiscussion }: {
 
                             <div>
 
-                                <div className='flex w-full gap-3 justify-end mb-6'>
+                                <div className='flex w-full gap-3 justify-end my-6'>
                                     <Button className='w-fit h-full bg-darkSecondary p-3 text-xs sm:text-base'>Annuler</Button>
-                                    <Button className='w-fit h-full bg-blue-500 p-3 text-xs sm:text-base'>Enregister</Button>
+                                    <Button className='w-fit h-full bg-blue-500 p-3 text-xs sm:text-base' isDisabled={inputValue.length === 0} onClick={() => updateCurrentSelectedDiscussion(inputValue)}>Enregister</Button>
                                 </div>
 
 
@@ -57,7 +58,7 @@ const EditGroup = ({ profileConnected, selectedCDiscussion }: {
                     </Card>
                 </Tab>
                 <Tab key="Membres" title="Membres" className='w-full flex justify-center'>
-                    <Card className='w-11/12 min-h-[500px]'>
+                    <Card className='w-11/12 overflow-y-auto max-h-[500px]'>
                         <CardBody className='gap-3'>
                             <Card className='min-h-[50px] sm:min-h-[64px]'>
                                 <CardBody className='flex flex-row items-center gap-3'> <Avatar className='w-6 h-6 aspect-auto sm:w-10 sm:h-10' src={profileConnected.avatar_url} />
@@ -73,7 +74,7 @@ const EditGroup = ({ profileConnected, selectedCDiscussion }: {
                                                 <span className='text-xs sm:text-base'>{profile.username}</span>
                                             </div>
                                             <div className='flex flex-row items-center'>
-                                                <TrashIcon className='h-6 w-6 text-red-500 cursor-pointer' />
+                                                <TrashIcon onClick={() => removeUserFromSelectedDiscussion(profile.id_user)} className='h-6 w-6 text-red-500 cursor-pointer' />
                                             </div>
                                         </CardBody>
                                     </Card>
@@ -103,15 +104,19 @@ export default EditGroup;
 
 
 
-const ModalComponent = ({ onOpen, isOpen, onOpenChange }: { onOpen: () => void, isOpen: boolean, onOpenChange: (open: boolean) => void }) => {
-
+const ModalComponent = ({ isOpen, onOpenChange, defaultsProfiles, profileConnected, selectedCDiscussion }: { isOpen: boolean, onOpenChange: (open: boolean) => void, defaultsProfiles: ProfileInDiscussion[], profileConnected: Profile, selectedCDiscussion: DiscussionTab }) => {
     const supabase = createClient()
-    const [users, setUsers] = React.useState<Profile[]>([])
+    const [users, setUsers] = useState<Profile[]>([])
+    const profilesUsernames = defaultsProfiles.map((profile) => profile.username).join(',')
+    const [selectedKeys, setSelectedKeys] = React.useState<React.Key[]>([]);
+    const { addUsersToSelectedDiscussion } = useContext(DiscussionContext)
+
     useEffect(() => {
         const getUsers = async () => {
             const { data, error } = await supabase
                 .from('profiles')
                 .select('*')
+                .not('username', 'in', `(${profilesUsernames},${profileConnected.username})`)
             if (data) {
                 setUsers(data)
             }
@@ -120,7 +125,8 @@ const ModalComponent = ({ onOpen, isOpen, onOpenChange }: { onOpen: () => void, 
             }
         }
         getUsers()
-    }, [])
+        setSelectedKeys([])
+    }, [selectedCDiscussion])
 
     return (
         <>
@@ -130,26 +136,66 @@ const ModalComponent = ({ onOpen, isOpen, onOpenChange }: { onOpen: () => void, 
                         <>
                             <ModalBody>
                                 <Input placeholder='Rechercher un utilisateur' />
-                                {users.map((user) => (
-                                    <Card key={user.id_user} className='min-h-[50px] sm:min-h-[64px]'>
-                                        <CardBody className='flex flex-row items-center justify-between'>
+
+                                <Card>
+                                    <CardBody>
+                                        {
+                                            Array.from(selectedKeys).map((key) => users.find((user) => user.id_user === key)).length === 0
+                                                ?
+                                                <Chip
+                                                    key={`Chip-empty`}
+                                                    variant="flat"
+                                                    className='opacity-20'
+                                                >
+                                                    Aucun utilisateur selectionné
+                                                </Chip>
+                                                :
+                                                Array.from(selectedKeys).map((key) => users.find((user) => user.id_user === key)).map((user) => (
+                                                    <Chip
+                                                        key={`Chip-${user!.id_user}`}
+                                                        variant="flat"
+                                                        avatar={
+                                                            <Avatar
+                                                                src={user!.avatar_url}
+                                                            />
+                                                        }
+                                                    >
+                                                        {user!.username}
+                                                    </Chip>
+                                                ))
+                                        }
+                                    </CardBody>
+                                </Card>
+                                <Listbox
+                                    aria-label="Multiple selection example"
+                                    variant="flat"
+                                    disallowEmptySelection={false}
+                                    selectionMode="multiple"
+                                    items={users}
+                                    onSelectionChange={(keys) => setSelectedKeys(keys as unknown as React.Key[])}
+                                    selectedKeys={selectedKeys}
+                                >
+                                    {(item) => item && (
+                                        <ListboxItem key={item.id_user}>
+
                                             <div className='flex flex-row items-center gap-3 '>
-                                                <Avatar className='w-6 h-6 aspect-auto sm:w-10 sm:h-10' src={user.avatar_url} />
-                                                <span className='text-xs sm:text-base'>{user.username}</span>
+                                                <Avatar className='w-6 h-6 aspect-auto sm:w-10 sm:h-10' src={item.avatar_url} />
+                                                <span className='text-xs sm:text-base'>{item.username}</span>
                                             </div>
-                                            <div className='flex flex-row items-center'>
-                                                <TrashIcon className='h-6 w-6 text-red-500 cursor-pointer' />
-                                            </div>
-                                        </CardBody>
-                                    </Card>
-                                ))}
+
+                                        </ListboxItem>
+
+                                    )}
+                                </Listbox>
 
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="danger" variant="light" onPress={onClose}>
+                                <Button color="danger" variant="light" onPress={onClose} onClick={() => setSelectedKeys([])}>
                                     Annuler
                                 </Button>
-                                <Button color="primary" onPress={onClose}>
+                                <Button color="primary" onPress={onClose} onClick={() => addUsersToSelectedDiscussion(Array.from(selectedKeys) as string[])}
+                                    isDisabled={Array.from(selectedKeys).map((key) => users.find((user) => user.id_user === key)).length === 0}
+                                    className={`${Array.from(selectedKeys).map((key) => users.find((user) => user.id_user === key)).length === 0 && "hover:select-none bg-gray-800"}`}>
                                     Valider
                                 </Button>
                             </ModalFooter>

@@ -1,7 +1,7 @@
 "use client"
 import React, { useContext, useEffect } from 'react';
 import { Card, CardBody, Button, Avatar } from '@nextui-org/react';
-import { DiscussionTab, Profile } from '@/app/types/entities';
+import { DiscussionTab } from '@/app/types/entities';
 import { DiscussionContext } from '@/app/context/DiscussionContext';
 import { createClient } from '@/utils/supabase/client';
 import defaultGroup from '@/public/assets/defaultGroup.svg'
@@ -37,14 +37,20 @@ const ListDiscussions = ({ initDiscussions, refetchDiscussions }: { initDiscussi
         setDiscussions(refresh)
     }
 
+    useEffect(() => {
+        refetchDiscussions2()
+    }
+        , [selectedCDiscussion])
+
+
     return discussions && (
         <div className={`${selectedCDiscussion ? 'hidden sm:flex' : ' flex '} w-full sm:w-3/12 min-w-[200px] h-full border-e-2 border-white/20 no-scrollbar  flex-col flex-nowrap overflow-y-auto gap-4 pb-3 px-3`}>
-            {discussions.map((item: any, index: number) => (
+            {discussions.map((item: DiscussionTab, index: number) => (
                 <Card key={index} className={`rounded-md min-h-[55px] ${selectedCDiscussion?.id_discussion === item?.id_discussion ? 'bg-gradient-to-tl from-[#D4781A] to-[#AA3678]' : ''} `}>
                     <CardBody className='flex-row p-0' >
                         <Button onClick={() => [setIsEditingGroup(false), setSelectedDiscussion(item)]} className='w-full h-full p-2 bg-transparent flex justify-start'>
                             <div className='aspect-square max-w-[40px] min-w-[40px] flex'>
-                                {item?.profiles.length === 1 ?
+                                {item?.is_group === false ?
                                     <Avatar src={item?.profiles[0].avatar_url} className='h-10 w-10 aspect-square rounded-full' />
                                     :
                                     <Avatar src={defaultGroup.src} className='h-10 w-10 p-1 aspect-square rounded-full invert bg-contain' />
@@ -52,7 +58,7 @@ const ListDiscussions = ({ initDiscussions, refetchDiscussions }: { initDiscussi
                             </div>
                             <div className=' w-full overflow-hidden flex flex-col bg-green-300/0 h-full items-start'>
                                 <h1 className='text-md font-semibold'>
-                                    {item?.profiles.length === 1 ?
+                                    {item?.is_group === false ?
                                         item?.profiles[0].username
                                         :
                                         item.nom
