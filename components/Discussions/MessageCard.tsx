@@ -5,6 +5,7 @@ import { Avatar, Tooltip } from '@nextui-org/react';
 import { Popconfirm } from 'antd';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import Link from 'next/link';
 
 const MessageCard = ({ index, item, profileConnected, selectedCDiscussion, tooltipDeleteOpen, setTooltipDeleteOpen, tooltipUserOpen, setTooltipUserOpen, tooltipOthersOpen, setTooltipOthersOpen, prevMessage, nextMessage }: { index: number, item: Message, profileConnected: Profile, selectedCDiscussion: DiscussionTab, tooltipDeleteOpen: { open: boolean, key: string }, setTooltipDeleteOpen: React.Dispatch<React.SetStateAction<{ open: boolean, key: string }>>, tooltipUserOpen: { open: boolean, key: string }, setTooltipUserOpen: React.Dispatch<React.SetStateAction<{ open: boolean, key: string }>>, nextMessage: { id_user?: string, timestamp?: string }, prevMessage: { id_user?: string, timestamp?: string }, tooltipOthersOpen: { open: boolean, key: string }, setTooltipOthersOpen: React.Dispatch<React.SetStateAction<{ open: boolean, key: string }>> }) => {
 
@@ -83,10 +84,11 @@ const MessageCard = ({ index, item, profileConnected, selectedCDiscussion, toolt
     }
 
     return (
-        <div key={item.id_message} className={`w-full min-h-[40px] flex justify-start ${item.id_user === profileConnected?.id_user ? "flex-row-reverse" : "flex-row"} gap-3 px-1 ${(prevMessage.id_user !== item.id_user) ? "pt-3" : "pt-[1.5px]"} ${(nextMessage.id_user !== item.id_user) ? "pb-3" : "pb-[1.5px]"}`}>
+        <div key={item.id_message} className={`w-full min-h-[40px] pe-2 flex justify-start ${item.id_user === profileConnected?.id_user ? "flex-row-reverse" : "flex-row"} gap-3 px-1 ${(prevMessage.id_user !== item.id_user) ? "pt-3" : "pt-[1.5px]"} ${(nextMessage.id_user !== item.id_user) ? "pb-3" : "pb-[1.5px]"}`}>
             {prevMessage.id_user !== item.id_user ? (
-                <Tooltip placement='bottom' updatePositionDeps={[scrollPosition]} key={generateKeyTooltipUser(index, item.id_user)} isOpen={isMobile === true ? tooltipUserOpen.key === generateKeyTooltipUser(index, item.id_user) ? tooltipUserOpen.open : false : undefined} content={item.id_user === profileConnected?.id_user ? "Vous" : selectedCDiscussion.profiles.find(profile => profile.id_user === item.id_user)?.username}>
-                    <Avatar onClick={() => isMobile && handleToggleTooltipUser()}
+                <Tooltip className='hidden sm:flex' placement='bottom' updatePositionDeps={[scrollPosition]} key={generateKeyTooltipUser(index, item.id_user)} isOpen={isMobile === true ? tooltipUserOpen.key === generateKeyTooltipUser(index, item.id_user) ? tooltipUserOpen.open : false : undefined} content={item.id_user === profileConnected?.id_user ? "Vous" : selectedCDiscussion.profiles.find(profile => profile.id_user === item.id_user)?.username}>
+                    <Avatar as={Link} onClick={() => isMobile && handleToggleTooltipUser()}
+                        href={`/${item.profiles?.username}`}
                         src={item.id_user === profileConnected?.id_user ? profileConnected!.avatar_url : selectedCDiscussion.profiles.find(profile => profile.id_user === item.id_user)?.avatar_url} className='min-h-[2rem] min-w-[2rem] max-h-[2rem] max-w-[2rem] aspect-square rounded-full' />
                 </Tooltip>
             ) : (
@@ -98,7 +100,7 @@ const MessageCard = ({ index, item, profileConnected, selectedCDiscussion, toolt
                     <>
                         {
                             item.isDeleted === false ? (
-                                <div className="w-full flex flex-col items-end gap-1 min-h-full">
+                                <div className="w-full flex flex-col items-end gap-1 min-h-[40px]">
                                     <Tooltip updatePositionDeps={[scrollPosition]} key={generateKeyTooltipMessage(index, item.id_message)} content={<MessagePopup isMobile={isMobile} setIsMobile={setIsMobile} handleToggleTooltipDelete={handleToggleTooltipDelete} id_message={item.id_message} setTooltipDeleteOpen={setTooltipDeleteOpen} timestamp={item.created_at} />} isOpen={isMobile === true ? tooltipDeleteOpen.key === generateKeyTooltipMessage(index, item.id_message) ? tooltipDeleteOpen.open : false : undefined} placement='left'>
                                         <div onClick={() => isMobile && handleToggleTooltipDelete()}
                                             className={`max-w-[65%] sm:max-w-[70%] relative flex items-center w-fit h-full px-3 py-2 bg-gradient-to-tl from-[#D4781A] to-[#AA3678] rounded-lg ${prevMessage.id_user === item.id_user ? "rounded-tr-none" : ""} ${nextMessage.id_user === item.id_user ? "rounded-br-none" : ""}`}>
@@ -107,10 +109,10 @@ const MessageCard = ({ index, item, profileConnected, selectedCDiscussion, toolt
                                     </Tooltip>
                                 </div>
                             ) : (
-                                <div className="w-full flex flex-col items-end gap-1 min-h-full">
+                                <div className="w-full flex flex-col items-end gap-1 min-h-[40px]">
                                     <Tooltip updatePositionDeps={[scrollPosition]} key={generateKeyTooltipMessage(index, item.id_message)} content={<MessagePopupOthers isMobile={isMobile} setIsMobile={setIsMobile} setTooltipOthersOpen={setTooltipOthersOpen} timestamp={item.created_at} />} isOpen={isMobile === true ? tooltipOthersOpen.key === generateKeyTooltipMessage(index, item.id_message) ? tooltipOthersOpen.open : false : undefined} placement='left'>
                                         <div onClick={() => isMobile && handleToggleTooltipOthers()}
-                                            className={`max-w-[65%] sm:max-w-[70%] relative w-fit h-full px-3 py-2 bg-darkSecondary rounded-lg ${prevMessage.id_user === item.id_user ? "rounded-tr-none" : ""} ${nextMessage.id_user === item.id_user ? "rounded-br-none" : ""}`}>
+                                            className={`max-w-[65%] sm:max-w-[70%] relative flex items-center w-fit h-full px-3 py-2 bg-darkSecondary rounded-lg ${prevMessage.id_user === item.id_user ? "rounded-tr-none" : ""} ${nextMessage.id_user === item.id_user ? "rounded-br-none" : ""}`}>
                                             <p className='select-text text-textLight working-break-words italic text-xs sm:text-sm'>{item.contenu}</p>
                                         </div>
                                     </Tooltip>
@@ -124,19 +126,19 @@ const MessageCard = ({ index, item, profileConnected, selectedCDiscussion, toolt
                     <>
                         {
                             item.isDeleted === false ? (
-                                <div className="w-full flex flex-col items-start gap-1 min-h-full">
+                                <div className="w-full flex flex-col items-start gap-1 min-h-[40px]">
                                     <Tooltip updatePositionDeps={[scrollPosition]} key={generateKeyTooltipMessage(index, item.id_message)} content={<MessagePopupOthers isMobile={isMobile} setIsMobile={setIsMobile} setTooltipOthersOpen={setTooltipOthersOpen} timestamp={item.created_at} />} isOpen={isMobile === true ? tooltipOthersOpen.key === generateKeyTooltipMessage(index, item.id_message) ? tooltipOthersOpen.open : false : undefined} placement='right'>
                                         <div onClick={() => isMobile && handleToggleTooltipOthers()}
-                                            className={`max-w-[65%] sm:max-w-[70%] relative w-fit h-full px-3 py-2 bg-textLight rounded-lg ${prevMessage.id_user === item.id_user ? "rounded-tl-none" : ""} ${nextMessage.id_user === item.id_user ? "rounded-bl-none" : ""}`}>
+                                            className={`max-w-[65%] sm:max-w-[70%] relative flex items-center w-fit h-full px-3 py-2 bg-textLight rounded-lg ${prevMessage.id_user === item.id_user ? "rounded-tl-none" : ""} ${nextMessage.id_user === item.id_user ? "rounded-bl-none" : ""}`}>
                                             <p className='select-text text-black working-break-words text-sm sm:text-base'>{item.contenu}</p>
                                         </div>
                                     </Tooltip>
                                 </div>
                             ) : (
-                                <div className="w-full flex flex-col items-start gap-1 min-h-full">
+                                <div className="w-full flex flex-col items-start gap-1 min-h-[40px]">
                                     <Tooltip updatePositionDeps={[scrollPosition]} key={generateKeyTooltipMessage(index, item.id_message)} content={<MessagePopupOthers isMobile={isMobile} setIsMobile={setIsMobile} setTooltipOthersOpen={setTooltipOthersOpen} timestamp={item.created_at} />} isOpen={isMobile === true ? tooltipOthersOpen.key === generateKeyTooltipMessage(index, item.id_message) ? tooltipOthersOpen.open : false : undefined} placement='right'>
                                         <div onClick={() => isMobile && handleToggleTooltipOthers()}
-                                            className={`max-w-[65%] sm:max-w-[70%] relative w-fit h-full px-3 py-2 bg-darkSecondary rounded-lg ${prevMessage.id_user === item.id_user ? "rounded-tl-none" : ""} ${nextMessage.id_user === item.id_user ? "rounded-bl-none" : ""}`}>
+                                            className={`max-w-[65%] sm:max-w-[70%] relative flex items-center w-fit h-full px-3 py-2 bg-darkSecondary rounded-lg ${prevMessage.id_user === item.id_user ? "rounded-tl-none" : ""} ${nextMessage.id_user === item.id_user ? "rounded-bl-none" : ""}`}>
                                             <p className='select-text text-textLight working-break-words italic text-xs sm:text-sm'>{item.contenu}</p>
                                         </div>
                                     </Tooltip>

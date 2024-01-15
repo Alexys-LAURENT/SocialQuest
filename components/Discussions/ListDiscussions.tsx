@@ -8,7 +8,7 @@ import defaultGroup from '@/public/assets/defaultGroup.svg'
 
 const ListDiscussions = ({ initDiscussions, refetchDiscussions }: { initDiscussions: DiscussionTab[], refetchDiscussions: any }) => {
     const [discussions, setDiscussions] = React.useState<DiscussionTab[] | null>(initDiscussions);
-    const { selectedCDiscussion, setSelectedDiscussion, isEditingGroup, setIsEditingGroup } = useContext(DiscussionContext);
+    const { selectedCDiscussion, setSelectedDiscussion, setIsEditingGroup, setComponentReloaded } = useContext(DiscussionContext);
     const supabase = createClient()
 
 
@@ -48,7 +48,7 @@ const ListDiscussions = ({ initDiscussions, refetchDiscussions }: { initDiscussi
             {discussions.map((item: DiscussionTab, index: number) => (
                 <Card key={index} className={`rounded-md min-h-[55px] ${selectedCDiscussion?.id_discussion === item?.id_discussion ? 'bg-gradient-to-tl from-[#D4781A] to-[#AA3678]' : ''} `}>
                     <CardBody className='flex-row p-0' >
-                        <Button onClick={() => [setIsEditingGroup(false), setSelectedDiscussion(item)]} className='w-full h-full p-2 bg-transparent flex justify-start'>
+                        <Button onClick={() => [setIsEditingGroup(false), setComponentReloaded(true), setSelectedDiscussion(item)]} className='w-full h-full p-2 bg-transparent flex justify-start'>
                             <div className='aspect-square max-w-[40px] min-w-[40px] flex'>
                                 {item?.is_group === false ?
                                     <Avatar src={item?.profiles[0].avatar_url} className='h-10 w-10 aspect-square rounded-full' />

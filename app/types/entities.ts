@@ -58,11 +58,14 @@ export type DiscussionTab = {
 }
 
 export type Message = {
-    id_message: string;
-    created_at: string;
-    id_user: string;
-    contenu: string;
-    isDeleted: boolean;
+    id_message: string,
+    created_at: string,
+    id_user: string,
+    contenu: string,
+    isDeleted: boolean,
+    profiles: {
+        username: string
+    }
 }
 
 export type ProfileInDiscussion = {

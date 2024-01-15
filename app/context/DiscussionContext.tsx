@@ -11,6 +11,8 @@ export const DiscussionContext = createContext<{
     setSelectedDiscussion: (conversation: DiscussionTab | null) => void,
     isEditingGroup: boolean,
     setIsEditingGroup: (isEditingGroup: boolean) => void,
+    componentReloaded: boolean,
+    setComponentReloaded: (componentReloaded: boolean) => void,
     addUsersToSelectedDiscussion: (ids: string[]) => Promise<void>,
     removeUserFromSelectedDiscussion: (id: string) => Promise<void>,
     updateCurrentSelectedDiscussion: (nom: string) => Promise<void>
@@ -19,6 +21,8 @@ export const DiscussionContext = createContext<{
     setSelectedDiscussion: (conversation: DiscussionTab | null) => { },
     isEditingGroup: false,
     setIsEditingGroup: (isEditingGroup: boolean) => { },
+    componentReloaded: true,
+    setComponentReloaded: (componentReloaded: boolean) => { },
     addUsersToSelectedDiscussion: (ids: string[]) => Promise.resolve(),
     removeUserFromSelectedDiscussion: (id: string) => Promise.resolve(),
     updateCurrentSelectedDiscussion: (nom: string) => Promise.resolve()
@@ -27,6 +31,7 @@ export const DiscussionContext = createContext<{
 const DiscussionProvider = ({ children }: { children: React.ReactNode }) => {
     const [selectedCDiscussion, setSelectedDiscussion] = useState<DiscussionTab | null>(null);
     const [isEditingGroup, setIsEditingGroup] = useState<boolean>(false)
+    const [componentReloaded, setComponentReloaded] = useState<boolean>(true)
     const { success, error: toasterError } = useContext(ToasterContext)
     const router = useRouter()
     const supabase = createClient()
@@ -84,7 +89,7 @@ const DiscussionProvider = ({ children }: { children: React.ReactNode }) => {
 
 
     return (
-        <DiscussionContext.Provider value={{ selectedCDiscussion, setSelectedDiscussion, isEditingGroup, setIsEditingGroup, addUsersToSelectedDiscussion, removeUserFromSelectedDiscussion, updateCurrentSelectedDiscussion }}>
+        <DiscussionContext.Provider value={{ selectedCDiscussion, setSelectedDiscussion, isEditingGroup, setIsEditingGroup, addUsersToSelectedDiscussion, removeUserFromSelectedDiscussion, updateCurrentSelectedDiscussion, componentReloaded, setComponentReloaded }}>
             {children}
         </DiscussionContext.Provider>
     )

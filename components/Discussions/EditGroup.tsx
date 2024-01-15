@@ -2,13 +2,13 @@ import { DiscussionTab, Profile, ProfileInDiscussion } from '@/app/types/entitie
 import { Card, CardBody, Input, Avatar, Button, Tabs, Tab, Listbox, ListboxItem, Chip } from '@nextui-org/react';
 import React, { useContext, useEffect, useState } from 'react';
 import defaultGroup from '@/public/assets/defaultGroup.svg'
-import { TrashIcon } from '@heroicons/react/24/outline';
+import { TrashIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Modal, ModalContent, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
 import { createClient } from '@/utils/supabase/client';
 import { DiscussionContext } from '@/app/context/DiscussionContext';
 
-const EditGroup = ({ profileConnected, selectedCDiscussion }: {
-    profileConnected: Profile, selectedCDiscussion: DiscussionTab
+const EditGroup = ({ profileConnected, selectedCDiscussion, setIsEditingGroup }: {
+    profileConnected: Profile, selectedCDiscussion: DiscussionTab, setIsEditingGroup: (isEditingGroup: boolean) => void
 }) => {
     const [inputValue, setInputValue] = React.useState<string>(selectedCDiscussion.nom)
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -16,7 +16,8 @@ const EditGroup = ({ profileConnected, selectedCDiscussion }: {
 
 
     return (
-        <div className='w-full h-full flex flex-col items-center'>
+        <div className='w-full h-full flex flex-col items-center relative'>
+            <XMarkIcon onClick={() => setIsEditingGroup(false)} className='h-6 w-6 text-white absolute cursor-pointer right-12 top-3 block ' />
             <ModalComponent isOpen={isOpen} onOpenChange={onOpenChange} defaultsProfiles={selectedCDiscussion.profiles as ProfileInDiscussion[]} profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} />
             <Tabs aria-label="Options" className=''>
                 <Tab key="Général" title="Général" className='w-full flex justify-center'>
@@ -138,7 +139,7 @@ const ModalComponent = ({ isOpen, onOpenChange, defaultsProfiles, profileConnect
                                 <Input placeholder='Rechercher un utilisateur' />
 
                                 <Card>
-                                    <CardBody>
+                                    <CardBody className='flex flex-row items-center gap-1 w-full flex-wrap max-h-[125px]'>
                                         {
                                             Array.from(selectedKeys).map((key) => users.find((user) => user.id_user === key)).length === 0
                                                 ?
