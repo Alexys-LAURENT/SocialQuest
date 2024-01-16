@@ -4,30 +4,16 @@ import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { ExtendedPost, Profile } from '@/app/types/entities'
 import PostsWrapper from '@/components/Home/PostsWrapper';
+import { getUserConnected } from '@/utils/getUserConnected'
 import { getProfileConnected } from '@/utils/getProfileConnected'
+import { getAllPosts } from '@/utils/getAllPosts'
 
 
 export default async function Index() {
-  const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+
+
   const user = await getProfileConnected()
-
-
-  const { data: postsWithLikes, error: postsError } = await supabase
-    .from('posts')
-    .select(`*, profiles(username, avatar_url, a_propos),guildes(nom, avatar_url), likes(id_like, id_user),
-              children:posts(id_post)`)
-    .is('parent', null)
-    .order('created_at', { ascending: false });
-
-  // Récupérer le nombre total de likes par post
-  const posts = postsWithLikes?.map(post => {
-    const likesCount = post.likes.length;
-    const answersCount = post.children.length;
-    const userLikedPost = post.likes.some((like: any) => like.id_user === user?.id_user); // Remplacez currentUserID par l'ID de l'utilisateur actuel
-
-    return { ...post, likesCount, answersCount, userLikedPost };
-  }) as ExtendedPost[];
+  const posts = await getAllPosts()
 
 
   return (

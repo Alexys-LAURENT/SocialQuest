@@ -35,7 +35,7 @@ export default function Post({ user, post }: { user: Profile, post: ExtendedPost
                     <div className="flex gap-1">
                         {post.guildes && (
                             <>
-                                <Link href={`/guildes/${post.guildes.nom}`} className="text-sm text-textLight font-semibold">
+                                <Link href={`/g/${post.guildes.nom}`} className="text-sm text-textLight font-semibold">
                                     {post.guildes.nom}
                                 </Link>
                                 <div>
