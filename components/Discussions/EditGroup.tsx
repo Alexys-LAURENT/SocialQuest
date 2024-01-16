@@ -6,13 +6,31 @@ import { TrashIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Modal, ModalContent, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
 import { createClient } from '@/utils/supabase/client';
 import { DiscussionContext } from '@/app/context/DiscussionContext';
+import { Popconfirm } from 'antd';
+import { ToasterContext } from '@/app/context/ToasterContext';
 
-const EditGroup = ({ profileConnected, selectedCDiscussion, setIsEditingGroup }: {
-    profileConnected: Profile, selectedCDiscussion: DiscussionTab, setIsEditingGroup: (isEditingGroup: boolean) => void
+
+const EditGroup = ({ profileConnected, selectedCDiscussion, setSelectedDiscussion, setIsEditingGroup }: {
+    profileConnected: Profile, selectedCDiscussion: DiscussionTab, setSelectedDiscussion: (discussion: DiscussionTab | null) => void, setIsEditingGroup: (isEditingGroup: boolean) => void
 }) => {
     const [inputValue, setInputValue] = React.useState<string>(selectedCDiscussion.nom)
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const { removeUserFromSelectedDiscussion, updateCurrentSelectedDiscussion } = useContext(DiscussionContext)
+    const { success, error: errorToaster } = useContext(ToasterContext)
+
+    const confirm = async () => {
+        const supabase = createClient()
+        const { error } = await supabase.from('discussions').delete().match({ id_discussion: selectedCDiscussion.id_discussion })
+        if (error) {
+            console.log(error);
+            errorToaster('Une erreur est survenue')
+        }
+        setIsEditingGroup(false)
+        setSelectedDiscussion(null)
+        success('Groupe supprimé avec succès')
+    };
+
+    const cancel = () => { };
 
 
     return (
@@ -51,7 +69,18 @@ const EditGroup = ({ profileConnected, selectedCDiscussion, setIsEditingGroup }:
                                 <Card className='border rounded-md border-red-500/40 min-h-[58px]'>
                                     <CardBody className=' flex-row items-center justify-between'>
                                         <label className='text-xs sm:text-base'> Supprimer ce groupe </label>
-                                        <Button className='w-fit h-fit py-1 rounded-md text-red-500 text-xs sm:text-base'>Supprimer le groupe</Button>
+
+                                        <Popconfirm
+                                            className='relative'
+                                            title="Supprimer ce groupe ?"
+                                            onConfirm={confirm}
+                                            onCancel={cancel}
+                                            okText="Oui"
+                                            cancelText="Non"
+                                            okButtonProps={{ className: 'bg-red-500 hover:bg-red-600' }}
+                                        >
+                                            <Button className='w-fit h-fit py-1 rounded-md text-red-500 text-xs sm:text-base'>Supprimer le groupe</Button>
+                                        </Popconfirm>
                                     </CardBody>
                                 </Card>
                             </div>

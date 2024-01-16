@@ -136,7 +136,7 @@ const MessagesWrapper = () => {
             </div>
             <div className='relative w-full h-full max-h-[calc(100%-50px)] sm:max-h-[calc(100%-100px)] flex flex-col items-center '>
                 {isEditingGroup ? (
-                    <EditGroup profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} setIsEditingGroup={setIsEditingGroup} />
+                    <EditGroup profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} setSelectedDiscussion={setSelectedDiscussion} setIsEditingGroup={setIsEditingGroup} />
                 ) : (
                     <>
                         <div id='messages_container' className='w-11/12 h-full overflow-y-auto' >
