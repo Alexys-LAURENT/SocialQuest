@@ -36,6 +36,12 @@ div[id*=":"][id*=":"] {
   z-index: 5 !important;
 }
 
+@media (pointer: coarse) {
+  #messagesWrapper {
+    height: 92% !important;
+  }
+}
+
 .correctOutlineNone {
   outline: none !important;
 }

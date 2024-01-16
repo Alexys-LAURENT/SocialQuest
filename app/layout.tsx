@@ -39,7 +39,6 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${GeistSans.className} dark overflow-hidden`} >
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta>
       <body className='bg-bgDark dark:bg-bgDark overflow-x-hidden h-screen' >
         <Providers>
           <ConfigProvider theme={{ token: { colorBgMask: 'rgba(0, 0, 0, 0.8)', }, }}>
