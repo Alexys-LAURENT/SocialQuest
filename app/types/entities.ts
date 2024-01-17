@@ -35,3 +35,41 @@ export type ExtendedPost = Post & {
     userLikedPost: boolean,
     answersCount: number
 }
+
+
+export type DiscussionTab = {
+
+    id_discussion: string,
+    nom: string,
+    is_group: boolean,
+    image_url?: string,
+    created_by: string,
+    profiles:
+    {
+        id_user: string,
+        username: string,
+        avatar_url?: string
+    }[],
+    dernier_message?: {
+        contenu: string,
+        created_at: string
+    }
+
+}
+
+export type Message = {
+    id_message: string,
+    created_at: string,
+    id_user: string,
+    contenu: string,
+    isDeleted: boolean,
+    profiles: {
+        username: string
+    }
+}
+
+export type ProfileInDiscussion = {
+    id_user: string,
+    username: string,
+    avatar_url: string
+}

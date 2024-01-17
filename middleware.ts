@@ -13,6 +13,11 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL('/', request.url))
     }
 
+    // If a session does not exist and the user is trying to access a protected page, redirect them to the login page
+    if (!session.data.session && request.nextUrl.pathname.startsWith('/messages')) {
+      return NextResponse.redirect(new URL('/login', request.url))
+    }
+
     return response
   } catch (e) {
     return NextResponse.next({

@@ -1,7 +1,7 @@
 import Image from "@/components/Image";
 import { Profile } from "@/app/types/entities";
 import { Progress, Switch } from '@nextui-org/react';
-import { ArrowRightEndOnRectangleIcon, Cog8ToothIcon, CubeIcon, MoonIcon, UserIcon, ClipboardDocumentCheckIcon } from "@heroicons/react/24/outline";
+import { ArrowRightEndOnRectangleIcon, Cog8ToothIcon, CubeIcon, MoonIcon, UserIcon, ClipboardDocumentCheckIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 
@@ -34,6 +34,18 @@ const PopOverUserContent = ({ user, customFunction, signOut }: { user: Profile |
                 >
                     <UserIcon className="w-6 h-6" />
                     <div className="">Profil</div>
+                </Link>
+                <Link
+                    href={`/messages`}
+                    className="px-1 py-1 flex gap-2 items-center hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md"
+                    onClick={() =>
+                        customFunction()
+                    }
+                >
+                    <div className="relative w-6 h-6">
+                        <PaperAirplaneIcon className="absolute w-6 h-6 bottom-[0.1rem] left-[0.12rem] -rotate-45" />
+                    </div>
+                    <div className="">Messages</div>
                 </Link>
                 <Link
                     href={`/missions`}
@@ -74,7 +86,8 @@ const PopOverUserContent = ({ user, customFunction, signOut }: { user: Profile |
                         <Switch aria-label="Mode sombre" classNames={{ wrapper: "mr-1 bg-[#d9d9d9]" }} />
                     </div>
                 </div>
-                <div
+                <Link
+                    href="#"
                     className="px-1 py-1 flex gap-2 items-center hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md cursor-pointer"
                     onClick={() => {
                         customFunction();
@@ -83,7 +96,7 @@ const PopOverUserContent = ({ user, customFunction, signOut }: { user: Profile |
                 >
                     <ArrowRightEndOnRectangleIcon className="w-6 h-6" />
                     <div className="">Déconnexion</div>
-                </div>
+                </Link>
             </div>
         </div>
     );

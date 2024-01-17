@@ -25,7 +25,6 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile }
                 'postgres_changes',
                 { event: '*', schema: 'public', table: 'likes', filter: `id_post=eq.${post.id_post}` },
                 (payload) => {
-                    console.log('Change received!', payload);
                     async function getLikesCount() {
                         const { data: likesCount } = await supabase
                             .from('likes')

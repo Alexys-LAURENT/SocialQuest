@@ -4,20 +4,13 @@ import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { ExtendedPost, Profile } from '@/app/types/entities'
 import PostsWrapper from '@/components/Home/PostsWrapper';
+import { getProfileConnected } from '@/utils/getProfileConnected'
 
 
 export default async function Index() {
   const cookieStore = cookies()
   const supabase = createClient(cookieStore)
-  const {
-    data: { user: userAuth },
-  } = await supabase.auth.getUser()
-
-  const { data: user } = await supabase
-    .from('profiles')
-    .select()
-    .eq('id_user', userAuth?.id)
-    .single() as { data: Profile };
+  const user = await getProfileConnected()
 
 
   const { data: postsWithLikes, error: postsError } = await supabase
@@ -31,7 +24,7 @@ export default async function Index() {
   const posts = postsWithLikes?.map(post => {
     const likesCount = post.likes.length;
     const answersCount = post.children.length;
-    const userLikedPost = post.likes.some((like: any) => like.id_user === userAuth?.id); // Remplacez currentUserID par l'ID de l'utilisateur actuel
+    const userLikedPost = post.likes.some((like: any) => like.id_user === user?.id_user); // Remplacez currentUserID par l'ID de l'utilisateur actuel
 
     return { ...post, likesCount, answersCount, userLikedPost };
   }) as ExtendedPost[];
