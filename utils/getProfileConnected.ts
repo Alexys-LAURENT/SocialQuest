@@ -4,6 +4,7 @@ import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { User } from '@supabase/supabase-js'
 import { getUserConnected } from './getUserConnected'
+import { Profile } from '@/app/types/entities'
 
 export async function getProfileConnected(user?: User | null) {
     "use server"
@@ -18,10 +19,10 @@ export async function getProfileConnected(user?: User | null) {
 
         const { data: profile, error } = await supabase
             .from('profiles')
-            .select()
+            .select("id_user,updated_at,username,prenom,nom,a_propos,avatar_url,xp,social_coins,banner_url, niveaux(*)")
             .eq('id_user', user.id)
             .single()
-        return profile
+        return profile as unknown as Profile
     }
     throw new Error('No user connected')
 }

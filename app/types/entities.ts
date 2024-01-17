@@ -7,8 +7,14 @@ export type Profile = {
     a_propos?: string,
     avatar_url?: string,
     xp: number,
-    social_coin: number
+    social_coins: number
     banner_url?: string
+    niveaux: {
+        xp_fin: number,
+        libelle: number,
+        xp_debut: number,
+        id_niveau: string
+    }
 }
 
 export type Post = {
@@ -72,4 +78,14 @@ export type ProfileInDiscussion = {
     id_user: string,
     username: string,
     avatar_url: string
+}
+
+export type NextReward = {
+    items: {
+        nom: string,
+        type: string,
+        damage?: number,
+        id_item: string,
+        image_url: string
+    }
 }

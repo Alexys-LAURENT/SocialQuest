@@ -1,11 +1,12 @@
 "use client"
-import React, { createContext, useState } from 'react';
-import { Profile } from '@/app/types/entities';
+import React, { createContext, useEffect, useState } from 'react';
+import { NextReward, Profile } from '@/app/types/entities';
 import { Drawer } from 'antd';
 import PopOverUserContent from '@/components/NavBar/PopOverUserContent';
 import { createBrowserClient } from '@supabase/ssr';
 import NavBarMenu from '@/components/NavBar/NavBarMenu';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import { getNextRewards } from '@/utils/getNextRewards';
 type Content = "User" | "NavMenu";
 
 // create a context
@@ -18,7 +19,7 @@ export const DrawerContext = createContext({
 const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: Profile | null }) => {
     const [open, setOpen] = useState(false);
     const [content, setContent] = useState<Content>("User");
-
+    const [nextRewards, setNextRewards] = useState<NextReward[] | null>(null);
     const supabase = createBrowserClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -42,6 +43,15 @@ const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: P
         setOpen(false);
     };
 
+    useEffect(() => {
+        const getRewards = async () => {
+            if (user) {
+                setNextRewards(await getNextRewards(user?.niveaux.libelle!));
+            }
+        }
+        getRewards();
+    }, [user])
+
     return (
         <DrawerContext.Provider value={{ showDrawer, closeDrawer }}>
             <Drawer
@@ -53,7 +63,7 @@ const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: P
                 classNames={{ header: `${content === "User" ? "hidden" : "bg-bgDark text-textLight"}`, body: "bg-bgDark text-textLight", mask: `flex ${content === "User" ? "sm:hidden" : "md:hidden"}` }}
                 className={`flex  ${content === "User" ? "sm:hidden" : "md:hidden"}`}>
 
-                {content === "User" && <PopOverUserContent customFunction={closeDrawer} user={user} signOut={signOut} />}
+                {content === "User" && <PopOverUserContent customFunction={closeDrawer} user={user} signOut={signOut} nextRewards={nextRewards} />}
                 {content === "NavMenu" && <NavBarMenu customFunction={closeDrawer} />}
 
             </Drawer>

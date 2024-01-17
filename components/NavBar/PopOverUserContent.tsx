@@ -1,28 +1,43 @@
-import Image from "@/components/Image";
-import { Profile } from "@/app/types/entities";
+import { Image } from "antd";
+import { NextReward, Profile } from "@/app/types/entities";
 import { Progress, Switch } from '@nextui-org/react';
 import { ArrowRightEndOnRectangleIcon, Cog8ToothIcon, CubeIcon, MoonIcon, UserIcon, ClipboardDocumentCheckIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getNextRewards } from "@/utils/getNextRewards";
 
 
-const PopOverUserContent = ({ user, customFunction, signOut }: { user: Profile | null, customFunction: () => void, signOut: () => void }) => {
+const PopOverUserContent = ({ user, customFunction, signOut, nextRewards }: { user: Profile | null, customFunction: () => void, signOut: () => void, nextRewards: NextReward[] | null }) => {
+    const progressValue = (user?.xp! - user?.niveaux.xp_debut!) * 100 / (user?.niveaux.xp_fin! + 1);
+
+
     return (
         <div className="w-full px-1 py-2 gap-2 flex flex-col">
             <div>
                 <div className="flex justify-between items-center">
-                    <div className="text-sm">Level 2</div>
-                    <div className="text-sm">Level 3</div>
+                    <div className="text-sm">Level {user?.niveaux.libelle!}</div>
+                    <div className="text-sm">Level {user?.niveaux.libelle! + 1}</div>
                 </div>
-                <Progress aria-label="Level" value={60} />
+                <Progress aria-label="Level" value={progressValue} title={`${(user?.xp! - user?.niveaux.xp_debut!)} / ${user?.niveaux.xp_fin! + 1} xp`} />
             </div>
             <div className="flex justify-end items-center gap-1 text-end text-[#979797]">
-                <div className="text-sm">Suivant : Bannière Squelettes</div>
-                <div className="flex relative h-9 items-center justify-center rounded-md">
-                    <Image
-                        src="/assets/Dragon.png"
-                        alt="Bannière Squelettes"
-                    />
-                </div>
+                {
+                    nextRewards && (
+                        <>
+                            <div className="text-sm">Suivant : {nextRewards.length > 1 ? `${nextRewards.length} items` : nextRewards[0].items.nom}</div>
+                            <div className="flex relative items-center justify-center rounded-md">
+                                <Image.PreviewGroup preview={{ toolbarRender: () => (<></>), }}
+                                    items={nextRewards.reduce((acc: any, item: any) => { acc.push(item.items.image_url); return acc; }, [])}>
+
+                                    <Image className="h-7 w-auto aspect-auto rounded-md" src={nextRewards[0].items.image_url}
+                                        alt={nextRewards[0].items.nom}></Image>
+
+                                </Image.PreviewGroup>
+                            </div>
+                        </>
+                    )
+                }
+
             </div>
             <div className="flex flex-col text-lg select-none">
                 <Link

@@ -4,7 +4,7 @@ import SearchBar from "@/components/NavBar/SearchBar";
 import PopoverUser from "@/components/NavBar/PopoverUser";
 import PopoverNotifications from "@/components/NavBar/PopoverNotifications";
 import React, { useEffect, useContext, use } from "react";
-import { Profile } from "@/app/types/entities";
+import { NextReward, Profile } from "@/app/types/entities";
 import { Button } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 import { createBrowserClient } from '@supabase/ssr'
@@ -18,7 +18,7 @@ import {
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
-const NavBar = ({ user }: { user: Profile | null }) => {
+const NavBar = ({ user, nextRewards }: { user: Profile | null, nextRewards: NextReward[] | null }) => {
     const router = useRouter();
     const pathName = usePathname();
     const { showDrawer } = useContext(DrawerContext);
@@ -37,16 +37,6 @@ const NavBar = ({ user }: { user: Profile | null }) => {
         router.push("/")
         router.refresh()
     }
-
-    // useEffect(() => {
-    //     if (activePath === "/login") {
-    //         document.getElementsByTagName("main")[0].classList.remove("h-[calc(100vh-5rem)]");
-    //         document.getElementsByTagName("main")[0].classList.add("h-screen");
-    //     } else {
-    //         document.getElementsByTagName("main")[0].classList.remove("h-screen");
-    //         document.getElementsByTagName("main")[0].classList.add("h-[calc(100vh-5rem)]");
-    //     }
-    // }, []);
 
     const formatCount = (count: number) => {
         if (count >= 1000000) {
@@ -100,7 +90,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
                     <NavbarItem className="flex min-w-fit items-center rounded-md px-1 sm:px-2 py-1 bg-secondary/30">
                         <div className="flex gap-1">
                             <img src="/assets/Solidium.png" className="h-4 w-4" alt="" />
-                            <p className="text-xs">{formatCount(user.social_coin)}</p>
+                            <p className="text-xs">{formatCount(user.social_coins)}</p>
                         </div>
                     </NavbarItem>
                 )}
@@ -117,7 +107,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
                             <PopoverNotifications />
                         </NavbarItem>
                         <NavbarItem>
-                            <PopoverUser signOut={signOut} user={user} />
+                            <PopoverUser signOut={signOut} user={user} nextRewards={nextRewards} />
                         </NavbarItem>
                     </>
                 ) : (
