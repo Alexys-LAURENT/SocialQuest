@@ -3,16 +3,19 @@ import { useState, useContext } from 'react';
 import { Button } from 'antd';
 import { DocumentIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { createBrowserClient } from '@supabase/ssr'
-import { Textarea } from '@nextui-org/react';
+import { Avatar, Select, SelectItem, Textarea } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { ToasterContext } from '@/app/context/ToasterContext';
 import { sendPost } from '@/utils/sendPost';
+import Forbidden from '@/public/assets/forbidden.png';
 
 interface PostInputProps {
-    id_guilde?: string
+    id_guilde?: string,
+    index?: boolean,
+    guildesUser?: any
 }
 
-const PostInput = ({ id_guilde }: PostInputProps) => {
+const PostInput = ({ id_guilde, index, guildesUser }: PostInputProps) => {
     const router = useRouter();
     const { success, error } = useContext(ToasterContext);
     const limite = {
@@ -22,6 +25,7 @@ const PostInput = ({ id_guilde }: PostInputProps) => {
 
     const [titre, setTitre] = useState<string>('')
     const [contenu, setContenu] = useState<string>('')
+    const [guilde, setGuilde] = useState<any>('')
 
     const supabase = createBrowserClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -42,9 +46,15 @@ const PostInput = ({ id_guilde }: PostInputProps) => {
 
 
     async function send(e: any) {
-        const data = id_guilde ? { id_guilde: id_guilde, titre: titre, contenu: contenu } : { titre: titre, contenu: contenu }
         e.preventDefault();
+        if (titre === '' || contenu === '') {
+            return error('Veuillez inclure un titre et un contenu');
+        }
+
+        const data = id_guilde ? { id_guilde: id_guilde, titre: titre, contenu: contenu } : guilde === '' ? { titre: titre, contenu: contenu } : { id_guilde: guilde, titre: titre, contenu: contenu };
+
         const isDone = await sendPost(data);
+
         if (isDone) {
             success('Post envoyé !');
         } else {
@@ -59,12 +69,30 @@ const PostInput = ({ id_guilde }: PostInputProps) => {
     return (
         <div className="w-full h-fit flex flex-col min-h-fit ">
             <form id='NewPostinput' onSubmit={(e) => send(e)} >
-                <div className="relative flex flex-col h-full w-full bg-[#11100e] rounded-t-md py-2 px-6 gap-1">
-
-                    {/* <input type="text" placeholder="Titre..." id="PostInputTitle" value={titre} className="w-full h-[30px] bg-[#11100e] rounded-t-md text-2xl placeholder:text-[#3b3a39]" maxLength={50} onChange={(e) => handleChangeTitle(e)} /> */}
-
+                <div className="flex flex-col h-full w-full bg-[#11100e] rounded-t-md py-2 px-6 gap-1">
+                    {index &&
+                        <Select
+                            label="Guilde"
+                            variant='underlined'
+                            placeholder="Pas de guilde"
+                            className="w-full"
+                            classNames={{ trigger: "bg-transparent group-data-[focus=true]:bg-opacity-30 data-[hover=true]:bg-opacity-30 rounded-none", popoverContent: "bg-[#11100e]" }}
+                            onChange={(e) => setGuilde(e.target.value)}
+                        >
+                            {guildesUser.map((guildeUser: any) => (
+                                <SelectItem key={guildeUser.guildes.id_guilde} value={guildeUser.guildes.id_guilde} textValue={guildeUser.guildes.nom}>
+                                    <div className="flex gap-2 items-center">
+                                        <Avatar alt={guildeUser.guildes.nom} className="flex-shrink-0" size="sm" src={guildeUser.guildes.avatar_url} />
+                                        <div className="flex flex-col">
+                                            <span className="text-small">{guildeUser.guildes.nom}</span>
+                                        </div>
+                                    </div>
+                                </SelectItem>
+                            ))}
+                        </Select>
+                    }
                     <div className='relative'>
-                        <Textarea aria-label='titre' id="PostInputTitle" minRows={1} maxRows={5} classNames={{ inputWrapper: "bg-transparent group-data-[focus=true]:bg-opacity-30 data-[hover=true]:bg-opacity-30 h-auto pb-5", input: "font-bold" }} value={titre} placeholder="Titre..." maxLength={limite.titre} onChange={(e) => handleChangeTitle(e)}>
+                        <Textarea aria-label='titre' id="PostInputTitle" minRows={1} classNames={{ inputWrapper: "bg-transparent group-data-[focus=true]:bg-opacity-30 data-[hover=true]:bg-opacity-30 h-auto pb-5", input: "font-bold" }} value={titre} placeholder="Titre..." maxLength={limite.titre} onChange={(e) => handleChangeTitle(e)}>
 
                         </Textarea>
                         <div className={`CharCountTitleNewPostWrapper absolute bottom-1 right-4 text-[10px] text-[#7c7c7c] ${titre.length > limite.titre ? 'text-red-500' : ''}`}>
@@ -91,8 +119,8 @@ const PostInput = ({ id_guilde }: PostInputProps) => {
                         </Button>
                     </div>
                 </div>
-            </form>
-        </div>
+            </form >
+        </div >
     );
 };
 

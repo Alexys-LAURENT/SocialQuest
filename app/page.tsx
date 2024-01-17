@@ -7,6 +7,7 @@ import PostsWrapper from '@/components/Home/PostsWrapper';
 import { getUserConnected } from '@/utils/getUserConnected'
 import { getProfileConnected } from '@/utils/getProfileConnected'
 import { getAllPosts } from '@/utils/getAllPosts'
+import { getGuildesUser } from '@/utils/getGuildesUser'
 
 
 export default async function Index() {
@@ -14,6 +15,7 @@ export default async function Index() {
 
   const user = await getProfileConnected()
   const posts = await getAllPosts()
+  const guildesUser = await getGuildesUser()
 
 
   return (
@@ -36,7 +38,7 @@ export default async function Index() {
 
       <div className="flex flex-col w-full gap-6 lg:gap-10">
 
-        <TopTabs user={user} />
+        <TopTabs user={user} guildesUser={guildesUser} />
 
         <PostsWrapper posts={posts} user={user} />
       </div>
