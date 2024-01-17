@@ -9,6 +9,7 @@ import DrawerProvider from './context/DrawerContext';
 import ToasterProvider from './context/ToasterContext';
 import DiscussionProvider from './context/DiscussionContext';
 import { getProfileConnected } from '@/utils/getProfileConnected';
+import { getNextRewards } from '@/utils/getNextRewards';
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : 'http://localhost:3000'
@@ -36,7 +37,7 @@ export default async function RootLayout({
             <ToasterProvider>
               <DrawerProvider user={profile}>
                 <DiscussionProvider>
-                  <NavBar user={profile} />
+                  <NavBar user={profile} nextRewards={await getNextRewards(profile?.niveaux.libelle!)} />
                   <main className={`h-full w-full flex flex-col items-center overflow-y-auto`}>
                     {children}
                   </main>

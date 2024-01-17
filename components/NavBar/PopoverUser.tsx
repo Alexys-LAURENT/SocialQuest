@@ -1,11 +1,11 @@
 'use client';
 import PopOverUserContent from "./PopOverUserContent";
 import React, { useState, useContext } from "react";
-import { Profile } from "@/app/types/entities";
+import { NextReward, Profile } from "@/app/types/entities";
 import { DrawerContext } from "@/app/context/DrawerContext";
 import { Badge, Avatar, Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
 
-const PopoverUser = ({ signOut, user }: { signOut: () => void, user: Profile | null }) => {
+const PopoverUser = ({ signOut, user, nextRewards }: { signOut: () => void, user: Profile | null, nextRewards: NextReward[] | null }) => {
     const [isPopoverUserOpen, setIsPopoverUserOpen] = useState(false);
     const { showDrawer, closeDrawer } = useContext(DrawerContext);
 
@@ -15,15 +15,17 @@ const PopoverUser = ({ signOut, user }: { signOut: () => void, user: Profile | n
                 && !(e as HTMLElement).classList.contains("ant-image-preview-img")
                 && !(e as HTMLElement).classList.contains("ant-image-preview-close")
                 && !(e as HTMLElement).parentElement?.classList.contains("anticon-close")
-                && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("anticon-close")}>
+                && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("anticon-close")
+                && !(e as HTMLElement).classList.contains("ant-image-preview-switch-right")
+                && !(e as HTMLElement).classList.contains("ant-image-preview-switch-left")
+                && !(e as HTMLElement).parentElement?.classList.contains("ant-image-preview-switch-right")
+                && !(e as HTMLElement).parentElement?.classList.contains("ant-image-preview-switch-left")
+                && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("ant-image-preview-switch-right")
+                && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("ant-image-preview-switch-left")} >
             <PopoverTrigger>
                 <div className="flex items-center cursor-pointer" onClick={() => showDrawer("User")} >
-                    <Badge content="5" color="primary" className="text-xs hidden sm:flex">
-                        <Avatar isBordered src={user?.avatar_url} className="cursor-pointer w-[2.75rem] h-[2.75rem] hidden sm:flex" />
-                    </Badge>
-                    {/* mobile : */}
-                    <Badge content="5" color="primary" className="text-xs flex sm:hidden">
-                        <Avatar isBordered src={user?.avatar_url} className="cursor-pointer w-[2rem] h-[2rem] flex sm:hidden" />
+                    <Badge content={user?.niveaux.libelle} color="primary" className="text-xs flex">
+                        <Avatar isBordered src={user?.avatar_url} className="cursor-pointer w-[2rem] h-[2rem] sm:w-[2.75rem] sm:h-[2.75rem] flex" />
                     </Badge>
                 </div>
             </PopoverTrigger>
@@ -31,7 +33,7 @@ const PopoverUser = ({ signOut, user }: { signOut: () => void, user: Profile | n
                 <PopOverUserContent user={user} customFunction={() => {
                     setIsPopoverUserOpen(false);
                     closeDrawer();
-                }} signOut={signOut} />
+                }} signOut={signOut} nextRewards={nextRewards} />
             </PopoverContent>
         </Popover >
     );
