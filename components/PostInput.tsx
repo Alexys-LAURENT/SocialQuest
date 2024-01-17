@@ -6,9 +6,10 @@ import { createBrowserClient } from '@supabase/ssr'
 import { Textarea } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { ToasterContext } from '@/app/context/ToasterContext';
+import { sendPost } from '@/utils/sendPost';
 
 interface PostInputProps {
-    id_guilde?: number
+    id_guilde?: string
 }
 
 const PostInput = ({ id_guilde }: PostInputProps) => {
@@ -39,16 +40,12 @@ const PostInput = ({ id_guilde }: PostInputProps) => {
         }
     }
 
-    function sendPost(e: any) {
+
+    async function send(e: any) {
         const data = id_guilde ? { id_guilde: id_guilde, titre: titre, contenu: contenu } : { titre: titre, contenu: contenu }
         e.preventDefault();
-        supabase.from('posts').insert([
-            // iduser handled by supabase auth.uid()
-            data
-        ]).then(() => {
-            setTitre('');
-            setContenu('');
-            router.refresh();
+        const isDone = await sendPost(data);
+        if (isDone) {
             success('Post envoyé !');
         } else {
             error('Une erreur est survenue');
@@ -61,7 +58,7 @@ const PostInput = ({ id_guilde }: PostInputProps) => {
 
     return (
         <div className="w-full h-fit flex flex-col min-h-fit ">
-            <form id='NewPostinput' onSubmit={(e) => sendPost(e)} >
+            <form id='NewPostinput' onSubmit={(e) => send(e)} >
                 <div className="relative flex flex-col h-full w-full bg-[#11100e] rounded-t-md py-2 px-6 gap-1">
 
                     {/* <input type="text" placeholder="Titre..." id="PostInputTitle" value={titre} className="w-full h-[30px] bg-[#11100e] rounded-t-md text-2xl placeholder:text-[#3b3a39]" maxLength={50} onChange={(e) => handleChangeTitle(e)} /> */}
