@@ -4,12 +4,12 @@ import { getProfileConnected } from "./getProfileConnected"
 import { createClient } from "./supabase/server"
 import { cookies } from 'next/headers';
 
-export async function sendPost(titre: string, contenu: string) {
+export async function sendPost(data: { id_guilde?: string, titre: string, contenu: string }) {
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
     const { error } = await supabase.from('posts').insert([
         // iduser handled by supabase auth.uid()
-        { titre: titre, contenu: contenu }
+        data
     ])
     if (error) {
         console.error(error)
@@ -22,6 +22,7 @@ export async function sendPost(titre: string, contenu: string) {
 
     if (errorUpdateProfile) {
         console.error(errorUpdateProfile)
+
     }
 
     return true

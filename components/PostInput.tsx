@@ -1,3 +1,4 @@
+"use client"
 import { useState, useContext } from 'react';
 import { Button } from 'antd';
 import { DocumentIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
@@ -6,7 +7,12 @@ import { Textarea } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { ToasterContext } from '@/app/context/ToasterContext';
 import { sendPost } from '@/utils/sendPost';
-const PostInput = () => {
+
+interface PostInputProps {
+    id_guilde?: string
+}
+
+const PostInput = ({ id_guilde }: PostInputProps) => {
     const router = useRouter();
     const { success, error } = useContext(ToasterContext);
     const limite = {
@@ -34,9 +40,11 @@ const PostInput = () => {
         }
     }
 
+
     async function send(e: any) {
+        const data = id_guilde ? { id_guilde: id_guilde, titre: titre, contenu: contenu } : { titre: titre, contenu: contenu }
         e.preventDefault();
-        const isDone = await sendPost(titre, contenu);
+        const isDone = await sendPost(data);
         if (isDone) {
             success('Post envoyé !');
         } else {
@@ -49,7 +57,7 @@ const PostInput = () => {
 
 
     return (
-        <div className="w-full h-full flex flex-col min-h-[10rem]">
+        <div className="w-full h-fit flex flex-col min-h-fit ">
             <form id='NewPostinput' onSubmit={(e) => send(e)} >
                 <div className="relative flex flex-col h-full w-full bg-[#11100e] rounded-t-md py-2 px-6 gap-1">
 
