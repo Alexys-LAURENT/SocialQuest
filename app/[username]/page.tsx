@@ -7,14 +7,13 @@ import { Avatar } from '@nextui-org/react'
 import { notFound } from 'next/navigation'
 import ProfilPicture from '@/components/Profil/ProfilPicture'
 import { ExtendedPost } from '@/app/types/entities'
+import { getUserConnected } from '@/utils/getUserConnected'
 
 export default async function Profil({ params }: { params: { username: string } }) {
   const cookieStore = cookies()
   const supabase = createClient(cookieStore)
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const user = await getUserConnected()
 
   const { data: userProfile, error: erroruserProfile } = await supabase
     .from('profiles')

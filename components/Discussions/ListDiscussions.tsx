@@ -23,7 +23,6 @@ const ListDiscussions = ({ initDiscussions, refetchDiscussions }: { initDiscussi
         async function getProfile() {
             const profile = await getProfileConnected()
             setProfileConnected(profile)
-            console.log(profile);
         }
         getProfile()
 
@@ -110,14 +109,14 @@ export default ListDiscussions;
 
 
 const ModalComponent = ({ isOpen, setOpen, onOpenChange, profileConnected, setDiscussions, refetchDiscussions, setSelectedDiscussion }:
-    { isOpen: boolean, setOpen: (open: boolean) => void, onOpenChange: (open: boolean) => void, profileConnected: Profile, setDiscussions: any, refetchDiscussions: any, setSelectedDiscussion: any }) => {
+    { isOpen: boolean, setOpen: (open: boolean) => void, onOpenChange: (open: boolean) => void, profileConnected: Profile, setDiscussions: any, refetchDiscussions: any, setSelectedDiscussion: (conversation: DiscussionTab | null) => void }) => {
     const supabase = createClient()
     const [InputValue, setInputValue] = React.useState<string>('')
     const [users, setUsers] = React.useState<Profile[]>([])
     const [selectedKeys, setSelectedKeys] = React.useState<React.Key[]>([]);
 
     async function createDiscussion(ids: string[], nom: string) {
-        const { data: newDiscussionId, error: errorInsertDiscussion } = await supabase
+        const { data: newDiscussion, error: errorInsertDiscussion } = await supabase
             .from('discussions')
             .upsert({ is_group: ids.length >= 3, nom: ids.length >= 3 ? nom : null })
             .select('*')
@@ -127,7 +126,7 @@ const ModalComponent = ({ isOpen, setOpen, onOpenChange, profileConnected, setDi
 
         const { data, error: errorInsertDiscussionUsers } = await supabase
             .from('discussions_users')
-            .insert(ids.map(id => ({ id_discussion: newDiscussionId![0].id_discussion, id_user: id })))
+            .insert(ids.map(id => ({ id_discussion: newDiscussion![0].id_discussion, id_user: id })))
         if (errorInsertDiscussionUsers) {
             console.log(errorInsertDiscussionUsers);
         }
@@ -138,9 +137,7 @@ const ModalComponent = ({ isOpen, setOpen, onOpenChange, profileConnected, setDi
         async function refetchDiscussionsCreate() {
             const refresh = await refetchDiscussions()
             setDiscussions(refresh)
-
-            // a faire
-            // setSelectedDiscussion()
+            setSelectedDiscussion(refresh.find((discussion: DiscussionTab) => discussion.id_discussion === newDiscussion![0].id_discussion))
         }
         refetchDiscussionsCreate()
 

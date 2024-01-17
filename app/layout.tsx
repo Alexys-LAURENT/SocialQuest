@@ -8,6 +8,7 @@ import { ConfigProvider } from 'antd';
 import DrawerProvider from './context/DrawerContext';
 import ToasterProvider from './context/ToasterContext';
 import DiscussionProvider from './context/DiscussionContext';
+import { getProfileConnected } from '@/utils/getProfileConnected';
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : 'http://localhost:3000'
@@ -23,17 +24,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id_user', user?.id)
-    .single()
+  const profile = await getProfileConnected()
 
 
 
