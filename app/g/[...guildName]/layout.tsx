@@ -19,8 +19,6 @@ const layout = async ({
     if (params.guildName[1] && params.guildName[1] !== "activities" && params.guildName[1] !== "guildwars") redirect(`/g/${params.guildName[0]}`)
     const guilde = await getGuildInfos(params.guildName[0])
     const user = await getProfileConnected()
-    console.log(guilde)
-    console.log(typeof window)
 
     return (
 

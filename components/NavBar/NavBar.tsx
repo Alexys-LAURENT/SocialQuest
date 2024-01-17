@@ -104,7 +104,7 @@ const NavBar = ({ user, nextRewards }: { user: Profile | null, nextRewards: Next
                 {user ? (
                     <>
                         <NavbarItem className="flex items-center">
-                            <PopoverNotifications />
+                            <PopoverNotifications user={user} />
                         </NavbarItem>
                         <NavbarItem>
                             <PopoverUser signOut={signOut} user={user} nextRewards={nextRewards} />
