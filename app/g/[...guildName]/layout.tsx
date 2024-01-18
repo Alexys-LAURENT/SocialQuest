@@ -72,7 +72,7 @@ const layout = async ({
 
                 <div className="flex flex-col w-full gap-6 lg:gap-10">
 
-                    {!params.guildName[1] && <PostInput id_guilde={guilde!.id_guilde} />}
+                    {!params.guildName[1] && user && <PostInput id_guilde={guilde!.id_guilde} />}
                     {params.guildName[1] === "activities" && guildactivities}
                     {params.guildName[1] === "guildwars" && guildwars}
                     {!params.guildName[1] && children}

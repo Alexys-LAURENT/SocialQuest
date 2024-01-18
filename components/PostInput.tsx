@@ -79,7 +79,7 @@ const PostInput = ({ id_guilde, index, guildesUser }: PostInputProps) => {
                             classNames={{ trigger: "bg-transparent group-data-[focus=true]:bg-opacity-30 data-[hover=true]:bg-opacity-30 rounded-none", popoverContent: "bg-[#11100e]" }}
                             onChange={(e) => setGuilde(e.target.value)}
                         >
-                            {guildesUser.map((guildeUser: any) => (
+                            {guildesUser && guildesUser.map((guildeUser: any) => (
                                 <SelectItem key={guildeUser.guildes.id_guilde} value={guildeUser.guildes.id_guilde} textValue={guildeUser.guildes.nom}>
                                     <div className="flex gap-2 items-center">
                                         <Avatar alt={guildeUser.guildes.nom} className="flex-shrink-0" size="sm" src={guildeUser.guildes.avatar_url} />
