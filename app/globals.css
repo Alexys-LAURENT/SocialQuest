@@ -26,6 +26,17 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+.itemsWrapper {
+  grid-template-columns: repeat(auto-fill, minmax(6.15rem, 6.15rem));
+}
+
+@media screen and (max-width: 1023.999px) {
+  .itemsWrapper {
+    grid-template-columns: repeat(auto-fill, minmax(5.15rem, 5.15rem));
+  }
+
+}
+
 .working-break-words {
   overflow-wrap: break-word !important;
   word-break: break-word !important;

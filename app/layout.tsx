@@ -8,6 +8,7 @@ import { ConfigProvider } from 'antd';
 import DrawerProvider from './context/DrawerContext';
 import ToasterProvider from './context/ToasterContext';
 import DiscussionProvider from './context/DiscussionContext';
+import InventaireProvider from './context/InventaireContext';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 import { getNextRewards } from '@/utils/getNextRewards';
 import TopLoader from '@/components/TopLoader';
@@ -38,11 +39,13 @@ export default async function RootLayout({
             <ToasterProvider>
               <DrawerProvider user={profile}>
                 <DiscussionProvider>
-                  <NavBar user={profile} nextRewards={await getNextRewards(profile?.niveaux.libelle!)} />
-                  <TopLoader />
-                  <main className={`h-full w-full flex flex-col items-center overflow-y-auto`}>
-                    {children}
-                  </main>
+                  <InventaireProvider>
+                    <NavBar user={profile} nextRewards={await getNextRewards(profile?.niveaux.libelle!)} />
+                    <TopLoader />
+                    <main className={`h-full w-full flex flex-col items-center overflow-y-auto`}>
+                      {children}
+                    </main>
+                  </InventaireProvider>
                 </DiscussionProvider>
               </DrawerProvider>
             </ToasterProvider>

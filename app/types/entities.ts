@@ -100,3 +100,13 @@ export type Notification = {
     titre?: string,
     link?: string
 }
+
+export type Item = {
+    nom: string,
+    id_item: string,
+    created_at: string,
+    type: "banniere" | "badge" | "arme",
+    image_url: string,
+    damage?: number,
+    description: string
+}

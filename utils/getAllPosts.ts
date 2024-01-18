@@ -33,7 +33,7 @@ export async function getAllPosts() {
     return posts
 }
 
-export async function getAllPostsFromUser() {
+export async function getAllPostsFromUser(id_user: string) {
     "use server"
 
     const cookieStore = cookies()
@@ -44,7 +44,7 @@ export async function getAllPostsFromUser() {
         .from('posts')
         .select(`*, profiles(username, avatar_url, a_propos),guildes(nom, avatar_url), likes(id_like, id_user),
     children:posts(id_post)`)
-        .eq('id_user', user?.id_user)
+        .eq('id_user', id_user)
         .order('created_at', { ascending: false });
 
     if (postsError) return console.error(postsError)

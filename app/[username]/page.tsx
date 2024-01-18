@@ -16,10 +16,10 @@ export default async function Profil({ params }: { params: { username: string } 
 
   const userProfile = await getProfileConnected()
   const pageProfile = await getPageProfile(params.username)
-  const posts = await getAllPostsFromUser()
+  const posts = await getAllPostsFromUser(pageProfile?.id_user ?? '')
 
 
-  if (userProfile === null) {
+  if (pageProfile === null) {
     notFound()
   }
 
