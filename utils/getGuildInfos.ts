@@ -24,7 +24,6 @@ export async function getGuildInfos(guilde_name: string) {
         .select("count")
         .eq("id_guilde", guilde?.id_guilde)
 
-    console.log(guildeUsersCount![0].count)
 
     const { data: isUserInGuilde, error: errorIsUserInGuilde } = await supabase
         .from('guildes_users')

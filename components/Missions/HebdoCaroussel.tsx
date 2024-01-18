@@ -31,7 +31,7 @@ const HebdoCaroussel = () => {
             <div
                 ref={carousselRef}
                 id="carousselMissions"
-                className={clsx('transition-all no-scrollbar h-[180px] relative w-full flex items-center gap-5 overflow-x-scroll flex-nowrap px-5 xl:rounded-lg bg-gradient-to-br from-[#D4781A] to-[#AA3678]')}
+                className={clsx('transition-all no-scrollbar h-[180px] relative w-full flex items-center gap-5 overflow-x-scroll flex-nowrap px-5 xl:rounded-lg bg-gradient-to-br  from-[#60efff] to-[#183182]')}
                 onMouseEnter={() => setIsAnimating(false)}
                 onMouseLeave={() => setIsAnimating(true)}
             >

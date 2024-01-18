@@ -1,20 +1,20 @@
 "use server"
-
 import { cookies } from "next/headers"
 import { createClient } from "./supabase/server"
 
 
-export async function getUserNotifications(id_user: string) {
+export async function readUserNotifications(id_user: string) {
     "use server"
 
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 
-    const { data, error } = await supabase.from("notifications").select("*").eq("id_user", id_user).order("created_at", { ascending: false }).limit(5)
+    const { data, error } = await supabase.from("notifications").update({ is_read: true }).eq("id_user", id_user).eq("is_read", false)
 
     if (error) {
         console.error(error)
         return false
     }
-    return data
+
+    return true
 }

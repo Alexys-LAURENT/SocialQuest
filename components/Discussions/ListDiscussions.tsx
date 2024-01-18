@@ -77,7 +77,7 @@ const ListDiscussions = ({ initDiscussions, refetchDiscussions }: { initDiscussi
                 }
             </div>
             {discussions.map((item: DiscussionTab, index: number) => (
-                <Card key={index} className={`rounded-md min-h-[55px] ${selectedCDiscussion?.id_discussion === item?.id_discussion ? 'bg-gradient-to-tl from-[#D4781A] to-[#AA3678]' : ''} `}>
+                <Card key={index} className={`rounded-md min-h-[55px] ${selectedCDiscussion?.id_discussion === item?.id_discussion ? 'bg-secondary' : ''} `}>
                     <CardBody className='flex-row p-0' >
                         <Button onClick={() => [setIsEditingGroup(false), setComponentReloaded(true), setSelectedDiscussion(item)]} className='w-full h-full p-2 bg-transparent flex justify-start'>
                             <div className='aspect-square max-w-[40px] min-w-[40px] flex'>

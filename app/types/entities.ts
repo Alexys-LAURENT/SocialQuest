@@ -89,3 +89,14 @@ export type NextReward = {
         image_url: string
     }
 }
+
+export type Notification = {
+    id_notification: string,
+    created_at: string,
+    id_user: string,
+    image_url?: string,
+    message: string,
+    is_read: boolean,
+    titre?: string,
+    link?: string
+}
