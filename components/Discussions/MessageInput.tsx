@@ -17,7 +17,9 @@ const MessageInput = ({ supabase, selectedCDiscussion, profileConnected }: { sup
     return (
         <div className='w-11/12 min-h-[100px] mt-2 py-3 z-10 bg-bgDark flex gap-4 justify-center items-center '>
             <Textarea value={inputValue} onChange={(e) => setInputValue(e.target.value)} minRows={2} maxRows={5} placeholder='Message' className='w-full' classNames={{ inputWrapper: "h-auto" }} />
-            <Button onClick={() => { postMessage() }}>Envoyer</Button>
+            <Button onClick={(e) => { postMessage() }}>
+                Envoyer
+            </Button>
         </div>
     );
 };
