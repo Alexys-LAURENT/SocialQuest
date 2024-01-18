@@ -30,7 +30,7 @@ export default function Post({ user, post }: { user: Profile | null, post: Exten
         <div className="flex flex-col border border-gray-500 rounded-md p-2 gap-1">
 
             <div className="flex gap-2">
-                <Avatar src={post.guildes ? post.guildes.avatar_url : post.profiles.avatar_url} size='sm' className='min-h-[32px] min-w-[32px]' />
+                <Avatar size='sm' src={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url!} className='min-h-[32px] min-w-[32px] rounded-full' alt={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url!} />
                 <div className="flex items-center justify-between w-full">
                     <div className="flex gap-1">
                         {post.guildes && (

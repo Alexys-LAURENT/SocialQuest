@@ -2,12 +2,11 @@
 import { useState, useContext } from 'react';
 import { Button } from 'antd';
 import { DocumentIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
-import { createBrowserClient } from '@supabase/ssr'
-import { Avatar, Select, SelectItem, Textarea } from '@nextui-org/react';
+import { Textarea } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { ToasterContext } from '@/app/context/ToasterContext';
 import { sendPost } from '@/utils/sendPost';
-import Forbidden from '@/public/assets/forbidden.png';
+import PostInputGuildsListBox from './PostInputGuildsSelect';
 
 interface PostInputProps {
     id_guilde?: string,
@@ -26,11 +25,6 @@ const PostInput = ({ id_guilde, index, guildesUser }: PostInputProps) => {
     const [titre, setTitre] = useState<string>('')
     const [contenu, setContenu] = useState<string>('')
     const [guilde, setGuilde] = useState<any>('')
-
-    const supabase = createBrowserClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
 
     function handleChangeTitle(e: any) {
         if (e.target.value.length <= limite.titre) {
@@ -71,28 +65,10 @@ const PostInput = ({ id_guilde, index, guildesUser }: PostInputProps) => {
             <form id='NewPostinput' onSubmit={(e) => send(e)} >
                 <div className="flex flex-col h-full w-full bg-[#11100e] rounded-t-md py-2 px-6 gap-1">
                     {index &&
-                        <Select
-                            label="Guilde"
-                            variant='underlined'
-                            placeholder="Pas de guilde"
-                            className="w-full"
-                            classNames={{ trigger: "bg-transparent group-data-[focus=true]:bg-opacity-30 data-[hover=true]:bg-opacity-30 rounded-none", popoverContent: "bg-[#11100e]" }}
-                            onChange={(e) => setGuilde(e.target.value)}
-                        >
-                            {guildesUser && guildesUser.map((guildeUser: any) => (
-                                <SelectItem key={guildeUser.guildes.id_guilde} value={guildeUser.guildes.id_guilde} textValue={guildeUser.guildes.nom}>
-                                    <div className="flex gap-2 items-center">
-                                        <Avatar alt={guildeUser.guildes.nom} className="flex-shrink-0" size="sm" src={guildeUser.guildes.avatar_url} />
-                                        <div className="flex flex-col">
-                                            <span className="text-small">{guildeUser.guildes.nom}</span>
-                                        </div>
-                                    </div>
-                                </SelectItem>
-                            ))}
-                        </Select>
+                        <PostInputGuildsListBox setGuilde={setGuilde} guildesUser={guildesUser} />
                     }
                     <div className='relative'>
-                        <Textarea aria-label='titre' id="PostInputTitle" minRows={1} classNames={{ inputWrapper: "bg-transparent group-data-[focus=true]:bg-opacity-30 data-[hover=true]:bg-opacity-30 h-auto pb-5", input: "font-bold" }} value={titre} placeholder="Titre..." maxLength={limite.titre} onChange={(e) => handleChangeTitle(e)}>
+                        <Textarea aria-label='titre' id="PostInputTitle" minRows={1} classNames={{ inputWrapper: "bg-transparent group-data-[focus=true]:bg-opacity-30 data-[hover=true]:bg-opacity-30 pb-5 h-auto", input: "font-bold" }} value={titre} placeholder="Titre..." maxLength={limite.titre} onChange={(e) => handleChangeTitle(e)} >
 
                         </Textarea>
                         <div className={`CharCountTitleNewPostWrapper absolute bottom-1 right-4 text-[10px] text-[#7c7c7c] ${titre.length > limite.titre ? 'text-red-500' : ''}`}>
@@ -100,7 +76,7 @@ const PostInput = ({ id_guilde, index, guildesUser }: PostInputProps) => {
                         </div>
                     </div>
                     <div className='relative'>
-                        <Textarea aria-label='contenu' id="PostInputContent" classNames={{ inputWrapper: "bg-transparent group-data-[focus=true]:bg-opacity-30 data-[hover=true]:bg-opacity-30 h-auto pb-5" }} placeholder="Contenu..." value={contenu} maxLength={limite.contenu} onChange={(e) => handleChangeContent(e)}>
+                        <Textarea aria-label='contenu' id="PostInputContent" minRows={3} classNames={{ inputWrapper: "bg-transparent group-data-[focus=true]:bg-opacity-30 data-[hover=true]:bg-opacity-30 h-auto  pb-5" }} placeholder="Contenu..." value={contenu} maxLength={limite.contenu} onChange={(e) => handleChangeContent(e)} >
 
                         </Textarea>
                         <div className={`CharCountContenuNewPostWrapper absolute bottom-1 right-4 text-[10px] text-[#7c7c7c]  ${contenu.length > limite.contenu ? 'text-red-500' : ''}`}>

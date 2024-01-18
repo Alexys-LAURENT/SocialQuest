@@ -4,18 +4,18 @@ import PostsWrapper from '@/components/Home/PostsWrapper';
 import { getProfileConnected } from '@/utils/getProfileConnected'
 import { getAllPosts } from '@/utils/getAllPosts'
 import { getGuildesUser } from '@/utils/getGuildesUser'
-
+import { Suspense } from 'react'
+import PostsWrapperSkeleton from '@/components/Skeletons/PostsWrapperSkeleton';
 
 export default async function Index() {
 
 
   const user = await getProfileConnected()
-  const posts = await getAllPosts()
   const guildesUser = await getGuildesUser()
 
 
   return (
-    <div className="flex max-w-[1280px] w-full p-4 gap-6">
+    <div className={`flex max-w-[1280px] w-full p-4 gap-6`}>
 
       <div className="hidden lg:flex min-w-[17rem]">
         <div className="w-full flex flex-col bg-[#11100e] rounded-md text-xl font-semibold h-fit">
@@ -32,11 +32,13 @@ export default async function Index() {
       </div>
 
 
-      <div className="flex flex-col w-full gap-6 lg:gap-10">
+      <div className={`flex flex-col w-full gap-6 lg:gap-10 `}>
 
         <TopTabs user={user} guildesUser={guildesUser} />
 
-        <PostsWrapper posts={posts} user={user} />
+        <Suspense fallback={<PostsWrapperSkeleton />}>
+          <PostsWrapper user={user} getPost={getAllPosts} />
+        </Suspense>
       </div>
 
       <div className="hidden md:flex flex-col min-w-[17rem] gap-4 h-fit">

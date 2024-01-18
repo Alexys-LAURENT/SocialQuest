@@ -8,11 +8,10 @@ const GuildPostsWrapper = async ({
     params: { guildName: string }
 }) => {
     const user = await getProfileConnected()
-    const posts = await getAllPostsFromGuild(params.guildName[0])
 
     return (
         <div>
-            <PostsWrapper posts={posts} user={user} />
+            <PostsWrapper getPost={() => getAllPostsFromGuild(params.guildName[0])} user={user} />
         </div>
     );
 };
