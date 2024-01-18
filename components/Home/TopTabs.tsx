@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Profile } from '@/app/types/entities';
 import PostInput from '../PostInput';
 
-const TopTabs = ({ user, guildesUser }: { user: Profile, guildesUser: any }) => {
+const TopTabs = ({ user, guildesUser }: { user: Profile | null, guildesUser: any }) => {
     return (
         <div className="flex-col items-center justify-center">
             <Tabs aria-label="Options" defaultSelectedKey="NewPost" classNames={{ panel: 'px-0' }} className='lg:hidden flex justify-center items-center'>

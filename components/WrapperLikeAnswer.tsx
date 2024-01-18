@@ -7,7 +7,7 @@ import { ExtendedPost, Profile } from '@/app/types/entities';
 import { ChatBubbleLeftIcon, HeartIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 
-const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile }) => {
+const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile | null }) => {
     const router = useRouter();
     const [likesCount, setLikesCount] = useState(post.likesCount)
     const [answersCount, setAnswersCount] = useState(post.answersCount)
@@ -71,13 +71,13 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile }
             await supabase
                 .from('likes')
                 .delete()
-                .match({ id_user: user.id_user, id_post: post.id_post }) // Utiliser l'ID de l'utilisateur connecté
+                .match({ id_user: user!.id_user, id_post: post.id_post }) // Utiliser l'ID de l'utilisateur connecté
 
         } else {
             // Like
             await supabase
                 .from('likes')
-                .insert({ id_user: user.id_user, id_post: post.id_post }) // Utiliser l'ID de l'utilisateur connecté
+                .insert({ id_user: user!.id_user, id_post: post.id_post }) // Utiliser l'ID de l'utilisateur connecté
 
         }
 

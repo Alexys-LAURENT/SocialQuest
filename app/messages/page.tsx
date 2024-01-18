@@ -9,11 +9,11 @@ const page = async () => {
     const user = await getUserConnected()
     const userProfil = await getProfileConnected(user)
 
-    const discussions = await getAllDiscussions(userProfil, user!)
+    const discussions = await getAllDiscussions(userProfil!, user!)
 
     const refetchDiscussions = async () => {
         "use server"
-        return await getAllDiscussions(userProfil, user!)
+        return await getAllDiscussions(userProfil!, user!)
     }
 
 

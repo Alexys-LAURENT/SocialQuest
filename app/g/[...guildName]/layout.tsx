@@ -5,8 +5,14 @@ import { redirect } from 'next/navigation'
 import { getGuildInfos } from '@/utils/getGuildInfos';
 import JoinQuitButton from '@/components/guildes/JoinQuitButton';
 import { getProfileConnected } from '@/utils/getProfileConnected';
-import PostInput from '@/components/PostInput';
 import EditGuildButton from '@/components/guildes/EditGuildButton';
+import dynamic from 'next/dynamic'
+
+
+const DynamicPostInput = dynamic(() => import('@/components/PostInput'))
+
+
+
 const layout = async ({
     children,
     params, guildactivities, guildwars
@@ -72,7 +78,7 @@ const layout = async ({
 
                 <div className="flex flex-col w-full gap-6 lg:gap-10">
 
-                    {!params.guildName[1] && user && <PostInput id_guilde={guilde!.id_guilde} />}
+                    {!params.guildName[1] && user && <DynamicPostInput id_guilde={guilde!.id_guilde} />}
                     {params.guildName[1] === "activities" && guildactivities}
                     {params.guildName[1] === "guildwars" && guildwars}
                     {!params.guildName[1] && children}

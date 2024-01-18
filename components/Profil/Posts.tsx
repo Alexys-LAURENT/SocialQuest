@@ -1,7 +1,10 @@
 import React from 'react';
 import { ExtendedPost } from '@/app/types/entities'
 import { Profile } from '@/app/types/entities'
-import Post from '@/components/Post';
+import dynamic from 'next/dynamic'
+
+const DynamicPost = dynamic(() => import('@/components/Post'))
+
 
 const Posts = ({ userProfile, isUserProfil, posts }: { userProfile: Profile, isUserProfil: boolean, posts: ExtendedPost[] }) => {
 
@@ -11,7 +14,7 @@ const Posts = ({ userProfile, isUserProfil, posts }: { userProfile: Profile, isU
             <div className="flex flex-col gap-6">
                 {posts.length > 0 ? (
                     posts?.map((post: ExtendedPost) => (
-                        <Post key={post.id_post} post={post} user={userProfile} />
+                        <DynamicPost key={post.id_post} post={post} user={userProfile} />
 
                     ))
                 ) : (

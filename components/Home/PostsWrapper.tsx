@@ -1,10 +1,12 @@
 "use client"
 import React from 'react';
-import Post from '@/components/Post';
+// import Post from '@/components/Post';
 import { ExtendedPost, Profile } from '@/app/types/entities';
+import dynamic from 'next/dynamic'
 
+const Post = dynamic(() => import('@/components/Post'))
 
-const PostsWrapper = ({ posts, user }: { posts: ExtendedPost[], user: Profile }) => {
+const PostsWrapper = ({ posts, user }: { posts: ExtendedPost[], user: Profile | null }) => {
     return (
         <div className="w-full flex flex-col gap-4 mb-4">
             {posts?.length !== 0 ? (

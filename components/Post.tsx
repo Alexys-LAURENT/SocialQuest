@@ -8,7 +8,7 @@ import WrapperLikeAnswer from './WrapperLikeAnswer';
 import { createClient } from '@/utils/supabase/client';
 import { ToasterContext } from '@/app/context/ToasterContext';
 import { useRouter } from 'next/navigation';
-export default function Post({ user, post }: { user: Profile, post: ExtendedPost }) {
+export default function Post({ user, post }: { user: Profile | null, post: ExtendedPost }) {
 
     const router = useRouter()
     const { success } = useContext(ToasterContext)

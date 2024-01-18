@@ -1,10 +1,6 @@
 import Link from 'next/link'
 import TopTabs from '@/components/Home/TopTabs'
-import { cookies } from 'next/headers'
-import { createClient } from '@/utils/supabase/server'
-import { ExtendedPost, Profile } from '@/app/types/entities'
 import PostsWrapper from '@/components/Home/PostsWrapper';
-import { getUserConnected } from '@/utils/getUserConnected'
 import { getProfileConnected } from '@/utils/getProfileConnected'
 import { getAllPosts } from '@/utils/getAllPosts'
 import { getGuildesUser } from '@/utils/getGuildesUser'

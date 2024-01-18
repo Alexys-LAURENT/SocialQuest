@@ -5,9 +5,13 @@ import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { Avatar } from '@nextui-org/react'
 import { notFound } from 'next/navigation'
-import ProfilPicture from '@/components/Profil/ProfilPicture'
+// import ProfilPicture from '@/components/Profil/ProfilPicture'
 import { ExtendedPost } from '@/app/types/entities'
 import { getUserConnected } from '@/utils/getUserConnected'
+import dynamic from 'next/dynamic'
+
+const DynamicProfilPicture = dynamic(() => import('@/components/Profil/ProfilPicture'))
+
 
 export default async function Profil({ params }: { params: { username: string } }) {
   const cookieStore = cookies()
@@ -54,7 +58,7 @@ export default async function Profil({ params }: { params: { username: string } 
 
       <div className="relative w-full min-h-[7rem] max-w-[1280px]">
         <div className="flex relative -top-14 md:-top-20 left-10 md:left-20 lg:left-40 gap-2 md:gap-4 transition-all duration-500">
-          {isUserProfil && <ProfilPicture isUserProfil={isUserProfil} />}
+          {isUserProfil && <DynamicProfilPicture isUserProfil={isUserProfil} />}
           <Avatar src={userProfile?.avatar_url} className={`${isUserProfil ? 'absolute' : 'flex'} h-28 w-28 md:h-40 md:w-40 rounded-full text-large transition-all`} />
           <div className="relative flex flex-col">
             <p className="absolute w-max text-xl md:text-2xl font-semibold bottom-2 md:bottom-7">

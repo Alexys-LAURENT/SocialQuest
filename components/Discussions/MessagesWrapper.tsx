@@ -4,14 +4,17 @@ import React, { use, useContext, useEffect, useLayoutEffect, useState } from 're
 import { DiscussionContext } from '../../app/context/DiscussionContext';
 import { ArrowDownIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { createClient } from '@/utils/supabase/client';
-import MessageCard from '@/components/Discussions/MessageCard';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 import { Message } from '@/app/types/entities';
 import MessageInput from './MessageInput';
 import { Avatar } from '@nextui-org/react';
 import defaultGroup from '@/public/assets/defaultGroup.svg'
-import EditGroup from '@/components/Discussions/EditGroup';
 import Link from 'next/link';
+import dynamic from 'next/dynamic'
+
+
+const DynamicEditGroup = dynamic(() => import('@/components/Discussions/EditGroup'))
+const DynamicMessageCard = dynamic(() => import('@/components/Discussions/MessageCard'))
 
 
 const MessagesWrapper = () => {
@@ -22,6 +25,8 @@ const MessagesWrapper = () => {
     const [messages, setMessages] = useState<Message[] | null>([])
     const [profileConnected, setProfileConnected] = useState<Profile | null>(null)
     const supabase = createClient()
+
+
 
     useEffect(() => {
         if (selectedCDiscussion) {
@@ -143,13 +148,13 @@ const MessagesWrapper = () => {
             </div>
             <div className='relative w-full h-full max-h-[calc(100%-50px)] sm:max-h-[calc(100%-100px)] flex flex-col items-center '>
                 {isEditingGroup ? (
-                    <EditGroup profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} setSelectedDiscussion={setSelectedDiscussion} setIsEditingGroup={setIsEditingGroup} />
+                    <DynamicEditGroup profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} setSelectedDiscussion={setSelectedDiscussion} setIsEditingGroup={setIsEditingGroup} />
                 ) : (
                     <>
                         <div id='messages_container' className='w-11/12 h-full overflow-y-auto' >
                             {/* message */}
                             {messages && messages.map((item, index) => (
-                                <MessageCard key={`message-${index}`} index={index} item={item} profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} tooltipDeleteOpen={tooltipDeleteOpen} setTooltipDeleteOpen={setTooltipDeleteOpen} tooltipOthersOpen={tooltipOthersOpen} setTooltipOthersOpen={setTooltipOthersOpen} tooltipUserOpen={tooltipUserOpen} setTooltipUserOpen={setTooltipUserOpen} nextMessage={{ id_user: messages[index + 1]?.id_user, timestamp: messages[index + 1]?.created_at }} prevMessage={{ id_user: messages[index - 1]?.id_user, timestamp: messages[index - 1]?.created_at }} />
+                                <DynamicMessageCard key={`message-${index}`} index={index} item={item} profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} tooltipDeleteOpen={tooltipDeleteOpen} setTooltipDeleteOpen={setTooltipDeleteOpen} tooltipOthersOpen={tooltipOthersOpen} setTooltipOthersOpen={setTooltipOthersOpen} tooltipUserOpen={tooltipUserOpen} setTooltipUserOpen={setTooltipUserOpen} nextMessage={{ id_user: messages[index + 1]?.id_user, timestamp: messages[index + 1]?.created_at }} prevMessage={{ id_user: messages[index - 1]?.id_user, timestamp: messages[index - 1]?.created_at }} />
                             ))}
                         </div>
                         <MessageInput supabase={supabase} selectedCDiscussion={selectedCDiscussion} profileConnected={profileConnected} />
