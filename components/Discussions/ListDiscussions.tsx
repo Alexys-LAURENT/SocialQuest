@@ -17,7 +17,7 @@ const ListDiscussions = ({ initDiscussions, refetchDiscussions }: { initDiscussi
     const [isOpen, setOpen] = React.useState(false);
     const onOpenChange = (open: boolean) => setOpen(open);
     const [profileConnected, setProfileConnected] = React.useState<Profile | null>(null);
-    const { selectedCDiscussion, setSelectedDiscussion, setIsEditingGroup, setComponentReloaded } = useContext(DiscussionContext);
+    const { selectedCDiscussion, setSelectedDiscussion, setIsEditingGroup, setComponentReloaded, setMessages } = useContext(DiscussionContext);
     const supabase = createClient()
 
 

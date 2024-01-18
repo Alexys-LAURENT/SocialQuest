@@ -1,12 +1,14 @@
 "use client"
 
 import { createContext, useState, useContext } from "react";
-import { DiscussionTab } from "../types/entities";
+import { DiscussionTab, Message } from "../types/entities";
 import { createClient } from "@/utils/supabase/client";
 import { ToasterContext } from "./ToasterContext";
 import { useRouter } from "next/navigation";
 
 export const DiscussionContext = createContext<{
+    messages: Message[] | null,
+    setMessages: (messages: Message[] | null) => void,
     selectedCDiscussion: DiscussionTab | null,
     setSelectedDiscussion: (conversation: DiscussionTab | null) => void,
     isEditingGroup: boolean,
@@ -17,6 +19,8 @@ export const DiscussionContext = createContext<{
     removeUserFromSelectedDiscussion: (id: string) => Promise<void>,
     updateCurrentSelectedDiscussion: (nom: string) => Promise<void>
 }>({
+    messages: null,
+    setMessages: (messages: Message[] | null) => { },
     selectedCDiscussion: null,
     setSelectedDiscussion: (conversation: DiscussionTab | null) => { },
     isEditingGroup: false,
@@ -29,6 +33,7 @@ export const DiscussionContext = createContext<{
 });
 
 const DiscussionProvider = ({ children }: { children: React.ReactNode }) => {
+    const [messages, setMessages] = useState<Message[] | null>(null)
     const [selectedCDiscussion, setSelectedDiscussion] = useState<DiscussionTab | null>(null);
     const [isEditingGroup, setIsEditingGroup] = useState<boolean>(false)
     const [componentReloaded, setComponentReloaded] = useState<boolean>(true)
@@ -89,7 +94,7 @@ const DiscussionProvider = ({ children }: { children: React.ReactNode }) => {
 
 
     return (
-        <DiscussionContext.Provider value={{ selectedCDiscussion, setSelectedDiscussion, isEditingGroup, setIsEditingGroup, addUsersToSelectedDiscussion, removeUserFromSelectedDiscussion, updateCurrentSelectedDiscussion, componentReloaded, setComponentReloaded }}>
+        <DiscussionContext.Provider value={{ selectedCDiscussion, setSelectedDiscussion, isEditingGroup, setIsEditingGroup, addUsersToSelectedDiscussion, removeUserFromSelectedDiscussion, updateCurrentSelectedDiscussion, componentReloaded, setComponentReloaded, messages, setMessages }}>
             {children}
         </DiscussionContext.Provider>
     )
