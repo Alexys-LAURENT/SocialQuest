@@ -24,5 +24,5 @@ export async function getProfileConnected(user?: User | null) {
             .single()
         return profile as unknown as Profile
     }
-    throw new Error('No user connected')
+    return null
 }

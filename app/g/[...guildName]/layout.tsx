@@ -40,10 +40,10 @@ const layout = async ({
                 </div>
                 <div className="flex absolute bottom-2 md:top-5 left-10 md:right-20 lg:right-40 md:left-auto gap-4 md:transition-all">
                     {
-                        guilde.created_by !== user.id_user ?
-                            <JoinQuitButton guilde={guilde} user={user} />
-                            :
+                        guilde.created_by === user?.id_user ?
                             <EditGuildButton />
+                            :
+                            <JoinQuitButton guilde={guilde} user={user} />
                     }
                 </div>
             </div>
