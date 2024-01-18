@@ -18,11 +18,10 @@ const DynamicMessageCard = dynamic(() => import('@/components/Discussions/Messag
 
 
 const MessagesWrapper = () => {
-    const { selectedCDiscussion, setSelectedDiscussion, isEditingGroup, setIsEditingGroup, componentReloaded, setComponentReloaded } = useContext(DiscussionContext);
+    const { selectedCDiscussion, setSelectedDiscussion, isEditingGroup, setIsEditingGroup, componentReloaded, setComponentReloaded, messages, setMessages } = useContext(DiscussionContext);
     const [tooltipDeleteOpen, setTooltipDeleteOpen] = useState<{ open: boolean, key: string }>({ open: false, key: '' })
     const [tooltipUserOpen, setTooltipUserOpen] = useState<{ open: boolean, key: string }>({ open: false, key: '' })
     const [tooltipOthersOpen, setTooltipOthersOpen] = useState<{ open: boolean, key: string }>({ open: false, key: '' })
-    const [messages, setMessages] = useState<Message[] | null>([])
     const [profileConnected, setProfileConnected] = useState<Profile | null>(null)
     const supabase = createClient()
 
@@ -53,7 +52,7 @@ const MessagesWrapper = () => {
     // prevent page breaking when rerendered while selectedDiscussion isnt null
     useEffect(() => {
         setSelectedDiscussion(null)
-        setMessages(null)
+        setMessages([{ id_message: '0', created_at: '', id_user: '', contenu: '', isDeleted: false, profiles: { username: '' } }])
         setComponentReloaded(true)
     }, [])
 
