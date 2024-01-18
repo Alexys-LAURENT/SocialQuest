@@ -30,7 +30,7 @@ export default function Post({ user, post }: { user: Profile, post: ExtendedPost
         <div className="flex flex-col border border-gray-500 rounded-md p-2 gap-1">
 
             <div className="flex gap-2">
-                <Avatar as={Link} src={post.guildes ? post.guildes.avatar_url : post.profiles.avatar_url} size='sm' className='min-h-[32px] min-w-[32px]' />
+                <Avatar src={post.guildes ? post.guildes.avatar_url : post.profiles.avatar_url} size='sm' className='min-h-[32px] min-w-[32px]' />
                 <div className="flex items-center justify-between w-full">
                     <div className="flex gap-1">
                         {post.guildes && (
@@ -81,10 +81,10 @@ export default function Post({ user, post }: { user: Profile, post: ExtendedPost
 
             <div className="flex flex-col px-10 gap-2">
                 <div>
-                    <div className={`text-md font-bold ${post.titre ? 'mb-1' : ''}`}>
+                    <div className={`text-md font-bold working-break-words ${post.titre ? 'mb-1' : ''}`}>
                         {post.titre}
                     </div>
-                    <div className="text-textLight">
+                    <div className="text-textLight working-break-words">
                         {post.contenu}
                     </div>
                 </div>
