@@ -3,8 +3,6 @@ import { NextReward, Profile } from "@/app/types/entities";
 import { Progress, Switch } from '@nextui-org/react';
 import { ArrowRightEndOnRectangleIcon, Cog8ToothIcon, CubeIcon, MoonIcon, UserIcon, ClipboardDocumentCheckIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { getNextRewards } from "@/utils/getNextRewards";
 
 
 const PopOverUserContent = ({ user, customFunction, signOut, nextRewards }: { user: Profile | null, customFunction: () => void, signOut: () => void, nextRewards: NextReward[] | null }) => {
