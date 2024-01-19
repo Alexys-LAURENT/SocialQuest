@@ -17,7 +17,7 @@ const SelectedItem = ({ profileConnected }: { profileConnected: Profile }) => {
 
     return selectedItem && selectedItem.items && selectedItem.items.id_item && (
         <div className={`min-w-[300px]  ${selectedItem ? "flex w-full md:w-[300px]" : "hidden md:flex"} flex-col bg-darkSecondary rounded-md`}>
-            <ArrowLeftIcon onClick={() => setSelectedItem(null)} className='w-6 h-6 ms-4 mt-2 inline-block md:hidden cursor-pointer' />
+            <ArrowLeftIcon onClick={() => setSelectedItem(null)} className='w-6 h-6 ms-4 mt-3 inline-block md:hidden cursor-pointer' />
             <DynamicSelectedItemContent selectedItem={selectedItem} profileConnected={profileConnected} setSelectedItem={setSelectedItem} />
         </div>
 

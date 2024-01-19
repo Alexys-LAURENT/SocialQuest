@@ -32,7 +32,17 @@ export type ExtendedPost = Post & {
     profiles: {
         username: string,
         avatar_url?: string
-        a_propos?: string
+        a_propos?: string,
+        banner_url?: string,
+        users_badges: {
+            items: {
+                nom: string,
+                type: string,
+                damage?: number,
+                id_item: string,
+                image_url: string
+            }
+        }[]
     },
     guildes: {
         nom: string,

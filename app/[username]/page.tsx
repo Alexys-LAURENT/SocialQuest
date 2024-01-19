@@ -53,11 +53,6 @@ export default async function Profil({ params }: { params: { username: string } 
               )
             })
           }
-          {/* {pageProfile.badge1 && <div className="relative overflow-hidden h-14 w-14 rounded-full "><Image src={pageProfile.badge1} alt="Userbadge" fill></Image></div>}
-          {pageProfile.badge2 && <div className="relative overflow-hidden h-14 w-14 rounded-full "><Image src={pageProfile.badge2} alt="Userbadge" fill></Image></div>}
-          {pageProfile.badge3 && <div className="relative overflow-hidden h-14 w-14 rounded-full "><Image src={pageProfile.badge3} alt="Userbadge" fill></Image></div>}
-          {pageProfile.badge4 && <div className="relative overflow-hidden h-14 w-14 rounded-full "><Image src={pageProfile.badge4} alt="Userbadge" fill></Image></div>}
-          {pageProfile.badge5 && <div className="relative overflow-hidden h-14 w-14 rounded-full "><Image src={pageProfile.badge5} alt="Userbadge" fill></Image></div>} */}
         </div>
       </div>
 

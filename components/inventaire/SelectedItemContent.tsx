@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Button, ButtonGroup } from '@nextui-org/react';
+import { Button, ButtonGroup, Chip } from '@nextui-org/react';
 import { Item, Profile } from '@/app/types/entities';
 import { useRouter } from 'next/navigation';
 import { setCurrentUserBannerUrl } from '@/utils/setCurrentUserBannerUrl';
@@ -34,21 +34,28 @@ const SelectedItemContent = ({ selectedItem, profileConnected, setSelectedItem }
     }
 
     return (
-        <div className="flex flex-col p-4 gap-4">
-            <div className="relative flex aspect-square w-full overflow-hidden rounded-lg bg-black/20 ">
+        <div className="flex flex-row flex-wrap md:flex-col p-4 gap-4">
+            <div className="relative flex aspect-square w-4/12 md:w-full overflow-hidden rounded-lg bg-black/20 ">
                 <Image className=' object-cover' src={selectedItem.items.image_url} fill alt={selectedItem.items.description} />
             </div>
-            <div className="text-3xl font-bold">
-                {selectedItem.items.nom}
-            </div>
-            <div className="text-medium">
-                {selectedItem.items.description}
-            </div>
-            {selectedItem.items.type === "arme" &&
-                <div className="text-xl">
-                    {selectedItem.items.damage} dégats
+            <div className='w-7/12 md:w-full '>
+                <div className="text-xl md:text-3xl font-bold">
+                    <span className='working-break-words'>{selectedItem.items.nom}</span>
                 </div>
-            }
+                <div className="text-base md:text-medium">
+                    <span className='working-break-words'>{selectedItem.items.description}</span>
+                </div>
+            </div>
+            <div className='flex gap-2'>
+                <Chip>
+                    {selectedItem.items.type}
+                </Chip>
+                {selectedItem.items.type === "arme" &&
+                    <Chip>
+                        {selectedItem.items.damage} dégats
+                    </Chip>
+                }
+            </div>
 
             {selectedItem.items.type !== "arme" &&
                 <ButtonGroup className='w-full'>
