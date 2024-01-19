@@ -4,7 +4,6 @@ import { ExtendedPost } from '@/app/types/entities';
 import Image from 'next/image';
 
 const PopoverUserProfile = ({ post }: { post: ExtendedPost }) => {
-    console.log(post);
     return (
         <Popover classNames={{ content: "z-10" }} placement="top" offset={10} shouldBlockScroll={true} className='mr-3 md:w-[90vw] !max-w-[17.5rem] md:!max-w-sm'>
             <PopoverTrigger>

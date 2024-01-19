@@ -20,7 +20,7 @@ const PopOverUserContent = ({ user, customFunction, signOut, nextRewards }: { us
             </div>
             <div className="flex justify-end items-center gap-1 text-end text-[#979797]">
                 {
-                    nextRewards && (
+                    nextRewards && nextRewards.length > 0 && (
                         <>
                             <div className="text-sm">Suivant : {nextRewards.length > 1 ? `${nextRewards.length} items` : nextRewards[0].items.nom}</div>
                             <div className="flex relative items-center justify-center rounded-md">

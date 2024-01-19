@@ -4,10 +4,10 @@ import { Button, Progress } from '@nextui-org/react'
 import { Image } from 'antd';
 import { CheckIcon, PencilIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { createBrowserClient } from '@supabase/ssr'
-import { Profile } from '@/app/types/entities';
+import { NextReward, Profile } from '@/app/types/entities';
 
 
-const APropos = ({ isUserProfil, user, nextRewards }: { isUserProfil: boolean, user: Profile | null, nextRewards: any }) => {
+const APropos = ({ isUserProfil, user, nextRewards }: { isUserProfil: boolean, user: Profile | null, nextRewards: NextReward[] | null }) => {
     const [isEditingAPropos, setIsEditingAPropos] = React.useState(false);
     const progressValue = (user?.xp! - user?.niveaux.xp_debut!) * 100 / (user?.niveaux.xp_fin! + 1);
 
@@ -85,7 +85,7 @@ const APropos = ({ isUserProfil, user, nextRewards }: { isUserProfil: boolean, u
             </div>
 
             {!isEditingAPropos &&
-                <div className='flex flex-col gap-2 h-[50%] bg-[#1c1c1c] rounded-md py-2 px-3'>
+                <div className='flex flex-col justify-center gap-2 h-[50%] bg-[#1c1c1c] rounded-md py-2 px-3'>
                     <div>
                         <div className="flex justify-between items-center">
                             <div className="text-sm">Level {user?.niveaux.libelle!}</div>
@@ -95,7 +95,7 @@ const APropos = ({ isUserProfil, user, nextRewards }: { isUserProfil: boolean, u
                     </div>
                     <div className="flex justify-end items-center gap-1 text-end text-[#979797]">
                         {
-                            nextRewards && (
+                            isUserProfil && nextRewards && nextRewards.length > 0 && (
                                 <>
                                     <div className="text-sm">Suivant : {nextRewards.length > 1 ? `${nextRewards.length} items` : nextRewards[0].items.nom}</div>
                                     <div className="flex relative items-center justify-center rounded-md">

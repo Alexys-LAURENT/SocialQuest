@@ -36,7 +36,7 @@ const SelectedItemContent = ({ selectedItem, profileConnected, setSelectedItem }
     return (
         <div className="flex flex-row flex-wrap md:flex-col p-4 gap-4">
             <div className="relative flex aspect-square w-4/12 md:w-full overflow-hidden rounded-lg bg-black/20 ">
-                <Image className=' object-cover' src={selectedItem.items.image_url} fill alt={selectedItem.items.description} />
+                <Image className='object-cover' src={selectedItem.items.image_url} fill alt={selectedItem.items.description} />
             </div>
             <div className='w-7/12 md:w-full '>
                 <div className="text-xl md:text-3xl font-bold">
@@ -50,14 +50,14 @@ const SelectedItemContent = ({ selectedItem, profileConnected, setSelectedItem }
                 <Chip>
                     {selectedItem.items.type}
                 </Chip>
-                {selectedItem.items.type === "arme" &&
+                {selectedItem.items.type === "Arme" &&
                     <Chip>
                         {selectedItem.items.damage} dégats
                     </Chip>
                 }
             </div>
 
-            {selectedItem.items.type !== "arme" &&
+            {selectedItem.items.type !== "Arme" &&
                 <ButtonGroup className='w-full'>
                     <EquiperBtn SelectedItem={selectedItem} profileConnected={profileConnected} onOpenChange={onOpenChange} />
                     <Button onClick={() => toggleFav()} className='px-3 min-w-0'><StarIcon className={`${selectedItem.is_favorite ? "fill-yellow-500 text-yellow-500" : ""} w-7 h-7 `} /></Button>
@@ -95,7 +95,7 @@ const EquiperBtn = ({ SelectedItem, profileConnected, onOpenChange }: { Selected
     }
 
 
-    if (SelectedItem.items.type === "banniere") {
+    if (SelectedItem.items.type === "Bannière") {
         return profileConnected.banner_url === SelectedItem.items.image_url ? (
             <Button onClick={() => handleToggleBanner(null)} variant='flat' color='danger' className='w-full'>
                 Déséquiper
@@ -107,7 +107,7 @@ const EquiperBtn = ({ SelectedItem, profileConnected, onOpenChange }: { Selected
         )
     }
 
-    if (SelectedItem.items.type === "badge") {
+    if (SelectedItem.items.type === "Badge") {
         return profileConnected.users_badges.reduce((acc, item) => { return acc || item.items.image_url === SelectedItem.items.image_url }, false) === false ? (
             <Button onClick={() => onOpenChange(true)} variant='flat' color='primary' className='w-full'>
                 Équiper

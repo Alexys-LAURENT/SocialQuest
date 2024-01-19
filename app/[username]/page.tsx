@@ -48,7 +48,9 @@ export default async function Profil({ params }: { params: { username: string } 
             pageProfile.users_badges && pageProfile.users_badges.length > 0 && pageProfile.users_badges.map((badge, index) => {
               return (
                 <Tooltip content={badge.items.nom} key={index}>
-                  <div key={index} className="relative overflow-hidden h-14 w-14 rounded-full "><Image src={badge.items.image_url} alt="Userbadge" fill></Image></div>
+                  <div key={index} className="relative overflow-hidden h-14 w-14 rounded-full ">
+                    <Image src={badge.items.image_url} alt="Userbadge" fill />
+                  </div>
                 </Tooltip>
               )
             })

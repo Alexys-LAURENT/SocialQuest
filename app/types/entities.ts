@@ -118,7 +118,7 @@ export type Item = {
         nom: string,
         id_item: string,
         created_at: string,
-        type: "banniere" | "badge" | "arme",
+        type: "Bannière" | "Badge" | "Arme",
         image_url: string,
         damage?: number,
         description: string
