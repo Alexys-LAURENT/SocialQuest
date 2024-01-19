@@ -15,6 +15,7 @@ export type Profile = {
         xp_debut: number,
         id_niveau: string
     }
+    users_badges: Item[]
 }
 
 export type Post = {
@@ -102,11 +103,14 @@ export type Notification = {
 }
 
 export type Item = {
-    nom: string,
-    id_item: string,
-    created_at: string,
-    type: "banniere" | "badge" | "arme",
-    image_url: string,
-    damage?: number,
-    description: string
+    is_favorite?: boolean,
+    items: {
+        nom: string,
+        id_item: string,
+        created_at: string,
+        type: "banniere" | "badge" | "arme",
+        image_url: string,
+        damage?: number,
+        description: string
+    }
 }

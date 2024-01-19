@@ -19,7 +19,7 @@ export async function getPageProfile(username: string, user?: User | null) {
 
         const { data: profile, error } = await supabase
             .from('profiles')
-            .select("*, niveaux(*)")
+            .select("*, niveaux(*), users_badges(items(*))")
             .eq('username', username)
             .single()
         return profile as unknown as Profile

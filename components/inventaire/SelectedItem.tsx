@@ -1,33 +1,26 @@
 "use client";
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { useContext } from 'react';
 import { InventaireContext } from '@/app/context/InventaireContext';
-import Image from 'next/image';
-import { Button } from '@nextui-org/react';
+import dynamic from 'next/dynamic'
+import { Profile } from '@/app/types/entities';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+const DynamicSelectedItemContent = dynamic(() => import('./SelectedItemContent'))
 
-const SelectedItem = () => {
-    const { selectedItem } = useContext(InventaireContext);
-    console.log(selectedItem);
-    return (
-        <div className="flex flex-col p-4 gap-4">
-            <div className="relative flex w-full aspect-auto">
-                <Image className='rounded-lg' src={selectedItem.image_url} alt={selectedItem.description} width={300} height={300} />
-            </div>
-            <div className="text-3xl font-bold">
-                {selectedItem.nom}
-            </div>
-            <div className="text-xl">
-                {selectedItem.description}
-            </div>
-            {selectedItem.type === "arme" &&
-                <div className="text-xl">
-                    {selectedItem.damage} dégats
-                </div>
-            }
-            <Button variant='flat' color='primary' className='w-full'>
-                Équiper
-            </Button>
+
+const SelectedItem = ({ profileConnected }: { profileConnected: Profile }) => {
+    const { selectedItem, setSelectedItem } = useContext(InventaireContext);
+
+    useLayoutEffect(() => {
+        setSelectedItem(null)
+    }, [])
+
+    return selectedItem && selectedItem.items && selectedItem.items.id_item && (
+        <div className={`min-w-[300px]  ${selectedItem ? "flex w-full md:w-[300px]" : "hidden md:flex"} flex-col bg-darkSecondary rounded-md`}>
+            <ArrowLeftIcon onClick={() => setSelectedItem(null)} className='w-6 h-6 ms-4 mt-2 inline-block md:hidden cursor-pointer' />
+            <DynamicSelectedItemContent selectedItem={selectedItem} profileConnected={profileConnected} setSelectedItem={setSelectedItem} />
         </div>
+
     );
 };
 

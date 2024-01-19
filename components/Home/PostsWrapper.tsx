@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic'
 const Post = dynamic(() => import('@/components/Post'))
 
 const PostsWrapper = async ({ user, getPost }: { user: Profile | null, getPost: any }) => {
-    console.log(getPost)
     const posts = await getPost()
 
     return (

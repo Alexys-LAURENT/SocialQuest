@@ -1,55 +1,73 @@
 "use client"
 import React, { useEffect } from 'react';
-import { Item } from '@/app/types/entities';
+import { Item, Profile } from '@/app/types/entities';
 import { Card, CardBody, Tab, Tabs } from "@nextui-org/react";
 import Image from 'next/image';
 import { useContext } from 'react';
 import { InventaireContext } from '@/app/context/InventaireContext';
-
-const TabsFiltre = ({ inventory }: { inventory: Item[] }) => {
+import { StarIcon } from '@heroicons/react/24/outline';
+import { CheckCircleIcon } from '@heroicons/react/24/solid';
+const TabsFiltre = ({ inventory, profileConnected }: { inventory: Item[], profileConnected: Profile }) => {
     const { selectedItem, setSelectedItem } = useContext(InventaireContext)
+
+
     const tabsList = [{
         title: "Tout",
         key: "Tout",
         data: inventory
     },
     {
+        title: "Favoris",
+        key: "Favoris",
+        data: inventory?.filter((item: Item) => item.is_favorite)
+    },
+    {
+        title: "Équipés",
+        key: "Équipés",
+        data: inventory?.filter((item: Item) => item.items.image_url === profileConnected.banner_url || profileConnected.users_badges.reduce((acc, badge) => { return acc || badge.items.image_url === item.items.image_url }, false))
+    },
+    {
         title: "Bannières",
         key: "Bannières",
-        data: inventory?.filter((item: any) => item.items.type === "banniere")
+        data: inventory?.filter((item: Item) => item.items.type === "banniere")
     },
     {
         title: "Badges",
         key: "Badges",
-        data: inventory?.filter((item: any) => item.items.type === "badge")
+        data: inventory?.filter((item: Item) => item.items.type === "badge")
     },
     {
         title: "Items",
         key: "Items",
-        data: inventory?.filter((item: any) => item.items.type === "item")
-    }]
+        data: inventory?.filter((item: Item) => item.items.type === "arme")
+    }
+    ]
 
     return (
-        <Tabs aria-label="Options" items={tabsList} classNames={{ panel: "p-0" }}>
-            {(item) => (
-                <Tab key={item.key} title={item.title}>
-                    <Card className='bg-transparent shadow-none'>
-                        <CardBody className="p-0 w-full grid itemsWrapper justify-center gap-3 overflow-y-auto transition-all duration-500 ease-in-out">
-                            {item.data?.map((item: any) => {
-                                return (
-                                    <div key={item.items.id_item} className={`cursor-pointer relative aspect-square rounded-lg ${selectedItem.id_item === item.items.id_item ? 'border-2 border-primary' : ''}`}
-                                        onClick={() => { setSelectedItem(item.items) }}>
-                                        <Image className='rounded-lg' src={item.items.image_url} alt={item.items.nom} fill layout="fill" objectFit="cover" sizes='100%' />
-                                    </div>
-                                )
+        <div className={` ${selectedItem ? "hidden md:flex" : ""} flex w-full h-full gap-6 flex-col  transition-all`}>
+            <Tabs className={`${selectedItem ? "hidden md:flex" : ""}`} aria-label="Options" items={tabsList} classNames={{ panel: "p-0" }} onSelectionChange={() => setSelectedItem(null)}>
+                {(item) => (
+                    <Tab className={`${selectedItem ? "hidden md:flex flex-col" : ""}`} key={item.key} title={item.title} >
+                        <Card className='bg-transparent shadow-none'>
+                            <CardBody className="p-1 w-full grid itemsWrapper justify-start gap-3 overflow-y-auto transition-all duration-500 ease-in-out">
+                                {item.data?.map((item: Item) => {
+                                    return (
+                                        <div key={item.items.id_item} className={`cursor-pointer relative aspect-square overflow-hidden rounded-lg ${selectedItem && selectedItem.items && selectedItem.items.id_item === item.items.id_item ? 'border-2 border-primary' : ''}`}
+                                            onClick={() => { setSelectedItem(item) }}>
+                                            {item.is_favorite && <StarIcon className='absolute top-1 right-1 z-50 w-4 h-4 fill-yellow-600 text-yellow-500' />}
+                                            {item.items.image_url === profileConnected.banner_url && <CheckCircleIcon className='absolute top-1 left-1 z-50 w-4 h-4 fill-primary text-primary' />}
+                                            {profileConnected.users_badges.reduce((acc, badge) => { return acc || badge.items.image_url === item.items.image_url }, false) && <CheckCircleIcon className='absolute top-1 left-1 z-50 w-4 h-4 fill-primary text-primary' />}
+                                            <Image src={item.items.image_url} alt={item.items.nom} fill objectFit="cover" sizes='100%' />
+                                        </div>
+                                    )
 
-                            })}
-                        </CardBody>
-                    </Card>
-                </Tab>
-            )
-            }
-        </Tabs >
+                                })}
+                            </CardBody>
+                        </Card>
+                    </Tab>
+                )}
+            </Tabs >
+        </div>
     );
 };
 
