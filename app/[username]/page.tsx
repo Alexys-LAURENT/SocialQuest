@@ -61,7 +61,7 @@ export default async function Profil({ params }: { params: { username: string } 
 
 
 
-      <div className="flex flex-col w-full px-6 md:px-12 max-w-[1280px] mb-24 md:mb-12">
+      <div className="flex flex-col w-full px-6 md:px-12 max-w-[1280px] pb-6">
         <div className="flex flex-col-reverse gap-6 sm:gap-12 lg:flex-row my-6 md:my-12">
           <Compagnons isUserProfil={isUserProfil} />
           <Infos isUserProfil={isUserProfil} user={pageProfile} />
@@ -72,7 +72,7 @@ export default async function Profil({ params }: { params: { username: string } 
           <div className="text-2xl w-full font-semibold text-start">
             {isUserProfil ? "Mes Posts" : "Posts"}
           </div>
-          <Posts userProfile={pageProfile} isUserProfil={isUserProfil} posts={posts as ExtendedPost[]} />
+          <Posts userProfile={userProfile} isUserProfil={isUserProfil} posts={posts as ExtendedPost[]} />
         </div>
       </div>
     </div >

@@ -52,25 +52,27 @@ const NavBar = ({ user, nextRewards }: { user: Profile | null, nextRewards: Next
         <Navbar maxWidth="2xl" className="py-2 bg-bgDark" position="sticky">
             <NavbarContent justify="start">
                 <NavbarBrand className="hidden md:flex text-3xl font-bold">
-                    <span className="cursor-pointer"
+                    <Link
+                        href="/"
                         onClick={() => {
                             (pathName !== "/") ? router.push("/") : router.refresh()
                         }}
                     >
                         SOCIAL QUEST
-                    </span>
+                    </Link>
                 </NavbarBrand>
                 <NavbarItem className="flex md:hidden" onClick={() => showDrawer('NavMenu')}>
                     <Bars3Icon className="w-6 h-6 cursor-pointer" />
                 </NavbarItem>
                 <NavbarBrand className="md:hidden flex text-2xl font-bold">
-                    <span className="cursor-pointer"
+                    <Link
+                        href="/"
                         onClick={() => {
                             (pathName !== "/") ? router.push("/") : router.refresh()
                         }}
                     >
                         SQ
-                    </span>
+                    </Link>
                 </NavbarBrand>
                 <NavbarItem>
                     <MagnifyingGlassIcon className="flex sm:hidden w-6 h-6" />
@@ -113,7 +115,7 @@ const NavBar = ({ user, nextRewards }: { user: Profile | null, nextRewards: Next
                 ) : (
                     <NavbarItem>
                         <Button as={Link} color="primary" href="/login" variant="flat">
-                            Login
+                            Connexion
                         </Button>
                     </NavbarItem>
                 )}

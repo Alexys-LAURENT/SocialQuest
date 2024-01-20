@@ -1,6 +1,7 @@
 "use client"
 import { useContext } from 'react';
-import { Avatar, Button, Link, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
+import { Avatar, Button, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
+import Link from 'next/link';
 import { EllipsisVerticalIcon, FlagIcon, ShareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { ExtendedPost, Profile } from '@/app/types/entities';
 import PopoverUserProfile from '@/components/PopoverUserProfile';

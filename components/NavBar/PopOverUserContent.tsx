@@ -100,7 +100,7 @@ const PopOverUserContent = ({ user, customFunction, signOut, nextRewards }: { us
                     </div>
                 </div>
                 <Link
-                    href="#"
+                    href="/"
                     className="px-1 py-1 flex gap-2 items-center hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md cursor-pointer"
                     onClick={() => {
                         customFunction();

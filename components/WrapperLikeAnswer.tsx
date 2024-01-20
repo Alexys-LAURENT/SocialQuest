@@ -1,11 +1,12 @@
 'use client'
-import React, { useEffect } from 'react';
+import React, { use, useEffect } from 'react';
 import { Button } from '@nextui-org/react';
 import { useState } from 'react';
 import { createBrowserClient } from '@supabase/ssr'
 import { ExtendedPost, Profile } from '@/app/types/entities';
 import { ChatBubbleLeftIcon, HeartIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile | null }) => {
     const router = useRouter();
@@ -52,6 +53,12 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile |
         }
     }, [])
 
+    // fix state not updating when user disconnect on index page
+    useEffect(() => {
+        if (!user) setUserLikedPost(false)
+    }
+        , [user])
+
 
     const handletoggleLike = () => {
         if (user === null) {
@@ -97,12 +104,25 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile |
 
     return (
         <div className='flex gap-4'>
-            <Button variant='flat' color='primary' className='min-w-0 h-7 w-max rounded-sm text-textLight px-2' onClick={handletoggleLike}>
-                <HeartIcon className={`w-5 h-5 ${userLikedPost ? 'text-red-500 fill-red-500' : ''} transition-all ease-in-out`} /> {formatCount(likesCount)}
-            </Button>
-            <Button variant='flat' color='primary' className='min-w-0 h-7 w-max rounded-sm text-textLight px-2'>
-                <ChatBubbleLeftIcon className="w-5 h-5" /> {answersCount}
-            </Button>
+            {user ? (
+                <>
+                    <Button variant='flat' color='primary' className='min-w-0 h-7 w-max rounded-sm text-textLight px-2' onClick={handletoggleLike}>
+                        <HeartIcon className={`w-5 h-5 ${userLikedPost ? 'text-red-500 fill-red-500' : ''} transition-all ease-in-out`} /> {formatCount(likesCount)}
+                    </Button>
+                    <Button variant='flat' color='primary' className='min-w-0 h-7 w-max rounded-sm text-textLight px-2'>
+                        <ChatBubbleLeftIcon className="w-5 h-5" /> {answersCount}
+                    </Button>
+                </>
+            ) : (
+                <>
+                    <Button as={Link} variant='flat' color='primary' className='min-w-0 h-7 w-max rounded-sm text-textLight px-2' href='/login'>
+                        <HeartIcon className={`w-5 h-5 ${userLikedPost ? 'text-red-500 fill-red-500' : ''} transition-all ease-in-out`} /> {formatCount(likesCount)}
+                    </Button>
+                    <Button variant='flat' color='primary' className='min-w-0 h-7 w-max rounded-sm text-textLight px-2'>
+                        <ChatBubbleLeftIcon className="w-5 h-5" /> {answersCount}
+                    </Button>
+                </>
+            )}
         </div>
     );
 };

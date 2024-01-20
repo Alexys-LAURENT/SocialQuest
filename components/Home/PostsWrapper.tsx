@@ -8,7 +8,7 @@ const PostsWrapper = async ({ user, getPost }: { user: Profile | null, getPost: 
     const posts = await getPost()
 
     return (
-        <div className="w-full flex flex-col gap-4 mb-4">
+        <div className="w-full flex flex-col gap-4">
             {posts?.length !== 0 ? (
                 posts?.map((post: ExtendedPost) => (
                     <>
