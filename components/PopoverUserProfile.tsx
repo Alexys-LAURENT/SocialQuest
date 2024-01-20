@@ -1,10 +1,11 @@
 import React from 'react';
 import { Avatar, Button, Link, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
 import { ExtendedPost } from '@/app/types/entities';
+import Image from 'next/image';
 
 const PopoverUserProfile = ({ post }: { post: ExtendedPost }) => {
     return (
-        <Popover placement="top" offset={10} shouldBlockScroll={true} className='mr-3 md:w-[90vw] !max-w-[17.5rem] md:!max-w-sm'>
+        <Popover classNames={{ content: "z-10" }} placement="top" offset={10} shouldBlockScroll={true} className='mr-3 md:w-[90vw] !max-w-[17.5rem] md:!max-w-sm'>
             <PopoverTrigger>
                 <div className="cursor-pointer text-textLight">
                     @{post.profiles.username}
@@ -12,16 +13,19 @@ const PopoverUserProfile = ({ post }: { post: ExtendedPost }) => {
             </PopoverTrigger>
             <PopoverContent className='p-0 bg-darkSecondary'>
                 <div className="flex flex-col w-full h-full">
-                    <div className="w-full min-h-[4rem] md:min-h-[5rem] bg-white bg-cover bg-center transition-all rounded-t-md" style={{ backgroundImage: "url('/assets/Jane.png')" }}></div>
+                    <div className="w-full min-h-[4rem] md:min-h-[5rem] bg-white bg-cover bg-center transition-all rounded-t-md" style={{ backgroundImage: `url(${post.profiles.banner_url})` }}></div>
                     <div className="relative w-full min-h-[1.5rem] md:min-h-[3rem]">
                         <div className="flex absolute -top-7 md:-top-10 left-5 gap-2 transition-all duration-500">
                             <Avatar src={post.profiles.avatar_url} className="flex h-14 w-14 md:h-20 md:w-20 rounded-full text-large transition-all" />
                         </div>
-                        <div className="flex absolute -top-6 md:-top-8 right-5 gap-2 md:transition-all">
-                            <div className="h-5 w-5 md:h-7 md:w-7 rounded-full bg-green-500"></div>
-                            <div className="h-5 w-5 md:h-7 md:w-7 rounded-full bg-yellow-500"></div>
-                            <div className="h-5 w-5 md:h-7 md:w-7 rounded-full bg-pink-500"></div>
-                            <div className="h-5 w-5 md:h-7 md:w-7 rounded-full bg-blue-500"></div>
+                        <div className="flex absolute -top-5 md:-top-7 right-5 gap-2 md:transition-all">
+                            {
+                                post.profiles.users_badges && post.profiles.users_badges.length > 0 && post.profiles.users_badges.map((badge, index) => {
+                                    return (
+                                        <div key={index} className="relative overflow-hidden w-9 h-9 md:h-12 md:w-12 rounded-full "><Image src={badge.items.image_url} alt="Userbadge" fill></Image></div>
+                                    )
+                                })
+                            }
                         </div>
                     </div>
                     <div className="flex flex-col p-4 gap-4">

@@ -15,6 +15,7 @@ export type Profile = {
         xp_debut: number,
         id_niveau: string
     }
+    users_badges: Item[]
 }
 
 export type Post = {
@@ -31,7 +32,17 @@ export type ExtendedPost = Post & {
     profiles: {
         username: string,
         avatar_url?: string
-        a_propos?: string
+        a_propos?: string,
+        banner_url?: string,
+        users_badges: {
+            items: {
+                nom: string,
+                type: string,
+                damage?: number,
+                id_item: string,
+                image_url: string
+            }
+        }[]
     },
     guildes: {
         nom: string,
@@ -99,4 +110,17 @@ export type Notification = {
     is_read: boolean,
     titre?: string,
     link?: string
+}
+
+export type Item = {
+    is_favorite?: boolean,
+    items: {
+        nom: string,
+        id_item: string,
+        created_at: string,
+        type: "Bannière" | "Badge" | "Arme",
+        image_url: string,
+        damage?: number,
+        description: string
+    }
 }

@@ -64,7 +64,7 @@ const ListDiscussions = ({ initDiscussions, refetchDiscussions }: { initDiscussi
 
 
     return discussions && (
-        <div className={`${selectedCDiscussion ? 'hidden sm:flex' : ' flex '} w-full sm:w-3/12 min-w-[200px] h-full border-e-2 border-white/20 no-scrollbar  flex-col flex-nowrap overflow-y-auto gap-4 pb-3 px-3`}>
+        <div className={`${selectedCDiscussion ? 'hidden sm:flex' : ' flex '} w-full sm:w-3/12 min-w-[200px] h-full border-e-none sm:border-e-2 border-white/20 no-scrollbar  flex-col flex-nowrap overflow-y-auto gap-4 pb-3 px-3`}>
             <div className="flex justify-between">
                 <div className="text-xl">
                     Discussions

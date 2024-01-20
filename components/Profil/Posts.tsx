@@ -12,7 +12,7 @@ const Posts = ({ userProfile, isUserProfil, posts }: { userProfile: Profile | nu
         <div className="w-full max-w-2xl" >
 
             <div className="flex flex-col gap-6">
-                {posts.length > 0 ? (
+                {posts?.length > 0 ? (
                     posts?.map((post: ExtendedPost) => (
                         <DynamicPost key={post.id_post} post={post} user={userProfile} />
 

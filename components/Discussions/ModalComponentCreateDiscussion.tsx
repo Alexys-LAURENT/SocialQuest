@@ -60,7 +60,7 @@ const ModalComponentCreateDiscussion = ({ isOpen, setOpen, onOpenChange, profile
 
     return (
         <>
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange} closeButton={<></>}>
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} closeButton={<></>} className='rounded-b-none max-w-none sm:max-w-md sm:rounded-b-xl' classNames={{ wrapper: 'w-full' }}>
                 <ModalContent>
                     {(onClose) => (
                         <>
