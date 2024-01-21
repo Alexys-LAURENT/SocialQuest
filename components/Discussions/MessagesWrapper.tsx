@@ -64,6 +64,7 @@ const MessagesWrapper = () => {
             if (!messagesContainer || !newMessagesIndicator) return;
             const isNearBottom = messagesContainer.scrollHeight - (messagesContainer.scrollTop + messagesContainer.clientHeight) < 60;
             if (isNearBottom) {
+                newMessagesIndicator?.classList.remove('flex');
                 newMessagesIndicator?.classList.add('hidden');
             }
         };
@@ -88,6 +89,7 @@ const MessagesWrapper = () => {
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
             } else {
                 document.getElementById('NewMessagesIndicator')?.classList.remove('hidden')
+                document.getElementById('NewMessagesIndicator')?.classList.add('flex')
             }
         }
     }, [messages])
@@ -165,7 +167,7 @@ const MessagesWrapper = () => {
                             ))}
                         </div>
                         <MessageInput supabase={supabase} selectedCDiscussion={selectedCDiscussion} profileConnected={profileConnected} />
-                        <div id='NewMessagesIndicator' className="absolute flex hidden bottom-28 right-16 bg-bgDark rounded-full p-2 cursor-pointer border border-white/20 hover:border-white/40 transition-all" onClick={() => document.getElementById('messages_container')?.scrollTo({ top: document.getElementById('messages_container')?.scrollHeight, behavior: 'smooth' })}>
+                        <div id='NewMessagesIndicator' className="absolute hidden bottom-28 right-16 bg-bgDark rounded-full p-2 cursor-pointer border border-white/20 hover:border-white/40 transition-all" onClick={() => document.getElementById('messages_container')?.scrollTo({ top: document.getElementById('messages_container')?.scrollHeight, behavior: 'smooth' })}>
                             <p className="text-base text-textLight mr-2">Nouveaux messages</p>
                             <ArrowDownIcon className="h-5 w-5 text-textLight" />
                         </div>
