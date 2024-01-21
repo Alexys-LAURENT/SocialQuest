@@ -48,6 +48,16 @@ const NavBar = ({ user, nextRewards }: { user: Profile | null, nextRewards: Next
         }
     }
 
+    const formatCountText = (count: number) => {
+        let countStr = count.toString();
+        let index = countStr.length - 3;
+        while (index > 0) {
+            countStr = countStr.substring(0, index) + ',' + countStr.substring(index);
+            index -= 3;
+        }
+        return countStr;
+    }
+
     return activePath !== "/login" ? (
         <Navbar maxWidth="2xl" className="py-2 bg-bgDark" position="sticky">
             <NavbarContent justify="start">
@@ -90,7 +100,7 @@ const NavBar = ({ user, nextRewards }: { user: Profile | null, nextRewards: Next
             <NavbarContent justify="end" className="">
                 {user && (
                     <NavbarItem className="flex min-w-fit items-center rounded-md px-1 sm:px-2 py-1 bg-secondary/30">
-                        <div className="flex gap-1">
+                        <div className="flex gap-1" title={`${formatCountText(user.social_coins)} SocialCoins`}>
                             <img src="/assets/SocialCoin.png" className="h-4 w-4" alt="" />
                             <p className="text-xs">{formatCount(user.social_coins)}</p>
                         </div>

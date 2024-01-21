@@ -113,6 +113,9 @@ export type Notification = {
 }
 
 export type Item = {
+    id_item_user: string,
+    id_user: string,
+    id_item: string,
     is_favorite?: boolean,
     items: {
         nom: string,

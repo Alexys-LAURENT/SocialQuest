@@ -6,8 +6,8 @@ const SwitchTheme = () => {
     const [checked, setChecked] = useState(false);
 
     return (
-        <div className="flex justify-between hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md cursor-pointer" onClick={() => setChecked(!checked)}>
-            <div className="px-1 py-1 flex gap-2 items-center">
+        <div className="px-1 py-1 flex justify-between hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md cursor-pointer" onClick={() => setChecked(!checked)}>
+            <div className="flex gap-2 items-center">
                 <MoonIcon className="w-6 h-6" />
                 <div className="">Mode sombre</div>
             </div>

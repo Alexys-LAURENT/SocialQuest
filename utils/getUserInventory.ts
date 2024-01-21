@@ -27,13 +27,15 @@ export async function getUserInventory(username: string) {
     // Utiliser l'id_user pour filtrer les items_users
     const { data: inventaire, error: inventaireError } = await supabase
         .from('items_users')
-        .select("is_favorite,items(*), profiles(username)")
+        .select("*, is_favorite, items(*), profiles(username)")
         .eq('id_user', user.id_user);
 
     if (inventaireError) {
         console.log(inventaireError)
         return []
     }
+
+    console.log(inventaire)
 
     return inventaire as unknown as Item[]
 
