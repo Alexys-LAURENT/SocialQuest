@@ -1,12 +1,12 @@
 "use client"
 import { Profile } from '@/app/types/entities';
 import React, { use, useContext, useEffect, useLayoutEffect, useState } from 'react';
-import { DiscussionContext } from '../../app/context/DiscussionContext';
+import { DiscussionContext } from '@/app/context/DiscussionContext';
 import { ArrowDownIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { createClient } from '@/utils/supabase/client';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 import { Message } from '@/app/types/entities';
-import MessageInput from './MessageInput';
+import MessageInput from '@/components/Discussions/MessageInput';
 import { Avatar } from '@nextui-org/react';
 import defaultGroup from '@/public/assets/defaultGroup.svg'
 import Link from 'next/link';
@@ -139,10 +139,18 @@ const MessagesWrapper = () => {
 
             <div className='flex sm:flex-col bg-bgDark items-center justify-center w-full h-[50px] sm:h-[100px] gap-2 relative z-10'>
                 <ArrowLeftIcon onClick={() => [setMessages(null), setSelectedDiscussion(null), setIsEditingGroup(false)]} className='h-6 w-6 text-white absolute cursor-pointer left-5 block sm:hidden ' />
-                <Avatar as={Link}
-                    href={`${selectedCDiscussion.is_group ? "#" : "/" + selectedCDiscussion.profiles[0]?.username}`}
-                    src={getImageUrl()} onClick={() => { selectedCDiscussion.is_group && profileConnected.id_user === selectedCDiscussion.created_by && setIsEditingGroup(true) }}
-                    className={`w-8 h-8 sm:h-12 sm:w-12 aspect-square rounded-full ${selectedCDiscussion.is_group ? 'invert p-1' : ''} ${selectedCDiscussion.is_group ? (profileConnected.id_user === selectedCDiscussion.created_by ? "cursor-pointer" : "cursor-default") : "cursor-pointer"}`} />
+                {selectedCDiscussion.is_group ?
+                    (
+                        <Avatar
+                            src={getImageUrl()} onClick={() => { profileConnected.id_user === selectedCDiscussion.created_by && setIsEditingGroup(true) }}
+                            className={`w-8 h-8 sm:h-12 sm:w-12 aspect-square rounded-full ${selectedCDiscussion.is_group ? 'invert p-1' : ''} ${selectedCDiscussion.is_group ? (profileConnected.id_user === selectedCDiscussion.created_by ? "cursor-pointer" : "cursor-default") : "cursor-pointer"}`} />
+                    ) : (
+                        <Avatar as={Link}
+                            href={`${selectedCDiscussion.profiles[0]?.username}`}
+                            src={getImageUrl()} onClick={() => { selectedCDiscussion.is_group && profileConnected.id_user === selectedCDiscussion.created_by && setIsEditingGroup(true) }}
+                            className={`w-8 h-8 sm:h-12 sm:w-12 aspect-square rounded-full ${selectedCDiscussion.is_group ? 'invert p-1' : ''} ${selectedCDiscussion.is_group ? (profileConnected.id_user === selectedCDiscussion.created_by ? "cursor-pointer" : "cursor-default") : "cursor-pointer"}`} />
+                    )}
+
                 <h1 className='text-md font-semibold'>{selectedCDiscussion.is_group ? selectedCDiscussion.nom : selectedCDiscussion.profiles[0]?.username}</h1>
             </div>
             <div className='relative w-full h-full max-h-[calc(100%-50px)] sm:max-h-[calc(100%-100px)] flex flex-col items-center '>

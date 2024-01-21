@@ -1,9 +1,9 @@
 "use client"
 
 import { createContext, useState, useContext } from "react";
-import { DiscussionTab, Message } from "../types/entities";
+import { DiscussionTab, Message } from "@/app/types/entities";
 import { createClient } from "@/utils/supabase/client";
-import { ToasterContext } from "./ToasterContext";
+import { ToasterContext } from "@/app/context/ToasterContext";
 import { useRouter } from "next/navigation";
 
 export const DiscussionContext = createContext<{

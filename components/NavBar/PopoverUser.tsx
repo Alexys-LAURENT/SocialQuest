@@ -1,5 +1,5 @@
 'use client';
-import PopOverUserContent from "./PopOverUserContent";
+import PopOverUserContent from "@/components/NavBar/PopOverUserContent";
 import React, { useState, useContext } from "react";
 import { NextReward, Profile } from "@/app/types/entities";
 import { DrawerContext } from "@/app/context/DrawerContext";

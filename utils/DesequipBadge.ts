@@ -1,7 +1,7 @@
 "use server"
-import { getProfileConnected } from "./getProfileConnected";
+import { getProfileConnected } from "@/utils/getProfileConnected";
 import { cookies } from 'next/headers';
-import { createClient } from "./supabase/server";
+import { createClient } from "@/utils/supabase/server";
 
 export async function Desequipbadge(image_url: string) {
     "use server"

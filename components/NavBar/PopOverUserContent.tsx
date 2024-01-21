@@ -1,8 +1,9 @@
 import { Image } from "antd";
 import { NextReward, Profile } from "@/app/types/entities";
 import { Progress, Switch } from '@nextui-org/react';
-import { ArrowRightEndOnRectangleIcon, Cog8ToothIcon, CubeIcon, MoonIcon, UserIcon, ClipboardDocumentCheckIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { ArrowRightEndOnRectangleIcon, Cog8ToothIcon, CubeIcon, UserIcon, ClipboardDocumentCheckIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import SwitchTheme from "@/components/NavBar/SwitchTheme";
 
 
 const PopOverUserContent = ({ user, customFunction, signOut, nextRewards }: { user: Profile | null, customFunction: () => void, signOut: () => void, nextRewards: NextReward[] | null }) => {
@@ -81,7 +82,7 @@ const PopOverUserContent = ({ user, customFunction, signOut, nextRewards }: { us
                     <div className="">Paramètres</div>
                 </Link>
                 <Link
-                    href="/inventaire"
+                    href={`/${user?.username}/inventaire`}
                     className="px-1 py-1 flex gap-2 items-center hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md"
                     onClick={() =>
                         customFunction()
@@ -90,15 +91,8 @@ const PopOverUserContent = ({ user, customFunction, signOut, nextRewards }: { us
                     <CubeIcon className="w-6 h-6" />
                     <div className="">Inventaire</div>
                 </Link>
-                <div className="flex justify-between">
-                    <div className="px-1 py-1 flex gap-2 items-center">
-                        <MoonIcon className="w-6 h-6" />
-                        <div className="">Mode sombre</div>
-                    </div>
-                    <div className="flex items-center">
-                        <Switch aria-label="Mode sombre" classNames={{ wrapper: "mr-1 bg-[#d9d9d9]" }} />
-                    </div>
-                </div>
+                <SwitchTheme />
+
                 <Link
                     href="/"
                     className="px-1 py-1 flex gap-2 items-center hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md cursor-pointer"

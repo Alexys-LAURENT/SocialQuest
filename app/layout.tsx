@@ -1,14 +1,14 @@
-import './globals.css'
+import '@/app/styles/globals.css'
 import NavBar from '@/components/NavBar/NavBar'
 import { cookies } from 'next/headers'
 import { GeistSans } from 'geist/font/sans'
-import { Providers } from "./providers";
+import { Providers } from "@/app/providers"
 import { createClient } from '@/utils/supabase/server'
 import { ConfigProvider } from 'antd';
-import DrawerProvider from './context/DrawerContext';
-import ToasterProvider from './context/ToasterContext';
-import DiscussionProvider from './context/DiscussionContext';
-import InventaireProvider from './context/InventaireContext';
+import DrawerProvider from '@/app/context/DrawerContext';
+import ToasterProvider from '@/app/context/ToasterContext';
+import DiscussionProvider from '@/app/context/DiscussionContext';
+import InventaireProvider from '@/app/context/InventaireContext';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 import { getNextRewards } from '@/utils/getNextRewards';
 import TopLoader from '@/components/TopLoader';

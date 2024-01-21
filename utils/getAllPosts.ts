@@ -1,8 +1,8 @@
 "use server"
 import { cookies } from "next/headers";
-import { createClient } from "./supabase/server";
+import { createClient } from "@/utils/supabase/server";
 import { ExtendedPost } from "@/app/types/entities";
-import { getProfileConnected } from "./getProfileConnected";
+import { getProfileConnected } from "@/utils/getProfileConnected";
 
 // posts for home page
 export async function getAllPosts() {

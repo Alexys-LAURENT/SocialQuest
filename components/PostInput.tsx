@@ -6,7 +6,7 @@ import { Textarea } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { ToasterContext } from '@/app/context/ToasterContext';
 import { sendPost } from '@/utils/sendPost';
-import PostInputGuildsListBox from './PostInputGuildsSelect';
+import PostInputGuildsListBox from '@/components/PostInputGuildsSelect';
 
 interface PostInputProps {
     id_guilde?: string,

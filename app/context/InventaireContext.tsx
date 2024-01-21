@@ -1,6 +1,6 @@
 "use client"
 import React, { createContext, useState } from 'react';
-import { Item } from '../types/entities';
+import { Item } from '@/app/types/entities';
 
 export const InventaireContext = createContext({
     selectedItem: {} as Item,

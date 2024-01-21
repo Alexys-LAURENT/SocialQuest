@@ -11,6 +11,7 @@ const NotificationsListBox = ({ notifications }: { notifications: Notification[]
             items={notifications}
             aria-label="Dynamic Actions"
             classNames={{ base: "max-h-[250px] overflow-y-auto" }}
+            emptyContent="Aucune notification"
         >
             {(item: Notification) => (
                 <ListboxItem

@@ -1,5 +1,5 @@
 "use server"
-import { createClient } from "./supabase/server";
+import { createClient } from "@/utils/supabase/server";
 import { cookies } from 'next/headers'
 
 export async function joinGuild(id_user: string, id_guild: string) {

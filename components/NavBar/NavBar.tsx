@@ -91,7 +91,7 @@ const NavBar = ({ user, nextRewards }: { user: Profile | null, nextRewards: Next
                 {user && (
                     <NavbarItem className="flex min-w-fit items-center rounded-md px-1 sm:px-2 py-1 bg-secondary/30">
                         <div className="flex gap-1">
-                            <img src="/assets/Solidium.png" className="h-4 w-4" alt="" />
+                            <img src="/assets/SocialCoin.png" className="h-4 w-4" alt="" />
                             <p className="text-xs">{formatCount(user.social_coins)}</p>
                         </div>
                     </NavbarItem>

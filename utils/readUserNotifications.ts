@@ -1,6 +1,6 @@
 "use server"
 import { cookies } from "next/headers"
-import { createClient } from "./supabase/server"
+import { createClient } from "@/utils/supabase/server"
 
 
 export async function readUserNotifications(id_user: string) {

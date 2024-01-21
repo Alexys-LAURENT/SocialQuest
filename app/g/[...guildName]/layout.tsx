@@ -77,7 +77,7 @@ const layout = async ({
                 </div>
 
 
-                <div className="flex flex-col w-full gap-6 lg:gap-10">
+                <div className="flex flex-col w-full gap-10">
 
                     {!params.guildName[1] && user && <DynamicPostInput id_guilde={guilde!.id_guilde} />}
                     {params.guildName[1] === "activities" && guildactivities}

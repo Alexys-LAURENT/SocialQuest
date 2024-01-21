@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Button, ButtonGroup, Chip } from '@nextui-org/react';
+import { Button, ButtonGroup, Chip, Input } from '@nextui-org/react';
 import { Item, Profile } from '@/app/types/entities';
 import { useRouter } from 'next/navigation';
 import { setCurrentUserBannerUrl } from '@/utils/setCurrentUserBannerUrl';
@@ -11,12 +11,12 @@ import { StarIcon } from '@heroicons/react/24/outline';
 import { Desequipbadge } from '@/utils/DesequipBadge';
 import { toggleFavorite } from '@/utils/toggleFavorite';
 
-const DynamicModalEquipBadge = dynamic(() => import('./ModalEquipBadge'))
+const DynamicModalEquipBadge = dynamic(() => import('@/components/inventaire/ModalEquipBadge'));
 
 
 
 
-const SelectedItemContent = ({ selectedItem, profileConnected, setSelectedItem }: { selectedItem: Item, profileConnected: Profile, setSelectedItem: (item: any) => void }) => {
+const SelectedItemContent = ({ selectedItem, profileConnected, setSelectedItem, pageProfile, isUserInventory }: { selectedItem: Item, profileConnected: Profile, setSelectedItem: (item: any) => void, pageProfile: Profile, isUserInventory: boolean }) => {
     const [isOpen, setOpen] = useState(false);
     const onOpenChange = (open: boolean) => setOpen(open);
     const router = useRouter()
@@ -25,7 +25,7 @@ const SelectedItemContent = ({ selectedItem, profileConnected, setSelectedItem }
     const toggleFav = async () => {
         const isUpdated = await toggleFavorite(selectedItem)
         if (isUpdated) {
-            selectedItem.is_favorite ? success('Favori retiré') : success('Item ajouté aux favoris')
+            selectedItem.is_favorite ? success('Désépinglé') : success('Épinglé')
             setSelectedItem({ ...selectedItem, is_favorite: !selectedItem.is_favorite })
             router.refresh()
         } else {
@@ -34,43 +34,76 @@ const SelectedItemContent = ({ selectedItem, profileConnected, setSelectedItem }
     }
 
     return (
-        <div className="flex flex-row flex-wrap md:flex-col p-4 gap-4">
-            <div className="relative flex aspect-square w-4/12 md:w-full overflow-hidden rounded-lg bg-black/20 ">
-                <Image className='object-cover' src={selectedItem.items.image_url} fill alt={selectedItem.items.description} />
-            </div>
-            <div className='w-7/12 md:w-full '>
-                <div className="text-xl md:text-3xl font-bold">
-                    <span className='working-break-words'>{selectedItem.items.nom}</span>
+        <div className="flex flex-col justify-between h-full overflow-hidden">
+            <div className="flex flex-row flex-wrap md:flex-col gap-4 p-4 w-full">
+                <div className="relative flex aspect-square w-4/12 min-w-[140px] md:w-full overflow-hidden rounded-lg bg-black/20 ">
+                    <Image className='object-cover' src={selectedItem.items.image_url} fill alt={selectedItem.items.description} sizes='100%' />
                 </div>
-                <div className="text-base md:text-medium">
-                    <span className='working-break-words'>{selectedItem.items.description}</span>
+                <div className='w-auto md:w-full '>
+                    <div className="text-xl md:text-3xl font-bold">
+                        <span className='working-break-words'>{selectedItem.items.nom}</span>
+                    </div>
+                    <div className="text-base md:text-medium">
+                        <span className='working-break-words'>{selectedItem.items.description}</span>
+                    </div>
                 </div>
-            </div>
-            <div className='flex gap-2'>
-                <Chip>
-                    {selectedItem.items.type}
-                </Chip>
-                {selectedItem.items.type === "Arme" &&
+                <div className='flex gap-2 w-full'>
                     <Chip>
-                        {selectedItem.items.damage} dégats
+                        {selectedItem.items.type}
                     </Chip>
+                    {selectedItem.items.type === "Arme" &&
+                        <Chip>
+                            {selectedItem.items.damage} dégats
+                        </Chip>
+                    }
+                </div>
+
+                {isUserInventory && selectedItem.items.type !== "Arme" &&
+                    <ButtonGroup className='w-full'>
+                        <EquiperBtn SelectedItem={selectedItem} pageProfile={pageProfile} onOpenChange={onOpenChange} />
+                        <Button onClick={() => toggleFav()} className='px-3 min-w-0'>
+                            {selectedItem.is_favorite ? (
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className={`w-6 h-6 fill-white bi bi-pin-angle-fill`} viewBox="0 0 16 16">
+                                    <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a6 6 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707s.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a6 6 0 0 1 1.013.16l3.134-3.133a3 3 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146" />
+                                </svg>
+                            ) : (
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill='white' className={`w-6 h-6 bi bi-pin-angle`} viewBox="0 0 16 16">
+                                    <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a6 6 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707s.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a6 6 0 0 1 1.013.16l3.134-3.133a3 3 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146m.122 2.112v-.002zm0-.002v.002a.5.5 0 0 1-.122.51L6.293 6.878a.5.5 0 0 1-.511.12H5.78l-.014-.004a5 5 0 0 0-.288-.076 5 5 0 0 0-.765-.116c-.422-.028-.836.008-1.175.15l5.51 5.509c.141-.34.177-.753.149-1.175a5 5 0 0 0-.192-1.054l-.004-.013v-.001a.5.5 0 0 1 .12-.512l3.536-3.535a.5.5 0 0 1 .532-.115l.096.022c.087.017.208.034.344.034q.172.002.343-.04L9.927 2.028q-.042.172-.04.343a1.8 1.8 0 0 0 .062.46z" />
+                                </svg>
+                            )}
+                        </Button>
+                    </ButtonGroup>
                 }
             </div>
 
-            {selectedItem.items.type !== "Arme" &&
-                <ButtonGroup className='w-full'>
-                    <EquiperBtn SelectedItem={selectedItem} profileConnected={profileConnected} onOpenChange={onOpenChange} />
-                    <Button onClick={() => toggleFav()} className='px-3 min-w-0'><StarIcon className={`${selectedItem.is_favorite ? "fill-yellow-500 text-yellow-500" : ""} w-7 h-7 `} /></Button>
-                </ButtonGroup>
-            }
-            {isOpen && <DynamicModalEquipBadge isOpen={isOpen} onOpenChange={onOpenChange} selectedItem={selectedItem} profileConnected={profileConnected} />}
+            <div className="flex flex-col border-t border-gray-200 gap-2 p-4 pb-12 overflow-y-auto">
+                <p className='text-3xl font-bold text-center pb-4'>
+                    Marché
+                </p>
+
+                <p className='flex gap-1 text-sm'>
+                    Prix moyen sur le marché : <span className='flex flex-row items-center gap-1'> 125 <Image src='/assets/SocialCoin.png' width={16} height={16} alt='SocialCoin' /></span>
+                </p>
+
+                <Input type="number" label="Prix" className='w-full' size='sm' labelPlacement='inside' classNames={{ inputWrapper: 'py-0 h-10 rounded-none' }} />
+
+                <Button className='w-full rounded-none min-h-[40px]' color='primary' variant='flat'>
+                    Mettre en vente
+                </Button>
+            </div>
+
+
+
+
+
+            {isUserInventory && isOpen && <DynamicModalEquipBadge isOpen={isOpen} onOpenChange={onOpenChange} selectedItem={selectedItem} profileConnected={profileConnected} />}
         </div>
     );
 };
 
 export default SelectedItemContent;
 
-const EquiperBtn = ({ SelectedItem, profileConnected, onOpenChange }: { SelectedItem: Item, profileConnected: Profile, onOpenChange: (open: boolean) => void }) => {
+const EquiperBtn = ({ SelectedItem, pageProfile, onOpenChange, }: { SelectedItem: Item, pageProfile: Profile, onOpenChange: (open: boolean) => void }) => {
     const router = useRouter()
     const { success, error } = useContext(ToasterContext)
     const handleToggleBanner = async (image_url: string | null) => {
@@ -96,7 +129,7 @@ const EquiperBtn = ({ SelectedItem, profileConnected, onOpenChange }: { Selected
 
 
     if (SelectedItem.items.type === "Bannière") {
-        return profileConnected.banner_url === SelectedItem.items.image_url ? (
+        return pageProfile.banner_url === SelectedItem.items.image_url ? (
             <Button onClick={() => handleToggleBanner(null)} variant='flat' color='danger' className='w-full'>
                 Déséquiper
             </Button>
@@ -108,7 +141,7 @@ const EquiperBtn = ({ SelectedItem, profileConnected, onOpenChange }: { Selected
     }
 
     if (SelectedItem.items.type === "Badge") {
-        return profileConnected.users_badges.reduce((acc, item) => { return acc || item.items.image_url === SelectedItem.items.image_url }, false) === false ? (
+        return pageProfile.users_badges.reduce((acc, item) => { return acc || item.items.image_url === SelectedItem.items.image_url }, false) === false ? (
             <Button onClick={() => onOpenChange(true)} variant='flat' color='primary' className='w-full'>
                 Équiper
             </Button>

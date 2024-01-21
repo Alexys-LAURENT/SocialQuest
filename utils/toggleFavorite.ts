@@ -1,8 +1,7 @@
 "use server"
-import { getProfileConnected } from "./getProfileConnected";
+import { getProfileConnected } from "@/utils/getProfileConnected";
 import { cookies } from 'next/headers';
-import { createClient } from "./supabase/server";
-import { Desequipbadge } from "./DesequipBadge";
+import { createClient } from "@/utils/supabase/server";
 import { Item } from "@/app/types/entities";
 
 export async function toggleFavorite(selectedItem: Item) {

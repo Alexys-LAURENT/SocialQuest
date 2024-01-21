@@ -1,6 +1,6 @@
 "use server";
-import { getProfileConnected } from "./getProfileConnected";
-import { createClient } from "./supabase/server"
+import { getProfileConnected } from "@/utils/getProfileConnected";
+import { createClient } from "@/utils/supabase/server"
 import { cookies } from 'next/headers'
 
 export async function getGuildesUser() {

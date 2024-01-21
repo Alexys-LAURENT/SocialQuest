@@ -1,19 +1,20 @@
+"use client";
 import React from 'react';
-import { Button, Link } from '@nextui-org/react';
-import { getBannieresUser } from '@/utils/getItemsProfil';
 import { Item, Profile } from '@/app/types/entities';
 import Image from 'next/image';
+import { setCurrentUserBannerUrl } from '@/utils/setCurrentUserBannerUrl';
+import { useRouter } from 'next/navigation';
 
-const BannieresProfil = async ({ isUserProfil, user }: { isUserProfil: boolean, user: Profile | null }) => {
+const BannieresProfil = async ({ isUserProfil, bannieres }: { isUserProfil: boolean, bannieres: Item[] }) => {
 
-    const bannieres = await getBannieresUser(user?.id_user!) as unknown as Item[];
+    const router = useRouter();
 
     return (
         <>
             {
                 bannieres.map((banniere, index) => {
                     return (
-                        <div key={`CardBannieresProfilePage${index}`} className="relative h-full aspect-square bg-[#2e2e2e] rounded-md">
+                        <div key={`CardBannieresProfilePage${index}`} className="relative cursor-pointer h-full aspect-square bg-[#2e2e2e] rounded-md hover:opacity-70 transition-all" onClick={() => { isUserProfil && setCurrentUserBannerUrl(banniere.items.image_url), router.refresh() }}>
                             <Image className="rounded-md object-cover" src={banniere.items.image_url} alt="Banniere" fill />
                         </div>
                     )

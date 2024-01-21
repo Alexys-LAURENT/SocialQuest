@@ -51,6 +51,12 @@ div[id*=":"][id*=":"] {
   outline: none !important;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 @layer base {
   * {
     @apply border-foreground/20;

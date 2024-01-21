@@ -1,5 +1,5 @@
 "use server";
-import { createClient } from "./supabase/server"
+import { createClient } from "@/utils/supabase/server"
 import { cookies } from 'next/headers'
 
 export async function getBannieresUser(id_user: string) {
@@ -11,6 +11,7 @@ export async function getBannieresUser(id_user: string) {
     const { data: bannieres, error: bannieresError } = await supabase
         .from('items_users')
         .select(`items(*)`)
+        .eq('is_favorite', true)
         .eq('id_user', id_user)
         .eq('items.type', 'Bannière')
 
@@ -28,6 +29,7 @@ export async function getBadgesUser(id_user: string) {
     const { data: badges, error: badgesError } = await supabase
         .from('items_users')
         .select(`items(*)`)
+        .eq('is_favorite', true)
         .eq('id_user', id_user)
         .eq('items.type', 'Badge')
 

@@ -1,7 +1,7 @@
 "use server"
 
 import { cookies } from "next/headers"
-import { createClient } from "./supabase/server"
+import { createClient } from "@/utils/supabase/server"
 import { NextReward } from "@/app/types/entities"
 
 export async function getNextRewards(current_libelle: number) {

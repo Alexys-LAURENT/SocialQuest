@@ -1,8 +1,8 @@
 "use server"
-import { getProfileConnected } from "./getProfileConnected";
+import { getProfileConnected } from "@/utils/getProfileConnected";
 import { cookies } from 'next/headers';
-import { createClient } from "./supabase/server";
-import { Desequipbadge } from "./DesequipBadge";
+import { createClient } from "@/utils/supabase/server";
+import { Desequipbadge } from "@/utils/DesequipBadge";
 
 export async function setEquipbadge(newBadgeUrl: string, oldBadgeUrl?: string) {
     "use server"

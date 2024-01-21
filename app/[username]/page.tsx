@@ -43,13 +43,13 @@ export default async function Profil({ params }: { params: { username: string } 
             </p>
           </div>
         </div>
-        <div className="flex absolute bottom-2 md:-top-7 left-10 md:right-20 lg:right-10 md:left-auto gap-4 md:transition-all">
+        <div className="flex absolute bottom-2 md:-top-7 lg:-top-10 left-10 md:right-20 lg:right-10 md:left-auto gap-4 md:transition-all">
           {
             pageProfile.users_badges && pageProfile.users_badges.length > 0 && pageProfile.users_badges.map((badge, index) => {
               return (
                 <Tooltip content={badge.items.nom} key={index}>
-                  <div key={index} className="relative overflow-hidden h-14 w-14 rounded-full ">
-                    <Image src={badge.items.image_url} alt="Userbadge" fill />
+                  <div key={index} className="relative overflow-hidden h-14 w-14 lg:h-20 lg:w-20 rounded-full ">
+                    <Image src={badge.items.image_url} alt="Userbadge" fill sizes='100%' />
                   </div>
                 </Tooltip>
               )

@@ -86,7 +86,7 @@ export default function Login({
           >
             <polyline points="15 18 9 12 15 6" />
           </svg>{' '}
-          Back
+          Retour
         </Link>
       </div>
       <Form signIn={signIn} signUp={signUp} searchParams={searchParams} />

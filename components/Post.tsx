@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { EllipsisVerticalIcon, FlagIcon, ShareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { ExtendedPost, Profile } from '@/app/types/entities';
 import PopoverUserProfile from '@/components/PopoverUserProfile';
-import WrapperLikeAnswer from './WrapperLikeAnswer';
+import WrapperLikeAnswer from '@/components/WrapperLikeAnswer';
 import { createClient } from '@/utils/supabase/client';
 import { ToasterContext } from '@/app/context/ToasterContext';
 import { useRouter } from 'next/navigation';

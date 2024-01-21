@@ -2,28 +2,39 @@
 
 import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
-import { User } from '@supabase/supabase-js'
-import { getUserConnected } from './getUserConnected'
 import { Item } from '@/app/types/entities'
 
-export async function getUserInventory(user?: User | null) {
+export async function getUserInventory(username: string) {
     "use server"
 
 
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 
-    if (!user) user = await getUserConnected()
 
-    if (user) {
+    // Récupérer l'id_user correspondant au username
+    const { data: user, error: userError } = await supabase
+        .from('profiles')
+        .select('id_user')
+        .eq('username', username)
+        .single();
 
-        const { data: inventaire, error } = await supabase
-            .from('items_users')
-            .select("is_favorite,items(*)")
-            .eq('id_user', user.id)
-
-        return inventaire as unknown as Item[]
+    if (userError) {
+        console.log(userError)
+        return []
     }
 
-    return null
+    // Utiliser l'id_user pour filtrer les items_users
+    const { data: inventaire, error: inventaireError } = await supabase
+        .from('items_users')
+        .select("is_favorite,items(*), profiles(username)")
+        .eq('id_user', user.id_user);
+
+    if (inventaireError) {
+        console.log(inventaireError)
+        return []
+    }
+
+    return inventaire as unknown as Item[]
+
 }

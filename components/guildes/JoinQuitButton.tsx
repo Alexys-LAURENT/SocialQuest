@@ -1,10 +1,11 @@
 "use client"
 import { Button } from '@nextui-org/react';
 import { useContext } from 'react';
-import { ToasterContext } from '../../app/context/ToasterContext';
+import { ToasterContext } from '@/app/context/ToasterContext';
 import { joinGuild, leaveGuild } from '@/utils/joinGuild';
 import { Profile } from '@/app/types/entities';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 const JoinQuitButton = ({ guilde, user }: { guilde: any, user: Profile | null }) => {
     const { success, error } = useContext(ToasterContext)
     const router = useRouter()
@@ -34,10 +35,20 @@ const JoinQuitButton = ({ guilde, user }: { guilde: any, user: Profile | null })
     return (
         <>
             {
-                guilde!.isUserInGuilde ?
-                    <Button onClick={() => handleLeaveGuild()} color="danger" >Quitter</Button>
-                    :
-                    <Button onClick={() => handleJoinGuild()}  >Rejoindre</Button>
+                user ?
+                    (
+                        guilde!.isUserInGuilde ?
+                            <Button
+                                onClick={() => handleLeaveGuild()} color="danger" >
+                                Quitter
+                            </Button>
+                            :
+                            <Button onClick={() => handleJoinGuild()}  >Rejoindre</Button>
+                    ) : (
+                        <Button as={Link} href="/login" color="default" >
+                            Rejoindre</Button>
+                    )
+
             }
         </>
     );

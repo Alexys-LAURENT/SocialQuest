@@ -3,7 +3,7 @@
 import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { User } from '@supabase/supabase-js'
-import { getUserConnected } from './getUserConnected'
+import { getUserConnected } from '@/utils/getUserConnected'
 import { Profile } from '@/app/types/entities'
 
 export async function getProfileConnected(user?: User | null) {
