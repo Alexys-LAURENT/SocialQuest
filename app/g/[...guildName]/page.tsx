@@ -1,4 +1,4 @@
-import PostsWrapper from "@/components/Home/PostsWrapper";
+import PostsWrapper from "@/components/PostsWrapper";
 import { getAllPostsFromGuild } from "@/utils/getAllPosts";
 import { getProfileConnected } from "@/utils/getProfileConnected";
 

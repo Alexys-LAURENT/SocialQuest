@@ -7,10 +7,13 @@ import { createClient } from '@/utils/supabase/client';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 import { Message } from '@/app/types/entities';
 import MessageInput from '@/components/Discussions/MessageInput';
-import { Avatar } from '@nextui-org/react';
+import { Avatar, ScrollShadow } from '@nextui-org/react';
 import defaultGroup from '@/public/assets/defaultGroup.svg'
 import Link from 'next/link';
 import dynamic from 'next/dynamic'
+import 'moment/locale/fr'
+import moment from 'moment';
+import Image from 'next/image'
 
 
 const DynamicEditGroup = dynamic(() => import('@/components/Discussions/EditGroup'))
@@ -24,6 +27,7 @@ const MessagesWrapper = () => {
     const [tooltipOthersOpen, setTooltipOthersOpen] = useState<{ open: boolean, key: string }>({ open: false, key: '' })
     const [profileConnected, setProfileConnected] = useState<Profile | null>(null)
     const supabase = createClient()
+
 
 
 
@@ -64,6 +68,7 @@ const MessagesWrapper = () => {
             if (!messagesContainer || !newMessagesIndicator) return;
             const isNearBottom = messagesContainer.scrollHeight - (messagesContainer.scrollTop + messagesContainer.clientHeight) < 60;
             if (isNearBottom) {
+                newMessagesIndicator?.classList.remove('flex');
                 newMessagesIndicator?.classList.add('hidden');
             }
         };
@@ -88,6 +93,7 @@ const MessagesWrapper = () => {
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
             } else {
                 document.getElementById('NewMessagesIndicator')?.classList.remove('hidden')
+                document.getElementById('NewMessagesIndicator')?.classList.add('flex')
             }
         }
     }, [messages])
@@ -141,9 +147,14 @@ const MessagesWrapper = () => {
                 <ArrowLeftIcon onClick={() => [setMessages(null), setSelectedDiscussion(null), setIsEditingGroup(false)]} className='h-6 w-6 text-white absolute cursor-pointer left-5 block sm:hidden ' />
                 {selectedCDiscussion.is_group ?
                     (
-                        <Avatar
-                            src={getImageUrl()} onClick={() => { profileConnected.id_user === selectedCDiscussion.created_by && setIsEditingGroup(true) }}
-                            className={`w-8 h-8 sm:h-12 sm:w-12 aspect-square rounded-full ${selectedCDiscussion.is_group ? 'invert p-1' : ''} ${selectedCDiscussion.is_group ? (profileConnected.id_user === selectedCDiscussion.created_by ? "cursor-pointer" : "cursor-default") : "cursor-pointer"}`} />
+                        <Image
+                            src={getImageUrl()}
+                            alt="group"
+                            width={50}
+                            height={50}
+                            className={`w-8 h-8 sm:h-12 sm:w-12 bg-[#3f3f46] rounded-full ${selectedCDiscussion.is_group ? 'invert p-1' : ''} ${selectedCDiscussion.is_group ? (profileConnected.id_user === selectedCDiscussion.created_by ? "cursor-pointer" : "cursor-default") : "cursor-pointer"}`}
+                            onClick={() => { selectedCDiscussion.is_group && profileConnected.id_user === selectedCDiscussion.created_by && setIsEditingGroup(true) }}
+                        />
                     ) : (
                         <Avatar as={Link}
                             href={`${selectedCDiscussion.profiles[0]?.username}`}
@@ -158,14 +169,24 @@ const MessagesWrapper = () => {
                     <DynamicEditGroup profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} setSelectedDiscussion={setSelectedDiscussion} setIsEditingGroup={setIsEditingGroup} />
                 ) : (
                     <>
-                        <div id='messages_container' className='w-11/12 h-full overflow-y-auto' >
+                        <ScrollShadow id='messages_container' className='relative w-11/12 h-full overflow-y-auto' size={50} offset={5}>
+
                             {/* message */}
                             {messages && messages.map((item, index) => (
-                                <DynamicMessageCard key={`message-${index}`} index={index} item={item} profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} tooltipDeleteOpen={tooltipDeleteOpen} setTooltipDeleteOpen={setTooltipDeleteOpen} tooltipOthersOpen={tooltipOthersOpen} setTooltipOthersOpen={setTooltipOthersOpen} tooltipUserOpen={tooltipUserOpen} setTooltipUserOpen={setTooltipUserOpen} nextMessage={{ id_user: messages[index + 1]?.id_user, timestamp: messages[index + 1]?.created_at }} prevMessage={{ id_user: messages[index - 1]?.id_user, timestamp: messages[index - 1]?.created_at }} />
+                                <>
+                                    {
+                                        messages[index - 1]?.created_at.split('T')[0] !== item.created_at.split('T')[0] &&
+                                        <div key={`date-${index}`} className='w-full flex justify-center items-center pt-6 text-sm text-gray-200'>
+                                            {moment(item.created_at).locale('fr').format('dddd DD MMMM YYYY')}
+                                        </div>
+                                    }
+
+                                    <DynamicMessageCard key={`message-${index}`} index={index} item={item} profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} tooltipDeleteOpen={tooltipDeleteOpen} setTooltipDeleteOpen={setTooltipDeleteOpen} tooltipOthersOpen={tooltipOthersOpen} setTooltipOthersOpen={setTooltipOthersOpen} tooltipUserOpen={tooltipUserOpen} setTooltipUserOpen={setTooltipUserOpen} nextMessage={{ id_user: messages[index + 1]?.id_user, timestamp: messages[index + 1]?.created_at }} prevMessage={{ id_user: messages[index - 1]?.id_user, timestamp: messages[index - 1]?.created_at }} />
+                                </>
                             ))}
-                        </div>
+                        </ScrollShadow>
                         <MessageInput supabase={supabase} selectedCDiscussion={selectedCDiscussion} profileConnected={profileConnected} />
-                        <div id='NewMessagesIndicator' className="absolute flex hidden bottom-28 right-16 bg-bgDark rounded-full p-2 cursor-pointer border border-white/20 hover:border-white/40 transition-all" onClick={() => document.getElementById('messages_container')?.scrollTo({ top: document.getElementById('messages_container')?.scrollHeight, behavior: 'smooth' })}>
+                        <div id='NewMessagesIndicator' className="z-[1000000000] absolute hidden bottom-28 right-16 bg-bgDark rounded-full p-2 cursor-pointer border border-white/20 hover:border-white/40 transition-all" onClick={() => document.getElementById('messages_container')?.scrollTo({ top: document.getElementById('messages_container')?.scrollHeight, behavior: 'smooth' })}>
                             <p className="text-base text-textLight mr-2">Nouveaux messages</p>
                             <ArrowDownIcon className="h-5 w-5 text-textLight" />
                         </div>

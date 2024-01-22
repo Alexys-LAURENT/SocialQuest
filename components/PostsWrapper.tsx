@@ -4,11 +4,11 @@ import dynamic from 'next/dynamic'
 
 const Post = dynamic(() => import('@/components/Post'))
 
-const PostsWrapper = async ({ user, getPost }: { user: Profile | null, getPost: any }) => {
+const PostsWrapper = async ({ user, getPost, postPage }: { user: Profile | null, getPost: any, postPage?: boolean }) => {
     const posts = await getPost()
 
     return (
-        <div className="w-full flex flex-col gap-4">
+        <div className={`w-full flex flex-col gap-4 ${postPage ? 'mt-8' : ''}`}>
             {posts?.length !== 0 ? (
                 posts?.map((post: ExtendedPost) => (
                     <>
@@ -18,7 +18,7 @@ const PostsWrapper = async ({ user, getPost }: { user: Profile | null, getPost: 
             ) : (
                 <div className="flex flex-col items-center justify-center gap-2">
                     <div className="text-2xl font-semibold">
-                        Aucun post 😢
+                        {postPage ? "Aucune réponse 😢" : "Aucun post 😢"}
                     </div>
                 </div>
             )}

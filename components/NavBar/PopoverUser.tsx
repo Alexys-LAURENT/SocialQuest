@@ -4,6 +4,8 @@ import React, { useState, useContext } from "react";
 import { NextReward, Profile } from "@/app/types/entities";
 import { DrawerContext } from "@/app/context/DrawerContext";
 import { Badge, Avatar, Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
+import Image from "next/image";
+import defaultUser from "@/public/assets/defaultUser.svg";
 
 const PopoverUser = ({ signOut, user, nextRewards }: { signOut: () => void, user: Profile | null, nextRewards: NextReward[] | null }) => {
     const [isPopoverUserOpen, setIsPopoverUserOpen] = useState(false);
@@ -23,9 +25,9 @@ const PopoverUser = ({ signOut, user, nextRewards }: { signOut: () => void, user
                 && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("ant-image-preview-switch-right")
                 && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("ant-image-preview-switch-left")} >
             <PopoverTrigger>
-                <div className="flex items-center cursor-pointer" onClick={() => showDrawer("User")} >
+                <div className="flex items-center cursor-pointer min-w-[32px] sm:min-w-[44px]" onClick={() => showDrawer("User")} >
                     <Badge content={user?.niveaux.libelle} color="primary" className="text-xs flex">
-                        <Avatar isBordered src={user?.avatar_url} className="cursor-pointer w-[2rem] h-[2rem] sm:w-[2.75rem] sm:h-[2.75rem] flex" />
+                        <Image src={user?.avatar_url || defaultUser.src} alt={user?.avatar_url! || defaultUser.src} width={48} height={48} className="relative inline-flex shrink-0 justify-center items-center box-border overflow-hidden align-middle z-0 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-tiny bg-default text-default-foreground w-[2rem] h-[2rem] sm:w-[2.75rem] sm:h-[2.75rem] rounded-full ring-2 ring-offset-2 ring-offset-background dark:ring-offset-background-dark ring-default" />
                     </Badge>
                 </div>
             </PopoverTrigger>

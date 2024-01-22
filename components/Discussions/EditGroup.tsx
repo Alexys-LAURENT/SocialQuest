@@ -2,6 +2,7 @@ import { DiscussionTab, Profile, ProfileInDiscussion } from '@/app/types/entitie
 import { Card, CardBody, Input, Avatar, Button, Tabs, Tab } from '@nextui-org/react';
 import React, { useContext } from 'react';
 import defaultGroup from '@/public/assets/defaultGroup.svg'
+import defaultUser from '@/public/assets/defaultUser.svg'
 import { TrashIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useDisclosure } from "@nextui-org/react";
 import { createClient } from '@/utils/supabase/client';
@@ -9,6 +10,7 @@ import { DiscussionContext } from '@/app/context/DiscussionContext';
 import { Popconfirm } from 'antd';
 import { ToasterContext } from '@/app/context/ToasterContext';
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 
 const DynamicModalComponentAddUsersToDiscussion = dynamic(() => import('@/components/Discussions/ModalComponentAddUsersToDiscussion'))
 
@@ -48,7 +50,7 @@ const EditGroup = ({ profileConnected, selectedCDiscussion, setSelectedDiscussio
                             <div>
 
                                 <div className='w-full py-4 h-auto flex justify-center items-center'>
-                                    <Avatar className={`w-14 h-14 sm:w-24 sm:h-24 ${!selectedCDiscussion.image_url && "invert"}`} src={selectedCDiscussion.image_url ? selectedCDiscussion.image_url : defaultGroup.src} />
+                                    <Image src={selectedCDiscussion.image_url ? selectedCDiscussion.image_url : defaultGroup.src} alt="group" width={100} height={100} className={`p-1 w-14 h-14 sm:w-24 sm:h-24 bg-[#3f3f46] rounded-full ${!selectedCDiscussion.image_url && "invert"}`} />
                                 </div>
                                 <Input
                                     label='Nom du groupe'
@@ -95,7 +97,8 @@ const EditGroup = ({ profileConnected, selectedCDiscussion, setSelectedDiscussio
                     <Card className='w-11/12 overflow-y-auto max-h-[500px]'>
                         <CardBody className='gap-3'>
                             <Card className='min-h-[50px] sm:min-h-[64px]'>
-                                <CardBody className='flex flex-row items-center gap-3'> <Avatar className='w-6 h-6 aspect-auto sm:w-10 sm:h-10' src={profileConnected.avatar_url} />
+                                <CardBody className='flex flex-row items-center gap-3'>
+                                    <Image src={profileConnected.avatar_url!} alt="group" width={100} height={100} className={`w-6 h-6 sm:w-10 sm:h-10 bg-[#3f3f46] rounded-full ${!profileConnected.avatar_url && "invert"}`} />
                                     <span className='text-xs sm:text-base'>{profileConnected.username} (vous)</span>
                                 </CardBody>
                             </Card>
@@ -104,7 +107,7 @@ const EditGroup = ({ profileConnected, selectedCDiscussion, setSelectedDiscussio
                                     <Card key={profile.id_user} className='min-h-[50px] sm:min-h-[64px]'>
                                         <CardBody className='flex flex-row items-center justify-between'>
                                             <div className='flex flex-row items-center gap-3 '>
-                                                <Avatar className='w-6 h-6 aspect-auto sm:w-10 sm:h-10' src={profile.avatar_url} />
+                                                <Image src={profile.avatar_url ? profile.avatar_url : defaultUser.src} alt="group" width={100} height={100} className={`w-6 h-6 sm:w-10 sm:h-10 bg-[#3f3f46] rounded-full`} />
                                                 <span className='text-xs sm:text-base'>{profile.username}</span>
                                             </div>
                                             <div className='flex flex-row items-center'>
