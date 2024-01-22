@@ -11,7 +11,7 @@ export default function Login({
 }) {
   const signIn = async (formData: FormData) => {
     'use server'
-
+    console.log('formData', formData)
     const email = formData.get('email') as string
     const password = formData.get('password') as string
     const cookieStore = cookies()
@@ -64,6 +64,8 @@ export default function Login({
 
     return redirect('/login?message=Check email to continue sign in process')
   }
+
+
 
   return (
     <div className="flex-1 flex flex-col w-full px-8 justify-center gap-2">
