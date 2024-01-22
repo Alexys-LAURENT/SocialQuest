@@ -1,9 +1,7 @@
 import '@/app/styles/globals.css'
 import NavBar from '@/components/NavBar/NavBar'
-import { cookies } from 'next/headers'
 import { GeistSans } from 'geist/font/sans'
 import { Providers } from "@/app/providers"
-import { createClient } from '@/utils/supabase/server'
 import { ConfigProvider } from 'antd';
 import DrawerProvider from '@/app/context/DrawerContext';
 import ToasterProvider from '@/app/context/ToasterContext';
@@ -12,6 +10,8 @@ import InventaireProvider from '@/app/context/InventaireContext';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 import { getNextRewards } from '@/utils/getNextRewards';
 import TopLoader from '@/components/TopLoader';
+import { Analytics } from '@vercel/analytics/react';
+
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : 'http://localhost:3000'
@@ -45,6 +45,7 @@ export default async function RootLayout({
                     <main className={`h-full w-full flex flex-col items-center overflow-y-auto`}>
                       {children}
                     </main>
+                    <Analytics />
                   </InventaireProvider>
                 </DiscussionProvider>
               </DrawerProvider>
