@@ -4,6 +4,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Modal, ModalContent, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
 import { createClient } from '@/utils/supabase/client';
 import { DiscussionContext } from '@/app/context/DiscussionContext';
+import Image from 'next/image'
+import defaultUser from '@/public/assets/defaultUser.svg'
 
 
 const ModalComponentAddUsersToDiscussion = ({ isOpen, onOpenChange, defaultsProfiles, profileConnected, selectedCDiscussion }: { isOpen: boolean, onOpenChange: (open: boolean) => void, defaultsProfiles: ProfileInDiscussion[], profileConnected: Profile, selectedCDiscussion: DiscussionTab }) => {
@@ -54,12 +56,11 @@ const ModalComponentAddUsersToDiscussion = ({ isOpen, onOpenChange, defaultsProf
                                                 :
                                                 Array.from(selectedKeys).map((key) => users.find((user) => user.id_user === key)).map((user) => (
                                                     <Chip
+                                                        classNames={{ avatar: 'rounded-full' }}
                                                         key={`Chip-${user!.id_user}`}
                                                         variant="flat"
                                                         avatar={
-                                                            <Avatar
-                                                                src={user!.avatar_url}
-                                                            />
+                                                            <Image src={user!.avatar_url || defaultUser.src} alt="avatar" width={50} height={50} />
                                                         }
                                                     >
                                                         {user!.username}
@@ -78,10 +79,11 @@ const ModalComponentAddUsersToDiscussion = ({ isOpen, onOpenChange, defaultsProf
                                     selectedKeys={selectedKeys}
                                 >
                                     {(item) => item && (
+                                        console.log(item),
                                         <ListboxItem key={item.id_user} textValue={item.username}>
 
                                             <div className='flex flex-row items-center gap-3 '>
-                                                <Avatar className='w-6 h-6 aspect-auto sm:w-10 sm:h-10' src={item.avatar_url} />
+                                                <Image src={item.avatar_url || defaultUser.src} alt="avatar" width={50} height={50} className={`w-6 h-6 sm:w-10 sm:h-10 bg-[#3f3f46] rounded-full`} />
                                                 <span className='text-xs sm:text-base'>{item.username}</span>
                                             </div>
 

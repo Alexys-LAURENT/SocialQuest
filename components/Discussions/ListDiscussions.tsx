@@ -8,6 +8,8 @@ import { getProfileConnected } from '@/utils/getProfileConnected';
 import defaultGroup from '@/public/assets/defaultGroup.svg'
 import { PlusIcon } from '@heroicons/react/24/outline';
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
+import defaultUser from '@/public/assets/defaultUser.svg'
 
 const DynamicModalComponentCreateDiscussion = dynamic(() => import('@/components/Discussions/ModalComponentCreateDiscussion'))
 
@@ -86,9 +88,9 @@ const ListDiscussions = ({ initDiscussions, refetchDiscussions }: { initDiscussi
                         <Button onClick={() => [setIsEditingGroup(false), setComponentReloaded(true), setSelectedDiscussion(item)]} className='w-full h-full p-2 bg-transparent flex justify-start'>
                             <div className='aspect-square max-w-[40px] min-w-[40px] flex'>
                                 {item?.is_group === false ?
-                                    <Avatar src={item?.profiles[0].avatar_url} className='h-10 w-10 aspect-square rounded-full' />
+                                    <Image src={item?.profiles[0].avatar_url || defaultUser.src} alt="group" width={50} height={50} className={`w-10 h-10 bg-[#3f3f46] rounded-full`} />
                                     :
-                                    <Avatar src={defaultGroup.src} className='h-10 w-10 p-1 aspect-square rounded-full invert bg-contain' />
+                                    <Image src={defaultGroup.src} alt="group" width={50} height={50} className={`p-1 w-10 h-10 bg-[#3f3f46] rounded-full invert`} />
                                 }
                             </div>
                             <div className=' w-full overflow-hidden flex flex-col bg-green-300/0 h-full items-start'>

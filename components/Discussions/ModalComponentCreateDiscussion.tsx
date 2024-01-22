@@ -2,8 +2,9 @@
 import { useEffect, useState } from 'react';
 import { Card, CardBody, Button, Avatar, Chip, Input, Listbox, ListboxItem, Modal, ModalBody, ModalContent, ModalFooter } from '@nextui-org/react';
 import { DiscussionTab, Profile } from '@/app/types/entities';
-
 import { createClient } from '@/utils/supabase/client';
+import defaultUser from '@/public/assets/defaultUser.svg'
+import Image from 'next/image'
 
 
 const ModalComponentCreateDiscussion = ({ isOpen, setOpen, onOpenChange, profileConnected, setDiscussions, refetchDiscussions, setSelectedDiscussion }:
@@ -85,12 +86,11 @@ const ModalComponentCreateDiscussion = ({ isOpen, setOpen, onOpenChange, profile
                                                 :
                                                 Array.from(selectedKeys).map((key) => users.find((user) => user.id_user === key)).map((user) => (
                                                     <Chip
+                                                        classNames={{ avatar: 'rounded-full' }}
                                                         key={`Chip-${user!.id_user}`}
                                                         variant="flat"
                                                         avatar={
-                                                            <Avatar
-                                                                src={user!.avatar_url}
-                                                            />
+                                                            <Image src={user!.avatar_url || defaultUser.src} alt="avatar" width={50} height={50} />
                                                         }
                                                     >
                                                         {user!.username}
@@ -112,7 +112,7 @@ const ModalComponentCreateDiscussion = ({ isOpen, setOpen, onOpenChange, profile
                                         <ListboxItem key={item.id_user} textValue={item.username}>
 
                                             <div className='flex flex-row items-center gap-3 '>
-                                                <Avatar className='w-6 h-6 aspect-auto sm:w-10 sm:h-10' src={item.avatar_url} />
+                                                <Image src={item.avatar_url || defaultUser.src} alt="avatar" width={50} height={50} className={`w-6 h-6 sm:w-10 sm:h-10 bg-[#3f3f46] rounded-full`} />
                                                 <span className='text-xs sm:text-base'>{item.username}</span>
                                             </div>
 
