@@ -8,6 +8,8 @@ const DynamicPost = dynamic(() => import('@/components/Post'))
 
 const Posts = ({ userProfile, isUserProfil, posts }: { userProfile: Profile | null, isUserProfil: boolean, posts: ExtendedPost[] }) => {
 
+    console.log(posts)
+
     return (
         <div className="w-full max-w-2xl" >
 

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import TopTabs from '@/components/Home/TopTabs'
-import PostsWrapper from '@/components/Home/PostsWrapper';
+import PostsWrapper from '@/components/PostsWrapper';
 import { getProfileConnected } from '@/utils/getProfileConnected'
 import { getAllPosts } from '@/utils/getAllPosts'
 import { getGuildesUser } from '@/utils/getGuildesUser'

@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Item, Profile } from '@/app/types/entities';
 import { Card, CardBody, Tab, Tabs } from "@nextui-org/react";
 import Image from 'next/image';

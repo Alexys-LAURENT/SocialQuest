@@ -3,10 +3,11 @@ import { Avatar, Button, Popover, PopoverContent, PopoverTrigger } from '@nextui
 import Link from 'next/link';
 import { ExtendedPost } from '@/app/types/entities';
 import Image from 'next/image';
+import defaultUser from '@/public/assets/defaultUser.svg'
 
 const PopoverUserProfile = ({ post }: { post: ExtendedPost }) => {
     return (
-        <Popover classNames={{ content: "z-10" }} placement="top" offset={10} shouldBlockScroll={true} className='mr-3 md:w-[90vw] !max-w-[17.5rem] md:!max-w-sm'>
+        <Popover classNames={{ content: "z-10" }} placement="top" offset={10} shouldBlockScroll={true} className='mr-3 md:w-[90vw] !max-w-[17.5rem] md:!max-w-sm min-w-[17.5rem]'>
             <PopoverTrigger>
                 <div className="cursor-pointer text-textLight">
                     @{post.profiles.username}
@@ -17,7 +18,7 @@ const PopoverUserProfile = ({ post }: { post: ExtendedPost }) => {
                     <div className="w-full min-h-[4rem] md:min-h-[5rem] bg-white bg-cover bg-center transition-all rounded-t-md" style={{ backgroundImage: `url(${post.profiles.banner_url})` }}></div>
                     <div className="relative w-full min-h-[1.5rem] md:min-h-[3rem]">
                         <div className="flex absolute -top-7 md:-top-10 left-5 gap-2 transition-all duration-500">
-                            <Avatar src={post.profiles.avatar_url} className="flex h-14 w-14 md:h-20 md:w-20 rounded-full text-large transition-all" />
+                            <Image src={post.profiles.avatar_url || defaultUser.src} alt={post.profiles.avatar_url! || defaultUser.src} width={80} height={80} className="flex h-14 w-14 md:h-20 md:w-20 rounded-full text-large transition-all" />
                         </div>
                         <div className="flex absolute -top-5 md:-top-7 right-5 gap-2 md:transition-all">
                             {

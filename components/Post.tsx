@@ -9,6 +9,8 @@ import WrapperLikeAnswer from '@/components/WrapperLikeAnswer';
 import { createClient } from '@/utils/supabase/client';
 import { ToasterContext } from '@/app/context/ToasterContext';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import defaultUser from '@/public/assets/defaultUser.svg'
 export default function Post({ user, post }: { user: Profile | null, post: ExtendedPost }) {
 
     const router = useRouter()
@@ -31,7 +33,7 @@ export default function Post({ user, post }: { user: Profile | null, post: Exten
         <div className="flex flex-col border border-gray-500 rounded-md p-2 gap-1">
 
             <div className="flex gap-2">
-                <Avatar size='sm' src={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url!} className='min-h-[32px] min-w-[32px] rounded-full' alt={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url!} />
+                <Image src={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url! || defaultUser.src} alt={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url! || defaultUser.src} width={32} height={32} className='min-h-[32px] min-w-[32px] rounded-full' />
                 <div className="flex items-center justify-between w-full">
                     <div className="flex gap-1">
                         {post.guildes && (
