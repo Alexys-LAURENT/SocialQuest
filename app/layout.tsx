@@ -11,7 +11,7 @@ import { getProfileConnected } from '@/utils/getProfileConnected';
 import { getNextRewards } from '@/utils/getNextRewards';
 import TopLoader from '@/components/TopLoader';
 import { Analytics } from '@vercel/analytics/react';
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : 'http://localhost:3000'
@@ -46,6 +46,7 @@ export default async function RootLayout({
                       {children}
                     </main>
                     <Analytics />
+                    <SpeedInsights />
                   </InventaireProvider>
                 </DiscussionProvider>
               </DrawerProvider>
