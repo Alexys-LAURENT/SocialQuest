@@ -9,6 +9,7 @@ import { getProfileConnected } from '@/utils/getProfileConnected'
 import { getAllPostsFromUser } from '@/utils/getAllPosts'
 import { getPageProfile } from '@/utils/getPageProfile'
 import Image from 'next/image'
+import defaultUser from '@/public/assets/defaultUser.svg'
 
 const DynamicProfilPicture = dynamic(() => import('@/components/Profil/ProfilPicture'))
 
@@ -36,7 +37,7 @@ export default async function Profil({ params }: { params: { username: string } 
       <div className="relative w-full min-h-[7rem] max-w-[1280px]">
         <div className="flex relative -top-14 md:-top-20 left-10 md:left-20 lg:left-40 gap-2 md:gap-4 transition-all duration-500">
           {isUserProfil && <DynamicProfilPicture isUserProfil={isUserProfil} />}
-          <Avatar src={pageProfile?.avatar_url} className={`${isUserProfil ? 'absolute' : 'flex'} h-28 w-28 md:h-40 md:w-40 rounded-full text-large transition-all`} />
+          <Image src={pageProfile?.avatar_url || defaultUser.src} alt={pageProfile?.avatar_url! || defaultUser.src} width={160} height={160} className={`${isUserProfil ? 'absolute' : 'flex'} h-28 w-28 md:h-40 md:w-40 rounded-full text-large transition-all`} />
           <div className="relative flex flex-col">
             <p className="absolute w-max text-xl md:text-2xl font-semibold bottom-2 md:bottom-7">
               {pageProfile?.username}

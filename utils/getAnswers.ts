@@ -15,7 +15,6 @@ export async function getAnswers(id_post: string) {
         .select(`*, profiles(username, avatar_url, a_propos,banner_url, users_badges(items(*))),guildes(nom, avatar_url), likes(id_like, id_user),
         children:posts(id_post)`)
         .eq('parent', id_post)
-        .order('created_at', { ascending: true })
 
     if (err) {
         console.error(err)
@@ -30,6 +29,8 @@ export async function getAnswers(id_post: string) {
 
         return { ...post, likesCount, answersCount, userLikedPost };
     }) as ExtendedPost[];
+
+    posts && posts.sort((a, b) => b.likesCount - a.likesCount)
 
     return posts
 }

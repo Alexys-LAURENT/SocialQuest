@@ -3,7 +3,7 @@ import Link from "next/link";
 import SearchBar from "@/components/NavBar/SearchBar";
 import PopoverUser from "@/components/NavBar/PopoverUser";
 import PopoverNotifications from "@/components/NavBar/PopoverNotifications";
-import React, { useEffect, useContext, use } from "react";
+import React, { useContext } from "react";
 import { NextReward, Profile } from "@/app/types/entities";
 import { Button } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
@@ -59,7 +59,7 @@ const NavBar = ({ user, nextRewards }: { user: Profile | null, nextRewards: Next
     }
 
     return activePath !== "/login" ? (
-        <Navbar maxWidth="2xl" className="py-2 bg-bgDark" position="sticky">
+        <Navbar maxWidth="2xl" className="py-2 bg-bgDark" position="sticky" classNames={{ wrapper: "px-4 sm:px-6" }}>
             <NavbarContent justify="start">
                 <NavbarBrand className="hidden md:flex text-3xl font-bold">
                     <Link

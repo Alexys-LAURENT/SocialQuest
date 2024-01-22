@@ -12,9 +12,10 @@ interface PostInputProps {
     id_guilde?: string,
     index?: boolean,
     guildesUser?: any
+    parent?: string
 }
 
-const PostInput = ({ id_guilde, index, guildesUser }: PostInputProps) => {
+const PostInput = ({ id_guilde, index, guildesUser, parent }: PostInputProps) => {
     const router = useRouter();
     const { success, error } = useContext(ToasterContext);
     const limite = {
@@ -45,7 +46,17 @@ const PostInput = ({ id_guilde, index, guildesUser }: PostInputProps) => {
             return error('Veuillez inclure un titre et un contenu');
         }
 
-        const data = id_guilde ? { id_guilde: id_guilde, titre: titre, contenu: contenu } : guilde === '' ? { titre: titre, contenu: contenu } : { id_guilde: guilde, titre: titre, contenu: contenu };
+        const data: { id_guilde?: string, titre: string, contenu: string, parent?: string } = { titre: titre, contenu: contenu };
+
+        if (id_guilde) {
+            data.id_guilde = id_guilde;
+        } else if (guilde !== '') {
+            data.id_guilde = guilde;
+        }
+
+        if (parent) {
+            data.parent = parent;
+        }
 
         const isDone = await sendPost(data);
 
@@ -64,7 +75,7 @@ const PostInput = ({ id_guilde, index, guildesUser }: PostInputProps) => {
         <div className="w-full h-fit flex flex-col min-h-fit ">
             <form id='NewPostinput' onSubmit={(e) => send(e)} >
                 <div className="flex flex-col h-full w-full bg-[#11100e] rounded-t-md py-2 px-6 gap-1">
-                    {index &&
+                    {index && guildesUser.length > 0 &&
                         <PostInputGuildsListBox setGuilde={setGuilde} guildesUser={guildesUser} />
                     }
                     <div className='relative'>
