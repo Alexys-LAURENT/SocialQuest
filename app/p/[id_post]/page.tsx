@@ -1,7 +1,7 @@
 import React from 'react';
 import { getPost } from '@/utils/getPost';
 import { getAnswers } from '@/utils/getAnswers';
-import Post from '@/components/Post';
+import MainPost from '@/components/Post/MainPost';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 import { ExtendedPost } from '@/app/types/entities';
 import { notFound } from 'next/navigation';
@@ -25,8 +25,8 @@ const page = async ({ params }: { params: { id_post: string } }) => {
                 <div className="min-w-[2rem] sm:min-w-[5rem] md:min-w-[9rem] lg:min-w-[17rem] flex" />
 
                 <div className="flex flex-col w-full gap-4">
-                    <Post post={post} user={userProfile} />
-                    <PostInput id_guilde={undefined} index={false} guildesUser={null} parent={post.id_post} />
+                    <MainPost post={post} user={userProfile} />
+                    <PostInput id_guilde={undefined} page="post" guildesUser={null} parent={post.id_post} />
                     <PostsWrapper user={userProfile} getPost={() => answers} postPage={true} />
                 </div>
 

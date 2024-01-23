@@ -10,7 +10,7 @@ const TopTabs = ({ user, guildesUser }: { user: Profile | null, guildesUser: any
         <div className={`flex-col items-center justify-center ${!user && 'hidden'}`}>
             <Tabs aria-label="Options" defaultSelectedKey="NewPost" classNames={{ panel: 'px-0' }} className='lg:hidden flex justify-center items-center'>
                 <Tab key="NewPost" title="Nouveau post" className="w-full lg:p-0 ">
-                    {user && <PostInput index={true} guildesUser={guildesUser} />}
+                    {user && <PostInput page="index" guildesUser={guildesUser} />}
                 </Tab>
                 <Tab key="filtres" title="Filtres" className="w-full">
                     <div className="w-full flex flex-col bg-[#11100e] rounded-md text-xl font-semibold h-fit">

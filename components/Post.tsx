@@ -35,7 +35,7 @@ export default function Post({ user, post }: { user: Profile | null, post: Exten
             <div className="flex gap-2">
                 <Image src={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url! || defaultUser.src} alt={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url! || defaultUser.src} width={32} height={32} className='min-h-[32px] min-w-[32px] rounded-full' />
                 <div className="flex items-center justify-between w-full">
-                    <div className="flex gap-1">
+                    <div className="flex items-center gap-1">
                         {post.guildes && (
                             <>
                                 <Link href={`/g/${post.guildes.nom}`} className="text-sm text-textLight font-semibold">

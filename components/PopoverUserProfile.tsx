@@ -9,7 +9,7 @@ const PopoverUserProfile = ({ post }: { post: ExtendedPost }) => {
     return (
         <Popover classNames={{ content: "z-10" }} placement="top" offset={10} shouldBlockScroll={true} className='mr-3 md:w-[90vw] !max-w-[17.5rem] md:!max-w-sm min-w-[17.5rem]'>
             <PopoverTrigger>
-                <div className="cursor-pointer text-textLight">
+                <div className="cursor-pointer text-textLight flex items-center">
                     @{post.profiles.username}
                 </div>
             </PopoverTrigger>

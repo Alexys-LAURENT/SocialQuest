@@ -10,12 +10,12 @@ import PostInputGuildsListBox from '@/components/PostInputGuildsSelect';
 
 interface PostInputProps {
     id_guilde?: string,
-    index?: boolean,
+    page?: string
     guildesUser?: any
     parent?: string
 }
 
-const PostInput = ({ id_guilde, index, guildesUser, parent }: PostInputProps) => {
+const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => {
     const router = useRouter();
     const { success, error } = useContext(ToasterContext);
     const limite = {
@@ -42,8 +42,8 @@ const PostInput = ({ id_guilde, index, guildesUser, parent }: PostInputProps) =>
 
     async function send(e: any) {
         e.preventDefault();
-        if (titre === '' || contenu === '') {
-            return error('Veuillez inclure un titre et un contenu');
+        if (page !== 'post' && titre === '' || contenu === '') {
+            return error(`Veuillez inclure ${page !== 'post' ? 'un titre et' : ''} un contenu`);
         }
 
         const data: { id_guilde?: string, titre: string, contenu: string, parent?: string } = { titre: titre, contenu: contenu };
@@ -75,17 +75,19 @@ const PostInput = ({ id_guilde, index, guildesUser, parent }: PostInputProps) =>
         <div className="w-full h-fit flex flex-col min-h-fit ">
             <form id='NewPostinput' onSubmit={(e) => send(e)} >
                 <div className="flex flex-col h-full w-full bg-[#11100e] rounded-t-md py-2 px-6 gap-1">
-                    {index && guildesUser.length > 0 &&
+                    {page === 'index' && guildesUser.length > 0 &&
                         <PostInputGuildsListBox setGuilde={setGuilde} guildesUser={guildesUser} />
                     }
-                    <div className='relative'>
-                        <Textarea aria-label='titre' id="PostInputTitle" minRows={1} classNames={{ inputWrapper: "bg-transparent group-data-[focus=true]:bg-opacity-30 data-[hover=true]:bg-opacity-30 pb-5 h-auto", input: "font-bold" }} value={titre} placeholder="Titre..." maxLength={limite.titre} onChange={(e) => handleChangeTitle(e)} >
+                    {page !== 'post' &&
+                        <div className='relative'>
+                            <Textarea aria-label='titre' id="PostInputTitle" minRows={1} classNames={{ inputWrapper: "bg-transparent group-data-[focus=true]:bg-opacity-30 data-[hover=true]:bg-opacity-30 pb-5 h-auto", input: "font-bold" }} value={titre} placeholder="Titre..." maxLength={limite.titre} onChange={(e) => handleChangeTitle(e)} >
 
-                        </Textarea>
-                        <div className={`CharCountTitleNewPostWrapper absolute bottom-1 right-4 text-[10px] text-[#7c7c7c] ${titre.length > limite.titre ? 'text-red-500' : ''}`}>
-                            <span className="CharCountTitleNewPost">{titre.length}</span>/{limite.titre}
+                            </Textarea>
+                            <div className={`CharCountTitleNewPostWrapper absolute bottom-1 right-4 text-[10px] text-[#7c7c7c] ${titre.length > limite.titre ? 'text-red-500' : ''}`}>
+                                <span className="CharCountTitleNewPost">{titre.length}</span>/{limite.titre}
+                            </div>
                         </div>
-                    </div>
+                    }
                     <div className='relative'>
                         <Textarea aria-label='contenu' id="PostInputContent" minRows={3} classNames={{ inputWrapper: "bg-transparent group-data-[focus=true]:bg-opacity-30 data-[hover=true]:bg-opacity-30 h-auto  pb-5" }} placeholder="Contenu..." value={contenu} maxLength={limite.contenu} onChange={(e) => handleChangeContent(e)} >
 
