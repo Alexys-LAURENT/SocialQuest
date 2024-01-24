@@ -1,15 +1,16 @@
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import TopTabs from '@/components/Home/TopTabs'
-import PostsWrapper from '@/components/PostsWrapper';
 import { getProfileConnected } from '@/utils/getProfileConnected'
 import { getAllPosts } from '@/utils/getAllPosts'
 import { getGuildesUser } from '@/utils/getGuildesUser'
 import { Suspense } from 'react'
-import PostsWrapperSkeleton from '@/components/Skeletons/PostsWrapperSkeleton';
 import { Button } from '@nextui-org/react';
 
 export default async function Index() {
 
+  const TopTabs = dynamic(() => import('@/components/Home/TopTabs'));
+  const PostsWrapper = dynamic(() => import('@/components/PostsWrapper'));
+  const PostsWrapperSkeleton = dynamic(() => import('@/components/Skeletons/PostsWrapperSkeleton'));
 
   const user = await getProfileConnected()
   const guildesUser = await getGuildesUser()
@@ -21,20 +22,20 @@ export default async function Index() {
       <div className="hidden lg:flex min-w-[17rem] h-fit">
         {user ?
           (
-            <div className="w-full flex flex-col bg-[#11100e] rounded-md text-xl font-semibold h-fit">
-              <Link href={`/${user ? user.username : 'login'}`} className='hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>
+            <div className="w-full flex flex-col bg-bgLightCard dark:bg-bgDarkCard text-textDark dark:text-textLight rounded-md text-xl font-semibold h-fit transition-all !duration-500">
+              <Link href={`/${user ? user.username : 'login'}`} className='text-textDark dark:text-textLight hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>
                 Ma page
               </Link>
-              <Link href={`#`} className='hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>
+              <Link href={`#`} className='text-textDark dark:text-textLight hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>
                 Mes Compagnons
               </Link>
-              <Link href={`#`} className='hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>
+              <Link href={`#`} className='text-textDark dark:text-textLight hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>
                 Mes Guildes
               </Link>
             </div>
           ) : (
-            <div className="w-full flex flex-col bg-[#11100e] rounded-md text-xl font-semibold h-fit">
-              <div className="text-base text-center p-2">
+            <div className="w-full flex flex-col bg-bgLightCard dark:bg-bgDarkCard rounded-md text-xl font-semibold h-fit transition-all !duration-500">
+              <div className="text-base text-center p-2 text-textDark dark:text-textLight">
                 Connectez-vous pour profiter pleinement de votre expérience sur notre site !
               </div>
 
@@ -56,13 +57,13 @@ export default async function Index() {
       </div>
 
       <div className="hidden md:flex flex-col min-w-[17rem] gap-4 h-fit">
-        <div className="p-2 w-full flex flex-col bg-[#11100e] rounded-md">
-          <div className="text-xl font-semibold min-h-[25rem]">
+        <div className="p-2 w-full flex flex-col bg-bgLightCard dark:bg-bgDarkCard rounded-md transition-all !duration-500">
+          <div className="text-xl font-semibold min-h-[25rem] text-textDark dark:text-textLight transition-all !duration-[125ms]">
             Top Guildes
           </div>
         </div>
-        <div className="p-2 w-full flex flex-col bg-[#11100e] rounded-md">
-          <div className="text-xl font-semibold min-h-[25rem]">
+        <div className="p-2 w-full flex flex-col bg-bgLightCard dark:bg-bgDarkCard rounded-md transition-all !duration-500">
+          <div className="text-xl font-semibold min-h-[25rem] text-textDark dark:text-textLight transition-all !duration-[125ms]">
             Top Membres
           </div>
         </div>

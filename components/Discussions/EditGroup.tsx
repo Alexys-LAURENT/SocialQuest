@@ -66,7 +66,7 @@ const EditGroup = ({ profileConnected, selectedCDiscussion, setSelectedDiscussio
                             <div>
 
                                 <div className='flex w-full gap-3 justify-end my-6'>
-                                    <Button className='w-fit h-full bg-darkSecondary p-3 text-xs sm:text-base'>Annuler</Button>
+                                    <Button className='w-fit h-full bg-bgLightPopover dark:bg-bgDarkPopover p-3 text-xs sm:text-base'>Annuler</Button>
                                     <Button className='w-fit h-full bg-blue-500 p-3 text-xs sm:text-base' isDisabled={inputValue.length === 0} onClick={() => updateCurrentSelectedDiscussion(inputValue)}>Enregister</Button>
                                 </div>
 
@@ -104,7 +104,7 @@ const EditGroup = ({ profileConnected, selectedCDiscussion, setSelectedDiscussio
                             </Card>
                             {
                                 selectedCDiscussion.profiles.map((profile) => (
-                                    <Card key={profile.id_user} className='min-h-[50px] sm:min-h-[64px]'>
+                                    <Card key={`EditGroup-${profile.id_user}`} className='min-h-[50px] sm:min-h-[64px]'>
                                         <CardBody className='flex flex-row items-center justify-between'>
                                             <div className='flex flex-row items-center gap-3 '>
                                                 <Image src={profile.avatar_url ? profile.avatar_url : defaultUser.src} alt="group" width={100} height={100} className={`w-6 h-6 sm:w-10 sm:h-10 bg-[#3f3f46] rounded-full`} />

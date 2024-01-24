@@ -16,8 +16,9 @@ const MessageInput = ({ supabase, selectedCDiscussion, profileConnected }: { sup
     }
 
     return (
-        <div className='w-11/12 min-h-[100px] mt-2 py-3 z-10 bg-bgDark flex gap-4 justify-center items-center '>
-            <Textarea id='MessageTextarea' value={inputValue} onChange={(e) => setInputValue(e.target.value)} minRows={2} maxRows={5} placeholder='Message' className='w-full' classNames={{ inputWrapper: "h-auto" }} onBlur={(e) => { e.relatedTarget?.id === "MessageButton" && (document.getElementById('MessageTextarea') as HTMLTextAreaElement).focus() }} />
+        <div className='w-11/12 min-h-[100px] mt-2 py-3 z-10 flex gap-4 justify-center items-center bg-bgLight dark:bg-bgDark transition-all !duration-500'>
+            <Textarea id='MessageTextarea' value={inputValue} onChange={(e) => setInputValue(e.target.value)} minRows={2} maxRows={5} placeholder='Message' className='w-full'
+                classNames={{ inputWrapper: "h-auto" }} onBlur={(e) => { e.relatedTarget?.id === "MessageButton" && (document.getElementById('MessageTextarea') as HTMLTextAreaElement).focus() }} />
             <Button id='MessageButton' onClick={() => { postMessage() }}>
                 Envoyer
             </Button>

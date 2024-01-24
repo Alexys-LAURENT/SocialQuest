@@ -13,14 +13,21 @@ const config = {
       colors: {
         textLight: "#e0e0e0",
         bgDark: "#0a0a0a",
+        bgDarkCard: "#11100e",
+        bgDarkPopover: "#3b3b3b",
+        bgLight: "#F1F1F1",
+        bgLightCard: "#E2E2E2",
+        bgLightPopover: "#b9b9b9",
+        textDark: "#323232",
         secondary: "#0070F0",
-        darkSecondary: "#1C1C1C",
-      },
+        bgDarkSecondary: "#1C1C1C",
+        bgLightSecondary: "#F0F0F0",
+      }
     },
   },
   darkMode: "class",
   plugins: [nextui()],
-  important: true,
+  important: false,
 }
 
 export default config;

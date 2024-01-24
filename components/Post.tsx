@@ -38,10 +38,10 @@ export default function Post({ user, post }: { user: Profile | null, post: Exten
                     <div className="flex items-center gap-1">
                         {post.guildes && (
                             <>
-                                <Link href={`/g/${post.guildes.nom}`} className="text-sm text-textLight font-semibold">
+                                <Link href={`/g/${post.guildes.nom}`} className="text-sm text-textDark dark:text-textLight transition-all !duration-[125ms] font-semibold">
                                     {post.guildes.nom}
                                 </Link>
-                                <div>
+                                <div className='text-textDark dark:text-textLight transition-all !duration-[125ms]'>
                                     •
                                 </div>
                             </>
@@ -50,7 +50,7 @@ export default function Post({ user, post }: { user: Profile | null, post: Exten
                     </div>
                     <Popover placement="top" offset={10} shouldBlockScroll={true}>
                         <PopoverTrigger>
-                            <EllipsisVerticalIcon className="w-5 h-5 text-textLight cursor-pointer" />
+                            <EllipsisVerticalIcon className="w-5 h-5 text-textDark dark:text-textLight cursor-pointer transition-all !duration-[125ms]" />
                         </PopoverTrigger>
                         <PopoverContent className="p-0">
                             <div className="flex flex-col">
@@ -84,10 +84,10 @@ export default function Post({ user, post }: { user: Profile | null, post: Exten
 
             <div className="flex flex-col px-10 gap-2">
                 <div>
-                    <div className={`text-md font-bold working-break-words ${post.titre ? 'mb-1' : ''}`}>
+                    <div className={`text-textDark dark:text-textLight text-md font-bold working-break-words transition-all !duration-[125ms] ${post.titre ? 'mb-1' : ''}`}>
                         {post.titre}
                     </div>
-                    <div className="text-textLight working-break-words">
+                    <div className="text-textDark dark:text-textLight working-break-words transition-all !duration-[125ms]">
                         {post.contenu}
                     </div>
                 </div>
@@ -95,7 +95,7 @@ export default function Post({ user, post }: { user: Profile | null, post: Exten
                 <div className="flex md:flex-row gap-2 flex-col-reverse justify-between">
                     <WrapperLikeAnswer post={post} user={user} />
                     <div className="text-slate-400 text-xs flex items-end">
-                        {new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(new Date(post.created_at ?? ''))}
+                        {post.createdAtFormated}
                     </div>
                 </div>
             </div>

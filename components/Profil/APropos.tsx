@@ -41,9 +41,9 @@ const APropos = ({ isUserProfil, user, nextRewards }: { isUserProfil: boolean, u
 
     return (
         <div className="flex flex-col gap-6 h-[40%]">
-            <div className={`flex flex-col gap-1 ${!isEditingAPropos ? 'h-[50%]' : 'h-full'} bg-[#1c1c1c] rounded-md py-2 px-3`}>
+            <div className={`flex flex-col gap-1 ${!isEditingAPropos ? 'h-[50%]' : 'h-full'} bg-bgLightCard dark:bg-bgDarkSecondary transition-all !duration-500 rounded-md py-2 px-3`}>
                 <div className="flex font-semibold items-center justify-between">
-                    <h1>
+                    <h1 className='text-textDark dark:text-textLight transition-all !duration-[100ms]'>
                         A propos
                     </h1>
                     {isUserProfil && (
@@ -57,7 +57,7 @@ const APropos = ({ isUserProfil, user, nextRewards }: { isUserProfil: boolean, u
                         )
                     )}
                 </div>
-                <div className="font-light text-sm h-full overflow-y-auto">
+                <div className="font-light text-sm h-full overflow-y-auto text-textDark dark:text-textLight transition-all !duration-[100ms]">
                     {!isEditingAPropos ? (
                         (user?.a_propos !== ""
                             ? user?.a_propos
@@ -85,24 +85,24 @@ const APropos = ({ isUserProfil, user, nextRewards }: { isUserProfil: boolean, u
             </div>
 
             {!isEditingAPropos &&
-                <div className='flex flex-col justify-center gap-2 h-[50%] bg-[#1c1c1c] rounded-md py-2 px-3'>
+                <div className='flex flex-col justify-center gap-2 h-[50%] bg-bgLightCard dark:bg-bgDarkSecondary transition-all !duration-500 rounded-md py-2 px-3'>
                     <div>
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-between items-center text-textDark dark:text-textLight transition-all !duration-[100ms]">
                             <div className="text-sm">Level {user?.niveaux.libelle!}</div>
                             <div className="text-sm">Level {user?.niveaux.libelle! + 1}</div>
                         </div>
-                        <Progress aria-label="Level" title={`${(user?.xp! - user?.niveaux.xp_debut!)} / ${user?.niveaux.xp_fin! + 1} xp`} value={progressValue} />
+                        <Progress aria-label="Level" title={`${(user?.xp! - user?.niveaux.xp_debut!)} / ${user?.niveaux.xp_fin! + 1} xp`} value={progressValue} classNames={{ track: "transition-all !duration-500" }} />
                     </div>
                     <div className="flex justify-end items-center gap-1 text-end text-[#979797]">
                         {
                             isUserProfil && nextRewards && nextRewards.length > 0 && (
                                 <>
-                                    <div className="text-sm">Suivant : {nextRewards.length > 1 ? `${nextRewards.length} items` : nextRewards[0].items.nom}</div>
+                                    <div className="text-sm text-[#777777] dark:text-[#919191]">Suivant : {nextRewards.length > 1 ? `${nextRewards.length} items` : nextRewards[0].items.nom}</div>
                                     <div className="flex relative items-center justify-center rounded-md">
                                         <Image.PreviewGroup preview={{ toolbarRender: () => (<></>), }}
                                             items={nextRewards.reduce((acc: any, item: any) => { acc.push(item.items.image_url); return acc; }, [])}>
 
-                                            <Image className="h-7 w-auto aspect-auto rounded-md" src={nextRewards[0].items.image_url}
+                                            <Image className="!h-7 w-auto aspect-auto rounded-md" src={nextRewards[0].items.image_url}
                                                 alt={nextRewards[0].items.nom}></Image>
 
                                         </Image.PreviewGroup>

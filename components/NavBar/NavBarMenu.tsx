@@ -20,13 +20,13 @@ const NavBarMenu = ({ customFunction }: { customFunction: () => void }) => {
                     Marché
                 </ListboxItem>
 
-                <ListboxItem key="Top Guildes" className='bg-darkSecondary'>
+                <ListboxItem key="Top Guildes" className='bg-bgLightCard dark:bg-bgDarkSecondary'>
                     <div>
                         Top Guildes
                     </div>
                     <div>lalal</div>
                 </ListboxItem>
-                <ListboxItem key="Top Membres" className='bg-darkSecondary'>
+                <ListboxItem key="Top Membres" className='bg-bgLightCard dark:bg-bgDarkSecondary'>
                     <div>
                         Top Membres
                     </div>

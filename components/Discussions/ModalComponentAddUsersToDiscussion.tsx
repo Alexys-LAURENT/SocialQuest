@@ -47,7 +47,7 @@ const ModalComponentAddUsersToDiscussion = ({ isOpen, onOpenChange, defaultsProf
                                             Array.from(selectedKeys).map((key) => users.find((user) => user.id_user === key)).length === 0
                                                 ?
                                                 <Chip
-                                                    key={`Chip-empty`}
+                                                    key={`${Math.random()}-${Math.random()}-Chip-empty`}
                                                     variant="flat"
                                                     className='opacity-20'
                                                 >
@@ -57,7 +57,7 @@ const ModalComponentAddUsersToDiscussion = ({ isOpen, onOpenChange, defaultsProf
                                                 Array.from(selectedKeys).map((key) => users.find((user) => user.id_user === key)).map((user) => (
                                                     <Chip
                                                         classNames={{ avatar: 'rounded-full' }}
-                                                        key={`Chip-${user!.id_user}`}
+                                                        key={`ChipAddUsersToDscussion-${Math.random()}-${user!.id_user}`}
                                                         variant="flat"
                                                         avatar={
                                                             <Image src={user!.avatar_url || defaultUser.src} alt="avatar" width={50} height={50} />
@@ -79,7 +79,6 @@ const ModalComponentAddUsersToDiscussion = ({ isOpen, onOpenChange, defaultsProf
                                     selectedKeys={selectedKeys}
                                 >
                                     {(item) => item && (
-                                        console.log(item),
                                         <ListboxItem key={item.id_user} textValue={item.username}>
 
                                             <div className='flex flex-row items-center gap-3 '>

@@ -11,24 +11,24 @@ const PopOverUserContent = ({ user, customFunction, signOut, nextRewards }: { us
 
 
     return (
-        <div className="w-full px-1 py-2 gap-2 flex flex-col">
-            <div>
-                <div className="flex justify-between items-center">
+        <div className="popOverUserContentWrapper w-full px-1 py-2 gap-2 flex flex-col text-textDark dark:text-textLight">
+            <div className="levelWrapper">
+                <div className="flex justify-between items-center transition-all !duration-[125ms]">
                     <div className="text-sm">Level {user?.niveaux.libelle!}</div>
                     <div className="text-sm">Level {user?.niveaux.libelle! + 1}</div>
                 </div>
-                <Progress aria-label="Level" value={progressValue} title={`${(user?.xp! - user?.niveaux.xp_debut!)} / ${user?.niveaux.xp_fin! + 1} xp`} />
+                <Progress aria-label="Level" value={progressValue} title={`${(user?.xp! - user?.niveaux.xp_debut!)} / ${user?.niveaux.xp_fin! + 1} xp`} classNames={{ track: "transition-all !duration-500" }} />
             </div>
-            <div className="flex justify-end items-center gap-1 text-end text-[#979797]">
+            <div className="nextRewardsWrapper flex justify-end items-center gap-1 text-end text-[#979797]">
                 {
                     nextRewards && nextRewards.length > 0 && (
                         <>
-                            <div className="text-sm">Suivant : {nextRewards.length > 1 ? `${nextRewards.length} items` : nextRewards[0].items.nom}</div>
+                            <div className="text-sm text-[#777777] dark:text-[#919191]">Suivant : {nextRewards.length > 1 ? `${nextRewards.length} items` : nextRewards[0].items.nom}</div>
                             <div className="flex relative items-center justify-center rounded-md">
                                 <Image.PreviewGroup preview={{ toolbarRender: () => (<></>), }}
                                     items={nextRewards.reduce((acc: any, item: any) => { acc.push(item.items.image_url); return acc; }, [])}>
 
-                                    <Image className="h-7 w-auto aspect-auto rounded-md" src={nextRewards[0].items.image_url}
+                                    <Image className="!h-7 w-auto aspect-auto rounded-md" src={nextRewards[0].items.image_url}
                                         alt={nextRewards[0].items.nom}></Image>
 
                                 </Image.PreviewGroup>
@@ -41,68 +41,69 @@ const PopOverUserContent = ({ user, customFunction, signOut, nextRewards }: { us
             <div className="flex flex-col text-lg select-none">
                 <Link
                     href={`/${user?.username}`}
-                    className="px-1 py-1 flex gap-2 items-center hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md"
+                    className="px-1 py-1 flex gap-2 items-center dark:hover:bg-[#767676] hover:bg-[#e5e5e5] hover:bg-opacity-75 transition-all ease-in-out rounded-md"
                     onClick={() =>
                         customFunction()
                     }
                 >
-                    <UserIcon className="w-6 h-6" />
-                    <div className="">Profil</div>
+                    <UserIcon className="w-6 h-6 text-textDark dark:text-textLight transition-all !duration-[125ms]" />
+                    <div className="text-textDark dark:text-textLight transition-all !duration-[125ms]">Profil</div>
                 </Link>
                 <Link
                     href={`/messages`}
-                    className="px-1 py-1 flex gap-2 items-center hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md"
+                    className="px-1 py-1 flex gap-2 items-center dark:hover:bg-[#767676] hover:bg-[#e5e5e5] hover:bg-opacity-75 transition-all ease-in-out rounded-md"
                     onClick={() =>
                         customFunction()
                     }
                 >
-                    <div className="relative w-6 h-6">
+                    <div className="relative w-6 h-6 text-textDark dark:text-textLight transition-all !duration-[125ms]">
                         <PaperAirplaneIcon className="absolute w-6 h-6 bottom-[0.1rem] left-[0.12rem] -rotate-45" />
                     </div>
-                    <div className="">Messages</div>
+                    <div className="text-textDark dark:text-textLight transition-all !duration-[125ms]">Messages</div>
                 </Link>
                 <Link
                     href={`/missions`}
-                    className="px-1 py-1 flex gap-2 items-center hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md"
+                    className="px-1 py-1 flex gap-2 items-center dark:hover:bg-[#767676] hover:bg-[#e5e5e5] hover:bg-opacity-75 transition-all ease-in-out rounded-md"
                     onClick={() =>
                         customFunction()
                     }
                 >
-                    <ClipboardDocumentCheckIcon className="w-6 h-6" />
-                    <div className="">Missions</div>
+                    <ClipboardDocumentCheckIcon className="w-6 h-6 text-textDark dark:text-textLight transition-all !duration-[125ms]" />
+                    <div className="text-textDark dark:text-textLight transition-all !duration-[125ms]">Missions</div>
                 </Link>
                 <Link
                     href="/parametres"
-                    className="px-1 py-1 flex gap-2 items-center hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md"
+                    className="px-1 py-1 flex gap-2 items-center dark:hover:bg-[#767676] hover:bg-[#e5e5e5] hover:bg-opacity-75 transition-all ease-in-out rounded-md"
                     onClick={() =>
                         customFunction()
                     }
                 >
-                    <Cog8ToothIcon className="w-6 h-6" />
-                    <div className="">Paramètres</div>
+                    <Cog8ToothIcon className="w-6 h-6 text-textDark dark:text-textLight transition-all !duration-[125ms]" />
+                    <div className="text-textDark dark:text-textLight transition-all !duration-[125ms]">Paramètres</div>
                 </Link>
                 <Link
                     href={`/${user?.username}/inventaire`}
-                    className="px-1 py-1 flex gap-2 items-center hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md"
+                    className="px-1 py-1 flex gap-2 items-center dark:hover:bg-[#767676] hover:bg-[#e5e5e5] hover:bg-opacity-75 transition-all ease-in-out rounded-md"
                     onClick={() =>
                         customFunction()
                     }
                 >
-                    <CubeIcon className="w-6 h-6" />
-                    <div className="">Inventaire</div>
+                    <CubeIcon className="w-6 h-6 text-textDark dark:text-textLight transition-all !duration-[125ms]" />
+                    <div className="text-textDark dark:text-textLight transition-all !duration-[125ms]">Inventaire</div>
                 </Link>
-                <SwitchTheme />
+
+                <SwitchTheme user={user} />
 
                 <Link
                     href="/"
-                    className="px-1 py-1 flex gap-2 items-center hover:bg-[#767676] hover:bg-opacity-75 transition-all ease-in-out rounded-md cursor-pointer"
+                    className="px-1 py-1 flex gap-2 items-center dark:hover:bg-[#767676] hover:bg-[#e5e5e5] hover:bg-opacity-75 transition-all ease-in-out rounded-md cursor-pointer"
                     onClick={() => {
                         customFunction();
                         signOut();
                     }}
                 >
-                    <ArrowRightEndOnRectangleIcon className="w-6 h-6" />
-                    <div className="">Déconnexion</div>
+                    <ArrowRightEndOnRectangleIcon className="w-6 h-6 text-textDark dark:text-textLight transition-all !duration-[125ms]" />
+                    <div className="text-textDark dark:text-textLight transition-all !duration-[125ms]">Déconnexion</div>
                 </Link>
             </div>
         </div>

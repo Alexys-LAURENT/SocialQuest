@@ -13,7 +13,7 @@ const BadgesProfil = async ({ isUserProfil, user }: { isUserProfil: boolean, use
             {
                 badges.map((badge, index) => {
                     return (
-                        <div key={`CardBadgeProfilePage${index}`} className="relative h-full aspect-square bg-[#2e2e2e] rounded-md">
+                        <div key={`CardBadgeProfilePage${badge.id_item_user}`} className="relative h-full aspect-square bg-[#2e2e2e] rounded-md">
                             <Image className="rounded-md object-cover" src={badge.items.image_url} alt="Badge" fill />
                         </div>
                     )

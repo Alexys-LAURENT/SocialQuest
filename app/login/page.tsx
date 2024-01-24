@@ -11,7 +11,6 @@ export default function Login({
 }) {
   const signIn = async (formData: FormData) => {
     'use server'
-    console.log('formData', formData)
     const email = formData.get('email') as string
     const password = formData.get('password') as string
     const cookieStore = cookies()
@@ -69,28 +68,7 @@ export default function Login({
 
   return (
     <div className="flex-1 flex flex-col w-full px-8 justify-center gap-2">
-      <div className="py-8 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover text-sm">
-        <Link
-          href="/"
-          className="flex items-center w-max"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
-          >
-            <polyline points="15 18 9 12 15 6" />
-          </svg>{' '}
-          Retour
-        </Link>
-      </div>
+
       <Form signIn={signIn} signUp={signUp} searchParams={searchParams} />
     </div>
   )

@@ -35,8 +35,6 @@ export async function getUserInventory(username: string) {
         return []
     }
 
-    console.log(inventaire)
-
     return inventaire as unknown as Item[]
 
 }

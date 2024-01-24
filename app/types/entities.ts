@@ -7,8 +7,9 @@ export type Profile = {
     a_propos?: string,
     avatar_url?: string,
     xp: number,
-    social_coins: number
-    banner_url?: string
+    social_coins: number,
+    banner_url?: string,
+    theme: string,
     niveaux: {
         xp_fin: number,
         libelle: number,
@@ -50,7 +51,8 @@ export type ExtendedPost = Post & {
     },
     likesCount: number,
     userLikedPost: boolean,
-    answersCount: number
+    answersCount: number,
+    createdAtFormated: string,
 }
 
 

@@ -1,10 +1,14 @@
-import React from 'react';
-import ListDiscussions from '@/components/Discussions/ListDiscussions';
-import MessagesWrapper from '@/components/Discussions/MessagesWrapper';
 import { getAllDiscussions } from '@/utils/getAllDiscussions';
 import { DiscussionTab } from '@/app/types/entities';
 import { getUserConnected } from '@/utils/getUserConnected';
 import { getProfileConnected } from '@/utils/getProfileConnected';
+import dynamic from 'next/dynamic';
+
+
+const ListDiscussions = dynamic(() => import('@/components/Discussions/ListDiscussions'));
+const MessagesWrapper = dynamic(() => import('@/components/Discussions/MessagesWrapper'));
+
+
 const page = async () => {
     const user = await getUserConnected()
     const userProfil = await getProfileConnected(user)

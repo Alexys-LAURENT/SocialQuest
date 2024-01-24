@@ -62,7 +62,7 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
                         <div className="flex gap-1 items-center">
                             {post.guildes && (
                                 <>
-                                    <Link href={`/g/${post.guildes.nom}`} className="text-sm text-textLight font-semibold">
+                                    <Link href={`/g/${post.guildes.nom}`} className="text-sm text-textDark dark:text-textLight font-semibold">
                                         {post.guildes.nom}
                                     </Link>
                                     <div>
@@ -74,7 +74,7 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
                         </div>
                         <Popover placement="top" offset={10} shouldBlockScroll={true}>
                             <PopoverTrigger>
-                                <EllipsisVerticalIcon className="w-5 h-5 text-textLight cursor-pointer" />
+                                <EllipsisVerticalIcon className="w-5 h-5 text-textDark dark:text-textLight cursor-pointer" />
                             </PopoverTrigger>
                             <PopoverContent className="p-0">
                                 <div className="flex flex-col">
@@ -108,10 +108,10 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
 
                 <div className="flex flex-col p-2 gap-2">
                     <div>
-                        <div className={`text-md font-bold working-break-words ${post.titre ? 'mb-1' : ''}`}>
+                        <div className={`text-textDark dark:text-textLight text-md font-bold working-break-words ${post.titre ? 'mb-1' : ''}`}>
                             {post.titre}
                         </div>
-                        <div className="text-textLight working-break-words">
+                        <div className="text-textDark dark:text-textLight working-break-words">
                             {post.contenu}
                         </div>
                     </div>
@@ -119,7 +119,7 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
                     <div className="flex md:flex-row gap-2 flex-col-reverse justify-between">
                         <WrapperLikeAnswer post={post} user={user} />
                         <div className="text-slate-400 text-xs flex items-end">
-                            {new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(new Date(post.created_at ?? ''))}
+                            {post.createdAtFormated}
                         </div>
                     </div>
                 </div>

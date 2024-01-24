@@ -77,7 +77,7 @@ const ModalComponentCreateDiscussion = ({ isOpen, setOpen, onOpenChange, profile
                                             Array.from(selectedKeys).map((key) => users.find((user) => user.id_user === key)).length === 0
                                                 ?
                                                 <Chip
-                                                    key={`Chip-empty`}
+                                                    key={`${Math.random()}-${Math.random()}-Chip-empty`}
                                                     variant="flat"
                                                     className='opacity-20'
                                                 >
@@ -87,7 +87,7 @@ const ModalComponentCreateDiscussion = ({ isOpen, setOpen, onOpenChange, profile
                                                 Array.from(selectedKeys).map((key) => users.find((user) => user.id_user === key)).map((user) => (
                                                     <Chip
                                                         classNames={{ avatar: 'rounded-full' }}
-                                                        key={`Chip-${user!.id_user}`}
+                                                        key={`Chip-${Math.random()}-${user!.id_user}`}
                                                         variant="flat"
                                                         avatar={
                                                             <Image src={user!.avatar_url || defaultUser.src} alt="avatar" width={50} height={50} />

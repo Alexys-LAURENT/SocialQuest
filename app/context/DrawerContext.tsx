@@ -1,12 +1,10 @@
 "use client"
 import React, { createContext, useEffect, useState } from 'react';
 import { NextReward, Profile } from '@/app/types/entities';
-import { Drawer } from 'antd';
-import PopOverUserContent from '@/components/NavBar/PopOverUserContent';
 import { createBrowserClient } from '@supabase/ssr';
-import NavBarMenu from '@/components/NavBar/NavBarMenu';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { getNextRewards } from '@/utils/getNextRewards';
+import dynamic from 'next/dynamic';
 type Content = "User" | "NavMenu";
 
 // create a context
@@ -14,6 +12,10 @@ export const DrawerContext = createContext({
     showDrawer: (content: Content) => { },
     closeDrawer: () => { },
 });
+
+const PopOverUserContent = dynamic(() => import('@/components/NavBar/PopOverUserContent'));
+const NavBarMenu = dynamic(() => import('@/components/NavBar/NavBarMenu'));
+const Drawer = dynamic(() => import('antd').then((mod) => mod.Drawer));
 
 // create a provider function
 const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: Profile | null }) => {
@@ -24,6 +26,9 @@ const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: P
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     )
+
+
+
 
     const signOut = async () => {
         const { error } = await supabase.auth.signOut();
@@ -54,19 +59,21 @@ const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: P
 
     return (
         <DrawerContext.Provider value={{ showDrawer, closeDrawer }}>
-            <Drawer
-                contentWrapperStyle={{ height: "auto" }}
-                closeIcon={<XMarkIcon className='w-6 h-6 text-textLight' />}
-                title={content === "NavMenu" ? <p className='text-textLight'>Menu</p> : <></>}
-                placement={content === "User" ? "bottom" : "left"}
-                onClose={closeDrawer} open={open}
-                classNames={{ header: `${content === "User" ? "hidden" : "bg-bgDark text-textLight"}`, body: "bg-bgDark text-textLight", mask: `flex ${content === "User" ? "sm:hidden" : "md:hidden"}` }}
-                className={`flex  ${content === "User" ? "sm:hidden" : "md:hidden"}`}>
+            {open &&
+                <Drawer
+                    contentWrapperStyle={{ height: "auto" }}
+                    closeIcon={<XMarkIcon className='w-6 h-6 text-textDark dark:text-textLight' />}
+                    title={content === "NavMenu" ? <p className='text-textDark dark:text-textLight'>Menu</p> : <></>}
+                    placement={content === "User" ? "bottom" : "left"}
+                    onClose={closeDrawer} open={open}
+                    classNames={{ header: `${content === "User" ? "!hidden" : "bg-bgLight dark:bg-bgDark text-textDark dark:text-textLight transition-all !duration-400"}`, body: "bg-bgLight dark:bg-bgDark text-textDark dark:text-textLight transition-all !duration-400", mask: `flex ${content === "User" ? "sm:hidden" : "md:hidden"}` }}
+                    className={`flex  ${content === "User" ? "sm:hidden" : "md:hidden"}`}>
 
-                {content === "User" && <PopOverUserContent customFunction={closeDrawer} user={user} signOut={signOut} nextRewards={nextRewards} />}
-                {content === "NavMenu" && <NavBarMenu customFunction={closeDrawer} />}
+                    {content === "User" && <PopOverUserContent customFunction={closeDrawer} user={user} signOut={signOut} nextRewards={nextRewards} />}
+                    {content === "NavMenu" && <NavBarMenu customFunction={closeDrawer} />}
 
-            </Drawer>
+                </Drawer>
+            }
             {children}
         </DrawerContext.Provider >
     );

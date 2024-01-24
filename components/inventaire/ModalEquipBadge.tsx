@@ -54,19 +54,19 @@ const ModalEquipBadge = ({ isOpen, onOpenChange, selectedItem, profileConnected 
 
 
 
-                                            <div onClick={() => handleEquipBadge(profileConnected.users_badges[0] && profileConnected.users_badges[0].items.image_url || null)} className='cursor-pointer relative flex justify-center items-center min-w-[70px] min-h-[70px] bg-darkSecondary rounded-md'>
+                                            <div onClick={() => handleEquipBadge(profileConnected.users_badges[0] && profileConnected.users_badges[0].items.image_url || null)} className='cursor-pointer relative flex justify-center items-center min-w-[70px] min-h-[70px] bg-bgDarkSecondary rounded-md'>
                                                 {profileConnected.users_badges[0] ? <Image src={profileConnected.users_badges[0].items.image_url} fill alt={profileConnected.users_badges[0].items.nom}></Image> : <span className='opacity-30'>vide</span>}
                                             </div>
 
-                                            <div onClick={() => handleEquipBadge(profileConnected.users_badges[1] && profileConnected.users_badges[1].items.image_url || null)} className='cursor-pointer relative flex justify-center items-center min-w-[70px] min-h-[70px] bg-darkSecondary rounded-md'>
+                                            <div onClick={() => handleEquipBadge(profileConnected.users_badges[1] && profileConnected.users_badges[1].items.image_url || null)} className='cursor-pointer relative flex justify-center items-center min-w-[70px] min-h-[70px] bg-bgDarkSecondary rounded-md'>
                                                 {profileConnected.users_badges[1] ? <Image src={profileConnected.users_badges[1].items.image_url} fill alt={profileConnected.users_badges[1].items.nom}></Image> : <span className='opacity-30'>vide</span>}
                                             </div>
 
-                                            <div onClick={() => handleEquipBadge(profileConnected.users_badges[2] && profileConnected.users_badges[2].items.image_url || null)} className='cursor-pointer relative flex justify-center items-center min-w-[70px] min-h-[70px] bg-darkSecondary rounded-md'>
+                                            <div onClick={() => handleEquipBadge(profileConnected.users_badges[2] && profileConnected.users_badges[2].items.image_url || null)} className='cursor-pointer relative flex justify-center items-center min-w-[70px] min-h-[70px] bg-bgDarkSecondary rounded-md'>
                                                 {profileConnected.users_badges[2] ? <Image src={profileConnected.users_badges[2].items.image_url} fill alt={profileConnected.users_badges[2].items.nom}></Image> : <span className='opacity-30'>vide</span>}
                                             </div>
 
-                                            <div onClick={() => handleEquipBadge(profileConnected.users_badges[3] && profileConnected.users_badges[3].items.image_url || null)} className='cursor-pointer relative flex justify-center items-center min-w-[70px] min-h-[70px] bg-darkSecondary rounded-md'>
+                                            <div onClick={() => handleEquipBadge(profileConnected.users_badges[3] && profileConnected.users_badges[3].items.image_url || null)} className='cursor-pointer relative flex justify-center items-center min-w-[70px] min-h-[70px] bg-bgDarkSecondary rounded-md'>
                                                 {profileConnected.users_badges[3] ? <Image src={profileConnected.users_badges[3].items.image_url} fill alt={profileConnected.users_badges[3].items.nom}></Image> : <span className='opacity-30'>vide</span>}
                                             </div>
 

@@ -16,7 +16,7 @@ const NotificationsListBox = ({ notifications }: { notifications: Notification[]
             {(item: Notification) => (
                 <ListboxItem
                     textValue={item.id_notification}
-                    classNames={{ title: "max-w-full w-full whitespace-normal mb-1", base: `data-[hover=true]:bg-darkSecondary/40 ${item.link ? "data-[hover=true]:cursor-pointer" : "data-[hover=true]:cursor-default"}` }}
+                    classNames={{ title: "max-w-full w-full whitespace-normal mb-1", base: `data-[hover=true]:bg-bgDarkSecondary/40 ${item.link ? "data-[hover=true]:cursor-pointer" : "data-[hover=true]:cursor-default"}` }}
                     key={item.id_notification}
                     description={moment(item.created_at).fromNow()}
                 >

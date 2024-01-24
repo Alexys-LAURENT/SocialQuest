@@ -39,7 +39,7 @@ export default async function Profil({ params }: { params: { username: string } 
           {isUserProfil && <DynamicProfilPicture isUserProfil={isUserProfil} />}
           <Image src={pageProfile?.avatar_url || defaultUser.src} alt={pageProfile?.avatar_url! || defaultUser.src} width={160} height={160} className={`${isUserProfil ? 'absolute' : 'flex'} h-28 w-28 md:h-40 md:w-40 rounded-full text-large transition-all`} />
           <div className="relative flex flex-col">
-            <p className="absolute w-max text-xl md:text-2xl font-semibold bottom-2 md:bottom-7">
+            <p className="absolute w-max text-xl md:text-2xl font-semibold bottom-2 md:bottom-7 text-textDark dark:text-textLight transition-all !duration-[125ms]">
               {pageProfile?.username}
             </p>
           </div>
@@ -48,7 +48,7 @@ export default async function Profil({ params }: { params: { username: string } 
           {
             pageProfile.users_badges && pageProfile.users_badges.length > 0 && pageProfile.users_badges.map((badge, index) => {
               return (
-                <Tooltip content={badge.items.nom} key={index}>
+                <Tooltip content={badge.items.nom} key={badge.id_item_user}>
                   <div key={index} className="relative overflow-hidden h-14 w-14 lg:h-20 lg:w-20 rounded-full ">
                     <Image src={badge.items.image_url} alt="Userbadge" fill sizes='100%' />
                   </div>
@@ -70,7 +70,7 @@ export default async function Profil({ params }: { params: { username: string } 
 
 
         <div className="flex flex-col w-full gap-6 rounded-md transition-all items-center">
-          <div className="text-2xl w-full font-semibold text-start">
+          <div className="text-2xl w-full font-semibold text-start text-textDark dark:text-textLight transition-all !duration-[125ms]">
             {isUserProfil ? "Mes Posts" : "Posts"}
           </div>
           <Posts userProfile={userProfile} isUserProfil={isUserProfil} posts={posts as ExtendedPost[]} />

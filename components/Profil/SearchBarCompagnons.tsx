@@ -18,7 +18,7 @@ const SearchBar = () => {
     return (
         <Autocomplete
             aria-label="Rechercher"
-            inputProps={{ classNames: { inputWrapper: "h-10 bg-[#2e2e2e] rounded-md" }, startContent: <MagnifyingGlassIcon className="w-5 h-5" /> }}
+            inputProps={{ classNames: { inputWrapper: "h-10 transition-all !duration-500" }, startContent: <MagnifyingGlassIcon className="w-5 h-5 text-textDark dark:text-textLight !duration-[125ms]" /> }}
             classNames={{ selectorButton: "hidden" }}
             className=""
             selectorIcon={null}

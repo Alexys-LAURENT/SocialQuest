@@ -8,15 +8,13 @@ const DynamicPost = dynamic(() => import('@/components/Post'))
 
 const Posts = ({ userProfile, isUserProfil, posts }: { userProfile: Profile | null, isUserProfil: boolean, posts: ExtendedPost[] }) => {
 
-    console.log(posts)
-
     return (
         <div className="w-full max-w-2xl" >
 
             <div className="flex flex-col gap-6">
                 {posts?.length > 0 ? (
                     posts?.map((post: ExtendedPost) => (
-                        <DynamicPost key={post.id_post} post={post} user={userProfile} />
+                        <DynamicPost key={`Posts-${post.id_post}`} post={post} user={userProfile} />
 
                     ))
                 ) : (

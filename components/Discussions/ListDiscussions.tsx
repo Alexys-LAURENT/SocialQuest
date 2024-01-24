@@ -83,7 +83,7 @@ const ListDiscussions = ({ initDiscussions, refetchDiscussions }: { initDiscussi
                 }
             </div>
             {discussions.map((item: DiscussionTab, index: number) => (
-                <Card key={index} className={`rounded-md min-h-[55px] ${selectedCDiscussion?.id_discussion === item?.id_discussion ? 'bg-secondary' : ''} `}>
+                <Card key={`ListDiscussions-${item.id_discussion}`} className={`rounded-md min-h-[55px] ${selectedCDiscussion?.id_discussion === item?.id_discussion ? 'bg-secondary' : ''} `}>
                     <CardBody className='flex-row p-0' >
                         <Button onClick={() => [setIsEditingGroup(false), setComponentReloaded(true), setSelectedDiscussion(item)]} className='w-full h-full p-2 bg-transparent flex justify-start'>
                             <div className='aspect-square max-w-[40px] min-w-[40px] flex'>
@@ -94,14 +94,16 @@ const ListDiscussions = ({ initDiscussions, refetchDiscussions }: { initDiscussi
                                 }
                             </div>
                             <div className=' w-full overflow-hidden flex flex-col bg-green-300/0 h-full items-start'>
-                                <h1 className='text-md font-semibold'>
+                                <h1 className='text-md font-semibold text-textDark dark:text-textLight transition-all !duration-[125ms]'>
                                     {item?.is_group === false ?
                                         item?.profiles[0].username
                                         :
                                         item.nom
                                     }
                                 </h1>
-                                <p className='text-ellipsis line-clamp-1 flex w-full text-left'>{item?.dernier_message?.contenu}</p>
+                                <p className='text-ellipsis line-clamp-1 flex w-full text-left text-textDark dark:text-textLight transition-all !duration-[125ms]'>
+                                    {item?.dernier_message?.contenu}
+                                </p>
                             </div>
                         </Button>
                     </CardBody>

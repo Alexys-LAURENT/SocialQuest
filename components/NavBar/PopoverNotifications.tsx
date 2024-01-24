@@ -46,11 +46,11 @@ const PopoverNotifications = ({ user }: { user: Profile }) => {
             <PopoverTrigger >
                 <div className="flex items-center cursor-pointer">
                     <Badge content={notificationsNotRead.length} color="danger" className={`text-xs`} classNames={{ badge: `${notificationsNotRead.length > 0 ? "" : "opacity-0"}` }}>
-                        <BellIcon className="w-6 h-6" />
+                        <BellIcon className="w-6 h-6 text-textDark dark:text-textLight !duration-[125ms]" />
                     </Badge>
                 </div>
             </PopoverTrigger>
-            <PopoverContent className="bg-[#3b3b3b] max-h-[300px] overflox-y-auto">
+            <PopoverContent className="bg-bgLightPopover dark:bg-bgDarkPopover max-h-[300px] overflow-y-auto">
 
                 {
                     notifications ?
@@ -60,10 +60,10 @@ const PopoverNotifications = ({ user }: { user: Profile }) => {
                         :
                         (
                             <div className="w-full flex flex-col gap-3 py-3">
-                                <div className="w-full h-7 rounded-md animate-pulse bg-darkSecondary/60"></div>
-                                <div className="w-full h-7 rounded-md animate-pulse bg-darkSecondary/60"></div>
-                                <div className="w-full h-7 rounded-md animate-pulse bg-darkSecondary/60"></div>
-                                <div className="w-full h-7 rounded-md animate-pulse bg-darkSecondary/60"></div>
+                                <div className="w-full h-7 rounded-md animate-pulse bg-bgDarkSecondary/60"></div>
+                                <div className="w-full h-7 rounded-md animate-pulse bg-bgDarkSecondary/60"></div>
+                                <div className="w-full h-7 rounded-md animate-pulse bg-bgDarkSecondary/60"></div>
+                                <div className="w-full h-7 rounded-md animate-pulse bg-bgDarkSecondary/60"></div>
 
                             </div>
                         )

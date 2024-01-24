@@ -29,6 +29,7 @@ const MessagesWrapper = () => {
     const supabase = createClient()
 
 
+    const isMobile = (window.innerWidth <= 768)
 
 
     useEffect(() => {
@@ -143,8 +144,8 @@ const MessagesWrapper = () => {
         <div id='messagesWrapper' className={`flex-col w-full sm:w-9/12 h-full
          overflow-hidden `}>
 
-            <div className='flex sm:flex-col bg-bgDark items-center justify-center w-full h-[50px] sm:h-[100px] gap-2 relative z-10'>
-                <ArrowLeftIcon onClick={() => [setMessages(null), setSelectedDiscussion(null), setIsEditingGroup(false)]} className='h-6 w-6 text-white absolute cursor-pointer left-5 block sm:hidden ' />
+            <div className='flex sm:flex-col items-center justify-center w-full h-[50px] sm:h-[100px] gap-2 relative z-10 bg-bgLight dark:bg-bgDark transition-all !duration-500'>
+                <ArrowLeftIcon onClick={() => [setMessages(null), setSelectedDiscussion(null), setIsEditingGroup(false)]} className='h-6 w-6 text-textDark dark:text-textLight absolute cursor-pointer left-5 block sm:hidden ' />
                 {selectedCDiscussion.is_group ?
                     (
                         <Image
@@ -162,27 +163,29 @@ const MessagesWrapper = () => {
                             className={`w-8 h-8 sm:h-12 sm:w-12 aspect-square rounded-full ${selectedCDiscussion.is_group ? 'invert p-1' : ''} ${selectedCDiscussion.is_group ? (profileConnected.id_user === selectedCDiscussion.created_by ? "cursor-pointer" : "cursor-default") : "cursor-pointer"}`} />
                     )}
 
-                <h1 className='text-md font-semibold'>{selectedCDiscussion.is_group ? selectedCDiscussion.nom : selectedCDiscussion.profiles[0]?.username}</h1>
+                <h1 className='text-md font-semibold text-textDark dark:text-textLight transition-all !duration-[125ms]'>
+                    {selectedCDiscussion.is_group ? selectedCDiscussion.nom : selectedCDiscussion.profiles[0]?.username}
+                </h1>
             </div>
             <div className='relative w-full h-full max-h-[calc(100%-50px)] sm:max-h-[calc(100%-100px)] flex flex-col items-center '>
                 {isEditingGroup ? (
                     <DynamicEditGroup profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} setSelectedDiscussion={setSelectedDiscussion} setIsEditingGroup={setIsEditingGroup} />
                 ) : (
                     <>
-                        <ScrollShadow id='messages_container' className='relative w-11/12 h-full overflow-y-auto' size={50} offset={5}>
+                        <ScrollShadow id='messages_container' className='relative w-11/12 h-full overflow-y-auto' size={isMobile ? 0 : 50} offset={5}>
 
                             {/* message */}
                             {messages && messages.map((item, index) => (
-                                <>
+                                <React.Fragment key={`message-${item.id_message}`}>
                                     {
                                         messages[index - 1]?.created_at.split('T')[0] !== item.created_at.split('T')[0] &&
-                                        <div key={`date-${index}`} className='w-full flex justify-center items-center pt-6 text-sm text-gray-200'>
+                                        <div key={`dateMessagesWrapper-${Math.random()}-${item.id_message}`} className='w-full flex justify-center items-center pt-6 text-sm text-gray-200'>
                                             {moment(item.created_at).locale('fr').format('dddd DD MMMM YYYY')}
                                         </div>
                                     }
 
-                                    <DynamicMessageCard key={`message-${index}`} index={index} item={item} profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} tooltipDeleteOpen={tooltipDeleteOpen} setTooltipDeleteOpen={setTooltipDeleteOpen} tooltipOthersOpen={tooltipOthersOpen} setTooltipOthersOpen={setTooltipOthersOpen} tooltipUserOpen={tooltipUserOpen} setTooltipUserOpen={setTooltipUserOpen} nextMessage={{ id_user: messages[index + 1]?.id_user, timestamp: messages[index + 1]?.created_at }} prevMessage={{ id_user: messages[index - 1]?.id_user, timestamp: messages[index - 1]?.created_at }} />
-                                </>
+                                    <DynamicMessageCard item={item} index={index} profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} tooltipDeleteOpen={tooltipDeleteOpen} setTooltipDeleteOpen={setTooltipDeleteOpen} tooltipOthersOpen={tooltipOthersOpen} setTooltipOthersOpen={setTooltipOthersOpen} tooltipUserOpen={tooltipUserOpen} setTooltipUserOpen={setTooltipUserOpen} nextMessage={{ id_user: messages[index + 1]?.id_user, timestamp: messages[index + 1]?.created_at }} prevMessage={{ id_user: messages[index - 1]?.id_user, timestamp: messages[index - 1]?.created_at }} />
+                                </React.Fragment>
                             ))}
                         </ScrollShadow>
                         <MessageInput supabase={supabase} selectedCDiscussion={selectedCDiscussion} profileConnected={profileConnected} />

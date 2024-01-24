@@ -27,8 +27,9 @@ export async function getPost(id_post: string) {
     const likesCount = postWithLikes.likes?.length || 0;
     const answersCount = postWithLikes.children?.length || 0;
     const userLikedPost = Array.isArray(postWithLikes.likes) && postWithLikes.likes.some((like: any) => like.id_user === user?.id_user); // Remplacez currentUserID par l'ID de l'utilisateur actuel
+    const createdAtFormated = new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(new Date(post.created_at ?? ''))
 
-    post = { ...postWithLikes, likesCount, answersCount, userLikedPost };
+    post = { ...postWithLikes, likesCount, answersCount, userLikedPost, createdAtFormated };
 
     return post
 }

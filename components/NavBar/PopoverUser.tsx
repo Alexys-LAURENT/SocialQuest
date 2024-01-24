@@ -23,15 +23,34 @@ const PopoverUser = ({ signOut, user, nextRewards }: { signOut: () => void, user
                 && !(e as HTMLElement).parentElement?.classList.contains("ant-image-preview-switch-right")
                 && !(e as HTMLElement).parentElement?.classList.contains("ant-image-preview-switch-left")
                 && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("ant-image-preview-switch-right")
-                && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("ant-image-preview-switch-left")} >
+                && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("ant-image-preview-switch-left")
+                && !(e as HTMLElement).classList.contains("ant-drawer-body")
+                && !(e as HTMLElement).classList.contains("switchThemeWrapper")
+                && !(e as HTMLElement).parentElement?.classList.contains("switchThemeWrapper")
+                && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("switchThemeWrapper")
+                && !(e as HTMLElement).parentElement?.parentElement?.parentElement?.classList.contains("switchThemeWrapper")
+                && !(e as HTMLElement).parentElement?.parentElement?.parentElement?.parentElement?.classList.contains("switchThemeWrapper")
+                && !(e as HTMLElement).classList.contains("levelWrapper")
+                && !(e as HTMLElement).parentElement?.classList.contains("levelWrapper")
+                && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("levelWrapper")
+                && !(e as HTMLElement).parentElement?.parentElement?.parentElement?.classList.contains("levelWrapper")
+                && !(e as HTMLElement).parentElement?.parentElement?.parentElement?.parentElement?.classList.contains("levelWrapper")
+                && !(e as HTMLElement).classList.contains("nextRewardsWrapper")
+                && !(e as HTMLElement).parentElement?.classList.contains("nextRewardsWrapper")
+                && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("nextRewardsWrapper")
+                && !(e as HTMLElement).parentElement?.parentElement?.parentElement?.classList.contains("nextRewardsWrapper")
+                && !(e as HTMLElement).parentElement?.parentElement?.parentElement?.parentElement?.classList.contains("nextRewardsWrapper")
+                && !(e as HTMLElement).parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.classList.contains("nextRewardsWrapper")
+                && !(e as HTMLElement).classList.contains("popOverUserContentWrapper")
+            }>
             <PopoverTrigger>
                 <div className="flex items-center cursor-pointer min-w-[32px] sm:min-w-[44px]" onClick={() => showDrawer("User")} >
-                    <Badge content={user?.niveaux.libelle} color="primary" className="text-xs flex">
-                        <Image src={user?.avatar_url || defaultUser.src} alt={user?.avatar_url! || defaultUser.src} width={48} height={48} className="relative inline-flex shrink-0 justify-center items-center box-border overflow-hidden align-middle z-0 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-tiny bg-default text-default-foreground w-[2rem] h-[2rem] sm:w-[2.75rem] sm:h-[2.75rem] rounded-full ring-2 ring-offset-2 ring-offset-background dark:ring-offset-background-dark ring-default" />
+                    <Badge content={user?.niveaux.libelle} color="primary" className="text-xs border-bgLight dark:border-bgDark transition-all !duration-500">
+                        <Image src={user?.avatar_url || defaultUser.src} alt={user?.avatar_url! || defaultUser.src} width={48} height={48} className="relative inline-flex shrink-0 justify-center items-center box-border overflow-hidden align-middle z-0 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-tiny bg-default text-default-foreground w-[2rem] h-[2rem] sm:w-[2.75rem] sm:h-[2.75rem] rounded-full ring-2 ring-offset-2 ring-offset-background dark:ring-offset-background-dark ring-default transition-all !duration-500" />
                     </Badge>
                 </div>
             </PopoverTrigger>
-            <PopoverContent className="bg-[#3b3b3b]">
+            <PopoverContent className="bg-white dark:bg-bgDarkPopover transition-all !duration-500">
                 <PopOverUserContent user={user} customFunction={() => {
                     setIsPopoverUserOpen(false);
                     closeDrawer();

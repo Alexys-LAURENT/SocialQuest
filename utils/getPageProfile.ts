@@ -22,7 +22,5 @@ export async function getPageProfile(username: string) {
         return null
     }
 
-    console.log(profile)
-
     return profile as unknown as Profile
 }

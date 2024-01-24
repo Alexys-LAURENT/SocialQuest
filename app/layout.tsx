@@ -1,5 +1,5 @@
 import '@/app/styles/globals.css'
-import NavBar from '@/components/NavBar/NavBar'
+import dynamic from 'next/dynamic';
 import { GeistSans } from 'geist/font/sans'
 import { Providers } from "@/app/providers"
 import { ConfigProvider } from 'antd';
@@ -9,7 +9,6 @@ import DiscussionProvider from '@/app/context/DiscussionContext';
 import InventaireProvider from '@/app/context/InventaireContext';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 import { getNextRewards } from '@/utils/getNextRewards';
-import TopLoader from '@/components/TopLoader';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 const defaultUrl = process.env.VERCEL_URL
@@ -30,10 +29,14 @@ export default async function RootLayout({
   const profile = await getProfileConnected()
 
 
+  const NavBar = dynamic(() => import('@/components/NavBar/NavBar'));
+  const TopLoader = dynamic(() => import('@/components/TopLoader'));
+
+
 
   return (
-    <html lang="en" className={`${GeistSans.className} dark overflow-hidden h-full`} >
-      <body className='bg-bgDark dark:bg-bgDark overflow-x-hidden h-full' >
+    <html lang="en" className={`${GeistSans.className} h-full ${profile?.theme || 'dark'}`}>
+      <body className='bg-bgLight dark:bg-bgDark overflow-x-hidden h-full transition-all !duration-500' >
         <Providers>
           <ConfigProvider theme={{ token: { colorBgMask: 'rgba(0, 0, 0, 0.8)', }, }}>
             <ToasterProvider>

@@ -51,7 +51,7 @@ const TabsFiltre = ({ inventory, profileConnected, pageProfile, filterParam, isU
                             <CardBody className="p-1 w-full grid itemsWrapper justify-start gap-3 overflow-y-auto transition-all duration-500 ease-in-out">
                                 {item.data?.map((item: Item) => {
                                     return (
-                                        <div key={item.items.id_item} className={`cursor-pointer relative aspect-square overflow-hidden rounded-lg ${selectedItem && selectedItem.items && selectedItem.id_item_user === item.id_item_user ? 'border-2 border-primary' : ''}`}
+                                        <div key={`TabsFiltre-${item.items.id_item}`} className={`cursor-pointer relative aspect-square overflow-hidden rounded-lg ${selectedItem && selectedItem.items && selectedItem.id_item_user === item.id_item_user ? 'border-2 border-primary' : ''}`}
                                             onClick={() => { selectedItem?.id_item_user === item.id_item_user ? setSelectedItem(null) : setSelectedItem(item) }}>
                                             {item.is_favorite &&
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className="absolute top-1 right-1 z-50 w-4 h-4 lg:w-[1.15rem] lg:h-[1.15rem] fill-white bi bi-pin-angle-fill" viewBox="0 0 16 16">

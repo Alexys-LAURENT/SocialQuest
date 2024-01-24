@@ -63,7 +63,7 @@ const layout = async ({
             <div className="flex max-w-[1280px] w-full p-4 gap-6 mt-6">
 
                 <div className="hidden lg:flex min-w-[17rem]">
-                    <div className="w-full flex flex-col bg-[#11100e] rounded-md text-xl font-semibold h-fit">
+                    <div className="w-full flex flex-col bg-bgLightCard dark:bg-bgDarkCard rounded-md text-xl font-semibold h-fit">
                         <Link href={`/g/${params.guildName[0]}`} className='hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>
                             Feed
                         </Link>
@@ -87,7 +87,7 @@ const layout = async ({
                 </div>
 
                 <div className="hidden md:flex flex-col min-w-[17rem] gap-4 h-fit">
-                    <div className="p-2 w-full flex flex-col bg-[#11100e] rounded-md">
+                    <div className="p-2 w-full flex flex-col bg-bgLightCard dark:bg-bgDarkCard rounded-md">
                         <div className="text-xl font-semibold min-h-[25rem]">
                             <h4>A propos</h4>
                             <span className='text-sm font-normal'>
@@ -95,7 +95,7 @@ const layout = async ({
                             </span>
                         </div>
                     </div>
-                    <div className="p-2 w-full flex flex-col bg-[#11100e] rounded-md">
+                    <div className="p-2 w-full flex flex-col bg-bgLightCard dark:bg-bgDarkCard rounded-md">
                         <div className="text-xl font-semibold min-h-[25rem]">
                             <h4>Membres ({guilde!.usersCount})</h4>
                         </div>

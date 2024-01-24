@@ -9,11 +9,11 @@ const PopoverUserProfile = ({ post }: { post: ExtendedPost }) => {
     return (
         <Popover classNames={{ content: "z-10" }} placement="top" offset={10} shouldBlockScroll={true} className='mr-3 md:w-[90vw] !max-w-[17.5rem] md:!max-w-sm min-w-[17.5rem]'>
             <PopoverTrigger>
-                <div className="cursor-pointer text-textLight flex items-center">
+                <div className="cursor-pointer text-textDark dark:text-textLight flex items-center transition-all !duration-[125ms]">
                     @{post.profiles.username}
                 </div>
             </PopoverTrigger>
-            <PopoverContent className='p-0 bg-darkSecondary'>
+            <PopoverContent className='p-0 bg-bgLightSecondary dark:bg-bgDarkSecondary'>
                 <div className="flex flex-col w-full h-full">
                     <div className="w-full min-h-[4rem] md:min-h-[5rem] bg-white bg-cover bg-center transition-all rounded-t-md" style={{ backgroundImage: `url(${post.profiles.banner_url})` }}></div>
                     <div className="relative w-full min-h-[1.5rem] md:min-h-[3rem]">
@@ -24,7 +24,7 @@ const PopoverUserProfile = ({ post }: { post: ExtendedPost }) => {
                             {
                                 post.profiles.users_badges && post.profiles.users_badges.length > 0 && post.profiles.users_badges.map((badge, index) => {
                                     return (
-                                        <div key={index} className="relative overflow-hidden w-9 h-9 md:h-12 md:w-12 rounded-full "><Image src={badge.items.image_url} alt="Userbadge" fill></Image></div>
+                                        <div key={`${badge.items.id_item}-badge-${index}`} className="relative overflow-hidden w-9 h-9 md:h-12 md:w-12 rounded-full "><Image src={badge.items.image_url} alt="Userbadge" fill></Image></div>
                                     )
                                 })
                             }

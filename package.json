@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
+    "@next/bundle-analyzer": "^14.1.0",
     "@nextui-org/react": "^2.2.9",
     "@react-stately/data": "^3.11.0",
     "@supabase/ssr": "latest",
@@ -23,6 +24,7 @@
     "postcss": "8.4.29",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "sharp": "^0.33.2",
     "tailwindcss": "3.3.3",
     "typescript": "5.1.3"
   },
