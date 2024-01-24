@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { setCurrentUserBannerUrl } from '@/utils/setCurrentUserBannerUrl';
 import { useRouter } from 'next/navigation';
 
-const BannieresProfil = async ({ isUserProfil, bannieres }: { isUserProfil: boolean, bannieres: Item[] }) => {
+const BannieresProfil = ({ isUserProfil, bannieres }: { isUserProfil: boolean, bannieres: Item[] }) => {
 
     const router = useRouter();
 

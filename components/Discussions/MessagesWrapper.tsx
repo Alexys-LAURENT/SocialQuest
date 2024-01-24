@@ -167,19 +167,19 @@ const MessagesWrapper = () => {
                     {selectedCDiscussion.is_group ? selectedCDiscussion.nom : selectedCDiscussion.profiles[0]?.username}
                 </h1>
             </div>
-            <div className='relative w-full h-full max-h-[calc(100%-50px)] sm:max-h-[calc(100%-100px)] flex flex-col items-center '>
+            <div className='relative w-full px-2 h-full max-h-[calc(100%-50px)] sm:max-h-[calc(100%-100px)] flex flex-col items-center '>
                 {isEditingGroup ? (
                     <DynamicEditGroup profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} setSelectedDiscussion={setSelectedDiscussion} setIsEditingGroup={setIsEditingGroup} />
                 ) : (
                     <>
-                        <ScrollShadow id='messages_container' className='relative w-11/12 h-full overflow-y-auto' size={isMobile ? 0 : 50} offset={5}>
+                        <ScrollShadow id='messages_container' className='relative w-full h-full overflow-y-auto' size={isMobile ? 0 : 50} offset={5}>
 
                             {/* message */}
                             {messages && messages.map((item, index) => (
                                 <React.Fragment key={`message-${item.id_message}`}>
                                     {
                                         messages[index - 1]?.created_at.split('T')[0] !== item.created_at.split('T')[0] &&
-                                        <div key={`dateMessagesWrapper-${Math.random()}-${item.id_message}`} className='w-full flex justify-center items-center pt-6 text-sm text-gray-200'>
+                                        <div key={`dateMessagesWrapper-${Math.random()}-${item.id_message}`} className='w-full flex justify-center items-center pt-6 text-sm text-gray-500 dark:text-gray-200 transition-all !duration-[125ms]'>
                                             {moment(item.created_at).locale('fr').format('dddd DD MMMM YYYY')}
                                         </div>
                                     }

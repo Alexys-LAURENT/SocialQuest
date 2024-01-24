@@ -8,7 +8,7 @@ import PostInput from '@/components/PostInput';
 const TopTabs = ({ user, guildesUser }: { user: Profile | null, guildesUser: any }) => {
     return (
         <div className={`flex-col items-center justify-center ${!user && 'hidden'}`}>
-            <Tabs aria-label="Options" defaultSelectedKey="NewPost" classNames={{ panel: 'px-0', tabList: 'bg-bgLightCard dark:bg-bgDarkCard transition-all !duration-500', cursor: 'bg-bgLight dark:bg-bgDark transition-all !duration-500' }} className='lg:hidden flex justify-center items-center'>
+            <Tabs aria-label="Options" defaultSelectedKey="NewPost" classNames={{ panel: 'px-0', tabList: 'bg-bgLightCard dark:bg-bgDarkCard transition-all !duration-500', cursor: 'bg-bgLight dark:bg-textDark transition-colors !duration-500' }} className='lg:hidden flex justify-center items-center'>
                 <Tab key="NewPost" title="Nouveau post" className="w-full lg:p-0 ">
                     {user && <PostInput page="index" guildesUser={guildesUser} />}
                 </Tab>

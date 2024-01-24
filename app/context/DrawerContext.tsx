@@ -59,7 +59,7 @@ const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: P
 
     return (
         <DrawerContext.Provider value={{ showDrawer, closeDrawer }}>
-            {open &&
+            {
                 <Drawer
                     contentWrapperStyle={{ height: "auto" }}
                     closeIcon={<XMarkIcon className='w-6 h-6 text-textDark dark:text-textLight' />}
