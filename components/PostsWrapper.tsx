@@ -6,6 +6,7 @@ const Post = dynamic(() => import('@/components/Post'))
 
 const PostsWrapper = async ({ user, getPost, postPage }: { user: Profile | null, getPost: any, postPage?: boolean }) => {
     const posts = await getPost()
+    await new Promise(resolve => setTimeout(resolve, 5000));
 
     return (
         <div className={`w-full flex flex-col gap-4 ${postPage ? 'mt-8' : ''}`}>

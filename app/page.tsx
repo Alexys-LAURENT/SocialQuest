@@ -8,12 +8,11 @@ import { Button } from '@nextui-org/react';
 
 export default async function Index() {
 
-  const TopTabs = dynamic(() => import('@/components/Home/TopTabs'));
+  const TopTabsSuspenser = dynamic(() => import('../components/Home/TopTabsSuspenser'));
   const PostsWrapper = dynamic(() => import('@/components/PostsWrapper'));
   const PostsWrapperSkeleton = dynamic(() => import('@/components/Skeletons/PostsWrapperSkeleton'));
 
   const user = await getProfileConnected()
-  const guildesUser = await getGuildesUser()
 
 
   return (
@@ -49,7 +48,9 @@ export default async function Index() {
 
       <div className={`flex flex-col w-full gap-6 lg:gap-10 `}>
 
-        <TopTabs user={user} guildesUser={guildesUser} />
+        <Suspense fallback={<div>Chargement...</div>}>
+          <TopTabsSuspenser />
+        </Suspense>
 
         <Suspense fallback={<PostsWrapperSkeleton />}>
           <PostsWrapper user={user} getPost={getAllPosts} />

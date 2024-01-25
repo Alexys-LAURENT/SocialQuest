@@ -1,25 +1,27 @@
 "use server"
 import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
-import { Profile } from '@/app/types/entities'
-import { User } from '@supabase/supabase-js'
+import { getProfileConnected } from './getProfileConnected'
 
-export async function getAllDiscussions(userProfil: Profile, user: User) {
+export async function getCurrentUserAllDiscussions() {
     "use server"
 
 
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
+    const userConnected = await getProfileConnected()
 
-    const idsDiscussions = await supabase.from('discussions_users').select('id_discussion').eq('id_user', user?.id)
-    const ids = idsDiscussions.data!.map((item: any) => item.id_discussion)
-    const discussions = await supabase.from('discussions_users').select('discussions(id_discussion,nom,is_group,image_url,created_by),profiles(id_user, username, avatar_url)').in('id_discussion', ids)
+    const { data: discussions, error } = await supabase.from('discussions_users').select('discussions(id_discussion,nom,is_group,image_url,created_by),profiles(id_user, username, avatar_url)')
 
+    if (error) {
+        console.log(error)
+        return
+    }
 
     // Map pour regrouper les données par id_discussion
     const discussionMap = new Map();
 
-    discussions.data!.forEach((item: any) => {
+    discussions!.forEach((item: any) => {
         const discussionId = item.discussions.id_discussion;
 
         // Si l'id_discussion n'est pas encore dans la map, l'ajouter avec le nom de la discussion
@@ -35,7 +37,7 @@ export async function getAllDiscussions(userProfil: Profile, user: User) {
         }
 
         // Ajouter le profil à la liste des profils de la discussion
-        if (item.profiles.username !== userProfil.username) {
+        if (item.profiles.username !== userConnected?.username) {
             discussionMap.get(discussionId).profiles.push({
                 id_user: item.profiles.id_user,
                 username: item.profiles.username,
@@ -59,5 +61,6 @@ export async function getAllDiscussions(userProfil: Profile, user: User) {
             item.dernier_message = data![0]
         })
     );
+    console.log(resultArray)
     return resultArray;
 }

@@ -3,8 +3,8 @@ import Link from "next/link";
 import SearchBar from "@/components/NavBar/SearchBar";
 import PopoverUser from "@/components/NavBar/PopoverUser";
 import PopoverNotifications from "@/components/NavBar/PopoverNotifications";
-import React, { useContext, useEffect } from "react";
-import { NextReward, Profile } from "@/app/types/entities";
+import React, { useContext } from "react";
+import { Profile } from "@/app/types/entities";
 import { Button } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 import { createBrowserClient } from '@supabase/ssr'
@@ -20,7 +20,7 @@ import {
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-const NavBar = ({ user, nextRewards }: { user: Profile | null, nextRewards: NextReward[] | null }) => {
+const NavBar = ({ user }: { user: Profile | null }) => {
     const router = useRouter();
     const pathName = usePathname();
     const { showDrawer } = useContext(DrawerContext);
@@ -112,7 +112,7 @@ const NavBar = ({ user, nextRewards }: { user: Profile | null, nextRewards: Next
                             <PopoverNotifications user={user} />
                         </NavbarItem>
                         <NavbarItem>
-                            <PopoverUser signOut={signOut} user={user} nextRewards={nextRewards} />
+                            <PopoverUser signOut={signOut} user={user} />
                         </NavbarItem>
                     </>
                 ) : (

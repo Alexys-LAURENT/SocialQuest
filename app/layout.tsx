@@ -8,7 +8,6 @@ import ToasterProvider from '@/app/context/ToasterContext';
 import DiscussionProvider from '@/app/context/DiscussionContext';
 import InventaireProvider from '@/app/context/InventaireContext';
 import { getProfileConnected } from '@/utils/getProfileConnected';
-import { getNextRewards } from '@/utils/getNextRewards';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 const defaultUrl = process.env.VERCEL_URL
@@ -43,7 +42,7 @@ export default async function RootLayout({
               <DrawerProvider user={profile}>
                 <DiscussionProvider>
                   <InventaireProvider>
-                    <NavBar user={profile} nextRewards={await getNextRewards(profile?.niveaux.libelle!)} />
+                    <NavBar user={profile} />
                     <TopLoader />
                     <main className={`h-full w-full flex flex-col items-center overflow-y-auto`}>
                       {children}

@@ -7,7 +7,7 @@ import { Badge, Avatar, Popover, PopoverTrigger, PopoverContent } from "@nextui-
 import Image from "next/image";
 import defaultUser from "@/public/assets/defaultUser.svg";
 
-const PopoverUser = ({ signOut, user, nextRewards }: { signOut: () => void, user: Profile | null, nextRewards: NextReward[] | null }) => {
+const PopoverUser = ({ signOut, user }: { signOut: () => void, user: Profile | null }) => {
     const [isPopoverUserOpen, setIsPopoverUserOpen] = useState(false);
     const { showDrawer, closeDrawer } = useContext(DrawerContext);
 
@@ -54,7 +54,7 @@ const PopoverUser = ({ signOut, user, nextRewards }: { signOut: () => void, user
                 <PopOverUserContent user={user} customFunction={() => {
                     setIsPopoverUserOpen(false);
                     closeDrawer();
-                }} signOut={signOut} nextRewards={nextRewards} />
+                }} signOut={signOut} />
             </PopoverContent>
         </Popover >
     );

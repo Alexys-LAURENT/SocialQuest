@@ -1,14 +1,28 @@
-import { Image } from "antd";
+// import { Image } from "antd";
 import { NextReward, Profile } from "@/app/types/entities";
-import { Progress, Switch } from '@nextui-org/react';
+import { Progress } from '@nextui-org/react';
 import { ArrowRightEndOnRectangleIcon, Cog8ToothIcon, CubeIcon, UserIcon, ClipboardDocumentCheckIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import SwitchTheme from "@/components/NavBar/SwitchTheme";
+import { useEffect, useState } from "react";
+import { getNextRewards } from "@/utils/getNextRewards";
+import dynamic from "next/dynamic";
+// import image from antd dynamicly
+const Image = dynamic(() => import("antd").then((mod) => mod.Image));
+const PreviewGroup = dynamic(() => import("antd").then((mod) => mod.Image.PreviewGroup));
 
-
-const PopOverUserContent = ({ user, customFunction, signOut, nextRewards }: { user: Profile | null, customFunction: () => void, signOut: () => void, nextRewards: NextReward[] | null }) => {
+const PopOverUserContent = ({ user, customFunction, signOut }: { user: Profile | null, customFunction: () => void, signOut: () => void }) => {
     const progressValue = (user?.xp! - user?.niveaux.xp_debut!) * 100 / (user?.niveaux.xp_fin! + 1);
+    const [nextRewards, setNextRewards] = useState<NextReward[] | null>(null);
 
+    useEffect(() => {
+        const getRewards = async () => {
+            if (user) {
+                setNextRewards(await getNextRewards(user?.niveaux.libelle!));
+            }
+        }
+        getRewards();
+    }, [user])
 
     return (
         <div className="popOverUserContentWrapper w-full px-1 py-2 gap-2 flex flex-col text-textDark dark:text-textLight">
@@ -21,20 +35,23 @@ const PopOverUserContent = ({ user, customFunction, signOut, nextRewards }: { us
             </div>
             <div className="nextRewardsWrapper flex justify-end items-center gap-1 text-end text-[#979797]">
                 {
-                    nextRewards && nextRewards.length > 0 && (
+                    nextRewards && nextRewards.length > 0 ? (
                         <>
                             <div className="text-sm text-[#777777] dark:text-[#919191]">Suivant : {nextRewards.length > 1 ? `${nextRewards.length} items` : nextRewards[0].items.nom}</div>
                             <div className="flex relative items-center justify-center rounded-md">
-                                <Image.PreviewGroup preview={{ toolbarRender: () => (<></>), }}
+                                <PreviewGroup preview={{ toolbarRender: () => (<></>), }}
                                     items={nextRewards.reduce((acc: any, item: any) => { acc.push(item.items.image_url); return acc; }, [])}>
 
                                     <Image className="!h-7 w-auto aspect-auto rounded-md" src={nextRewards[0].items.image_url}
                                         alt={nextRewards[0].items.nom}></Image>
 
-                                </Image.PreviewGroup>
+                                </PreviewGroup>
                             </div>
                         </>
-                    )
+                    ) :
+                        (
+                            <div className="w-8/12 h-7 bg-[#2B2B2B] animate-pulse rounded-md"></div>
+                        )
                 }
 
             </div>
