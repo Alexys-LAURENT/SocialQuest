@@ -1,7 +1,7 @@
 import { DiscussionTab, Profile, ProfileInDiscussion } from '@/app/types/entities';
-import { Card, CardBody, Input, Avatar, Button, Listbox, ListboxItem, Chip } from '@nextui-org/react';
-import React, { useContext, useEffect, useState } from 'react';
-import { Modal, ModalContent, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
+import { Card, CardBody, Input, Button, Listbox, ListboxItem, Chip } from '@nextui-org/react';
+import { useContext, useEffect, useState } from 'react';
+import { Modal, ModalContent, ModalBody, ModalFooter } from "@nextui-org/react";
 import { createClient } from '@/utils/supabase/client';
 import { DiscussionContext } from '@/app/context/DiscussionContext';
 import Image from 'next/image'
@@ -12,7 +12,7 @@ const ModalComponentAddUsersToDiscussion = ({ isOpen, onOpenChange, defaultsProf
     const supabase = createClient()
     const [users, setUsers] = useState<Profile[]>([])
     const profilesUsernames = defaultsProfiles.map((profile) => profile.username).join(',')
-    const [selectedKeys, setSelectedKeys] = React.useState<React.Key[]>([]);
+    const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
     const { addUsersToSelectedDiscussion } = useContext(DiscussionContext)
 
     useEffect(() => {

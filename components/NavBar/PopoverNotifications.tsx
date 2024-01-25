@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Badge } from "@nextui-org/react";
 import { BellIcon } from "@heroicons/react/24/outline";
 import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";

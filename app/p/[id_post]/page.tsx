@@ -1,4 +1,3 @@
-import React from 'react';
 import { getPost } from '@/utils/getPost';
 import { getAnswers } from '@/utils/getAnswers';
 import MainPost from '@/components/Post/MainPost';

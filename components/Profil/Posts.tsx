@@ -1,4 +1,3 @@
-import React from 'react';
 import { ExtendedPost } from '@/app/types/entities'
 import { Profile } from '@/app/types/entities'
 import dynamic from 'next/dynamic'

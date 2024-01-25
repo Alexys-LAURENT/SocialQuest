@@ -2,7 +2,6 @@ import '@/app/styles/globals.css'
 import dynamic from 'next/dynamic';
 import { GeistSans } from 'geist/font/sans'
 import { Providers } from "@/app/providers"
-import { ConfigProvider } from 'antd';
 import DrawerProvider from '@/app/context/DrawerContext';
 import ToasterProvider from '@/app/context/ToasterContext';
 import DiscussionProvider from '@/app/context/DiscussionContext';
@@ -17,7 +16,7 @@ const defaultUrl = process.env.VERCEL_URL
 export const metadata = {
   metadataBase: new URL(defaultUrl),
   title: 'SocialQuest',
-  description: 'SocialQuest',
+  description: 'SocialQuest'
 }
 
 export default async function RootLayout({
@@ -37,23 +36,21 @@ export default async function RootLayout({
     <html lang="en" className={`${GeistSans.className} h-full ${profile?.theme || 'dark'}`}>
       <body className='bg-bgLight dark:bg-bgDark overflow-x-hidden h-full transition-colors !duration-500' >
         <Providers>
-          <ConfigProvider theme={{ token: { colorBgMask: 'rgba(0, 0, 0, 0.8)', }, }}>
-            <ToasterProvider>
-              <DrawerProvider user={profile}>
-                <DiscussionProvider>
-                  <InventaireProvider>
-                    <NavBar user={profile} />
-                    <TopLoader />
-                    <main className={`h-full w-full flex flex-col items-center overflow-y-auto`}>
-                      {children}
-                    </main>
-                    <Analytics />
-                    <SpeedInsights />
-                  </InventaireProvider>
-                </DiscussionProvider>
-              </DrawerProvider>
-            </ToasterProvider>
-          </ConfigProvider >
+          <ToasterProvider>
+            <DrawerProvider user={profile}>
+              <DiscussionProvider>
+                <InventaireProvider>
+                  <NavBar user={profile} />
+                  <TopLoader />
+                  <main className={`h-full w-full flex flex-col items-center overflow-y-auto`}>
+                    {children}
+                  </main>
+                  <Analytics />
+                  <SpeedInsights />
+                </InventaireProvider>
+              </DiscussionProvider>
+            </DrawerProvider>
+          </ToasterProvider>
         </Providers>
       </body>
     </html >

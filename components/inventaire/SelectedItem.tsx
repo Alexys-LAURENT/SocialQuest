@@ -1,5 +1,5 @@
 "use client";
-import React, { useLayoutEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { useContext } from 'react';
 import { InventaireContext } from '@/app/context/InventaireContext';
 import dynamic from 'next/dynamic'

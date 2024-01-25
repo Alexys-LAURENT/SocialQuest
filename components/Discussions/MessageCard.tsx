@@ -3,7 +3,7 @@ import { createClient } from '@/utils/supabase/client';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { Avatar, Tooltip } from '@nextui-org/react';
 import { Popconfirm } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import moment from 'moment';
 import Link from 'next/link';
 

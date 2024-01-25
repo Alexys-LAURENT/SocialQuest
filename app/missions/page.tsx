@@ -1,5 +1,4 @@
 import HebdoCaroussel from '@/components/Missions/HebdoCaroussel';
-import React from 'react';
 
 const page = () => {
     return (

@@ -1,6 +1,6 @@
 "use client"
-import React, { useContext, useEffect } from 'react';
-import { Card, CardBody, Button, Avatar } from '@nextui-org/react';
+import { useContext, useEffect, useState } from 'react';
+import { Card, CardBody, Button } from '@nextui-org/react';
 import { DiscussionTab, Profile } from '@/app/types/entities';
 import { DiscussionContext } from '@/app/context/DiscussionContext';
 import { createClient } from '@/utils/supabase/client';
@@ -15,10 +15,10 @@ const DynamicModalComponentCreateDiscussion = dynamic(() => import('@/components
 
 
 const ListDiscussions = ({ initDiscussions, refetchDiscussions }: { initDiscussions: DiscussionTab[], refetchDiscussions: any }) => {
-    const [discussions, setDiscussions] = React.useState<DiscussionTab[] | null>(initDiscussions);
-    const [isOpen, setOpen] = React.useState(false);
+    const [discussions, setDiscussions] = useState<DiscussionTab[] | null>(initDiscussions);
+    const [isOpen, setOpen] = useState(false);
     const onOpenChange = (open: boolean) => setOpen(open);
-    const [profileConnected, setProfileConnected] = React.useState<Profile | null>(null);
+    const [profileConnected, setProfileConnected] = useState<Profile | null>(null);
     const { selectedCDiscussion, setSelectedDiscussion, setIsEditingGroup, setComponentReloaded, setMessages } = useContext(DiscussionContext);
     const supabase = createClient()
 

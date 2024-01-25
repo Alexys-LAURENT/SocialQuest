@@ -1,14 +1,14 @@
 "use client";
-import React from 'react';
-import { Button, Progress } from '@nextui-org/react'
+import { Progress } from '@nextui-org/react'
 import { Image } from 'antd';
 import { CheckIcon, PencilIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { createBrowserClient } from '@supabase/ssr'
 import { NextReward, Profile } from '@/app/types/entities';
+import { useState } from 'react';
 
 
 const APropos = ({ isUserProfil, user, nextRewards }: { isUserProfil: boolean, user: Profile | null, nextRewards: NextReward[] | null }) => {
-    const [isEditingAPropos, setIsEditingAPropos] = React.useState(false);
+    const [isEditingAPropos, setIsEditingAPropos] = useState(false);
     const progressValue = (user?.xp! - user?.niveaux.xp_debut!) * 100 / (user?.niveaux.xp_fin! + 1);
 
     const supabase = createBrowserClient(

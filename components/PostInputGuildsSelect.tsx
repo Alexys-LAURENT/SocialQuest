@@ -1,5 +1,5 @@
 import { Select, SelectItem } from '@nextui-org/react';
-import React, { Dispatch } from 'react';
+import { Dispatch } from 'react';
 import Image from 'next/image';
 
 
@@ -16,7 +16,7 @@ const PostInputGuildsSelect = ({ setGuilde, guildesUser }: { setGuilde: Dispatch
 
 
             {guildesUser && guildesUser.map((guildeUser: any) => (
-                <SelectItem key={`PostInputGuildSelect-${guildeUser.guildes.id_guilde}`} value={guildeUser.guildes.id_guilde} textValue={guildeUser.guildes.nom} className=' bg-bgLight dark:bg-bgDark'>
+                <SelectItem key={`${guildeUser.guildes.id_guilde}`} value={guildeUser.guildes.id_guilde} textValue={guildeUser.guildes.nom} className=' bg-bgLight dark:bg-bgDark'>
                     <div className="flex gap-2 items-center">
                         <Image alt={guildeUser.guildes.nom} className="flex-shrink-0 rounded-full aspect-square w-8 h-8" src={guildeUser.guildes.avatar_url!} width={20} height={20} />
                         <div className="flex flex-col">

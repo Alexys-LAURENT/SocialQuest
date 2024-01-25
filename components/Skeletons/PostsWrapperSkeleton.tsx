@@ -1,7 +1,4 @@
-import React from 'react';
-import dynamic from 'next/dynamic'
-
-const PostSkeleton = dynamic(() => import('@/components/Skeletons/PostSkeleton'))
+import PostSkeleton from './PostSkeleton';
 
 const PostsWrapperSkeleton = () => {
 

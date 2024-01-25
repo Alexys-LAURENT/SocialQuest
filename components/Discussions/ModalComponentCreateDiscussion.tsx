@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from 'react';
-import { Card, CardBody, Button, Avatar, Chip, Input, Listbox, ListboxItem, Modal, ModalBody, ModalContent, ModalFooter } from '@nextui-org/react';
+import { Card, CardBody, Button, Chip, Input, Listbox, ListboxItem, Modal, ModalBody, ModalContent, ModalFooter } from '@nextui-org/react';
 import { DiscussionTab, Profile } from '@/app/types/entities';
 import { createClient } from '@/utils/supabase/client';
 import defaultUser from '@/public/assets/defaultUser.svg'

@@ -1,5 +1,5 @@
 'use client'
-import React, { use, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Button } from '@nextui-org/react';
 import { useState } from 'react';
 import { createBrowserClient } from '@supabase/ssr'

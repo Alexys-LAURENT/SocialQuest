@@ -1,7 +1,7 @@
 import Posts from '@/components/Profil/Posts'
 import Infos from '@/components/Profil/Infos'
 import Compagnons from '@/components/Profil/Compagnons'
-import { Avatar, Tooltip } from '@nextui-org/react'
+import { Tooltip } from '@nextui-org/react'
 import { notFound } from 'next/navigation'
 import { ExtendedPost } from '@/app/types/entities'
 import dynamic from 'next/dynamic'

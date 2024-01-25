@@ -1,6 +1,6 @@
 import { DiscussionTab, Profile, ProfileInDiscussion } from '@/app/types/entities';
-import { Card, CardBody, Input, Avatar, Button, Tabs, Tab } from '@nextui-org/react';
-import React, { useContext } from 'react';
+import { Card, CardBody, Input, Button, Tabs, Tab } from '@nextui-org/react';
+import { useContext, useState } from 'react';
 import defaultGroup from '@/public/assets/defaultGroup.svg'
 import defaultUser from '@/public/assets/defaultUser.svg'
 import { TrashIcon, XMarkIcon } from '@heroicons/react/24/outline';
@@ -19,7 +19,7 @@ const DynamicModalComponentAddUsersToDiscussion = dynamic(() => import('@/compon
 const EditGroup = ({ profileConnected, selectedCDiscussion, setSelectedDiscussion, setIsEditingGroup }: {
     profileConnected: Profile, selectedCDiscussion: DiscussionTab, setSelectedDiscussion: (discussion: DiscussionTab | null) => void, setIsEditingGroup: (isEditingGroup: boolean) => void
 }) => {
-    const [inputValue, setInputValue] = React.useState<string>(selectedCDiscussion.nom)
+    const [inputValue, setInputValue] = useState<string>(selectedCDiscussion.nom)
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const { removeUserFromSelectedDiscussion, updateCurrentSelectedDiscussion } = useContext(DiscussionContext)
     const { success, error: errorToaster } = useContext(ToasterContext)

@@ -1,5 +1,4 @@
 'use client'
-import React from "react";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { useAsyncList } from "@react-stately/data";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";

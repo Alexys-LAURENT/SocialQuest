@@ -1,11 +1,10 @@
 'use client'
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Tabs, Tab, Input, Button } from "@nextui-org/react";
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { createClient } from '@/utils/supabase/client';
 import Google_logo from '@/public/assets/Google_logo.png';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 const Form = ({ signIn, signUp, searchParams, }: { signIn: (arg1: FormData) => void, signUp: (arg1: FormData) => void, searchParams: { message: string } }) => {

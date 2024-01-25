@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import Form from '@/components/Login_Register/Form'
 import { headers, cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MoonIcon } from '@heroicons/react/24/outline';
 import { Switch } from '@nextui-org/react';
 import { Profile } from '@/app/types/entities';

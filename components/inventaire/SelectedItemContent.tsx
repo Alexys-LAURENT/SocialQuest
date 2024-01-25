@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { Button, ButtonGroup, Chip, Input } from '@nextui-org/react';
 import { Item, Profile } from '@/app/types/entities';
@@ -7,7 +7,6 @@ import { setCurrentUserBannerUrl } from '@/utils/setCurrentUserBannerUrl';
 import { useContext } from 'react';
 import { ToasterContext } from '@/app/context/ToasterContext';
 import dynamic from 'next/dynamic'
-import { StarIcon } from '@heroicons/react/24/outline';
 import { Desequipbadge } from '@/utils/DesequipBadge';
 import { toggleFavorite } from '@/utils/toggleFavorite';
 

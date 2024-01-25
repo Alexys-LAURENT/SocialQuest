@@ -1,6 +1,3 @@
-import { Avatar } from '@nextui-org/react';
-import React from 'react';
-
 const PostSkeleton = () => {
     return (
         <div className="flex flex-col border border-gray-500 rounded-md p-2 gap-1">

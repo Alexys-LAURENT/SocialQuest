@@ -1,5 +1,3 @@
-import React from 'react';
-
 const ProfileItemSkeleton = () => {
     const tab = [1, 2, 3, 4]
     return (

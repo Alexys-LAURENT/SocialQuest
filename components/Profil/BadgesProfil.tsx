@@ -1,5 +1,3 @@
-import React from 'react';
-import { Button, Link } from '@nextui-org/react';
 import { Item, Profile } from '@/app/types/entities';
 import { getBadgesUser } from '@/utils/getItemsProfil';
 import Image from 'next/image';

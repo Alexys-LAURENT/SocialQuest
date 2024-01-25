@@ -1,6 +1,6 @@
 "use client"
 import { Profile } from '@/app/types/entities';
-import React, { use, useContext, useEffect, useLayoutEffect, useState } from 'react';
+import { Fragment, useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { DiscussionContext } from '@/app/context/DiscussionContext';
 import { ArrowDownIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { createClient } from '@/utils/supabase/client';
@@ -176,7 +176,7 @@ const MessagesWrapper = () => {
 
                             {/* message */}
                             {messages && messages.map((item, index) => (
-                                <React.Fragment key={`message-${item.id_message}`}>
+                                <Fragment key={`message-${item.id_message}`}>
                                     {
                                         messages[index - 1]?.created_at.split('T')[0] !== item.created_at.split('T')[0] &&
                                         <div key={`dateMessagesWrapper-${Math.random()}-${item.id_message}`} className='w-full flex justify-center items-center pt-6 text-sm text-gray-500 dark:text-gray-200 transition-all !duration-[125ms]'>
@@ -185,7 +185,7 @@ const MessagesWrapper = () => {
                                     }
 
                                     <DynamicMessageCard item={item} index={index} profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} tooltipDeleteOpen={tooltipDeleteOpen} setTooltipDeleteOpen={setTooltipDeleteOpen} tooltipOthersOpen={tooltipOthersOpen} setTooltipOthersOpen={setTooltipOthersOpen} tooltipUserOpen={tooltipUserOpen} setTooltipUserOpen={setTooltipUserOpen} nextMessage={{ id_user: messages[index + 1]?.id_user, timestamp: messages[index + 1]?.created_at }} prevMessage={{ id_user: messages[index - 1]?.id_user, timestamp: messages[index - 1]?.created_at }} />
-                                </React.Fragment>
+                                </Fragment>
                             ))}
                         </ScrollShadow>
                         <MessageInput supabase={supabase} selectedCDiscussion={selectedCDiscussion} profileConnected={profileConnected} />

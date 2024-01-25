@@ -1,5 +1,4 @@
-import React from 'react';
-import { Avatar, Button, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
+import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
 import Link from 'next/link';
 import { ExtendedPost } from '@/app/types/entities';
 import Image from 'next/image';

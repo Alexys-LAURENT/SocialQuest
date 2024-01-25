@@ -1,9 +1,9 @@
 'use client';
 import PopOverUserContent from "@/components/NavBar/PopOverUserContent";
-import React, { useState, useContext } from "react";
-import { NextReward, Profile } from "@/app/types/entities";
+import { useState, useContext } from "react";
+import { Profile } from "@/app/types/entities";
 import { DrawerContext } from "@/app/context/DrawerContext";
-import { Badge, Avatar, Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
+import { Badge, Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
 import Image from "next/image";
 import defaultUser from "@/public/assets/defaultUser.svg";
 
@@ -13,36 +13,32 @@ const PopoverUser = ({ signOut, user }: { signOut: () => void, user: Profile | n
 
     return (
         <Popover id="PopoverUser" placement="bottom" offset={15} classNames={{ base: "hidden sm:flex w-[18.5rem]" }} isOpen={isPopoverUserOpen} onOpenChange={setIsPopoverUserOpen} shouldCloseOnBlur={false} onClose={() => closeDrawer()}
-            shouldCloseOnInteractOutside={(e) => !(e as HTMLElement).classList.contains("ant-image-preview-wrap")
-                && !(e as HTMLElement).classList.contains("ant-image-preview-img")
-                && !(e as HTMLElement).classList.contains("ant-image-preview-close")
-                && !(e as HTMLElement).parentElement?.classList.contains("anticon-close")
-                && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("anticon-close")
-                && !(e as HTMLElement).classList.contains("ant-image-preview-switch-right")
-                && !(e as HTMLElement).classList.contains("ant-image-preview-switch-left")
-                && !(e as HTMLElement).parentElement?.classList.contains("ant-image-preview-switch-right")
-                && !(e as HTMLElement).parentElement?.classList.contains("ant-image-preview-switch-left")
-                && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("ant-image-preview-switch-right")
-                && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("ant-image-preview-switch-left")
-                && !(e as HTMLElement).classList.contains("ant-drawer-body")
-                && !(e as HTMLElement).classList.contains("switchThemeWrapper")
-                && !(e as HTMLElement).parentElement?.classList.contains("switchThemeWrapper")
-                && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("switchThemeWrapper")
-                && !(e as HTMLElement).parentElement?.parentElement?.parentElement?.classList.contains("switchThemeWrapper")
-                && !(e as HTMLElement).parentElement?.parentElement?.parentElement?.parentElement?.classList.contains("switchThemeWrapper")
-                && !(e as HTMLElement).classList.contains("levelWrapper")
-                && !(e as HTMLElement).parentElement?.classList.contains("levelWrapper")
-                && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("levelWrapper")
-                && !(e as HTMLElement).parentElement?.parentElement?.parentElement?.classList.contains("levelWrapper")
-                && !(e as HTMLElement).parentElement?.parentElement?.parentElement?.parentElement?.classList.contains("levelWrapper")
-                && !(e as HTMLElement).classList.contains("nextRewardsWrapper")
-                && !(e as HTMLElement).parentElement?.classList.contains("nextRewardsWrapper")
-                && !(e as HTMLElement).parentElement?.parentElement?.classList.contains("nextRewardsWrapper")
-                && !(e as HTMLElement).parentElement?.parentElement?.parentElement?.classList.contains("nextRewardsWrapper")
-                && !(e as HTMLElement).parentElement?.parentElement?.parentElement?.parentElement?.classList.contains("nextRewardsWrapper")
-                && !(e as HTMLElement).parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.classList.contains("nextRewardsWrapper")
-                && !(e as HTMLElement).classList.contains("popOverUserContentWrapper")
-            }>
+            shouldCloseOnInteractOutside={(e) => {
+                const classes = [
+                    "ant-image-preview-wrap",
+                    "ant-image-preview-img",
+                    "ant-image-preview-close",
+                    "ant-image-preview-footer",
+                    "anticon-close",
+                    "ant-image-preview-switch-right",
+                    "ant-image-preview-switch-left",
+                    "ant-drawer-body",
+                    "switchThemeWrapper",
+                    "levelWrapper",
+                    "nextRewardsWrapper",
+                    "popOverUserContentWrapper"
+                ];
+
+                let element = e as HTMLElement;
+                while (element) {
+                    if (classes.some(className => element.classList.contains(className))) {
+                        return false;
+                    }
+                    element = element.parentElement as HTMLElement;
+                }
+
+                return true;
+            }}>
             <PopoverTrigger>
                 <div className="flex items-center cursor-pointer min-w-[32px] sm:min-w-[44px]" onClick={() => showDrawer("User")} >
                     <Badge content={user?.niveaux.libelle} color="primary" className="text-xs border-bgLight dark:border-bgDark transition-all !duration-500">

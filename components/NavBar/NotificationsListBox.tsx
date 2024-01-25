@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { Image, Listbox, ListboxItem } from "@nextui-org/react";
 import moment from "moment";
 import { Notification } from "@/app/types/entities";

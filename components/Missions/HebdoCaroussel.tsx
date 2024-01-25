@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { clsx } from "@nextui-org/shared-utils";
 import { Button, Progress } from "@nextui-org/react";
 

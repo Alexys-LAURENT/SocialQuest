@@ -1,5 +1,5 @@
 "use client"
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Card, CardBody } from '@nextui-org/react';
 import { DiscussionContext } from '@/app/context/DiscussionContext';
 import { PlusIcon } from '@heroicons/react/24/outline';

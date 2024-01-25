@@ -3,7 +3,7 @@ import Link from "next/link";
 import SearchBar from "@/components/NavBar/SearchBar";
 import PopoverUser from "@/components/NavBar/PopoverUser";
 import PopoverNotifications from "@/components/NavBar/PopoverNotifications";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Profile } from "@/app/types/entities";
 import { Button } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
@@ -64,7 +64,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
         <Navbar maxWidth="2xl" className="py-2 bg-bgLight dark:bg-bgDark transition-all !duration-500" position="sticky" classNames={{ wrapper: "px-4 sm:px-6" }}>
             <NavbarContent justify="start">
                 <NavbarItem className="flex md:hidden" onClick={() => showDrawer('NavMenu')}>
-                    <Bars3Icon className="w-6 h-6 cursor-pointer" />
+                    <Bars3Icon className="w-6 h-6 cursor-pointer text-textDark dark:text-textLight transition-all !duration-[125ms]" />
                 </NavbarItem>
                 <NavbarBrand className="text-3xl font-bold text-textDark dark:text-textLight transition-all !duration-[150ms]">
                     <Link
@@ -72,7 +72,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
                         onClick={() => {
                             (pathName !== "/") ? router.push("/") : router.refresh()
                         }}
-                        className="w-max"
+                        className="w-max border-1 border-transparent dark:border-white/50 rounded-[0.65rem] transition-all !duration-[150ms]"
                     >
                         <Image className="" src={SocialQuestLogo.src} alt="SocialQuest Logo" width={40} height={40} />
                     </Link>

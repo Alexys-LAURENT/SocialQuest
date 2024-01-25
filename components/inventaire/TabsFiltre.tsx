@@ -1,11 +1,9 @@
 "use client"
-import React from 'react';
 import { Item, Profile } from '@/app/types/entities';
 import { Card, CardBody, Tab, Tabs } from "@nextui-org/react";
 import Image from 'next/image';
 import { useContext } from 'react';
 import { InventaireContext } from '@/app/context/InventaireContext';
-import { StarIcon } from '@heroicons/react/24/outline';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 const TabsFiltre = ({ inventory, profileConnected, pageProfile, filterParam, isUserInventory }: { inventory: Item[], profileConnected: Profile, pageProfile: Profile, filterParam: string, isUserInventory: boolean }) => {
     const { selectedItem, setSelectedItem } = useContext(InventaireContext)

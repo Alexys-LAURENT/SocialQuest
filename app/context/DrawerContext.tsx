@@ -1,5 +1,5 @@
 "use client"
-import React, { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { NextReward, Profile } from '@/app/types/entities';
 import { createBrowserClient } from '@supabase/ssr';
 import { XMarkIcon } from '@heroicons/react/24/outline';
@@ -69,7 +69,7 @@ const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: P
                     classNames={{ header: `${content === "User" ? "!hidden" : "bg-bgLight dark:bg-bgDark text-textDark dark:text-textLight transition-all !duration-400"}`, body: "bg-bgLight dark:bg-bgDark text-textDark dark:text-textLight transition-all !duration-400", mask: `flex ${content === "User" ? "sm:hidden" : "md:hidden"}` }}
                     className={`flex  ${content === "User" ? "sm:hidden" : "md:hidden"}`}>
 
-                    {content === "User" && <PopOverUserContent customFunction={closeDrawer} user={user} signOut={signOut} nextRewards={nextRewards} />}
+                    {content === "User" && <PopOverUserContent customFunction={closeDrawer} user={user} signOut={signOut} />}
                     {content === "NavMenu" && <NavBarMenu customFunction={closeDrawer} />}
 
                 </Drawer>

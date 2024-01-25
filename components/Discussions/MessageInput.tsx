@@ -1,7 +1,7 @@
 import { DiscussionTab, Profile } from '@/app/types/entities';
 import { Button, Textarea } from '@nextui-org/react';
 import { SupabaseClient } from '@supabase/supabase-js';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const MessageInput = ({ supabase, selectedCDiscussion, profileConnected }: { supabase: SupabaseClient, selectedCDiscussion: DiscussionTab, profileConnected: Profile }) => {
     const [inputValue, setInputValue] = useState<string>('')

@@ -1,5 +1,4 @@
 import { Listbox, ListboxItem } from '@nextui-org/react';
-import React from 'react';
 import { HomeIcon, BuildingStorefrontIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 const NavBarMenu = ({ customFunction }: { customFunction: () => void }) => {

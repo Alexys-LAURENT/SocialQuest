@@ -1,6 +1,5 @@
 "use client"
 import { useState, useContext } from 'react';
-import { Button } from 'antd';
 import { DocumentIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { Textarea } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
@@ -100,12 +99,12 @@ const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => 
                 </div>
                 <div className="h-[30px] w-full bg-[#b9b9b9] dark:bg-[#1f1e1b] rounded-b-md transition-all !duration-500">
                     <div className="flex justify-between items-center h-full px-2">
-                        <Button color='primary' className="p-0 h-[20px] w-[20px] border-none bg-transparent">
+                        <button type='button' className="text-textDark dark:text-textLight transition-all !duration-[125ms]">
                             <DocumentIcon className="w-5 h-5 text-textDark dark:text-textLight transition-all !duration-[125ms]" />
-                        </Button>
-                        <Button color='primary' className="p-0 h-[20px] w-[20px] border-none bg-transparent" htmlType='submit'>
+                        </button>
+                        <button type='submit' className="text-textDark dark:text-textLight transition-all !duration-[125ms]">
                             <PaperAirplaneIcon className="w-5 h-5  text-textDark dark:text-textLight ml-[0.15rem] -rotate-45 transition-all !duration-[125ms]" />
-                        </Button>
+                        </button>
                     </div>
                 </div>
             </form >

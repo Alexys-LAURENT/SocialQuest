@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, Button } from '@nextui-org/react'
 import { getBannieresUser } from '@/utils/getItemsProfil';
 import { Item, Profile } from '@/app/types/entities';

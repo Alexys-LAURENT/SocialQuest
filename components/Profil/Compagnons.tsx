@@ -1,4 +1,3 @@
-import React from 'react';
 import SearchBarCompagnons from '@/components/Profil/SearchBarCompagnons'
 import { Avatar, Button, Link } from '@nextui-org/react'
 import { ChatBubbleOvalLeftEllipsisIcon } from '@heroicons/react/24/outline'
