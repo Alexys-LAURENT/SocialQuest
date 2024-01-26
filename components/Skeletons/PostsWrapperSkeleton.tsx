@@ -1,4 +1,4 @@
-import PostSkeleton from './PostSkeleton';
+import PostSkeleton from '@/components/Skeletons/PostSkeleton';
 
 const PostsWrapperSkeleton = () => {
 
