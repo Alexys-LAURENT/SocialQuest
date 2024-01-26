@@ -43,7 +43,7 @@ const PopoverNotifications = ({ user }: { user: Profile }) => {
 
     return (
         <Popover placement="bottom" offset={20} classNames={{ base: " w-[18.5rem]" }} onClose={() => notificationsNotRead.length > 0 && readUserNotifications(user.id_user)}>
-            <PopoverTrigger >
+            <PopoverTrigger>
                 <div className="flex items-center cursor-pointer">
                     <Badge content={notificationsNotRead.length} color="danger" className={`text-xs`} classNames={{ badge: `${notificationsNotRead.length > 0 ? "" : "opacity-0"}` }}>
                         <BellIcon className="w-6 h-6 text-textDark dark:text-textLight !duration-[125ms]" />

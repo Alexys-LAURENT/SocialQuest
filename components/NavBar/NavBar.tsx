@@ -66,17 +66,20 @@ const NavBar = ({ user }: { user: Profile | null }) => {
                 <NavbarItem className="flex md:hidden" onClick={() => showDrawer('NavMenu')}>
                     <Bars3Icon className="w-6 h-6 cursor-pointer text-textDark dark:text-textLight transition-all !duration-[125ms]" />
                 </NavbarItem>
-                <NavbarBrand className="text-3xl font-bold text-textDark dark:text-textLight transition-all !duration-[150ms]">
-                    <Link
-                        href="/"
-                        onClick={() => {
-                            (pathName !== "/") ? router.push("/") : router.refresh()
-                        }}
-                        className="w-max border-1 border-transparent dark:border-white/50 rounded-[0.65rem] transition-all !duration-[150ms]"
-                    >
-                        <Image className="" src={SocialQuestLogo.src} alt="SocialQuest Logo" width={40} height={40} />
-                    </Link>
-                </NavbarBrand>
+                <NavbarItem>
+                    <NavbarBrand className="text-3xl font-bold text-textDark dark:text-textLight transition-all !duration-[150ms]">
+                        <Link
+                            href="/"
+                            aria-label="HomePage"
+                            onClick={() => {
+                                (pathName !== "/") ? router.push("/") : router.refresh()
+                            }}
+                            className="w-max border-1 border-transparent dark:border-white/50 rounded-[0.65rem] transition-all !duration-[150ms]"
+                        >
+                            <Image className="" src={SocialQuestLogo.src} alt="SocialQuest Logo" width={40} height={40} />
+                        </Link>
+                    </NavbarBrand>
+                </NavbarItem>
                 <NavbarItem>
                     <MagnifyingGlassIcon className="flex sm:hidden w-6 h-6 text-textDark dark:text-textLight" />
                 </NavbarItem>
@@ -102,6 +105,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
                 <NavbarItem className="hidden md:flex">
                     <Link
                         href="/shop"
+                        aria-label="Boutique"
                     >
                         <BuildingStorefrontIcon className="w-6 h-6 text-textDark dark:text-textLight transition-all !duration-500" />
                     </Link>

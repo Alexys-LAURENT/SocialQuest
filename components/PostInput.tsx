@@ -99,10 +99,10 @@ const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => 
                 </div>
                 <div className="h-[30px] w-full bg-[#b9b9b9] dark:bg-[#1f1e1b] rounded-b-md transition-all !duration-500">
                     <div className="flex justify-between items-center h-full px-2">
-                        <button type='button' className="text-textDark dark:text-textLight transition-all !duration-[125ms]">
+                        <button type='button' className="text-textDark dark:text-textLight transition-all !duration-[125ms]" aria-label='ajouter un document' name='add-document'>
                             <DocumentIcon className="w-5 h-5 text-textDark dark:text-textLight transition-all !duration-[125ms]" />
                         </button>
-                        <button type='submit' className="text-textDark dark:text-textLight transition-all !duration-[125ms]">
+                        <button type='submit' className="text-textDark dark:text-textLight transition-all !duration-[125ms]" aria-label='envoyer le post' name='send-post'>
                             <PaperAirplaneIcon className="w-5 h-5  text-textDark dark:text-textLight ml-[0.15rem] -rotate-45 transition-all !duration-[125ms]" />
                         </button>
                     </div>

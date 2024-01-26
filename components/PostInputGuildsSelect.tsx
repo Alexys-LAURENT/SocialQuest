@@ -6,7 +6,9 @@ import Image from 'next/image';
 const PostInputGuildsSelect = ({ setGuilde, guildesUser }: { setGuilde: Dispatch<any>, guildesUser: any }) => {
     return (
         <Select
-            label="Guilde"
+            aria-label='Guilde du post / Pas de guilde'
+            name='Guilde du post / Pas de guilde'
+            label="Guilde du post"
             variant='underlined'
             placeholder="Pas de guilde"
             className="w-full"
