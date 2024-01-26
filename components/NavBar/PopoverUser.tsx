@@ -16,6 +16,13 @@ const PopoverUser = ({ signOut, user }: { signOut: () => void, user: Profile | n
         setWindowWidth(window.innerWidth);
         window.addEventListener("resize", () => {
             setWindowWidth(window.innerWidth);
+            if (window.innerWidth >= 640) {
+                setIsPopoverUserOpen(true);
+                closeDrawer();
+            } else {
+                setIsPopoverUserOpen(false);
+                showDrawer("User");
+            }
         });
 
         return () => {
