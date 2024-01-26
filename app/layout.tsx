@@ -45,13 +45,13 @@ export default async function RootLayout({
                   <main className={`h-full w-full flex flex-col items-center overflow-y-auto`}>
                     {children}
                   </main>
-                  <Analytics />
-                  <SpeedInsights />
                 </InventaireProvider>
               </DiscussionProvider>
             </DrawerProvider>
           </ToasterProvider>
         </Providers>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html >
   )
