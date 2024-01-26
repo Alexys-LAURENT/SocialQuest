@@ -1,5 +1,6 @@
 import { ExtendedPost, Profile } from '@/app/types/entities';
 import dynamic from 'next/dynamic'
+import { Fragment } from 'react'
 
 const Post = dynamic(() => import('@/components/Post'))
 
@@ -10,9 +11,9 @@ const PostsWrapper = async ({ user, getPost, postPage }: { user: Profile | null,
         <div className={`w-full flex flex-col gap-4 ${postPage ? 'mt-8' : ''}`}>
             {posts?.length !== 0 ? (
                 posts?.map((post: ExtendedPost) => (
-                    <>
+                    <Fragment key={`post-${post.id_post}`}>
                         <Post key={post.id_post} post={post} user={user} />
-                    </>
+                    </Fragment>
                 ))
             ) : (
                 <div className="flex flex-col items-center justify-center gap-2">
