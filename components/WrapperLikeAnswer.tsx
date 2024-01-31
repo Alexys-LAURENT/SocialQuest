@@ -60,7 +60,8 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile |
         , [user])
 
 
-    const handletoggleLike = () => {
+    const handletoggleLike = (e: any) => {
+        e.preventDefault();
         if (user === null) {
             router.push('/login');
             return;
@@ -71,7 +72,6 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile |
     }
 
     const toggleLike = async () => {
-
 
         if (userLikedPost) {
             // Unlike
@@ -106,7 +106,7 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile |
         <div className='flex gap-4'>
             {user ? (
                 <>
-                    <Button variant='flat' color='primary' className='min-w-0 h-7 w-max rounded-sm text-textDark dark:text-textLight transition-all !duration-[75ms] px-2' onClick={handletoggleLike}>
+                    <Button variant='flat' color='primary' className='min-w-0 h-7 w-max rounded-sm text-textDark dark:text-textLight transition-all !duration-[75ms] px-2' onClick={(e) => handletoggleLike(e)}>
                         <HeartIcon className={`w-5 h-5 ${userLikedPost ? 'text-red-500 fill-red-500' : ''} transition-all ease-in-out`} /> {formatCount(likesCount)}
                     </Button>
                     <Button as={Link} variant='flat' color='primary' className='min-w-0 h-7 w-max rounded-sm text-textDark dark:text-textLight transition-all !duration-[75ms] px-2' href={`/p/${post.id_post}`}>

@@ -8,7 +8,7 @@ import PopoverUserProfile from '@/components/PopoverUserProfile';
 import WrapperLikeAnswer from '@/components/WrapperLikeAnswer';
 import { createClient } from '@/utils/supabase/client';
 import { ToasterContext } from '@/app/context/ToasterContext';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import defaultUser from '@/public/assets/defaultUser.svg'
 export default function Post({ user, post }: { user: Profile | null, post: ExtendedPost }) {
@@ -30,7 +30,7 @@ export default function Post({ user, post }: { user: Profile | null, post: Exten
     }
 
     return (
-        <div className="flex flex-col border border-gray-500 rounded-md p-2 gap-1">
+        <div className="flex flex-col border border-gray-200/20 hover:border-gray-200/30  hover:bg-gray-700/5 transition-all rounded-md p-2 gap-1 cursor-pointer" onClick={() => router.push(`/p/${post.id_post}`)}>
 
             <div className="flex gap-2">
                 <Image src={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url! || defaultUser.src} alt={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url! || defaultUser.src} width={32} height={32} className='min-h-[32px] min-w-[32px] rounded-full' />
