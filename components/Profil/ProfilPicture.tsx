@@ -52,8 +52,9 @@ const ProfilPicture = ({ isUserProfil }: { isUserProfil: boolean }) => {
     return (
         <Upload
             name="avatar"
+            rootClassName='h-full'
             listType="picture-circle"
-            className="z-50 !h-28 !w-28 md:!h-40 md:!w-40 transition-all text-textLight opacity-0 hover:opacity-100"
+            className="ms-9 z-50 !min-h-[112px] !min-w-[112px] !max-h-[112px] !max-w-[112px] md:!min-h-[160px] md:!min-w-[160px] md:!max-h-[160px] md:!max-w-[160px] transition-all text-textLight opacity-0 hover:opacity-100"
             showUploadList={false}
             action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
             beforeUpload={beforeUpload}

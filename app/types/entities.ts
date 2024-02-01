@@ -16,7 +16,8 @@ export type Profile = {
         xp_debut: number,
         id_niveau: string
     }
-    users_badges: Item[]
+    users_badges: Item[],
+    isFollowed?: boolean
 }
 
 export type Post = {

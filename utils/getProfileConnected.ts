@@ -22,6 +22,13 @@ export async function getProfileConnected(user?: User | null) {
             .select("*, niveaux(*), users_badges(items(*))")
             .eq('id_user', user.id)
             .single()
+
+        if (error) {
+            console.log(error)
+            return null
+        }
+
+
         return profile as unknown as Profile
     }
     return null
