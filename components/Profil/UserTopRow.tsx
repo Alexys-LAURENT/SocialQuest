@@ -16,7 +16,7 @@ const DynamicProfilPicture = dynamic(() => import('@/components/Profil/ProfilPic
 const UserTopRow = ({ isUserProfil, pageProfile, profileConnected }: { isUserProfil: boolean, pageProfile: Profile, profileConnected: Profile | null }) => {
     const { success, error } = useContext(ToasterContext)
     const router = useRouter()
-    console.log(pageProfile)
+
     const handleFollow = async () => {
         if (!profileConnected?.id_user) return router.push('/login')
         const isDone = await toggleFollow(pageProfile?.id_user, pageProfile?.isFollowed!, profileConnected?.id_user)
@@ -30,9 +30,9 @@ const UserTopRow = ({ isUserProfil, pageProfile, profileConnected }: { isUserPro
 
     return (
         <>
-            <div className='relative -top-[60px] md:-top-[80px] w-full max-w-[1280px] flex items-end px-6 md:px-12'>
+            <div className='relative -top-[40px] sm:-top-[60px] md:-top-[80px] w-full max-w-[1280px] flex items-end px-6 md:px-12'>
                 {isUserProfil && <DynamicProfilPicture isUserProfil={isUserProfil} />}
-                <Image src={pageProfile?.avatar_url || defaultUser.src} alt={pageProfile?.avatar_url! || defaultUser.src} width={160} height={160} className={`${isUserProfil ? 'absolute' : 'flex'} h-28 w-28 md:h-40 md:w-40 rounded-full text-large transition-all ms-9`} />
+                <Image src={pageProfile?.avatar_url || defaultUser.src} alt={pageProfile?.avatar_url! || defaultUser.src} width={160} height={160} className={`${isUserProfil ? 'absolute' : 'flex'} -top-32 h-20 w-20 sm:h-28 sm:w-28 md:h-40 md:w-40 rounded-full text-large transition-all md:ms-9`} />
                 <div className='flex justify-between items-center h-unit-10 mb-1 sm:mb-0 ms-2 sm:ms-4  md:mb-7 w-full'>
                     <div className='sm:max-w-[80%]'>
                         <p className=" w-full overflow-hidden text-ellipsis line-clamp-1 text-lg md:text-2xl font-semibold text-textDark dark:text-textLight transition-all !duration-[125ms]">
@@ -53,11 +53,11 @@ const UserTopRow = ({ isUserProfil, pageProfile, profileConnected }: { isUserPro
             </div>
             {
                 pageProfile.isFollowed !== undefined && (
-                    <div className=' w-full max-w-[1280px] px-6 md:px-12 flex flex-row justify-end gap-4 sm:hidden bg-red-300 my-2 -top-[60px] md:-top-[80px] relative'>
+                    <div className=' w-full max-w-[1280px] px-6 md:px-12 flex flex-row justify-end my-4 sm:my-2 gap-2 sm:gap-4 sm:hidden -top-[40px] sm:-top-[60px] md:-top-[80px] relative'>
 
-                        <Button onClick={() => handleFollow()} color='primary' className='rounded-md'>{pageProfile.isFollowed ? 'Abonné' : 'Suivre'}</Button>
+                        <Button onClick={() => handleFollow()} color='primary' className='rounded-md w-full h-[30px]'>{pageProfile.isFollowed ? 'Abonné' : 'Suivre'}</Button>
 
-                        <Button color='primary' className='bg-bgLight w-[40px] h-[40px] rounded-md min-w-[40px] px-2'><ChatBubbleOvalLeftEllipsisIcon className='text-bgDarkPopover' /></Button>
+                        <Button color='primary' className='bg-bgLight w-[30px] rounded-md min-w-[40px] h-[30px] px-2'><ChatBubbleOvalLeftEllipsisIcon className='text-bgDarkPopover' /></Button>
                     </div>
                 )
             }
