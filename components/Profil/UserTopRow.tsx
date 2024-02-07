@@ -36,7 +36,7 @@ const UserTopRow = ({ isUserProfil, pageProfile, profileConnected }: { isUserPro
                 <div className='flex justify-between items-center h-unit-10 mb-1 sm:mb-0 ms-2 sm:ms-4  md:mb-7 w-full'>
                     <div className='sm:max-w-[80%]'>
                         <p className=" w-full overflow-hidden text-ellipsis line-clamp-1 text-lg md:text-2xl font-semibold text-textDark dark:text-textLight transition-all !duration-[125ms]">
-                            {pageProfile?.username}aiojioaj iodjzaiojd iozhad hdzahduiahioz jdopakopduiazid aznoi
+                            {pageProfile?.username}
                         </p>
                     </div>
                     {

@@ -10,7 +10,7 @@ export async function getBannieresUser(id_user: string) {
 
     const { data: bannieres, error: bannieresError } = await supabase
         .from('items_users')
-        .select(`items(*)`)
+        .select(`id_item_user, is_equiped,items(*)`)
         .eq('is_favorite', true)
         .eq('id_user', id_user)
         .eq('items.type', 'Bannière')
