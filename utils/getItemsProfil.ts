@@ -28,7 +28,7 @@ export async function getBadgesUser(id_user: string) {
 
     const { data: badges, error: badgesError } = await supabase
         .from('items_users')
-        .select(`items(*)`)
+        .select(`id_item_user, items(*)`)
         .eq('is_favorite', true)
         .eq('id_user', id_user)
         .eq('items.type', 'Badge')

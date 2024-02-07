@@ -14,7 +14,7 @@ export async function getPageProfile(username: string) {
     const user = await getProfileConnected()
     const { data: profile, error } = await supabase
         .from('profiles')
-        .select("*, niveaux(*), users_badges(items(*))")
+        .select("*, niveaux(*))")
         .eq('username', username)
         .single() as unknown as { data: Profile, error: Error }
 

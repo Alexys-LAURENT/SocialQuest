@@ -15,7 +15,7 @@ export async function getAllPosts() {
 
     const { data: postsWithLikes, error: postsError } = await supabase
         .from('posts')
-        .select(`*, profiles(username, avatar_url, a_propos,banner_url, users_badges(items(*))),guildes(nom, avatar_url), likes(id_like, id_user),
+        .select(`*, profiles(username, avatar_url, a_propos,banner_url),guildes(nom, avatar_url), likes(id_like, id_user),
           children:posts(id_post)`)
         .is('parent', null)
         .order('created_at', { ascending: false });
@@ -44,7 +44,7 @@ export async function getAllPostsFromUser(id_user: string) {
 
     const { data: postsWithLikes, error: postsError } = await supabase
         .from('posts')
-        .select(`*, profiles(username, avatar_url, a_propos,banner_url, users_badges(items(*))),guildes(nom, avatar_url), likes(id_like, id_user),
+        .select(`*, profiles(username, avatar_url, a_propos,banner_url),guildes(nom, avatar_url), likes(id_like, id_user),
     children:posts(id_post)`)
         .eq('id_user', id_user)
         .order('created_at', { ascending: false });
@@ -81,7 +81,7 @@ export async function getAllPostsFromGuild(guilde_name: string) {
 
     const { data: postsWithLikes, error: postsError } = await supabase
         .from('posts')
-        .select(`*, profiles(username, avatar_url, a_propos,banner_url, users_badges(items(*))),guildes(nom, avatar_url), likes(id_like, id_user),
+        .select(`*, profiles(username, avatar_url, a_propos,banner_url),guildes(nom, avatar_url), likes(id_like, id_user),
           children:posts(id_post)`)
         .is('parent', null)
         .eq('id_guilde', guilde?.id_guilde)
