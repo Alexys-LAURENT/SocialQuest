@@ -32,7 +32,7 @@ const UserTopRow = ({ isUserProfil, pageProfile, profileConnected }: { isUserPro
         <>
             <div className='relative -top-[40px] sm:-top-[60px] md:-top-[80px] w-full max-w-[1280px] flex items-end px-6 md:px-12'>
                 {isUserProfil && <DynamicProfilPicture isUserProfil={isUserProfil} />}
-                <Image src={pageProfile?.avatar_url || defaultUser.src} alt={pageProfile?.avatar_url! || defaultUser.src} width={160} height={160} className={`${isUserProfil ? 'absolute' : 'flex'} -top-32 h-20 w-20 sm:h-28 sm:w-28 md:h-40 md:w-40 rounded-full text-large transition-all md:ms-9`} />
+                <Image src={pageProfile?.avatar_url || defaultUser.src} alt={pageProfile?.avatar_url! || defaultUser.src} width={160} height={160} className={`${isUserProfil ? 'absolute' : 'flex'}  h-20 w-20 sm:h-28 sm:w-28 md:h-40 md:w-40 rounded-full text-large transition-all `} />
                 <div className='flex justify-between items-center h-unit-10 mb-1 sm:mb-0 ms-2 sm:ms-4  md:mb-7 w-full'>
                     <div className='sm:max-w-[80%]'>
                         <p className=" w-full overflow-hidden text-ellipsis line-clamp-1 text-lg md:text-2xl font-semibold text-textDark dark:text-textLight transition-all !duration-[125ms]">

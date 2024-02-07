@@ -61,6 +61,5 @@ export async function getCurrentUserAllDiscussions() {
             item.dernier_message = data![0]
         })
     );
-    console.log(resultArray)
     return resultArray;
 }

@@ -16,7 +16,6 @@ export async function getAllUsernames() {
         return []
     }
 
-    console.log(usernames)
 
     return usernames as unknown as { username: string }[]
 }

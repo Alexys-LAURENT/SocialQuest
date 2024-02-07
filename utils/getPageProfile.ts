@@ -36,7 +36,6 @@ export async function getPageProfile(username: string) {
         console.log(errorIsFollowed)
         return null
     }
-    console.log(isFollowed)
     if (isFollowed[0] && isFollowed[0].id_follow !== undefined) {
         profile.isFollowed = true
     } else {

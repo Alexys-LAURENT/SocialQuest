@@ -1,19 +1,20 @@
 import Posts from '@/components/Profil/Posts'
 import Infos from '@/components/Profil/Infos'
-import Compagnons from '@/components/Profil/Compagnons'
 import { notFound } from 'next/navigation'
 import { ExtendedPost } from '@/app/types/entities'
 import { getProfileConnected } from '@/utils/getProfileConnected'
 import { getAllPostsFromUser } from '@/utils/getAllPosts'
 import { getPageProfile } from '@/utils/getPageProfile'
 import UserTopRow from '@/components/Profil/UserTopRow'
+import CommpagnonsSuspenser from '@/components/Profil/CommpagnonsSuspenser'
+import { Suspense } from 'react'
+import CompagnonSkeleton from '@/components/Skeletons/Profil/CompagnonSkeleton'
 
 export default async function Profil({ params }: { params: { username: string } }) {
   const [profileConnected, pageProfile] = await Promise.all([
     getProfileConnected(),
     getPageProfile(params.username)
   ]);
-  console.log(pageProfile)
 
   if (pageProfile === null) {
     notFound()
@@ -37,7 +38,9 @@ export default async function Profil({ params }: { params: { username: string } 
 
       <div className="flex flex-col w-full px-6 md:px-12 max-w-[1280px] pb-6 -top-[60px] md:-top-[80px] relative">
         <div className="flex flex-col-reverse gap-6 sm:gap-12 lg:flex-row my-6 md:my-12">
-          <Compagnons isUserProfil={isUserProfil} />
+          <Suspense fallback={<CompagnonSkeleton isUserProfil={isUserProfil} />}>
+            <CommpagnonsSuspenser isUserProfil={isUserProfil} pageProfile={pageProfile} />
+          </Suspense>
           <Infos isUserProfil={isUserProfil} user={pageProfile} />
         </div>
 
