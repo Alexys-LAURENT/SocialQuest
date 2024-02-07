@@ -1,38 +1,24 @@
 'use client'
-import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
-import { useAsyncList } from "@react-stately/data";
+import { Input } from "@nextui-org/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-const SearchBar = () => {
-    let list = useAsyncList({
-        async load({ signal, filterText }) {
-            let res = await fetch(`https://swapi.py4e.com/api/people/?search=${filterText}`, { signal });
-            let json = await res.json();
-
-            return {
-                items: json.results,
-            };
-        },
-    });
+import { Profile } from "@/app/types/entities";
+import { Dispatch, SetStateAction, useState } from "react";
+import { getUserFriends } from "@/utils/getUserFriends";
+const SearchBar = ({ setListFriends, id_userPageProfile }: { setListFriends: Dispatch<SetStateAction<Profile[]>>, id_userPageProfile: string }) => {
+    const [inputValue, setInputValue] = useState('');
+    const handleChange = async (e: any) => {
+        setInputValue(e.target.value);
+        if (e.target.value.length > 0) {
+            const newList = await getUserFriends(id_userPageProfile, e.target.value);
+            setListFriends(newList as unknown as Profile[]);
+        } else {
+            const newList = await getUserFriends(id_userPageProfile);
+            setListFriends(newList as unknown as Profile[]);
+        }
+    }
 
     return (
-        <Autocomplete
-            aria-label="Rechercher"
-            inputProps={{ classNames: { inputWrapper: "h-10 transition-all !duration-500" }, startContent: <MagnifyingGlassIcon className="w-5 h-5 text-textDark dark:text-textLight !duration-[125ms]" /> }}
-            classNames={{ selectorButton: "hidden" }}
-            className=""
-            selectorIcon={null}
-            inputValue={list.filterText}
-            isLoading={list.isLoading}
-            items={list.items}
-            placeholder="Rechercher"
-            onInputChange={list.setFilterText}
-        >
-            {(item: any) => (
-                <AutocompleteItem aria-label={item.name} key={item.name} className="capitalize">
-                    {item.name}
-                </AutocompleteItem>
-            )}
-        </Autocomplete>
+        <Input onChange={(e) => handleChange(e)} value={inputValue} startContent={<MagnifyingGlassIcon className="w-5 h-5 text-textDark dark:text-textLight !duration-[125ms]" />}></Input>
     );
 }
 

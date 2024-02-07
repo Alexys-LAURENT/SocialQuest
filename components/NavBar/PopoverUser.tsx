@@ -10,30 +10,29 @@ import defaultUser from "@/public/assets/defaultUser.svg";
 const PopoverUser = ({ signOut, user }: { signOut: () => void, user: Profile | null }) => {
     const [isPopoverUserOpen, setIsPopoverUserOpen] = useState(false);
     const { showDrawer, closeDrawer } = useContext(DrawerContext);
-    const [windowWidth, setWindowWidth] = useState<number>(0);
 
-    useEffect(() => {
-        setWindowWidth(window.innerWidth);
-        window.addEventListener("resize", () => {
-            setWindowWidth(window.innerWidth);
-            if (window.innerWidth >= 640) {
-                setIsPopoverUserOpen(true);
-                closeDrawer();
-            } else {
-                setIsPopoverUserOpen(false);
-                showDrawer("User");
-            }
-        });
+    // useEffect(() => {
+    //     setWindowWidth(window.innerWidth);
+    //     window.addEventListener("resize", () => {
+    //         setWindowWidth(window.innerWidth);
+    //         if (window.innerWidth >= 640) {
+    //             setIsPopoverUserOpen(true);
+    //             closeDrawer();
+    //         } else {
+    //             setIsPopoverUserOpen(false);
+    //             showDrawer("User");
+    //         }
+    //     });
 
-        return () => {
-            window.removeEventListener("resize", () => {
-                setWindowWidth(window.innerWidth);
-            });
-        };
-    }, []);
+    //     return () => {
+    //         window.removeEventListener("resize", () => {
+    //             setWindowWidth(window.innerWidth);
+    //         });
+    //     };
+    // }, []);
 
     const handleShowDrawer = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        if (windowWidth < 640) {
+        if (window.innerWidth < 640) {
             e.stopPropagation();
             showDrawer("User");
         }
