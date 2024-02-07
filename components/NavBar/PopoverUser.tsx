@@ -12,7 +12,9 @@ const PopoverUser = ({ signOut, user }: { signOut: () => void, user: Profile | n
     const { showDrawer, closeDrawer } = useContext(DrawerContext);
 
     // useEffect(() => {
+    //     setWindowWidth(window.innerWidth);
     //     window.addEventListener("resize", () => {
+    //         setWindowWidth(window.innerWidth);
     //         if (window.innerWidth >= 640) {
     //             setIsPopoverUserOpen(true);
     //             closeDrawer();
@@ -21,6 +23,12 @@ const PopoverUser = ({ signOut, user }: { signOut: () => void, user: Profile | n
     //             showDrawer("User");
     //         }
     //     });
+
+    //     return () => {
+    //         window.removeEventListener("resize", () => {
+    //             setWindowWidth(window.innerWidth);
+    //         });
+    //     };
     // }, []);
 
     const handleShowDrawer = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
