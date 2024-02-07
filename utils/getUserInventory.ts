@@ -21,7 +21,7 @@ export async function getUserInventory(username: string) {
 
     if (userError) {
         console.log(userError)
-        return []
+        return null
     }
 
     // Utiliser l'id_user pour filtrer les items_users
@@ -32,9 +32,13 @@ export async function getUserInventory(username: string) {
 
     if (inventaireError) {
         console.log(inventaireError)
-        return []
+        return null
     }
-
-    return inventaire as unknown as Item[]
-
+    return {
+        all: inventaire?.sort((a, b) => a.is_favorite ? -1 : 1),
+        equiped: inventaire?.filter((item: Item) => item.is_equiped === true),
+        banners: inventaire?.filter((item: Item) => item.items.type === "Bannière"),
+        badges: inventaire?.filter((item: Item) => item.items.type === "Badge"),
+        items: inventaire?.filter((item: Item) => item.items.type === "Arme")
+    } as unknown as { all: Item[], equiped: Item[], banners: Item[], badges: Item[], items: Item[] }
 }

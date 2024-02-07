@@ -19,15 +19,6 @@ const PopoverUserProfile = ({ post }: { post: ExtendedPost }) => {
                         <div className="flex absolute -top-7 md:-top-10 left-5 gap-2 transition-all duration-500">
                             <Image src={post.profiles.avatar_url || defaultUser.src} alt={post.profiles.avatar_url! || defaultUser.src} width={80} height={80} className="flex h-14 w-14 md:h-20 md:w-20 rounded-full text-large transition-all" />
                         </div>
-                        <div className="flex absolute -top-5 md:-top-7 right-5 gap-2 md:transition-all">
-                            {
-                                post.profiles.users_badges && post.profiles.users_badges.length > 0 && post.profiles.users_badges.map((badge, index) => {
-                                    return (
-                                        <div key={`${badge.items.id_item}-badge-${index}`} className="relative overflow-hidden w-9 h-9 md:h-12 md:w-12 rounded-full "><Image src={badge.items.image_url} alt="Userbadge" fill></Image></div>
-                                    )
-                                })
-                            }
-                        </div>
                     </div>
                     <div className="flex flex-col p-4 gap-4">
                         <div className="text-xl md:text-3xl text-textLight font-bold">

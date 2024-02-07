@@ -12,7 +12,7 @@ export async function getAnswers(id_post: string) {
 
     const { data: postsWithLikes, error: err } = await supabase
         .from('posts')
-        .select(`*, profiles(username, avatar_url, a_propos,banner_url, users_badges(items(*))),guildes(nom, avatar_url), likes(id_like, id_user),
+        .select(`*, profiles(username, avatar_url, a_propos,banner_url),guildes(nom, avatar_url), likes(id_like, id_user),
         children:posts(id_post)`)
         .eq('parent', id_post)
 

@@ -19,7 +19,7 @@ export async function getProfileConnected(user?: User | null) {
 
         const { data: profile, error } = await supabase
             .from('profiles')
-            .select("*, niveaux(*), users_badges(items(*))")
+            .select("*, niveaux(*))")
             .eq('id_user', user.id)
             .single()
 

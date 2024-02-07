@@ -1,7 +1,7 @@
 "use client";
 import { Item } from '@/app/types/entities';
 import Image from 'next/image';
-import { setCurrentUserBannerUrl } from '@/utils/setCurrentUserBannerUrl';
+import { setCurrentUserBannerUrl } from '@/utils/toggleItemSelected';
 import { useRouter } from 'next/navigation';
 
 const BannieresProfil = ({ isUserProfil, bannieres }: { isUserProfil: boolean, bannieres: Item[] }) => {

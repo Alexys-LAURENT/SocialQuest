@@ -16,7 +16,6 @@ export type Profile = {
         xp_debut: number,
         id_niveau: string
     }
-    users_badges: Item[],
     isFollowed?: boolean
 }
 
@@ -35,16 +34,7 @@ export type ExtendedPost = Post & {
         username: string,
         avatar_url?: string
         a_propos?: string,
-        banner_url?: string,
-        users_badges: {
-            items: {
-                nom: string,
-                type: string,
-                damage?: number,
-                id_item: string,
-                image_url: string
-            }
-        }[]
+        banner_url?: string
     },
     guildes: {
         nom: string,
@@ -120,6 +110,7 @@ export type Item = {
     id_user: string,
     id_item: string,
     is_favorite?: boolean,
+    is_equiped: boolean,
     items: {
         nom: string,
         id_item: string,

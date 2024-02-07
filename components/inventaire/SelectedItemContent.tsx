@@ -3,21 +3,16 @@ import Image from 'next/image';
 import { Button, ButtonGroup, Chip, Input } from '@nextui-org/react';
 import { Item, Profile } from '@/app/types/entities';
 import { useRouter } from 'next/navigation';
-import { setCurrentUserBannerUrl } from '@/utils/setCurrentUserBannerUrl';
+import { toggleItemSelected } from '@/utils/toggleItemSelected';
 import { useContext } from 'react';
 import { ToasterContext } from '@/app/context/ToasterContext';
 import dynamic from 'next/dynamic'
-import { Desequipbadge } from '@/utils/DesequipBadge';
 import { toggleFavorite } from '@/utils/toggleFavorite';
 
-const DynamicModalEquipBadge = dynamic(() => import('@/components/inventaire/ModalEquipBadge'));
 
 
 
-
-const SelectedItemContent = ({ selectedItem, profileConnected, setSelectedItem, pageProfile, isUserInventory }: { selectedItem: Item, profileConnected: Profile, setSelectedItem: (item: any) => void, pageProfile: Profile, isUserInventory: boolean }) => {
-    const [isOpen, setOpen] = useState(false);
-    const onOpenChange = (open: boolean) => setOpen(open);
+const SelectedItemContent = ({ selectedItem, setSelectedItem, isUserInventory }: { selectedItem: Item, setSelectedItem: (item: any) => void, isUserInventory: boolean }) => {
     const router = useRouter()
     const { success, error } = useContext(ToasterContext)
 
@@ -63,8 +58,16 @@ const SelectedItemContent = ({ selectedItem, profileConnected, setSelectedItem, 
 
                 {isUserInventory && selectedItem.items.type !== "Arme" &&
                     <ButtonGroup className='w-full'>
-                        <EquiperBtn SelectedItem={selectedItem} pageProfile={pageProfile} onOpenChange={onOpenChange} />
-                        <Button onClick={() => toggleFav()} className='px-3 min-w-0 transition-all !duration-500'>
+                        {
+                            selectedItem.items.type !== "Badge" &&
+                            <EquiperBtn SelectedItem={selectedItem} />
+                        }
+                        <Button onClick={() => toggleFav()} className={`px-3 min-w-0 transition-all !duration-500 ${selectedItem.items.type === "Badge" ? 'w-full' : ''}`}>
+                            {selectedItem.items.type === "Badge" &&
+                                (
+                                    selectedItem.is_favorite ? 'Désépingler' : 'Épingler'
+                                )
+                            }
                             {selectedItem.is_favorite ? (
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className={`w-6 h-6 fill-textDark dark:fill-textLight bi bi-pin-angle-fill transition-all !duration-500`} viewBox="0 0 16 16">
                                     <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a6 6 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707s.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a6 6 0 0 1 1.013.16l3.134-3.133a3 3 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146" />
@@ -99,60 +102,37 @@ const SelectedItemContent = ({ selectedItem, profileConnected, setSelectedItem, 
 
 
 
-            {isUserInventory && isOpen && <DynamicModalEquipBadge isOpen={isOpen} onOpenChange={onOpenChange} selectedItem={selectedItem} profileConnected={profileConnected} />}
         </div>
     );
 };
 
 export default SelectedItemContent;
 
-const EquiperBtn = ({ SelectedItem, pageProfile, onOpenChange, }: { SelectedItem: Item, pageProfile: Profile, onOpenChange: (open: boolean) => void }) => {
+const EquiperBtn = ({ SelectedItem, }: { SelectedItem: Item }) => {
     const router = useRouter()
     const { success, error } = useContext(ToasterContext)
-    const handleToggleBanner = async (image_url: string | null) => {
-        const isUpdated = await setCurrentUserBannerUrl(image_url)
+    const handleToggleItem = async (id_item_user: string | null, action: 'equip' | 'desequip') => {
+        const isUpdated = await toggleItemSelected(id_item_user, action)
         if (isUpdated) {
-            image_url ? success('Bannière équipée') : success('Bannière retirée')
+            action === 'equip' ? success('Item équipée') : success('Item retiré')
             router.refresh()
         } else {
-            error('Erreur lors de la mise à jour de la bannière')
+            error('Erreur lors de la mise à jour de l\'item')
         }
     }
 
-    const handleRemoveBadge = async () => {
-        const isRemoved = await Desequipbadge(SelectedItem.items.image_url)
-        if (isRemoved) {
-            success('Badge retiré')
-            router.refresh()
-        }
-        else {
-            error('Erreur lors du retrait du badge')
-        }
-    }
 
 
     if (SelectedItem.items.type === "Bannière") {
-        return pageProfile.banner_url === SelectedItem.items.image_url ? (
-            <Button onClick={() => handleToggleBanner(null)} variant='flat' color='danger' className='w-full'>
+        return SelectedItem.is_equiped === true ? (
+            <Button onClick={() => handleToggleItem(SelectedItem.id_item_user, 'desequip')} variant='flat' color='danger' className='w-full'>
                 Déséquiper
             </Button>
         ) : (
-            <Button onClick={() => handleToggleBanner(SelectedItem.items.image_url)} variant='flat' color='primary' className='w-full'>
+            <Button onClick={() => handleToggleItem(SelectedItem.id_item_user, 'equip')} variant='flat' color='primary' className='w-full'>
                 Équiper
             </Button>
         )
     }
 
-    if (SelectedItem.items.type === "Badge") {
-        return pageProfile.users_badges.reduce((acc, item) => { return acc || item.items.image_url === SelectedItem.items.image_url }, false) === false ? (
-            <Button onClick={() => onOpenChange(true)} variant='flat' color='primary' className='w-full'>
-                Équiper
-            </Button>
-        ) :
-            (
-                <Button onClick={() => handleRemoveBadge()} variant='flat' color='danger' className='w-full'>
-                    Déséquiper
-                </Button>
-            )
-    }
 }
