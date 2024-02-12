@@ -1,5 +1,3 @@
-import React from 'react';
-
 const CompagnonSkeleton = ({ isUserProfil }: { isUserProfil: boolean }) => {
     return (
         <div className="flex flex-col gap-3 w-full h-[25rem] lg:h-[35rem] rounded-md lg:w-2/6 bg-bgLightCard dark:bg-bgDarkSecondary py-2 px-4 transition-all !duration-500">

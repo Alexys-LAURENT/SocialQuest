@@ -3,7 +3,7 @@
 import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { Profile } from '@/app/types/entities'
-import { getProfileConnected } from './getProfileConnected'
+import { getProfileConnected } from '@/utils/getProfileConnected'
 
 export async function getPageProfile(username: string) {
     "use server"
