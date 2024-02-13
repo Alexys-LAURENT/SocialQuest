@@ -107,7 +107,7 @@ const MessageCard = ({ index, item, profileConnected, selectedCDiscussion, toolt
                                 </div>
                             ) : (
                                 <div className="w-full flex flex-col items-end gap-1 min-h-[40px]">
-                                    <Tooltip classNames={{ content: 'bg-white dark:bg-bgDarkSecondary transition-all !duration-500' }} updatePositionDeps={[scrollPosition]} key={generateKeyTooltipMessage(index, item.id_message)} content={<MessagePopupOthers isMobile={isMobile} setIsMobile={setIsMobile} setTooltipOthersOpen={setTooltipOthersOpen} timestamp={item.created_at} />} isOpen={isMobile === true ? tooltipOthersOpen.key === generateKeyTooltipMessage(index, item.id_message) ? tooltipOthersOpen.open : false : undefined} placement='left'>
+                                    <Tooltip classNames={{ content: 'bg-white dark:bg-bgDarkSecondary transition-all !duration-500' }} updatePositionDeps={[scrollPosition]} key={generateKeyTooltipMessage(index, item.id_message)} content={<MessagePopupOthers  timestamp={item.created_at} />} isOpen={isMobile === true ? tooltipOthersOpen.key === generateKeyTooltipMessage(index, item.id_message) ? tooltipOthersOpen.open : false : undefined} placement='left'>
                                         <div onClick={() => isMobile && handleToggleTooltipOthers()}
                                             className={`max-w-[65%] sm:max-w-[70%] relative flex items-center w-fit h-full px-3 py-2 bg-bgLightPopover dark:bg-bgDarkSecondary transition-all !duration-500 rounded-lg ${prevMessage.id_user === item.id_user ? "rounded-tr-none" : ""} ${nextMessage.id_user === item.id_user ? "rounded-br-none" : ""}`}>
                                             <p className='select-text text-white working-break-words italic text-xs sm:text-sm'>{item.contenu}</p>
@@ -124,7 +124,7 @@ const MessageCard = ({ index, item, profileConnected, selectedCDiscussion, toolt
                         {
                             item.isDeleted === false ? (
                                 <div className="w-full flex flex-col items-start gap-1 min-h-[40px]">
-                                    <Tooltip classNames={{ content: 'bg-white dark:bg-bgDarkSecondary transition-all !duration-500' }} updatePositionDeps={[scrollPosition]} key={generateKeyTooltipMessage(index, item.id_message)} content={<MessagePopupOthers isMobile={isMobile} setIsMobile={setIsMobile} setTooltipOthersOpen={setTooltipOthersOpen} timestamp={item.created_at} />} isOpen={isMobile === true ? tooltipOthersOpen.key === generateKeyTooltipMessage(index, item.id_message) ? tooltipOthersOpen.open : false : undefined} placement='right'>
+                                    <Tooltip classNames={{ content: 'bg-white dark:bg-bgDarkSecondary transition-all !duration-500' }} updatePositionDeps={[scrollPosition]} key={generateKeyTooltipMessage(index, item.id_message)} content={<MessagePopupOthers  timestamp={item.created_at} />} isOpen={isMobile === true ? tooltipOthersOpen.key === generateKeyTooltipMessage(index, item.id_message) ? tooltipOthersOpen.open : false : undefined} placement='right'>
                                         <div onClick={() => isMobile && handleToggleTooltipOthers()}
                                             className={`max-w-[65%] sm:max-w-[70%] relative flex items-center w-fit h-full px-3 py-2 bg-textLight rounded-lg ${prevMessage.id_user === item.id_user ? "rounded-tl-none" : ""} ${nextMessage.id_user === item.id_user ? "rounded-bl-none" : ""}`}>
                                             <p className='select-text text-black working-break-words text-sm sm:text-base'>{item.contenu}</p>
@@ -133,7 +133,7 @@ const MessageCard = ({ index, item, profileConnected, selectedCDiscussion, toolt
                                 </div>
                             ) : (
                                 <div className="w-full flex flex-col items-start gap-1 min-h-[40px]">
-                                    <Tooltip classNames={{ content: 'bg-white dark:bg-bgDarkSecondary transition-all !duration-500' }} updatePositionDeps={[scrollPosition]} key={generateKeyTooltipMessage(index, item.id_message)} content={<MessagePopupOthers isMobile={isMobile} setIsMobile={setIsMobile} setTooltipOthersOpen={setTooltipOthersOpen} timestamp={item.created_at} />} isOpen={isMobile === true ? tooltipOthersOpen.key === generateKeyTooltipMessage(index, item.id_message) ? tooltipOthersOpen.open : false : undefined} placement='right'>
+                                    <Tooltip classNames={{ content: 'bg-white dark:bg-bgDarkSecondary transition-all !duration-500' }} updatePositionDeps={[scrollPosition]} key={generateKeyTooltipMessage(index, item.id_message)} content={<MessagePopupOthers  timestamp={item.created_at} />} isOpen={isMobile === true ? tooltipOthersOpen.key === generateKeyTooltipMessage(index, item.id_message) ? tooltipOthersOpen.open : false : undefined} placement='right'>
                                         <div onClick={() => isMobile && handleToggleTooltipOthers()}
                                             className={`max-w-[65%] sm:max-w-[70%] relative flex items-center w-fit h-full px-3 py-2 bg-bgLightPopover dark:bg-bgDarkSecondary transition-all !duration-500 rounded-lg ${prevMessage.id_user === item.id_user ? "rounded-tl-none" : ""} ${nextMessage.id_user === item.id_user ? "rounded-bl-none" : ""}`}>
                                             <p className='select-text text-white working-break-words italic text-xs sm:text-sm'>{item.contenu}</p>
@@ -214,13 +214,7 @@ const MessagePopup = ({ id_message, setTooltipDeleteOpen, setIsMobile, handleTog
     )
 }
 
-const MessagePopupOthers = ({ isMobile, setIsMobile, timestamp, setTooltipOthersOpen }: {
-    setIsMobile: React.Dispatch<React.SetStateAction<boolean>>,
-    setTooltipOthersOpen: React.Dispatch<React.SetStateAction<{
-        open: boolean;
-        key: string;
-    }>>,
-    isMobile: boolean,
+const MessagePopupOthers = ({ timestamp }: {
     timestamp: string
 }) => {
     return (

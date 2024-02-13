@@ -5,8 +5,6 @@ import { toggleItemSelected } from '@/utils/toggleItemSelected';
 import { useRouter } from 'next/navigation';
 
 const BannieresProfil = ({ isUserProfil, bannieres }: { isUserProfil: boolean, bannieres: Item[] }) => {
-    console.log(bannieres)
-
     const router = useRouter();
 
     return (
