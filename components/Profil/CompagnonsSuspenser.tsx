@@ -1,5 +1,4 @@
-import React from 'react';
-import Compagnons from './Compagnons';
+import Compagnons from '@/components/Profil/Compagnons';
 import { Profile } from '@/app/types/entities';
 import { getUserFriends } from '@/utils/getUserFriends';
 

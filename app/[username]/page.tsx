@@ -6,7 +6,7 @@ import { getProfileConnected } from '@/utils/getProfileConnected'
 import { getAllPostsFromUser } from '@/utils/getAllPosts'
 import { getPageProfile } from '@/utils/getPageProfile'
 import UserTopRow from '@/components/Profil/UserTopRow'
-import CommpagnonsSuspenser from '@/components/Profil/CommpagnonsSuspenser'
+import CommpagnonsSuspenser from '@/components/Profil/CompagnonsSuspenser'
 import { Suspense } from 'react'
 import CompagnonSkeleton from '@/components/Skeletons/Profil/CompagnonSkeleton'
 

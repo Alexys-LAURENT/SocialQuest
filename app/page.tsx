@@ -7,6 +7,8 @@ import PostInputSuspenser from '@/components/Home/PostInputSuspenser'
 // import TabsPostsWrapper from '@/components/Home/TabsPostsWrapper';
 import PostsWrapper from '@/components/PostsWrapper';
 import { getAllPosts } from '@/utils/getAllPosts';
+import TopGuildes from '@/components/TopGuildes';
+import TopMembres from '@/components/TopMembres';
 
 export default async function Index() {
 
@@ -18,6 +20,28 @@ export default async function Index() {
 
   return (
     <div className={`flex max-w-[1280px] w-full p-4 gap-6`}>
+
+
+      <div className="hidden md:flex flex-col min-w-[17rem] gap-4 h-fit">
+        <TopGuildes />
+        <TopMembres />
+      </div>
+
+
+
+      <div className={`flex flex-col w-full gap-6 lg:gap-10 `}>
+
+        {user &&
+          <Suspense fallback={<PostInputSkeleton />}>
+            <PostInputSuspenser />
+          </Suspense>
+        }
+
+        <Suspense fallback={<PostsWrapperSkeleton />}>
+          {/* <TabsPostsWrapper user={user} /> */}
+          <PostsWrapper user={user} getPost={getAllPosts} />
+        </Suspense>
+      </div>
 
       <div className="hidden lg:flex min-w-[17rem] h-fit">
         {user ?
@@ -44,34 +68,6 @@ export default async function Index() {
               </Button>
             </div>
           )}
-      </div>
-
-
-      <div className={`flex flex-col w-full gap-6 lg:gap-10 `}>
-
-        {user &&
-          <Suspense fallback={<PostInputSkeleton />}>
-            <PostInputSuspenser />
-          </Suspense>
-        }
-
-        <Suspense fallback={<PostsWrapperSkeleton />}>
-          {/* <TabsPostsWrapper user={user} /> */}
-          <PostsWrapper user={user} getPost={getAllPosts} />
-        </Suspense>
-      </div>
-
-      <div className="hidden md:flex flex-col min-w-[17rem] gap-4 h-fit">
-        <div className="p-2 w-full flex flex-col bg-bgLightCard dark:bg-bgDarkCard rounded-md transition-all !duration-500">
-          <div className="text-xl font-semibold min-h-[25rem] text-textDark dark:text-textLight transition-all !duration-[125ms]">
-            Top Guildes
-          </div>
-        </div>
-        <div className="p-2 w-full flex flex-col bg-bgLightCard dark:bg-bgDarkCard rounded-md transition-all !duration-500">
-          <div className="text-xl font-semibold min-h-[25rem] text-textDark dark:text-textLight transition-all !duration-[125ms]">
-            Top Membres
-          </div>
-        </div>
       </div>
 
     </div>
