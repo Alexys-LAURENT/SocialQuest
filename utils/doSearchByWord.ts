@@ -16,12 +16,12 @@ export async function doSearchByWord(query: string | undefined) {
             .from('profiles')
             .select(`username, avatar_url, niveaux(libelle)`)
             .neq('username', profileConnected?.username)
-            .like('username', `%${query}%`)
+            .ilike('username', `%${query}%`)
             .limit(10),
         supabase
             .from('guildes')
             .select(`nom, avatar_url, total_members`)
-            .like('nom', `%${query}%`)
+            .ilike('nom', `%${query}%`)
             .limit(10)
     ]);
 
