@@ -26,7 +26,8 @@ export type Post = {
     parent?: string,
     titre?: string,
     contenu: string,
-    created_at?: string
+    created_at?: string,
+    images?: string[]
 }
 
 export type ExtendedPost = Post & {

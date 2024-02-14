@@ -26,6 +26,10 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+.ant-image-preview-mask {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
 .flex-1-1 {
   flex: 1 1 45%;
 }
