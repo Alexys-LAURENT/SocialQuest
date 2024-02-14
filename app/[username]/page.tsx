@@ -36,7 +36,7 @@ export default async function Profil({ params }: { params: { username: string } 
 
 
 
-      <div className="flex flex-col w-full px-6 md:px-12 max-w-[1280px] pb-6 -top-[60px] md:-top-[80px] relative">
+      <div className="flex flex-col w-full px-2 sm:px-6 md:px-12 max-w-[1280px] pb-6 -top-[60px] md:-top-[80px] relative">
         <div className="flex flex-col-reverse gap-6 sm:gap-12 lg:flex-row my-6 md:my-12">
           <Suspense fallback={<CompagnonSkeleton isUserProfil={isUserProfil} />}>
             <CommpagnonsSuspenser isUserProfil={isUserProfil} pageProfile={pageProfile} />

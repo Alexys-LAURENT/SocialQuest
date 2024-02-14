@@ -19,7 +19,7 @@ export default async function Index() {
 
 
   return (
-    <div className={`flex max-w-[1280px] w-full p-4 gap-6`}>
+    <div className={`flex max-w-[1280px] w-full px-2 md:px-4 py-4 gap-6`}>
 
 
       <div className="hidden md:flex flex-col min-w-[17rem] gap-4 h-fit">
