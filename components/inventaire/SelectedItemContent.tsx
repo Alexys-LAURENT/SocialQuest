@@ -93,7 +93,7 @@ const SelectedItemContent = ({ selectedItem, setSelectedItem, isUserInventory }:
 
                 <Input type="number" label="Prix" className='w-full' size='sm' labelPlacement='inside' classNames={{ inputWrapper: 'py-0 h-10 rounded-none transition-all !duration-500' }} />
 
-                <Button className='w-full rounded-none min-h-[40px]' color='primary' variant='flat'>
+                <Button className='w-full rounded-none min-h-[40px] bg-secondary' variant='flat'>
                     Mettre en vente
                 </Button>
             </div>
@@ -129,7 +129,7 @@ const EquiperBtn = ({ SelectedItem, }: { SelectedItem: Item }) => {
                 Déséquiper
             </Button>
         ) : (
-            <Button onClick={() => handleToggleItem(SelectedItem.id_item_user, 'equip')} variant='flat' color='primary' className='w-full'>
+            <Button onClick={() => handleToggleItem(SelectedItem.id_item_user, 'equip')} variant='flat' className='w-full bg-secondary'>
                 Équiper
             </Button>
         )

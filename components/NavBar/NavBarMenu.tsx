@@ -1,9 +1,13 @@
 import { Listbox, ListboxItem } from '@nextui-org/react';
 import { HomeIcon, BuildingStorefrontIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+const TopGuildes = dynamic(() => import('@/components/TopGuildes'));
+const TopMembres = dynamic(() => import('@/components/TopMembres'));
 const NavBarMenu = ({ customFunction }: { customFunction: () => void }) => {
     return (
-        <div className='flex flex-col w-full'>
+        <div className='flex flex-col w-full gap-4'>
             <Listbox
                 aria-label="Actions"
                 classNames={{ list: "gap-4" }}
@@ -18,20 +22,10 @@ const NavBarMenu = ({ customFunction }: { customFunction: () => void }) => {
                 } startContent={<BuildingStorefrontIcon className="w-6 h-6" />}>
                     Marché
                 </ListboxItem>
-
-                <ListboxItem key="Top Guildes" className='bg-bgLightCard dark:bg-bgDarkSecondary'>
-                    <div>
-                        Top Guildes
-                    </div>
-                    <div>lalal</div>
-                </ListboxItem>
-                <ListboxItem key="Top Membres" className='bg-bgLightCard dark:bg-bgDarkSecondary'>
-                    <div>
-                        Top Membres
-                    </div>
-                    <div>lalal</div>
-                </ListboxItem>
             </Listbox>
+
+            <TopGuildes />
+            <TopMembres />
         </div >
     );
 };

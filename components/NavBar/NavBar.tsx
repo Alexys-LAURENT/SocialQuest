@@ -121,7 +121,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
                     </>
                 ) : (
                     <NavbarItem>
-                        <Button as={Link} color="primary" href="/login" variant="flat">
+                        <Button as={Link} href="/login" variant="flat" className="customButton bg-secondary/70 border-secondary text-textLight">
                             Connexion
                         </Button>
                     </NavbarItem>

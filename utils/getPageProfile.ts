@@ -3,7 +3,8 @@
 import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { Profile } from '@/app/types/entities'
-import { getProfileConnected } from './getProfileConnected'
+import { getProfileConnected } from '@/utils/getProfileConnected'
+import { doesFollow } from '@/utils/doesFollow'
 
 export async function getPageProfile(username: string) {
     "use server"
@@ -30,17 +31,10 @@ export async function getPageProfile(username: string) {
         return profile as unknown as Profile
     }
 
-    const { data: isFollowed, error: errorIsFollowed } = await supabase.from('follow').select('id_follow').eq('id_user', user.id_user).eq('id_followed', profile?.id_user)
+    const follow = await doesFollow(profile.id_user, user.id_user)
 
-    if (errorIsFollowed) {
-        console.log(errorIsFollowed)
-        return null
-    }
-    if (isFollowed[0] && isFollowed[0].id_follow !== undefined) {
-        profile.isFollowed = true
-    } else {
-        profile.isFollowed = false
-    }
+    if (follow)
+        profile.isFollowed = follow
 
     return profile as unknown as Profile
 }

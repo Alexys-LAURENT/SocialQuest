@@ -34,7 +34,7 @@ const Compagnons = ({ isUserProfil, userFriends, pageProfile }: { isUserProfil: 
                                     <div className="text-sm"> O O O O </div>
                                 </div>
                             </div>
-                            <Button variant='flat' color='primary' className="min-w-0 absolute flex h-full items-center right-0 px-2 rounded-l-sm rounded-r">
+                            <Button variant='flat' className="bg-secondary min-w-0 absolute flex h-full items-center right-0 px-2 rounded-l-sm rounded-r">
                                 <ChatBubbleOvalLeftEllipsisIcon className="w-4 h-4 text-textDark dark:text-textLight transition-all !duration-[125ms]" />
                             </Button>
                         </div>

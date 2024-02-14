@@ -1,7 +1,7 @@
 "use server"
 import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
-import { getProfileConnected } from './getProfileConnected'
+import { getProfileConnected } from '@/utils/getProfileConnected'
 
 export async function getCurrentUserAllDiscussions() {
     "use server"

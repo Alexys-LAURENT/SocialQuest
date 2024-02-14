@@ -22,7 +22,7 @@ const Infos = async ({ isUserProfil, user }: { isUserProfil: boolean, user: Prof
             <div className="flex flex-col gap-6 h-[60%] justify-center">
 
                 <div className='flex flex-col gap-2 h-[40%] sm:h-1/2'>
-                    <Button as={Link} href={`/${user.username}/inventaire?q=Bannières`} variant='flat' color='primary' className='w-max rounded-sm text-textDark dark:text-textLight transition-all !duration-500'>
+                    <Button as={Link} href={`/${user.username}/inventaire?q=Bannières`} variant='flat' className='bg-secondary/30 w-max rounded-sm text-textDark dark:text-textLight transition-all !duration-500'>
                         {isUserProfil ? ("Mes bannières épinglées") : ("Bannières épinglées")}
                     </Button>
                     <div className='relative flex h-full gap-6 bg-bgLightCard dark:bg-bgDarkSecondary transition-all !duration-500 rounded-md py-2 px-3 overflow-x-auto'>
@@ -35,7 +35,7 @@ const Infos = async ({ isUserProfil, user }: { isUserProfil: boolean, user: Prof
                 </div>
 
                 <div className='flex flex-col gap-2 h-[40%] sm:h-1/2'>
-                    <Button as={Link} href={`/${user.username}/inventaire?q=Badges`} variant='flat' color='primary' className='w-max rounded-sm text-textDark dark:text-textLight transition-all !duration-500'>
+                    <Button as={Link} href={`/${user.username}/inventaire?q=Badges`} variant='flat' className='bg-secondary/30 w-max rounded-sm text-textDark dark:text-textLight transition-all !duration-500'>
                         {isUserProfil ? ("Mes badges épinglées") : ("Badges épinglées")}
                     </Button>
                     <div className='relative flex h-full gap-6 bg-bgLightCard dark:bg-bgDarkSecondary transition-all !duration-500 rounded-md py-2 px-3'>

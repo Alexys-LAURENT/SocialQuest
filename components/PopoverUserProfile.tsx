@@ -1,4 +1,4 @@
-import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
+import { Button, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
 import Link from 'next/link';
 import { ExtendedPost } from '@/app/types/entities';
 import Image from 'next/image';
@@ -34,9 +34,10 @@ const PopoverUserProfile = ({ post }: { post: ExtendedPost }) => {
                                     : post.profiles.a_propos}
                             </div>
                         </div>
-                        <Link href={`/${post.profiles.username}`} className='z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-unit-4 min-w-unit-20 h-unit-10 gap-unit-2 [&>svg]:max-w-[theme(spacing.unit-8)] data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none bg-primary/20 data-[hover=true]:opacity-hover text-textLight text-base md:text-lg font-semibold rounded-sm'>
+                        <Link id='redirectToUserProfil' href={`/${post.profiles.username}`} className='hidden'></Link>
+                        <Button className='customButton bg-secondary/70 border-secondary !w-full text-textLight' variant='flat' onClick={() => document.getElementById('redirectToUserProfil')?.click()}>
                             Voir le profil
-                        </Link>
+                        </Button>
                     </div>
                 </div>
             </PopoverContent>

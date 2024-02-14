@@ -81,9 +81,9 @@ const Form = ({ signIn, signUp, searchParams, }: { signIn: (arg1: FormData) => v
                                 }
                                 type={isVisibleLogin ? "text" : "password"}
                             />
-                            <button className="bg-[#0070f0] rounded-md px-4 py-3 mt-4 text-2xl font-bold text-foreground mb-2 w-[90%]">
+                            <Button className=" customButton bg-secondary/70 text-2xl font-semibold !w-[90%]" type='submit'>
                                 Se connecter
-                            </button>
+                            </Button>
                             {/* separator */}
                             <div className="relative w-full flex items-center">
                                 <div className="flex-grow border-t border-gray-400"></div>
@@ -145,9 +145,9 @@ const Form = ({ signIn, signUp, searchParams, }: { signIn: (arg1: FormData) => v
                                 }
                                 type={isVisibleRegister2 ? "text" : "password"}
                             />
-                            <button className="bg-[#0070f0] rounded-md px-4 py-3 mt-4 text-2xl font-bold text-foreground mb-2 w-[90%]">
+                            <Button className="customButton bg-secondary/70 border-secondary text-2xl font-semibold !w-[90%]" type='submit'>
                                 S'inscrire
-                            </button>
+                            </Button>
                             {searchParams?.message && (
                                 <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
                                     {searchParams.message}
