@@ -26,6 +26,10 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+.flex-1-1 {
+  flex: 1 1 45%;
+}
+
 .itemsWrapper {
   grid-template-columns: repeat(auto-fill, minmax(6.15rem, 6.15rem));
 }
