@@ -20,10 +20,10 @@ const page = async ({ params }: { params: { id_post: string } }) => {
     return (
         <div className="h-full w-full flex flex-col overflow-y-auto overflow-x-hidden items-center">
 
-            <div className="flex w-full h-full max-w-[1280px]">
+            <div className="flex w-full max-w-[1280px]">
                 <div className="min-w-[0.5rem] sm:min-w-[5rem] md:min-w-[9rem] lg:min-w-[17rem] flex" />
 
-                <div className="flex flex-col w-full gap-4">
+                <div className="flex flex-col w-full gap-4 mb-5">
                     <MainPost post={post} user={userProfile} />
                     <PostInput id_guilde={undefined} page="post" guildesUser={null} parent={post.id_post} />
                     <PostsWrapper user={userProfile} getPost={() => answers} postPage={true} />
