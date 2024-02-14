@@ -6,6 +6,14 @@ import { useState } from 'react';
 const MessageInput = ({ supabase, selectedCDiscussion, profileConnected }: { supabase: SupabaseClient, selectedCDiscussion: DiscussionTab, profileConnected: Profile }) => {
     const [inputValue, setInputValue] = useState<string>('')
 
+    // add event listener to send message on enter
+    document.getElementById('MessageTextarea')?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault()
+            postMessage()
+        }
+    })
+
     async function postMessage() {
         if (inputValue.length === 0) return
         const { data, error } = await supabase
