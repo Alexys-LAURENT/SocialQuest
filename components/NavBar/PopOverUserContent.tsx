@@ -31,7 +31,7 @@ const PopOverUserContent = ({ user, customFunction, signOut }: { user: Profile |
                     <div className="text-sm">Level {user?.niveaux.libelle!}</div>
                     <div className="text-sm">Level {user?.niveaux.libelle! + 1}</div>
                 </div>
-                <Progress aria-label="Level" value={progressValue} title={`${(user?.xp! - user?.niveaux.xp_debut!)} / ${user?.niveaux.xp_fin! + 1} xp`} classNames={{ track: "transition-all !duration-500" }} />
+                <Progress aria-label="Level" value={progressValue} title={`${(user?.xp! - user?.niveaux.xp_debut!)} / ${user?.niveaux.xp_fin! + 1} xp`} classNames={{ track: "transition-all !duration-500", indicator: "bg-secondary" }} />
             </div>
             <div className="nextRewardsWrapper flex justify-end items-center gap-1 text-end text-[#979797]">
                 {

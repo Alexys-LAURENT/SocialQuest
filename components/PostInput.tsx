@@ -1,13 +1,13 @@
 "use client"
 import { useState, useContext, ChangeEvent } from 'react';
 import { DocumentIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
-import { Textarea } from '@nextui-org/react';
+import { Spinner, Textarea } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { ToasterContext } from '@/app/context/ToasterContext';
 import { sendPost } from '@/utils/sendPost';
 import PostInputGuildsListBox from '@/components/PostInputGuildsSelect';
 import Image from 'next/image';
-import { uploadFile } from '@/utils/uploadFile';
+import { uploadFiles } from '@/utils/uploadFiles';
 
 interface PostInputProps {
     id_guilde?: string,
@@ -28,6 +28,7 @@ const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => 
     const [contenu, setContenu] = useState<string>('')
     const [guilde, setGuilde] = useState<any>('')
     const [imageData, setImageData] = useState<{ file: File, url: string }[]>([]);
+    const [isPublishing, setIsPublishing] = useState(false);
 
     function handleChangeTitle(e: any) {
         if (e.target.value.length <= limite.titre) {
@@ -47,6 +48,7 @@ const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => 
         if (page !== 'post' && titre === '' || contenu === '') {
             return error(`Veuillez inclure ${page !== 'post' ? 'un titre et' : ''} un contenu`);
         }
+        setIsPublishing(true);
 
         const data: { id_guilde?: string, titre: string, contenu: string, parent?: string, images?: string[] } = { titre: titre, contenu: contenu };
 
@@ -60,15 +62,12 @@ const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => 
             data.parent = parent;
         }
 
-        const filesPaths = await uploadFile(imageData, 'images_posts');
+        const filesPaths = await uploadFiles(imageData, 'images_posts');
         if (!filesPaths) {
             return error('Une erreur est survenue lors de l\'envoi des images');
         }
 
-        console.log(imageData);
         data.images = filesPaths;
-        console.log(filesPaths);
-        console.log(data)
         const isDone = await sendPost(data);
 
         if (isDone) {
@@ -79,6 +78,7 @@ const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => 
         setTitre('');
         setContenu('');
         setImageData([]);
+        setIsPublishing(false);
         router.refresh();
     }
 
@@ -166,13 +166,17 @@ const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => 
                 </div>
                 <div className="h-[30px] w-full bg-[#b9b9b9] dark:bg-[#1f1e1b] rounded-b-md transition-all !duration-500">
                     <div className="flex justify-between items-center h-full px-2">
-                        <button type='button' className="text-textDark dark:text-textLight transition-all !duration-[125ms]" aria-label='ajouter un document' name='add-document'>
-                            {/* <input type='file' className="hidden" name='file' id='postUploaderFile' onChange={(e)=>console.log(e.target)} /> */}
+                        <button type='button' className="flex  items-center text-textDark dark:text-textLight transition-all !duration-[125ms]" aria-label='ajouter un document' name='add-document'>
                             <input type="file" id='postUploaderFile' className="hidden" onChange={handleFileChange} />
                             <DocumentIcon className={`w-5 h-5 text-textDark dark:text-textLight transition-all !duration-[125ms] ${imageData && imageData.length >= 4 ? 'opacity-25 cursor-not-allowed' : ''} `} onClick={() => { imageData && imageData?.length < 4 && document.getElementById('postUploaderFile')?.click() }} />
+                            {imageData && imageData.length > 0 && <span className="text-textDark/70 dark:text-textLight/70 text-[12px] ml-1">{imageData.length}/4</span>}
                         </button>
                         <button type='submit' className="text-textDark dark:text-textLight transition-all !duration-[125ms]" aria-label='envoyer le post' name='send-post'>
-                            <PaperAirplaneIcon className="w-5 h-5  text-textDark dark:text-textLight ml-[0.15rem] -rotate-45 transition-all !duration-[125ms]" />
+                            {
+                                isPublishing ?
+                                    <Spinner size='sm' className='scale-75 mt-2' color='white' /> :
+                                    <PaperAirplaneIcon className="w-5 h-5  text-textDark dark:text-textLight ml-[0.15rem] -rotate-45 transition-all !duration-[125ms]" />
+                            }
                         </button>
                     </div>
                 </div>

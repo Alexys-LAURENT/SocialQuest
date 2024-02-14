@@ -52,7 +52,7 @@ const HebdoCaroussel = () => {
                                     </div>
                                 </div>
                                 <div className='w-[85%] h-[20%] flex justify-center items-center'>
-                                    <Progress value={50} aria-label='progress bar' />
+                                    <Progress value={50} aria-label='progress bar' classNames={{ indicator: "bg-secondary" }} />
                                 </div>
                             </div>
                         )

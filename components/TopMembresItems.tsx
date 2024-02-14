@@ -22,7 +22,7 @@ const TopMembresItems = async () => {
                             </div>
                         </div>
                         <div className="flex items-center w-3 h-full text-textDark dark:text-textLight transition-all">
-                            <Badge color="primary" className="rounded-full" content={membre.level}> </Badge>
+                            <Badge className="rounded-full bg-secondary" content={membre.level}> </Badge>
                         </div>
                     </div>
                 </Button>

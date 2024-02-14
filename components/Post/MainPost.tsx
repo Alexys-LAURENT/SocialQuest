@@ -1,5 +1,5 @@
 "use client"
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Button, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
 import Link from 'next/link';
 import { EllipsisVerticalIcon, FlagIcon, ShareIcon, TrashIcon } from '@heroicons/react/24/outline';
@@ -11,23 +11,46 @@ import { ToasterContext } from '@/app/context/ToasterContext';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import defaultUser from '@/public/assets/defaultUser.svg'
+import { toggleFollow } from '@/utils/toggleFollow';
+import { doesFollow } from '@/utils/doesFollow';
+import { Image as ImageAntd } from 'antd';
+import { ArrowDownTrayIcon } from '@heroicons/react/24/solid';
+import { onDownload } from '@/utils/downloadImage';
 export default function MainPost({ user, post }: { user: Profile | null, post: ExtendedPost }) {
-
     const router = useRouter()
-    const { success } = useContext(ToasterContext)
-
+    const { success, error: errorToaster } = useContext(ToasterContext)
+    const [follow, setFollow] = useState<boolean | undefined>(undefined)
     const supabase = createClient()
+
+    useEffect(() => {
+        const getData = async () => setFollow(await doesFollow(post.profiles.id_user, user?.id_user))
+        getData()
+    }, [])
 
     const handleDelete = (id: string) => {
         supabase.from('posts').delete().eq('id_post', id).then(({ data, error }) => {
             if (error) {
                 console.error(error);
+                errorToaster('Erreur lors de la suppression du post')
                 return;
             }
             router.refresh()
             success('Post supprimé')
         })
     }
+
+    const handleFollow = async () => {
+        if (!user?.id_user) return router.push('/login')
+        const isDone = await toggleFollow(post.profiles.id_user, follow!, user.id_user)
+        if (isDone) {
+            follow === true ? success('Vous ne suivez plus cet utilisateur') : success('Vous suivez désormais cet utilisateur')
+            router.refresh()
+            setFollow(await doesFollow(post.profiles.id_user, user.id_user))
+        } else {
+            errorToaster('Une erreur est survenue')
+        }
+    }
+
 
     return (
         <div className="">
@@ -56,63 +79,100 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
 
             <div className="flex flex-col border border-gray-500 rounded-md p-2 gap-1">
 
-                <div className="flex gap-2">
-                    <Image src={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url! || defaultUser.src} alt={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url! || defaultUser.src} width={32} height={32} className='min-h-[32px] min-w-[32px] rounded-full' />
+                <div className="flex gap-2 justify-between">
+                    <Image src={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url! || defaultUser.src} alt={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url! || defaultUser.src} width={32} height={32} className='min-h-[42px] max-h-[42px] min-w-[42px] max-w-[42px] rounded-full' />
                     <div className="flex items-center justify-between w-full">
-                        <div className="flex gap-1 items-center">
-                            {post.guildes && (
-                                <>
-                                    <Link href={`/g/${post.guildes.nom}`} className="text-sm text-textDark dark:text-textLight font-semibold">
-                                        {post.guildes.nom}
-                                    </Link>
-                                    <div>
-                                        •
-                                    </div>
-                                </>
-                            )}
-                            <PopoverUserProfile post={post} />
-                        </div>
-                        <Popover placement="top" offset={10} shouldBlockScroll={true}>
-                            <PopoverTrigger>
-                                <EllipsisVerticalIcon className="w-5 h-5 text-textDark dark:text-textLight cursor-pointer" />
-                            </PopoverTrigger>
-                            <PopoverContent className="p-0">
-                                <div className="flex flex-col">
-                                    <Button className="flex gap-2 min-w-0 h-7 min-h-0 px-3 rounded-b" variant='light' color='primary'>
-                                        <ShareIcon className="w-5 h-5" />
-                                        <div className="">
-                                            Partager
+                        <div className="flex flex-col">
+
+                            <div className="flex gap-1 items-center">
+                                {post.guildes && (
+                                    <>
+                                        <Link href={`/g/${post.guildes.nom}`} className="text-sm text-textDark dark:text-textLight font-semibold">
+                                            {post.guildes.nom}
+                                        </Link>
+                                        <div>
+                                            •
                                         </div>
+                                    </>
+                                )}
+                                <PopoverUserProfile post={post} />
+                            </div>
+                            <span className='text-tiny dark:text-white/50 text-black/50'>Niveau {post.profiles.niveaux.libelle}</span>
+                        </div>
+                        <div className='flex gap-2 items-center'>
+                            {
+                                post.profiles.id_user !== user?.id_user && (
+                                    <Button onClick={() => handleFollow()} className='customButton bg-secondary/70 border-secondary text-textLight'>
+                                        {follow ? 'Abonné' : 'Suivre'}
                                     </Button>
-                                    {user?.id_user === post.id_user ? (
-                                        <Button onClick={() => handleDelete(post.id_post)} className="flex gap-2 min-w-0 h-7 min-h-0 px-3 rounded-t" variant='light' color='danger'>
-                                            <TrashIcon className="w-5 h-5" />
+                                )
+                            }
+                            <Popover placement="top" offset={10} shouldBlockScroll={true}>
+                                <PopoverTrigger>
+                                    <EllipsisVerticalIcon className="w-5 h-5 text-textDark dark:text-textLight cursor-pointer" />
+                                </PopoverTrigger>
+                                <PopoverContent className="p-0">
+                                    <div className="flex flex-col">
+                                        <Button className="flex gap-2 min-w-0 h-7 min-h-0 px-3 rounded-b text-secondary " variant='light'>
+                                            <ShareIcon className="w-5 h-5" />
                                             <div className="">
-                                                Supprimer
+                                                Partager
                                             </div>
                                         </Button>
-                                    ) : (
-                                        <Button className="flex gap-2 min-w-0 h-7 min-h-0 px-3 rounded-t" variant='light' color='danger'>
-                                            <FlagIcon className="w-5 h-5" />
-                                            <div className="">
-                                                Signaler
-                                            </div>
-                                        </Button>
-                                    )}
-                                </div>
-                            </PopoverContent>
-                        </Popover>
+                                        {user?.id_user === post.id_user ? (
+                                            <Button onClick={() => handleDelete(post.id_post)} className="flex gap-2 min-w-0 h-7 min-h-0 px-3 rounded-t" variant='light' color='danger'>
+                                                <TrashIcon className="w-5 h-5" />
+                                                <div className="">
+                                                    Supprimer
+                                                </div>
+                                            </Button>
+                                        ) : (
+                                            <Button className="flex gap-2 min-w-0 h-7 min-h-0 px-3 rounded-t" variant='light' color='danger'>
+                                                <FlagIcon className="w-5 h-5" />
+                                                <div className="">
+                                                    Signaler
+                                                </div>
+                                            </Button>
+                                        )}
+                                    </div>
+                                </PopoverContent>
+                            </Popover>
+                        </div>
                     </div>
                 </div>
 
 
                 <div className="flex flex-col p-2 gap-2">
                     <div>
-                        <div className={`text-textDark dark:text-textLight text-md font-bold working-break-words ${post.titre ? 'mb-1' : ''}`}>
+                        <div className={`text-textDark dark:text-textLight text-lg font-semibold working-break-words ${post.titre ? 'mb-1' : ''}`}>
                             {post.titre}
                         </div>
-                        <div className="text-textDark dark:text-textLight working-break-words">
+                        <div className="text-textDark dark:text-textLight text-base font-light working-break-words mb-4">
                             {post.contenu}
+                        </div>
+                        <div className={`flex flex-wrap gap-1 aspect-square rounded-lg overflow-hidden cursor-default ${post.images && post.images.length >= 1 ? 'w-full' : 'w-0'}`}>
+                            {
+                                post.images && post.images.length > 0 && post.images.map((img, index) => (
+                                    <div className={`relative flex-1-1 overflow-hidden`} key={`post-${post.id_post}-image-${img}`}>
+                                        <ImageAntd
+                                            src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images_posts/${img}`}
+                                            alt={img}
+                                            width={100}
+                                            className='absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover'
+                                            rootClassName='!h-full !w-full'
+                                            preview={{
+                                                toolbarRender: (
+                                                    _,
+                                                    {
+                                                    },
+                                                ) => (
+                                                    <ArrowDownTrayIcon onClick={() => onDownload(img)} className="w-10 h-10 rounded-lg text-white cursor-pointer bg-white/30 p-3" />
+                                                )
+                                            }}
+                                        />
+                                    </div>
+                                ))
+                            }
                         </div>
                     </div>
 

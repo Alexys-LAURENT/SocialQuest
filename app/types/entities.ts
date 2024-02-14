@@ -32,10 +32,14 @@ export type Post = {
 
 export type ExtendedPost = Post & {
     profiles: {
+        id_user: string,
         username: string,
         avatar_url?: string
         a_propos?: string,
-        banner_url?: string
+        banner_url?: string,
+        niveaux: {
+            libelle: number
+        }
     },
     guildes: {
         nom: string,

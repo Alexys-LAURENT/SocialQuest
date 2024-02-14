@@ -12,7 +12,7 @@ export async function getPost(id_post: string) {
 
     const { data: postWithLikes, error: err } = await supabase
         .from('posts')
-        .select(`*, profiles(username, avatar_url, a_propos,banner_url),guildes(nom, avatar_url), likes(id_like, id_user),
+        .select(`*, profiles(id_user,username, avatar_url, a_propos,banner_url, niveaux(libelle)),guildes(nom, avatar_url), likes(id_like, id_user),
         children:posts(id_post)`)
         .eq('id_post', id_post)
         .single()
@@ -21,6 +21,7 @@ export async function getPost(id_post: string) {
         console.error(err)
         return null
     }
+
 
     let post = postWithLikes as ExtendedPost
     // Récupérer le nombre total de likes par post

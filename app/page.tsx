@@ -63,7 +63,7 @@ export default async function Index() {
                 Connectez-vous pour profiter pleinement de votre expérience sur notre site !
               </div>
 
-              <Button as={Link} color="primary" href="/login" variant="flat" className='text-lg w-[85%] mx-auto mb-3'>
+              <Button as={Link} href="/login" variant="flat" className='!w-[85%] customButton bg-secondary/70 border-secondary mx-auto mb-3 text-textLight'>
                 Connexion
               </Button>
             </div>

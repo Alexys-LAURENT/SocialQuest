@@ -22,9 +22,24 @@
 
 * {
   outline: none !important;
-  user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
+
+/* CUSTOM */
+
+.customButton {
+  border-radius: 0.375rem !important;
+  min-width: 4.5rem !important;
+  padding-top: 0.3rem !important;
+  padding-bottom: 0.3rem !important;
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+  height: fit-content !important;
+  width: fit-content;
+  border-width: 2px;
+}
+
+/* ////// */
 
 .ant-image-preview-mask {
   background-color: rgba(0, 0, 0, 0.8) !important;

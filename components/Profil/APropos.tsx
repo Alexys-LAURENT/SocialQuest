@@ -91,7 +91,7 @@ const APropos = ({ isUserProfil, user, nextRewards }: { isUserProfil: boolean, u
                             <div className="text-sm">Level {user?.niveaux.libelle!}</div>
                             <div className="text-sm">Level {user?.niveaux.libelle! + 1}</div>
                         </div>
-                        <Progress aria-label="Level" title={`${(user?.xp! - user?.niveaux.xp_debut!)} / ${user?.niveaux.xp_fin! + 1} xp`} value={progressValue} classNames={{ track: "transition-all !duration-500" }} />
+                        <Progress aria-label="Level" title={`${(user?.xp! - user?.niveaux.xp_debut!)} / ${user?.niveaux.xp_fin! + 1} xp`} value={progressValue} classNames={{ track: "transition-all !duration-500", indicator: "bg-secondary" }} />
                     </div>
                     <div className="flex justify-end items-center gap-1 text-end text-[#979797]">
                         {
