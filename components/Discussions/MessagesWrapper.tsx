@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Profile } from '@/app/types/entities';
 import { Fragment, useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { DiscussionContext } from '@/app/context/DiscussionContext';
@@ -29,7 +29,6 @@ const MessagesWrapper = () => {
     const supabase = createClient()
 
 
-    const isMobile = (window.innerWidth <= 768)
 
 
     useEffect(() => {
@@ -172,10 +171,10 @@ const MessagesWrapper = () => {
                     <DynamicEditGroup profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} setSelectedDiscussion={setSelectedDiscussion} setIsEditingGroup={setIsEditingGroup} />
                 ) : (
                     <>
-                        <ScrollShadow id='messages_container' className='relative w-full h-full overflow-y-auto' size={isMobile ? 0 : 50} offset={5}>
+                        <ScrollShadow id='messages_container' className='relative w-full h-full overflow-y-auto' size={50} offset={5}>
 
                             {/* message */}
-                            {messages && messages.map((item, index) => (
+                            {messages && messages.length > 0 ? messages.map((item, index) => (
                                 <Fragment key={`message-${item.id_message}`}>
                                     {
                                         messages[index - 1]?.created_at.split('T')[0] !== item.created_at.split('T')[0] &&
@@ -186,7 +185,11 @@ const MessagesWrapper = () => {
 
                                     <DynamicMessageCard item={item} index={index} profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} tooltipDeleteOpen={tooltipDeleteOpen} setTooltipDeleteOpen={setTooltipDeleteOpen} tooltipOthersOpen={tooltipOthersOpen} setTooltipOthersOpen={setTooltipOthersOpen} tooltipUserOpen={tooltipUserOpen} setTooltipUserOpen={setTooltipUserOpen} nextMessage={{ id_user: messages[index + 1]?.id_user, timestamp: messages[index + 1]?.created_at }} prevMessage={{ id_user: messages[index - 1]?.id_user, timestamp: messages[index - 1]?.created_at }} />
                                 </Fragment>
-                            ))}
+                            )) : (
+                                <div className='flex flex-col items-center justify-center h-full'>
+                                    <h1 className='text-md font-semibold'>Aucun message</h1>
+                                </div>
+                            )}
                         </ScrollShadow>
                         <MessageInput supabase={supabase} selectedCDiscussion={selectedCDiscussion} profileConnected={profileConnected} />
                         <div id='NewMessagesIndicator' className="z-[1000000000] absolute hidden bottom-28 right-16 bg-bgDark rounded-full p-2 cursor-pointer border border-white/20 hover:border-white/40 transition-all" onClick={() => document.getElementById('messages_container')?.scrollTo({ top: document.getElementById('messages_container')?.scrollHeight, behavior: 'smooth' })}>

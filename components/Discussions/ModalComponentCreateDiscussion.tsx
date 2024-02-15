@@ -1,8 +1,9 @@
 "use client"
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Card, CardBody, Button, Chip, Input, Listbox, ListboxItem, Modal, ModalBody, ModalContent, ModalFooter } from '@nextui-org/react';
 import { DiscussionTab, Profile } from '@/app/types/entities';
 import { createClient } from '@/utils/supabase/client';
+import { ToasterContext } from '@/app/context/ToasterContext';
 import defaultUser from '@/public/assets/defaultUser.svg'
 import Image from 'next/image'
 
@@ -14,11 +15,51 @@ const ModalComponentCreateDiscussion = ({ isOpen, setOpen, onOpenChange, profile
     const [users, setUsers] = useState<Profile[]>([])
     const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
 
+    const { info: infoToaster, error: errorToaster } = useContext(ToasterContext)
+
     async function createDiscussion(ids: string[], nom: string) {
+        if (ids.length === 2) {
+            const { data: discussions1, error: error1 } = await supabase
+                .from('discussions_users')
+                .select('id_discussion')
+                .eq('id_user', ids[0])
+
+            const { data: discussions2, error: error2 } = await supabase
+                .from('discussions_users')
+                .select('id_discussion')
+                .eq('id_user', ids[1])
+
+            if (error1 || error2) {
+                console.log(error1, error2);
+                return;
+            }
+
+            const existingDiscussion = discussions1.find(discussion =>
+                discussions2.some(d2 => d2.id_discussion === discussion.id_discussion)
+            )
+
+            if (existingDiscussion) {
+                setOpen(false)
+                setInputValue('')
+                setSelectedDiscussion(await refetchDiscussions().then((discussions: DiscussionTab[]) => discussions.find((discussion: DiscussionTab) => discussion.id_discussion === existingDiscussion.id_discussion)))
+                infoToaster('Une discussion existe déjà avec cet utilisateur')
+                return;
+            }
+        }
+
+        const group = ids.length >= 3
+
+        if (group && !nom) {
+            errorToaster('Veuillez renseigner un nom pour la discussion de groupe')
+            return;
+        }
+
         const { data: newDiscussion, error: errorInsertDiscussion } = await supabase
             .from('discussions')
-            .upsert({ is_group: ids.length >= 3, nom: ids.length >= 3 ? nom : null })
+            .upsert({ is_group: group, nom: ids.length >= 3 ? nom : null })
             .select('*')
+
+
         if (errorInsertDiscussion) {
             console.log(errorInsertDiscussion);
         }

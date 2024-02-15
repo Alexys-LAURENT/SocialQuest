@@ -6,14 +6,6 @@ import { useState } from 'react';
 const MessageInput = ({ supabase, selectedCDiscussion, profileConnected }: { supabase: SupabaseClient, selectedCDiscussion: DiscussionTab, profileConnected: Profile }) => {
     const [inputValue, setInputValue] = useState<string>('')
 
-    // add event listener to send message on enter
-    document.getElementById('MessageTextarea')?.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault()
-            postMessage()
-        }
-    })
-
     async function postMessage() {
         if (inputValue.length === 0) return
         const { data, error } = await supabase
@@ -25,8 +17,22 @@ const MessageInput = ({ supabase, selectedCDiscussion, profileConnected }: { sup
 
     return (
         <div className='w-full min-h-[100px] mt-2 py-3 z-10 flex gap-4 justify-center items-center bg-bgLight dark:bg-bgDark transition-all !duration-500'>
-            <Textarea id='MessageTextarea' value={inputValue} onChange={(e) => setInputValue(e.target.value)} minRows={2} maxRows={5} placeholder='Message' className='w-full'
-                classNames={{ inputWrapper: "h-auto transition-all !duration-500" }} onBlur={(e) => { e.relatedTarget?.id === "MessageButton" && (document.getElementById('MessageTextarea') as HTMLTextAreaElement).focus() }} />
+            <Textarea
+                id='MessageTextarea'
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                minRows={2} maxRows={5}
+                placeholder='Message'
+                className='w-full'
+                classNames={{ inputWrapper: "h-auto transition-all !duration-500" }}
+                onBlur={(e) => { e.relatedTarget?.id === "MessageButton" && (document.getElementById('MessageTextarea') as HTMLTextAreaElement).focus() }}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault()
+                        postMessage()
+                    }
+                }}
+            />
             <Button id='MessageButton' onClick={() => { postMessage() }} className='transition-all !duration-500'>
                 <span className='text-textDark dark:text-textLight transition-all !duration-[125ms]'>
                     Envoyer
