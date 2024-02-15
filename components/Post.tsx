@@ -121,7 +121,6 @@ export default function Post({ user, post }: { user: Profile | null, post: Exten
                                     <ImageAntd
                                         src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images_posts/${img}`}
                                         alt={img}
-                                        width={100}
                                         className='absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover'
                                         rootClassName='!h-full !w-full'
                                         preview={{
