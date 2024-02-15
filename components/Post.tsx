@@ -133,6 +133,16 @@ export default function Post({ user, post }: { user: Profile | null, post: Exten
                                                 <ArrowDownTrayIcon onClick={() => onDownload(img)} className="w-10 h-10 rounded-lg text-white cursor-pointer bg-white/30 p-3" />
                                             )
                                         }}
+                                        placeholder={
+                                            <Image
+                                                src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images_posts/${img}`}
+                                                alt={img}
+                                                quality={0}
+                                                layout='fill'
+                                                objectFit='cover'
+                                                className='blur-sm'
+                                            />
+                                        }
                                     />
                                 </div>
                             ))
