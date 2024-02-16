@@ -39,7 +39,7 @@ const PopoverUser = ({ signOut, user }: { signOut: () => void, user: Profile | n
     };
 
     return (
-        <Popover id="PopoverUser" placement="bottom" offset={15} classNames={{ base: "hidden sm:flex w-[18.5rem]" }} isOpen={isPopoverUserOpen} onOpenChange={setIsPopoverUserOpen} shouldCloseOnBlur={false} onClose={() => closeDrawer()}
+        <Popover id="PopoverUser" placement="bottom" offset={15} classNames={{ base: "hidden sm:flex w-[16rem]" }} isOpen={isPopoverUserOpen} onOpenChange={setIsPopoverUserOpen} shouldCloseOnBlur={false} onClose={() => closeDrawer()}
             shouldCloseOnInteractOutside={(e) => {
                 const classes = [
                     "ant-image-preview-wrap",
@@ -68,12 +68,12 @@ const PopoverUser = ({ signOut, user }: { signOut: () => void, user: Profile | n
             }}>
             <PopoverTrigger>
                 <div className="flex items-center cursor-pointer min-w-[32px] sm:min-w-[44px]" onClick={(e) => handleShowDrawer(e)}>
-                    <Badge content={user?.niveaux.libelle} className="bg-secondary text-xs border-bgLight dark:border-bgDark transition-all !duration-500">
+                    <Badge content={user?.niveaux.libelle} className="bg-secondary text-xs border-bgLight dark:border-tempBgDark transition-all !duration-500">
                         <Image src={user?.avatar_url || defaultUser.src} alt={user?.avatar_url! || defaultUser.src} width={48} height={48} className="relative inline-flex shrink-0 justify-center items-center box-border overflow-hidden align-middle z-0 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-tiny bg-default text-default-foreground w-[2rem] h-[2rem] sm:w-[2.75rem] sm:h-[2.75rem] rounded-full ring-2 ring-offset-2 ring-offset-background dark:ring-offset-background-dark ring-default transition-all !duration-500" />
                     </Badge>
                 </div>
             </PopoverTrigger>
-            <PopoverContent className="bg-white dark:bg-bgDarkPopover transition-all !duration-500">
+            <PopoverContent className="bg-white dark:bg-tempBgDark border rounded-md border-white/30 transition-all !duration-500">
                 <PopOverUserContent user={user} customFunction={() => {
                     setIsPopoverUserOpen(false);
                     closeDrawer();

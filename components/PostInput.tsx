@@ -123,7 +123,7 @@ const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => 
     return (
         <div className="w-full h-fit flex flex-col min-h-fit ">
             <form id='NewPostinput' onSubmit={(e) => send(e)} >
-                <div className="flex flex-col h-full w-full bg-bgLightCard dark:bg-bgDarkCard rounded-t-md py-2 px-6 gap-1 transition-all !duration-500">
+                <div className="flex flex-col h-full w-full bg-bgLight dark:bg-tempBgDark border dark:border-tempDarkBorder border-tempLightBorder rounded-t-md py-2 px-6 gap-1 transition-all !duration-500">
                     {page === 'index' && guildesUser.length > 0 &&
                         <PostInputGuildsListBox setGuilde={setGuilde} guildesUser={guildesUser} />
                     }
@@ -164,7 +164,7 @@ const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => 
 
 
                 </div>
-                <div className="h-[30px] w-full bg-[#b9b9b9] dark:bg-[#1f1e1b] rounded-b-md transition-all !duration-500">
+                <div className="h-[30px] w-full bg-tempLightBorder dark:bg-[#1f1e1b] rounded-b-md transition-all !duration-500">
                     <div className="flex justify-between items-center h-full px-2">
                         <button type='button' className="flex  items-center text-textDark dark:text-textLight transition-all !duration-[125ms]" aria-label='ajouter un document' name='add-document'>
                             <input type="file" id='postUploaderFile' className="hidden" onChange={handleFileChange} />

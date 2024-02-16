@@ -43,7 +43,7 @@ export default function Post({ user, post }: { user: Profile | null, post: Exten
     }
 
     return (
-        <div className="postRedirect flex flex-col border border-gray-200/20 hover:border-gray-200/30  hover:bg-gray-700/5 transition-all rounded-md p-2 gap-1 cursor-pointer" onClick={(e) => handleClick(e)}>
+        <div className="postRedirect flex flex-col border border-tempLightBorder dark:border-tempDarkBorder hover:tempDarkHoverSecondary  hover:bg-tempLighHover dark:hover:bg-tempDarkHover/20 transition-all rounded-md p-2 gap-1 cursor-pointer" onClick={(e) => handleClick(e)}>
             <Link id={`post-link-${post.id_post}`} href={`/p/${post.id_post}`} className="hidden" />
             <div className="flex gap-2">
                 <Image src={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url! || defaultUser.src} alt={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url! || defaultUser.src} width={32} height={32} className='min-h-[32px] min-w-[32px] rounded-full' />

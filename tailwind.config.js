@@ -22,6 +22,16 @@ const config = {
         secondary: "#0070F0",
         bgDarkSecondary: "#1C1C1C",
         bgLightSecondary: "#F0F0F0",
+
+        tempBgDarkSecondary: "#0d0d10",
+        tempBgLightSecondary: "#f6f6f6",
+        tempBgDark: "#09090b",
+        tempDarkHover: "#27272a",
+        tempLighHover: "#f4f4f5",
+        tempDarkHoverSecondary: "#4e4f51",
+        tempDarkBorder: '#27272a',
+        tempTextLight: '#fafafa',
+        tempLightBorder: '#e4e4e7',
       }
     },
   },

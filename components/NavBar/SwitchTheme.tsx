@@ -15,13 +15,13 @@ const SwitchTheme = ({ user }: { user: Profile | null }) => {
     }
 
     return (
-        <div className="switchThemeWrapper px-1 py-1 flex justify-between dark:hover:bg-[#767676] hover:bg-[#e5e5e5] hover:bg-opacity-75 text-textDark dark:text-textLight transition-all !duration-[100ms] rounded-md cursor-pointer" onClick={() => handleChange()}>
+        <div className="switchThemeWrapper px-1 py-1 flex justify-between dark:hover:bg-tempDarkHover hover:bg-tempLighHover hover:bg-opacity-75 text-textDark dark:text-textLight transition-all !duration-[100ms] rounded-md cursor-pointer" onClick={() => handleChange()}>
             <div className="flex gap-2 items-center">
-                <MoonIcon className="w-6 h-6 text-textDark dark:text-textLight transition-all !duration-[125ms]" />
-                <div className="">Mode sombre</div>
+                <MoonIcon className="w-5 h-5 text-textDark dark:text-textLight transition-all !duration-[125ms]" />
+                <div className="text-sm font-semibold">Mode sombre</div>
             </div>
             <div className="flex items-center">
-                <Switch id="SwitchTheme" aria-label="Mode sombre" classNames={{ wrapper: "mr-1 bg-[#d9d9d9]" }} isSelected={checked} onClick={() => handleChange()} />
+                <Switch size='sm' id="SwitchTheme" aria-label="Mode sombre" classNames={{ wrapper: "mr-1 bg-[#d9d9d9] h-5", thumb: "scale-75" }} isSelected={checked} onClick={() => handleChange()} />
             </div>
         </div>
     );

@@ -143,7 +143,7 @@ const MessagesWrapper = () => {
         <div id='messagesWrapper' className={`flex-col w-full sm:w-9/12 h-full
          overflow-hidden `}>
 
-            <div className='flex sm:flex-col items-center justify-center w-full h-[50px] sm:h-[100px] gap-2 relative z-10 bg-bgLight dark:bg-bgDark transition-all !duration-500'>
+            <div className='flex sm:flex-col items-center justify-center w-full h-[50px] sm:h-[100px] gap-2 relative z-10 bg-bgLight dark:bg-tempBgDark transition-all !duration-500'>
                 <ArrowLeftIcon onClick={() => [setMessages(null), setSelectedDiscussion(null), setIsEditingGroup(false)]} className='h-6 w-6 text-textDark dark:text-textLight absolute cursor-pointer left-5 block sm:hidden ' />
                 {selectedCDiscussion.is_group ?
                     (
@@ -192,7 +192,7 @@ const MessagesWrapper = () => {
                             )}
                         </ScrollShadow>
                         <MessageInput supabase={supabase} selectedCDiscussion={selectedCDiscussion} profileConnected={profileConnected} />
-                        <div id='NewMessagesIndicator' className="z-[1000000000] absolute hidden bottom-28 right-16 bg-bgDark rounded-full p-2 cursor-pointer border border-white/20 hover:border-white/40 transition-all" onClick={() => document.getElementById('messages_container')?.scrollTo({ top: document.getElementById('messages_container')?.scrollHeight, behavior: 'smooth' })}>
+                        <div id='NewMessagesIndicator' className="z-[1000000000] absolute hidden bottom-28 right-16 bg-tempBgDark rounded-full p-2 cursor-pointer border border-white/20 hover:border-white/40 transition-all" onClick={() => document.getElementById('messages_container')?.scrollTo({ top: document.getElementById('messages_container')?.scrollHeight, behavior: 'smooth' })}>
                             <p className="text-base text-textLight mr-2">Nouveaux messages</p>
                             <ArrowDownIcon className="h-5 w-5 text-textLight" />
                         </div>

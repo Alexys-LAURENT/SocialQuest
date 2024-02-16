@@ -1,4 +1,4 @@
-import { Avatar, Button } from '@nextui-org/react';
+import { Avatar, Card } from '@nextui-org/react';
 import Link from 'next/link';
 import { getTopGuildes } from '@/utils/getTopGuildes';
 
@@ -18,13 +18,13 @@ const TopGuildesItems = async () => {
     return (
         <div className="flex flex-col gap-2">
             {topGuildes.map((guilde: any, index: any) => (
-                <Button key={`guildes-topItem-${index}-${Math.random}`} as={Link} className="p-0 text-sm text-textDark dark:text-textLight transition-all !duration-[125ms] h-auto"
+                <Card key={`guildes-topItem-${index}-${Math.random}`} as={Link} className="p-2 bg-tempBgLightSecondary hover:bg-tempLighHover dark:bg-tempBgDarkSecondary dark:hover:bg-tempDarkHover shadow-none border border-tempLightBorder dark:border-tempDarkBorder rounded-md !transition-all !duration-[125ms] h-auto"
                     href={`/g/${guilde.name}`}
                 >
-                    <div className="px-2 py-1 relative flex items-center justify-between gap-2 h-full w-full rounded-md bg-bgLightPopover dark:bg-bgDarkPopover transition-all !duration-500">
+                    <div className="flex items-center justify-between gap-2 h-full w-full transition-all !duration-500">
                         <div className="flex items-center">
                             <div className="flex items-center justify-center bg-bgLightPopover dark:bg-bgDarkPopover rounded-full">
-                                <Avatar src={guilde.avatar_url || ''} className="rounded-full text-large transition-all w-[40px] h-[40px]" />
+                                <Avatar src={guilde.avatar_url || ''} className="rounded-full text-large transition-all w-[35px] h-[35px]" />
                             </div>
                             <div className="flex flex-col ml-2 transition-all text-textDark dark:text-textLight">
                                 <div className="text-sm">
@@ -36,7 +36,7 @@ const TopGuildesItems = async () => {
                             </div>
                         </div>
                     </div>
-                </Button>
+                </Card>
             ))}
         </div>
     );

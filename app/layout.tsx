@@ -34,7 +34,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${GeistSans.className} h-full ${profile?.theme || 'dark'}`}>
-      <body className='bg-bgLight dark:bg-bgDark overflow-x-hidden h-full transition-colors !duration-500' >
+      <body className='bg-bgLight dark:bg-tempBgDark overflow-x-hidden h-full transition-colors !duration-500' >
         <Providers>
           <ToasterProvider>
             <DrawerProvider user={profile}>

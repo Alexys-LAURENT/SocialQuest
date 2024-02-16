@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 import { createBrowserClient } from '@supabase/ssr'
 import { DrawerContext } from "@/app/context/DrawerContext";
 import { BuildingStorefrontIcon, MagnifyingGlassIcon, Bars3Icon } from "@heroicons/react/24/outline";
-import SocialQuestLogo from "@/public/assets/SocialQuestLogo.svg";
+import SocialQuestLogo from "@/public/assets/SocialQuestLogoNoBg.png";
 import {
     Navbar,
     NavbarBrand,
@@ -61,7 +61,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
     }
 
     return activePath !== "/login" ? (
-        <Navbar maxWidth="2xl" className="py-2 bg-bgLight dark:bg-bgDark transition-all !duration-500" position="sticky" classNames={{ wrapper: "px-4 sm:px-6" }}>
+        <Navbar maxWidth="2xl" className="py-2 bg-bgLight dark:bg-tempBgDark transition-all !duration-500" position="sticky" classNames={{ wrapper: "px-4 sm:px-6" }}>
             <NavbarContent justify="start">
                 <NavbarItem className="flex md:hidden" onClick={() => showDrawer('NavMenu')}>
                     <Bars3Icon className="w-6 h-6 cursor-pointer text-textDark dark:text-textLight transition-all !duration-[125ms]" />
@@ -74,7 +74,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
                             onClick={() => {
                                 (pathName !== "/") ? router.push("/") : router.refresh()
                             }}
-                            className="w-max border-1 border-transparent dark:border-white/50 rounded-[0.65rem] transition-all !duration-[150ms]"
+                            className="w-max border-1 border-transparent invert dark:invert-0 rounded-[0.65rem] transition-all !duration-[150ms]"
                         >
                             <Image className="" src={SocialQuestLogo.src} alt="SocialQuest Logo" width={40} height={40} />
                         </Link>

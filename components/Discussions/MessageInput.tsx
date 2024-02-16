@@ -16,7 +16,7 @@ const MessageInput = ({ supabase, selectedCDiscussion, profileConnected }: { sup
     }
 
     return (
-        <div className='w-full min-h-[100px] mt-2 py-3 z-10 flex gap-4 justify-center items-center bg-bgLight dark:bg-bgDark transition-all !duration-500'>
+        <div className='w-full min-h-[100px] mt-2 py-3 z-10 flex gap-4 justify-center items-center bg-bgLight dark:bg-tempBgDark transition-all !duration-500'>
             <Textarea
                 id='MessageTextarea'
                 value={inputValue}
