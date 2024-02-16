@@ -18,7 +18,7 @@ const SearchBar = ({ setListFriends, id_userPageProfile }: { setListFriends: Dis
     }
 
     return (
-        <Input onChange={(e) => handleChange(e)} value={inputValue} startContent={<MagnifyingGlassIcon className="w-5 h-5 text-textDark dark:text-textLight !duration-[125ms]" />}></Input>
+        <Input classNames={{ inputWrapper: "bg-tempBgLightTertiary dark:bg-tempBgDarkTertiary group-data-[focus=true]:bg-tempBgLightTertiary dark:group-data-[focus=true]:bg-tempBgDarkTertiary dark:hover:bg-tempDarkHover transition-all !duration-500" }} onChange={(e) => handleChange(e)} value={inputValue} startContent={<MagnifyingGlassIcon className="w-5 h-5 text-textDark dark:text-textLight !duration-[125ms]" />}></Input>
     );
 }
 

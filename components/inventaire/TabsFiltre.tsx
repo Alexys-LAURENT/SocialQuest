@@ -52,9 +52,9 @@ const TabsFiltre = ({ inventory, filterParam }: { inventory: AllInventory, filte
                     <Tab className={`${selectedItem ? "hidden md:flex flex-col" : ""}`} key={item.key} title={item.title}>
                         <Card className='bg-transparent shadow-none'>
                             <CardBody className="p-1 w-full grid itemsWrapper justify-start gap-3 overflow-y-auto transition-all duration-500 ease-in-out">
-                                {item.data?.map((unItem: Item) => {
+                                {item.data!.length > 0 ? item.data?.map((unItem: Item) => {
                                     return (
-                                        <div key={`TabsFiltre-${unItem.items.id_item}`} className={`cursor-pointer relative aspect-square overflow-hidden rounded-lg ${selectedItem && selectedItem.items && selectedItem.id_item_user === unItem.id_item_user ? 'border-2 border-secondary' : ''}`}
+                                        <div key={`TabsFiltre-${unItem.items.id_item}-${Math.random()}`} className={`cursor-pointer relative aspect-square overflow-hidden rounded-lg ${selectedItem && selectedItem.items && selectedItem.id_item_user === unItem.id_item_user ? 'border-2 border-secondary' : ''}`}
                                             onClick={() => { selectedItem?.id_item_user === unItem.id_item_user ? setSelectedItem(null) : setSelectedItem(unItem) }}>
                                             {unItem.is_favorite &&
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className="absolute top-1 right-1 z-50 w-4 h-4 lg:w-[1.15rem] lg:h-[1.15rem] fill-white bi bi-pin-angle-fill" viewBox="0 0 16 16">
@@ -62,12 +62,12 @@ const TabsFiltre = ({ inventory, filterParam }: { inventory: AllInventory, filte
                                                 </svg>
                                             }
                                             {unItem.is_equiped && <CheckCircleIcon className='absolute top-1 left-1 z-50 w-4 h-4 lg:w-[1.2rem] lg:h-[1.2rem] fill-secondary' />}
-                                            <Image src={unItem.items.image_url} alt={unItem.items.nom} fill objectFit="cover" sizes='100%' className='drop-shadow-xl' />
+                                            <Image src={unItem.items.image_url} alt={unItem.items.nom} fill objectFit="cover" sizes='100%' className='drop-shadow-xl' loading='lazy' />
 
                                         </div>
                                     )
 
-                                })}
+                                }) : <div className='flex justify-center items-center w-full h-full text-textDark dark:text-textLight'>Aucun item</div>}
                             </CardBody>
                         </Card>
                     </Tab>

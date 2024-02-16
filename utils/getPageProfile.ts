@@ -32,9 +32,7 @@ export async function getPageProfile(username: string) {
     }
 
     const follow = await doesFollow(profile.id_user, user.id_user)
-
-    if (follow)
-        profile.isFollowed = follow
+    profile.isFollowed = follow
 
     return profile as unknown as Profile
 }

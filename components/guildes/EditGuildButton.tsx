@@ -2,7 +2,7 @@ import { Button } from '@nextui-org/react';
 
 const EditGuildButton = () => {
     return (
-        <Button>Étider la guilde</Button>
+        <Button>Éditer la guilde</Button>
     );
 };
 

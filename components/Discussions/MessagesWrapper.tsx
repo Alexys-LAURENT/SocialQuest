@@ -153,12 +153,12 @@ const MessagesWrapper = () => {
                             width={50}
                             height={50}
                             className={`w-8 h-8 sm:h-12 sm:w-12 bg-[#3f3f46] rounded-full ${selectedCDiscussion.is_group ? 'invert p-1' : ''} ${selectedCDiscussion.is_group ? (profileConnected.id_user === selectedCDiscussion.created_by ? "cursor-pointer" : "cursor-default") : "cursor-pointer"}`}
-                            onClick={() => { selectedCDiscussion.is_group && profileConnected.id_user === selectedCDiscussion.created_by && setIsEditingGroup(true) }}
+                            onClick={() => { selectedCDiscussion.is_group && profileConnected.id_user === selectedCDiscussion.created_by && setIsEditingGroup(!isEditingGroup) }}
                         />
                     ) : (
                         <Avatar as={Link}
                             href={`${selectedCDiscussion.profiles[0]?.username}`}
-                            src={getImageUrl()} onClick={() => { selectedCDiscussion.is_group && profileConnected.id_user === selectedCDiscussion.created_by && setIsEditingGroup(true) }}
+                            src={getImageUrl()}
                             className={`w-8 h-8 sm:h-12 sm:w-12 aspect-square rounded-full ${selectedCDiscussion.is_group ? 'invert p-1' : ''} ${selectedCDiscussion.is_group ? (profileConnected.id_user === selectedCDiscussion.created_by ? "cursor-pointer" : "cursor-default") : "cursor-pointer"}`} />
                     )}
 

@@ -30,11 +30,11 @@ const ListDiscussionsSkeleton = () => {
                     <CardBody className='flex-row p-0' >
                         <div className='w-full h-full gap-2 p-2 bg-transparent flex justify-start'>
                             <div className='aspect-square max-w-[40px] min-w-[40px] flex'>
-                                <div className='h-10 w-10 bg-gray-700 animate-pulse rounded-full'></div>
+                                <div className='h-10 w-10 bg-tempBgLightSkeleton dark:bg-tempBgDarkSkeleton animate-pulse rounded-full transition-all !duration-500'></div>
                             </div>
                             <div className=' w-full overflow-hidden flex flex-col bg-green-300/0 h-full items-start'>
-                                <div className='flex w-10/12 h-4 bg-gray-700 animate-pulse rounded-md'></div>
-                                <div className='flex w-8/12 h-4 bg-gray-700 animate-pulse rounded-md mt-2'></div>
+                                <div className='flex w-10/12 h-4 bg-tempBgLightSkeleton dark:bg-tempBgDarkSkeleton animate-pulse rounded-md transition-all !duration-500'></div>
+                                <div className='flex w-8/12 h-4 bg-tempBgLightSkeleton dark:bg-tempBgDarkSkeleton animate-pulse rounded-md mt-2 transition-all !duration-500'></div>
                             </div>
                         </div>
                     </CardBody>

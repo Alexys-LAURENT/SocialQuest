@@ -43,7 +43,7 @@ export default function Post({ user, post }: { user: Profile | null; post: Exten
 
   return (
     <div
-      className="postRedirect flex flex-col border border-tempLightBorder dark:border-tempDarkBorder hover:tempDarkHoverSecondary bg-tempBgLightSecondary hover:bg-tempLightBorder/20 dark:hover:bg-tempDarkHover/20 transition-all rounded-md p-2 gap-1 cursor-pointer"
+      className="postRedirect flex flex-col border border-tempLightBorder dark:border-tempDarkBorder bg-tempBgLightSecondary dark:bg-tempBgDarkSecondary hover:bg-tempLightHover/20 dark:hover:bg-tempDarkHover/20 rounded-md p-2 gap-1 cursor-pointer transition-all !duration-500"
       onClick={(e) => handleClick(e)}
     >
       <Link id={`post-link-${post.id_post}`} href={`/p/${post.id_post}`} className="hidden" />
@@ -61,7 +61,7 @@ export default function Post({ user, post }: { user: Profile | null; post: Exten
               <>
                 <Link
                   href={`/g/${post.guildes.nom}`}
-                  className="text-sm text-textDark dark:text-textLight transition-all !duration-[125ms] font-semibold"
+                  className="text-sm text-textDark dark:text-textLight  font-semibold"
                 >
                   {post.guildes.nom}
                 </Link>

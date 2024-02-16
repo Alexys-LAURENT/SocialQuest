@@ -28,7 +28,7 @@ const SelectedItemContent = ({ selectedItem, setSelectedItem, isUserInventory }:
     }
 
     return (
-        <div className="flex flex-col justify-between h-full overflow-hidden">
+        <div className="flex flex-col justify-between h-full overflow-y-auto">
             <div className="flex flex-row flex-wrap md:flex-col gap-4 p-4 w-full">
                 <div className="relative flex aspect-square w-4/12 min-w-[140px] md:w-full overflow-hidden rounded-lg bg-black/20 ">
                     <Image className='object-cover' src={selectedItem.items.image_url} fill alt={selectedItem.items.description} sizes='100%' />
@@ -82,7 +82,7 @@ const SelectedItemContent = ({ selectedItem, setSelectedItem, isUserInventory }:
                 }
             </div>
 
-            <div className="flex flex-col border-t dark:border-gray-200 border-gray-500 gap-2 p-4 pb-12 overflow-y-auto">
+            <div className="flex flex-col border-t dark:border-gray-200 border-gray-500 gap-2 p-4 pb-12">
                 <p className='text-3xl font-bold text-center pb-4 text-textDark dark:text-textLight transition-all !duration-[125ms]'>
                     Marché
                 </p>
@@ -115,6 +115,7 @@ const EquiperBtn = ({ SelectedItem, }: { SelectedItem: Item }) => {
         const isUpdated = await toggleItemSelected(id_item_user, action)
         if (isUpdated) {
             action === 'equip' ? success('Item équipée') : success('Item retiré')
+            SelectedItem.is_equiped = !SelectedItem.is_equiped
             router.refresh()
         } else {
             error('Erreur lors de la mise à jour de l\'item')

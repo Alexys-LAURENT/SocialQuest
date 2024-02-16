@@ -6,15 +6,8 @@ import { createBrowserClient } from '@supabase/ssr';
 import { NextReward, Profile } from '@/app/types/entities';
 import { useState } from 'react';
 
-const APropos = ({
-  isUserProfil,
-  user,
-  nextRewards,
-}: {
-  isUserProfil: boolean;
-  user: Profile | null;
-  nextRewards: NextReward[] | null;
-}) => {
+const APropos = ({ isUserProfil, user, nextRewards, }: { isUserProfil: boolean; user: Profile | null; nextRewards: NextReward[] | null }) => {
+
   const [isEditingAPropos, setIsEditingAPropos] = useState(false);
   const progressValue = ((user?.xp! - user?.niveaux.xp_debut!) * 100) / (user?.niveaux.xp_fin! + 1);
 

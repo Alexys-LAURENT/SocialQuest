@@ -1,6 +1,7 @@
 import { Avatar, Card } from '@nextui-org/react';
 import Link from 'next/link';
 import { getTopGuildes } from '@/utils/getTopGuildes';
+import Image from 'next/image';
 
 const TopGuildesItems = async () => {
   const topGuildes = await getTopGuildes();
@@ -38,6 +39,18 @@ const TopGuildesItems = async () => {
                   {formatCount(guilde.members)} membres
                 </div>
               </div>
+            </div>
+            <div className="flex items-center w-fit h-full text-textDark dark:text-textLight transition-all">
+              {/* if index is 0, 1 or 2, display the badge */}
+              {index < 3 && (
+                <Image
+                  src={`/assets/medal-${index}.png`}
+                  alt={`Rank ${index + 1}`}
+                  className='w-5 h-5'
+                  width={100}
+                  height={100}
+                />
+              )}
             </div>
           </div>
         </Card>

@@ -94,14 +94,14 @@ const ListDiscussions = ({ initDiscussions, refetchDiscussions }: { initDiscussi
                                 }
                             </div>
                             <div className=' w-full overflow-hidden flex flex-col bg-green-300/0 h-full items-start'>
-                                <h1 className='text-md font-semibold text-textDark dark:text-textLight transition-all !duration-[125ms]'>
+                                <h1 className={`text-md font-semibold ${selectedCDiscussion?.id_discussion === item?.id_discussion ? 'text-textLight' : 'text-textDark dark:text-textLight'} transition-all !duration-[125ms]`}>
                                     {item?.is_group === false ?
                                         item?.profiles[0].username
                                         :
                                         item.nom
                                     }
                                 </h1>
-                                <p className='text-ellipsis line-clamp-1 flex w-full text-left text-textDark dark:text-textLight transition-all !duration-[125ms]'>
+                                <p className={`text-ellipsis line-clamp-1 flex w-full text-left ${selectedCDiscussion?.id_discussion === item?.id_discussion ? 'text-textLight' : 'text-textDark dark:text-textLight'} transition-all !duration-[125ms]`}>
                                     {item?.dernier_message?.contenu}
                                 </p>
                             </div>

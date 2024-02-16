@@ -123,7 +123,7 @@ const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => 
   return (
     <div className="w-full h-fit flex flex-col min-h-fit ">
       <form id="NewPostinput" onSubmit={(e) => send(e)}>
-        <div className="flex flex-col h-full w-full bg-tempBgLightSecondary dark:bg-tempBgDark border dark:border-tempDarkBorder border-tempLightBorder rounded-t-md py-2 px-6 gap-1 transition-all !duration-500">
+        <div className="flex flex-col h-full w-full bg-tempBgLightSecondary dark:bg-tempBgDark border border-tempLightBorder dark:border-tempDarkBorder rounded-t-md py-2 px-6 gap-1 transition-all !duration-500">
           {page === 'index' && guildesUser.length > 0 && (
             <PostInputGuildsListBox setGuilde={setGuilde} guildesUser={guildesUser} />
           )}

@@ -40,7 +40,7 @@ const UserTopRow = ({ isUserProfil, pageProfile, profileConnected }: { isUserPro
                         </p>
                     </div>
                     {
-                        pageProfile.isFollowed !== undefined && (
+                        pageProfile.id_user !== profileConnected?.id_user && (
                             <span className='sm:flex items-center hidden gap-4'>
                                 <Button className='bg-bgLight customButton'><ChatBubbleOvalLeftEllipsisIcon className='text-bgDarkPopover h-[20px]' /></Button>
 
@@ -52,12 +52,12 @@ const UserTopRow = ({ isUserProfil, pageProfile, profileConnected }: { isUserPro
                 </div>
             </div>
             {
-                pageProfile.isFollowed !== undefined && (
+                pageProfile.id_user !== profileConnected?.id_user && (
                     <div className=' w-full max-w-[1280px] px-6 md:px-12 flex flex-row justify-end my-4 sm:my-2 gap-2 sm:gap-4 sm:hidden -top-[40px] sm:-top-[60px] md:-top-[80px] relative'>
 
-                        <Button onClick={() => handleFollow()} className='bg-secondary rounded-md w-full h-[30px]'>{pageProfile.isFollowed ? 'Abonné' : 'Suivre'}</Button>
+                        <Button onClick={() => handleFollow()} className='bg-secondary customButton text-textLight !w-full'>{pageProfile.isFollowed ? 'Abonné' : 'Suivre'}</Button>
 
-                        <Button className='bg-bgLight w-[30px] rounded-md min-w-[40px] h-[30px] px-2'><ChatBubbleOvalLeftEllipsisIcon className='text-bgDarkPopover' /></Button>
+                        <Button className='bg-bgLight customButton !min-w-0'><ChatBubbleOvalLeftEllipsisIcon className='text-bgDarkPopover h-[20px]' /></Button>
                     </div>
                 )
             }

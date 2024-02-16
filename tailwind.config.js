@@ -25,13 +25,17 @@ const config = {
 
         tempBgDarkSecondary: "#0d0d10",
         tempBgLightSecondary: "#f6f6f6",
+        tempBgLightTertiary: "#efefef",
+        tempBgDarkTertiary: "#1A1A1C",
         tempBgDark: "#09090b",
         tempDarkHover: "#27272a",
-        tempLighHover: "#f4f4f5",
+        tempLightHover: "#f4f4f5",
         tempDarkHoverSecondary: "#4e4f51",
         tempDarkBorder: '#27272a',
         tempTextLight: '#fafafa',
         tempLightBorder: '#e4e4e7',
+        tempBgLightSkeleton: '#e4e4e7',
+        tempBgDarkSkeleton: '#2B2B2B',
       }
     },
   },

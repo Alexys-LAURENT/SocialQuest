@@ -21,14 +21,10 @@ const Drawer = dynamic(() => import('antd').then((mod) => mod.Drawer));
 const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: Profile | null }) => {
     const [open, setOpen] = useState(false);
     const [content, setContent] = useState<Content>("User");
-    const [nextRewards, setNextRewards] = useState<NextReward[] | null>(null);
     const supabase = createBrowserClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     )
-
-
-
 
     const signOut = async () => {
         const { error } = await supabase.auth.signOut();
@@ -47,15 +43,6 @@ const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: P
     const closeDrawer = () => {
         setOpen(false);
     };
-
-    useEffect(() => {
-        const getRewards = async () => {
-            if (user) {
-                setNextRewards(await getNextRewards(user?.niveaux.libelle!));
-            }
-        }
-        getRewards();
-    }, [user])
 
     return (
         <DrawerContext.Provider value={{ showDrawer, closeDrawer }}>

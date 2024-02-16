@@ -50,7 +50,7 @@ const PopoverNotifications = ({ user }: { user: Profile }) => {
                     </Badge>
                 </div>
             </PopoverTrigger>
-            <PopoverContent className="bg-bgLightPopover dark:bg-bgDarkPopover max-h-[300px] overflow-y-auto">
+            <PopoverContent className="bg-white dark:bg-tempBgDark border rounded-md border-white/30 transition-all !duration-500 max-h-[300px] overflow-y-auto">
 
                 {
                     notifications ?
