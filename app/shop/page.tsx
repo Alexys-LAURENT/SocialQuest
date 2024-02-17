@@ -4,7 +4,7 @@ import { CheckboxGroup, Checkbox, Slider, Input, Select, SelectItem } from '@nex
 const page = () => {
   return (
     <div className={`flex flex-col max-w-[1280px] w-full px-2 md:px-4 py-4 gap-6`}>
-      <div className="w-full h-28 bg-gray-100/30 rounded-md"></div>
+      <div className="w-full h-28  dark:bg-tempDarkHover bg-tempDarkHover/20 rounded-md"></div>
 
       {/* ///////////////items les plus achetés/////////////// */}
       <div>
@@ -15,7 +15,7 @@ const page = () => {
               key={index}
               className="relative flex flex-col items-center justify-center min-w-[150px] w-[150px] min-h-[200px] h-[200px] | md:min-w-[200px] md:w-[200px] md:min-h-[250px] md:h-[250px] p-2 bg-tempBgLightSecondary dark:bg-tempBgDark border border-tempLightBorder dark:border-tempDarkBorder rounded-md"
             >
-              <div className="flex w-full h-[70%] bg-tempDarkHover rounded-md"></div>
+              <div className="flex w-full h-[70%] dark:bg-tempDarkHover bg-tempDarkHover/20 rounded-md"></div>
               <div className="flex w-full h-[30%]">
                 <p>item {item}</p>
               </div>
@@ -34,7 +34,7 @@ const page = () => {
               key={index}
               className="relative flex flex-row items-center justify-center p-1 px-2 gap-2 bg-tempBgLightSecondary dark:bg-tempBgDark border border-tempLightBorder dark:border-tempDarkBorder rounded-md"
             >
-              <div className="flex min-w-[40px] w-[40px] max-h-[40px] h-[40px] bg-tempDarkHover rounded-md"></div>
+              <div className="flex min-w-[40px] w-[40px] max-h-[40px] h-[40px] dark:bg-tempDarkHover bg-tempDarkHover/20 rounded-md"></div>
               <div className="flex flex-col ">
                 <p className="text-tiny whitespace-nowrap">Weexo zdad ad z</p>
                 <p className="text-tiny">$ {item}</p>
@@ -127,7 +127,7 @@ const page = () => {
                 key={index + 100}
                 className="relative flex flex-col items-center justify-center min-w-[150px] w-[150px] min-h-[200px] h-[200px] | md:min-w-[200px] md:w-[200px] md:min-h-[250px] md:h-[250px] p-2 bg-tempBgLightSecondary dark:bg-tempBgDark border border-tempLightBorder dark:border-tempDarkBorder rounded-md"
               >
-                <div className="flex w-full h-[70%] bg-tempDarkHover rounded-md"></div>
+                <div className="flex w-full h-[70%] dark:bg-tempDarkHover bg-tempDarkHover/20 rounded-md"></div>
                 <div className="flex w-full h-[30%]">
                   <p>item {item}</p>
                 </div>
