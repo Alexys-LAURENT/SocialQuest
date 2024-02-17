@@ -30,6 +30,15 @@ textarea {
   font-size: 16px !important;
 }
 
+/* mobile */
+@media (pointer: coarse) {
+  .ant-image-mask {
+    display: none !important;
+  }
+}
+
+
+
 /* CUSTOM */
 
 .customButton {

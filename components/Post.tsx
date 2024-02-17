@@ -9,16 +9,18 @@ import WrapperLikeAnswer from '@/components/WrapperLikeAnswer';
 import { ToasterContext } from '@/app/context/ToasterContext';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { Image as ImageAntd } from 'antd';
 import defaultUser from '@/public/assets/defaultUser.svg';
-import { ArrowDownTrayIcon } from '@heroicons/react/24/solid';
 import { removePost } from '@/utils/removePost';
 import { onDownload } from '@/utils/downloadImage';
+import ImageAntdPreview from '@/components/ImageAntdPreview';
+
 export default function Post({ user, post }: { user: Profile | null; post: ExtendedPost }) {
   const router = useRouter();
   const { success, error } = useContext(ToasterContext);
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
+
 
   const handleDelete = async () => {
     if (isLoading) return;
@@ -134,31 +136,7 @@ export default function Post({ user, post }: { user: Profile | null; post: Exten
               post.images.length > 0 &&
               post.images.map((img, index) => (
                 <div className={`relative flex-1-1 overflow-hidden`} key={`post-${post.id_post}-image-${img}`}>
-                  {/* <ImageAntd
-                                        src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images_posts/${img}`}
-                                        alt={img}
-                                        loading='lazy'
-                                        className='absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover'
-                                        rootClassName='!h-full !w-full'
-                                        preview={{
-                                            toolbarRender: (
-                                                _,
-                                                {
-                                                },
-                                            ) => (
-                                                <ArrowDownTrayIcon onClick={() => onDownload(img)} className="w-10 h-10 rounded-lg text-white cursor-pointer bg-white/30 p-3" />
-                                            )
-                                        }}
-                                        placeholder={ */}
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images_posts/${img}`}
-                    alt={img}
-                    quality={50}
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                  {/* }
-                                    /> */}
+                  <ImageAntdPreview img={img} onDownload={onDownload} />
                 </div>
               ))}
           </div>
