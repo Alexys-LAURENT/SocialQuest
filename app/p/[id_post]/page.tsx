@@ -11,7 +11,10 @@ const page = async ({ params }: { params: { id_post: string } }) => {
 
     const userProfile = await getProfileConnected()
     const post = await getPost(params.id_post) as ExtendedPost;
-    const answers = await getAnswers(params.id_post);
+    const getPostAnswers = async () => {
+        "use server"
+        return await getAnswers(params.id_post)
+    }
 
     if (post === null) {
         notFound()
@@ -26,7 +29,8 @@ const page = async ({ params }: { params: { id_post: string } }) => {
                 <div className="flex flex-col w-full gap-4 mb-5">
                     <MainPost post={post} user={userProfile} />
                     <PostInput id_guilde={undefined} page="post" guildesUser={null} parent={post.id_post} />
-                    <PostsWrapper user={userProfile} getPost={() => answers} postPage={true} />
+
+                    <PostsWrapper user={userProfile} getPost={getPostAnswers} postPage={true} filtre={false} />
                 </div>
 
                 <div className="min-w-[0.5rem] sm:min-w-[5rem] md:min-w-[9rem] lg:min-w-[17rem] flex" />

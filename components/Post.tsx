@@ -51,21 +51,21 @@ export default function Post({ user, post }: { user: Profile | null; post: Exten
       <Link id={`post-link-${post.id_post}`} href={`/p/${post.id_post}`} className="hidden" />
       <div className="flex gap-2">
         <Image
-          src={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url! || defaultUser.src}
-          alt={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url! || defaultUser.src}
+          src={post.id_guilde ? post.guilde_avatar_url : post.creator_avatar_url || defaultUser.src}
+          alt={post.id_guilde ? post.guilde_avatar_url : post.creator_avatar_url || defaultUser.src}
           width={32}
           height={32}
           className="min-h-[32px] min-w-[32px] rounded-full"
         />
         <div className="postRedirect flex items-center justify-between w-full">
           <div className="flex items-center gap-1">
-            {post.guildes && (
+            {post.id_guilde && (
               <>
                 <Link
-                  href={`/g/${post.guildes.nom}`}
+                  href={`/g/${post.guilde_nom}`}
                   className="text-sm text-textDark dark:text-textLight  font-semibold"
                 >
-                  {post.guildes.nom}
+                  {post.guilde_nom}
                 </Link>
                 <div className="text-textDark dark:text-textLight transition-all !duration-[125ms]">•</div>
               </>

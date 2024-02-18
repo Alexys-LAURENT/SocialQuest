@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, Dispatch, SetStateAction } from "react";
 import { DiscussionTab, Message } from "@/app/types/entities";
 import { createClient } from "@/utils/supabase/client";
 import { ToasterContext } from "@/app/context/ToasterContext";
@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 export const DiscussionContext = createContext<{
     messages: Message[] | null,
-    setMessages: (messages: Message[] | null) => void,
+    setMessages: Dispatch<SetStateAction<Message[] | null>>,
     selectedCDiscussion: DiscussionTab | null,
     setSelectedDiscussion: (conversation: DiscussionTab | null) => void,
     isEditingGroup: boolean,
@@ -20,16 +20,16 @@ export const DiscussionContext = createContext<{
     updateCurrentSelectedDiscussion: (nom: string) => Promise<void>
 }>({
     messages: null,
-    setMessages: (messages: Message[] | null) => { },
+    setMessages: () => { },
     selectedCDiscussion: null,
-    setSelectedDiscussion: (conversation: DiscussionTab | null) => { },
+    setSelectedDiscussion: () => { },
     isEditingGroup: false,
-    setIsEditingGroup: (isEditingGroup: boolean) => { },
+    setIsEditingGroup: () => { },
     componentReloaded: true,
-    setComponentReloaded: (componentReloaded: boolean) => { },
-    addUsersToSelectedDiscussion: (ids: string[]) => Promise.resolve(),
-    removeUserFromSelectedDiscussion: (id: string) => Promise.resolve(),
-    updateCurrentSelectedDiscussion: (nom: string) => Promise.resolve()
+    setComponentReloaded: () => { },
+    addUsersToSelectedDiscussion: () => Promise.resolve(),
+    removeUserFromSelectedDiscussion: () => Promise.resolve(),
+    updateCurrentSelectedDiscussion: () => Promise.resolve()
 });
 
 const DiscussionProvider = ({ children }: { children: React.ReactNode }) => {

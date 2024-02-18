@@ -4,7 +4,6 @@ import { getProfileConnected } from '@/utils/getProfileConnected'
 import { Suspense } from 'react'
 import { Button } from '@nextui-org/react';
 import PostInputSuspenser from '@/components/Home/PostInputSuspenser'
-// import TabsPostsWrapper from '@/components/Home/TabsPostsWrapper';
 import PostsWrapper from '@/components/PostsWrapper';
 import { getAllPosts } from '@/utils/getAllPosts';
 import TopGuildes from '@/components/TopGuildes';
@@ -37,10 +36,7 @@ export default async function Index() {
           </Suspense>
         }
 
-        <Suspense fallback={<PostsWrapperSkeleton />}>
-          {/* <TabsPostsWrapper user={user} /> */}
-          <PostsWrapper user={user} getPost={getAllPosts} />
-        </Suspense>
+        <PostsWrapper user={user} getPost={getAllPosts} filtre={user && user.id_user ? true : false} />
       </div>
 
       <div className="hidden lg:flex min-w-[17rem] h-fit">

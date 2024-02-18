@@ -26,8 +26,9 @@ export async function getAnswers(id_post: string) {
         const likesCount = post.likes.length;
         const answersCount = post.children.length;
         const userLikedPost = post.likes.some((like: any) => like.id_user === user?.id_user); // Remplacez currentUserID par l'ID de l'utilisateur actuel
+        const createdAtFormated = new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(new Date(post.created_at ?? ''))
 
-        return { ...post, likesCount, answersCount, userLikedPost };
+        return { ...post, likesCount, answersCount, userLikedPost, createdAtFormated }
     }) as ExtendedPost[];
 
     posts && posts.sort((a, b) => b.likesCount - a.likesCount)

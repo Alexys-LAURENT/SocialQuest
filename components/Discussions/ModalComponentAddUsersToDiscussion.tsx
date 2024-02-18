@@ -96,7 +96,7 @@ const ModalComponentAddUsersToDiscussion = ({ isOpen, onOpenChange, defaultsProf
                                 <Button color="danger" variant="light" onPress={onClose} onClick={() => setSelectedKeys([])}>
                                     Annuler
                                 </Button>
-                                <Button onPress={onClose} onClick={() => addUsersToSelectedDiscussion(Array.from(selectedKeys) as string[])}
+                                <Button onClick={() => addUsersToSelectedDiscussion(Array.from(selectedKeys) as string[]).then(() => onClose())}
                                     isDisabled={Array.from(selectedKeys).map((key) => users.find((user) => user.id_user === key)).length === 0}
                                     className={`${Array.from(selectedKeys).map((key) => users.find((user) => user.id_user === key)).length === 0 && "hover:select-none bg-gray-800"} bg-secondary`}>
                                     Valider

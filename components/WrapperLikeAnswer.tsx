@@ -10,9 +10,9 @@ import Link from 'next/link';
 
 const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile | null }) => {
     const router = useRouter();
-    const [likesCount, setLikesCount] = useState(post.likesCount)
-    const [answersCount, setAnswersCount] = useState(post.answersCount)
-    const [userLikedPost, setUserLikedPost] = useState(post.userLikedPost)
+    const [likesCount, setLikesCount] = useState(post.likes_count)
+    const [answersCount, setAnswersCount] = useState(post.answers_count)
+    const [userLikedPost, setUserLikedPost] = useState(post.user_liked_post)
 
     const supabase = createBrowserClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -25,7 +25,7 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile |
             .on(
                 'postgres_changes',
                 { event: '*', schema: 'public', table: 'likes', filter: `id_post=eq.${post.id_post}` },
-                (payload) => {
+                (_) => {
                     async function getLikesCount() {
                         const { data: likesCount } = await supabase
                             .from('likes')
@@ -50,6 +50,31 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile |
 
         return () => {
             like.unsubscribe()
+        }
+    }, [])
+
+    useEffect(() => {
+        const answers = supabase.channel('realtime:public:posts`$`parent=eq.`$`' + post.id_post)
+            .on(
+                'postgres_changes',
+                { event: '*', schema: 'public', table: 'posts', filter: `parent=eq.${post.id_post}` },
+                (_) => {
+                    console.log('answers changed')
+                    async function getAnswersCount() {
+                        const { data: answersCount } = await supabase
+                            .from('posts')
+                            .select('count')
+                            .eq('parent', post.id_post);
+
+                        setAnswersCount(answersCount && answersCount[0]?.count || 0);
+                    }
+                    getAnswersCount()
+                }
+            )
+            .subscribe()
+
+        return () => {
+            answers.unsubscribe()
         }
     }, [])
 
@@ -110,7 +135,7 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile |
                         <HeartIcon className={`w-5 h-5 ${userLikedPost ? 'text-red-500 fill-red-500' : ''} transition-all ease-in-out`} /> {formatCount(likesCount)}
                     </Button>
                     <Button as={Link} variant='flat' className='bg-secondary/30 min-w-0 h-7 w-max rounded-sm text-textDark dark:text-textLight transition-all !duration-[75ms] px-2' href={`/p/${post.id_post}`}>
-                        <ChatBubbleLeftIcon className="w-5 h-5" /> {answersCount}
+                        <ChatBubbleLeftIcon className="w-5 h-5" /> {formatCount(answersCount)}
                     </Button>
                 </>
             ) : (
@@ -119,7 +144,7 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile |
                         <HeartIcon className={`w-5 h-5 ${userLikedPost ? 'text-red-500 fill-red-500' : ''}`} /> {formatCount(likesCount)}
                     </Button>
                     <Button as={Link} variant='flat' className='bg-secondary/30 min-w-0 h-7 w-max rounded-sm text-textDark dark:text-textLight transition-all !duration-500 px-2' href={`/p/${post.id_post}`}>
-                        <ChatBubbleLeftIcon className="w-5 h-5" /> {answersCount}
+                        <ChatBubbleLeftIcon className="w-5 h-5" /> {formatCount(answersCount)}
                     </Button>
                 </>
             )}

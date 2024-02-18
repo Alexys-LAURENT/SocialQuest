@@ -10,28 +10,20 @@ export async function getAllPosts() {
 
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
-    const user = await getProfileConnected()
 
 
-    const { data: postsWithLikes, error: postsError } = await supabase
-        .from('posts')
-        .select(`*, profiles(username, avatar_url, a_propos,banner_url),guildes(nom, avatar_url), likes(id_like, id_user),
-          children:posts(id_post)`)
-        .is('parent', null)
-        .order('created_at', { ascending: false });
+    const { data: postsRandom, error: postsRandomError } = await supabase
+        .rpc('get_random_posts')
 
-    if (postsError) return console.error(postsError)
+    if (postsRandomError) {
+        console.error(postsRandomError)
+        return null
+    }
 
-    // Récupérer le nombre total de likes par post
-    const posts = postsWithLikes?.map(post => {
-        const likesCount = post.likes.length;
-        const answersCount = post.children.length;
-        const userLikedPost = post.likes.some((like: any) => like.id_user === user?.id_user); // Remplacez currentUserID par l'ID de l'utilisateur actuel
-        const createdAtFormated = new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(new Date(post.created_at ?? ''))
-        return { ...post, likesCount, answersCount, userLikedPost, createdAtFormated };
-    }) as ExtendedPost[];
-
-    return posts
+    return postsRandom.map((post: ExtendedPost) => {
+        post.createdAtFormated = new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(new Date(post.created_at ?? ''))
+        return post
+    }) as ExtendedPost[]
 }
 
 // posts for profile page
@@ -40,27 +32,19 @@ export async function getAllPostsFromUser(id_user: string) {
 
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
-    const user = await getProfileConnected()
 
-    const { data: postsWithLikes, error: postsError } = await supabase
-        .from('posts')
-        .select(`*, profiles(username, avatar_url, a_propos,banner_url),guildes(nom, avatar_url), likes(id_like, id_user),
-    children:posts(id_post)`)
-        .eq('id_user', id_user)
-        .order('created_at', { ascending: false });
+    const { data: postsUser, error: postsUserError } = await supabase
+        .rpc('get_all_posts_where_user', { the_id_user: id_user })
 
-    if (postsError) return console.error(postsError)
+    if (postsUserError) {
+        console.error(postsUserError)
+        return null
+    }
 
-    // Récupérer le nombre total de likes par post
-    const posts = postsWithLikes?.map(post => {
-        const likesCount = post.likes.length;
-        const answersCount = post.children.length;
-        const userLikedPost = post.likes.some((like: any) => like.id_user === user?.id_user); // Remplacez currentUserID par l'ID de l'utilisateur actuel
-        const createdAtFormated = new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(new Date(post.created_at ?? ''))
-
-        return { ...post, likesCount, answersCount, userLikedPost, createdAtFormated };
-    }) as ExtendedPost[];
-    return posts
+    return postsUser.map((post: ExtendedPost) => {
+        post.createdAtFormated = new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(new Date(post.created_at ?? ''))
+        return post
+    }) as ExtendedPost[]
 }
 
 // posts for guild page
@@ -69,34 +53,17 @@ export async function getAllPostsFromGuild(guilde_name: string) {
 
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
-    const user = await getProfileConnected()
 
-    const { data: guilde, error: guildeError } = await supabase
-        .from('guildes')
-        .select("id_guilde")
-        .eq("nom", guilde_name)
-        .single()
+    const { data: postsGuild, error: postsGuildError } = await supabase
+        .rpc('get_all_posts_where_guild', { the_guild_name: guilde_name })
 
-    if (guildeError) console.error(guildeError)
+    if (postsGuildError) {
+        console.error(postsGuildError)
+        return null
+    }
 
-    const { data: postsWithLikes, error: postsError } = await supabase
-        .from('posts')
-        .select(`*, profiles(username, avatar_url, a_propos,banner_url),guildes(nom, avatar_url), likes(id_like, id_user),
-          children:posts(id_post)`)
-        .is('parent', null)
-        .eq('id_guilde', guilde?.id_guilde)
-        .order('created_at', { ascending: false });
-
-    if (postsError) return console.error(postsError)
-
-    // Récupérer le nombre total de likes par post
-    const posts = postsWithLikes?.map(post => {
-        const likesCount = post.likes.length;
-        const answersCount = post.children.length;
-        const userLikedPost = post.likes.some((like: any) => like.id_user === user?.id_user); // Remplacez currentUserID par l'ID de l'utilisateur actuel
-        const createdAtFormated = new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(new Date(post.created_at ?? ''))
-
-        return { ...post, likesCount, answersCount, userLikedPost, createdAtFormated };
-    }) as ExtendedPost[];
-    return posts
+    return postsGuild.map((post: ExtendedPost) => {
+        post.createdAtFormated = new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(new Date(post.created_at ?? ''))
+        return post
+    }) as ExtendedPost[]
 }

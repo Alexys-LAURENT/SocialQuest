@@ -9,9 +9,14 @@ const GuildPostsWrapper = async ({
 }) => {
     const user = await getProfileConnected()
 
+    const getAllPostsGuild = async () => {
+        "use server"
+        return await getAllPostsFromGuild(params.guildName[0])
+    }
+
     return (
         <div>
-            <PostsWrapper getPost={() => getAllPostsFromGuild(params.guildName[0])} user={user} />
+            <PostsWrapper getPost={getAllPostsGuild} user={user} filtre={false} />
         </div>
     );
 };

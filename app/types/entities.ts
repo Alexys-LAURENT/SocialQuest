@@ -31,23 +31,17 @@ export type Post = {
 }
 
 export type ExtendedPost = Post & {
-    profiles: {
-        id_user: string,
-        username: string,
-        avatar_url?: string
-        a_propos?: string,
-        banner_url?: string,
-        niveaux: {
-            libelle: number
-        }
-    },
-    guildes: {
-        nom: string,
-        avatar_url?: string
-    },
-    likesCount: number,
-    userLikedPost: boolean,
-    answersCount: number,
+    creator_id_user: string,
+    creator_username: string,
+    creator_avatar_url: string,
+    creator_a_propos: string,
+    creator_banner_url?: string,
+    creator_niveau_libelle: number,
+    guilde_nom: string,
+    guilde_avatar_url: string,
+    likes_count: number,
+    user_liked_post: boolean,
+    answers_count: number,
     createdAtFormated: string,
 }
 

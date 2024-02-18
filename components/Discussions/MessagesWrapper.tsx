@@ -14,6 +14,7 @@ import dynamic from 'next/dynamic'
 import 'moment/locale/fr'
 import moment from 'moment';
 import Image from 'next/image'
+import { getMessages } from '@/utils/messages/getMessages';
 
 
 const DynamicEditGroup = dynamic(() => import('@/components/Discussions/EditGroup'))
@@ -26,21 +27,39 @@ const MessagesWrapper = () => {
     const [tooltipUserOpen, setTooltipUserOpen] = useState<{ open: boolean, key: string }>({ open: false, key: '' })
     const [tooltipOthersOpen, setTooltipOthersOpen] = useState<{ open: boolean, key: string }>({ open: false, key: '' })
     const [profileConnected, setProfileConnected] = useState<Profile | null>(null)
+    const [isMobile, setIsMobile] = useState(false)
     const supabase = createClient()
 
 
+    useEffect(() => {
+        setIsMobile(window.innerWidth <= 641)
+        window.addEventListener('resize', () => {
+            setIsMobile(window.innerWidth <= 641)
+        })
+        return () => {
+            window.removeEventListener('resize', () => {
+                setIsMobile(window.innerWidth <= 641)
+            })
+        }
+    }, [])
+
+
+    async function getMessagesDiscussion() {
+        const messages = await getMessages(selectedCDiscussion)
+        setMessages(messages)
+    }
 
 
     useEffect(() => {
         if (selectedCDiscussion) {
-            getMessages()
+            getMessagesDiscussion()
 
             const messagesChannel = supabase.channel(`discussion${selectedCDiscussion?.id_discussion}`)
                 .on(
                     'postgres_changes',
                     { event: '*', schema: 'public', table: 'messages', filter: `id_discussion=eq.${selectedCDiscussion?.id_discussion}` },
-                    (payload) => {
-                        getMessages(payload.eventType)
+                    (_) => {
+                        getMessagesDiscussion()
                     }
                 )
                 .subscribe()
@@ -105,19 +124,6 @@ const MessagesWrapper = () => {
         setProfileConnected(profile)
     }
 
-    async function getMessages(eventType?: string) {
-        const { data, error } = await supabase
-            .from('messages')
-            .select("id_message, created_at, id_user, contenu , isDeleted, profiles(username)")
-            .eq('id_discussion', selectedCDiscussion?.id_discussion)
-            .order('created_at', { ascending: true })
-        setMessages(data as unknown as Message[])
-        if (error) {
-            console.error(error);
-            return;
-        }
-    }
-
     function getImageUrl() {
         if (selectedCDiscussion?.is_group && selectedCDiscussion?.image_url) {
             return selectedCDiscussion?.image_url
@@ -171,7 +177,7 @@ const MessagesWrapper = () => {
                     <DynamicEditGroup profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} setSelectedDiscussion={setSelectedDiscussion} setIsEditingGroup={setIsEditingGroup} />
                 ) : (
                     <>
-                        <ScrollShadow id='messages_container' className='relative w-full h-full overflow-y-auto' size={50} offset={5}>
+                        <ScrollShadow id='messages_container' className='relative w-full h-full overflow-y-auto' size={isMobile ? 0 : 50} offset={5}>
 
                             {/* message */}
                             {messages && messages.length > 0 ? messages.map((item, index) => (
