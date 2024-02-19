@@ -8,11 +8,12 @@ import { sendPost } from '@/utils/sendPost';
 import PostInputGuildsListBox from '@/components/PostInputGuildsSelect';
 import Image from 'next/image';
 import { uploadFiles } from '@/utils/uploadFiles';
+import { Guilde } from '@/app/types/entities';
 
 interface PostInputProps {
   id_guilde?: string;
   page?: string;
-  guildesUser?: any;
+  guildesUser?: Guilde[] | null;
   parent?: string;
 }
 
@@ -124,7 +125,7 @@ const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => 
     <div className="w-full h-fit flex flex-col min-h-fit ">
       <form id="NewPostinput" onSubmit={(e) => send(e)}>
         <div className="flex flex-col h-full w-full bg-tempBgLightSecondary dark:bg-tempBgDark border border-tempLightBorder dark:border-tempDarkBorder rounded-t-md py-2 px-6 gap-1 transition-all !duration-500">
-          {page === 'index' && guildesUser.length > 0 && (
+          {page === 'index' && guildesUser && guildesUser.length > 0 && (
             <PostInputGuildsListBox setGuilde={setGuilde} guildesUser={guildesUser} />
           )}
           {page !== 'post' && (

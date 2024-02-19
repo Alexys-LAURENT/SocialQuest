@@ -2,19 +2,10 @@ import { Avatar, Card } from '@nextui-org/react';
 import Link from 'next/link';
 import { getTopGuildes } from '@/utils/getTopGuildes';
 import Image from 'next/image';
+import { formatCount } from '@/utils/formatCount';
 
 const TopGuildesItems = async () => {
   const topGuildes = await getTopGuildes();
-
-  const formatCount = (count: number) => {
-    if (count >= 1000000) {
-      return (Math.floor((count / 1000000) * 10) / 10).toFixed(1) + 'M'; // convert to M for number from > 1000000
-    } else if (count >= 1000) {
-      return (Math.floor(count / 100) / 10).toFixed(1) + 'k'; // convert to k for number from > 1000
-    } else {
-      return count;
-    }
-  };
 
   return (
     <div className="flex flex-col gap-2">

@@ -1,4 +1,5 @@
 "use server";
+import { Guilde } from "@/app/types/entities";
 import { getProfileConnected } from "@/utils/getProfileConnected";
 import { createClient } from "@/utils/supabase/server"
 import { cookies } from 'next/headers'
@@ -13,7 +14,7 @@ export async function getGuildesUser() {
 
     const { data: guildesUser, error: guildesUserError } = await supabase
         .from('guildes_users')
-        .select("id_guilde, guildes(*)")
+        .select("guildes(*)")
         .eq("id_user", user?.id_user)
 
 
@@ -21,6 +22,5 @@ export async function getGuildesUser() {
         console.log(guildesUserError)
         return null
     }
-
-    return guildesUser
+    return guildesUser.map((guilde: any) => guilde.guildes) as Guilde[]
 }

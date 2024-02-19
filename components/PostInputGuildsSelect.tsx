@@ -1,9 +1,10 @@
 import { Select, SelectItem } from '@nextui-org/react';
 import { Dispatch } from 'react';
 import Image from 'next/image';
+import { Guilde } from '@/app/types/entities';
 
 
-const PostInputGuildsSelect = ({ setGuilde, guildesUser }: { setGuilde: Dispatch<any>, guildesUser: any }) => {
+const PostInputGuildsSelect = ({ setGuilde, guildesUser }: { setGuilde: Dispatch<any>, guildesUser: Guilde[] }) => {
     return (
         <Select
             aria-label='Guilde du post / Pas de guilde'
@@ -17,12 +18,12 @@ const PostInputGuildsSelect = ({ setGuilde, guildesUser }: { setGuilde: Dispatch
         >
 
 
-            {guildesUser && guildesUser.map((guildeUser: any) => (
-                <SelectItem key={`${guildeUser.guildes.id_guilde}`} value={guildeUser.guildes.id_guilde} textValue={guildeUser.guildes.nom} className=' bg-bgLight dark:bg-tempBgDark'>
+            {guildesUser && guildesUser.map((guildeUser: Guilde) => (
+                <SelectItem key={`${guildeUser.id_guilde}`} value={guildeUser.id_guilde} textValue={guildeUser.nom} className=' bg-bgLight dark:bg-tempBgDark'>
                     <div className="flex gap-2 items-center">
-                        <Image alt={guildeUser.guildes.nom} className="flex-shrink-0 rounded-full aspect-square w-8 h-8" src={guildeUser.guildes.avatar_url!} width={20} height={20} />
+                        <Image alt={guildeUser.nom} className="flex-shrink-0 rounded-full aspect-square w-8 h-8" src={guildeUser.avatar_url!} width={20} height={20} />
                         <div className="flex flex-col">
-                            <span className="text-small">{guildeUser.guildes.nom}</span>
+                            <span className="text-small">{guildeUser.nom}</span>
                         </div>
                     </div>
                 </SelectItem>

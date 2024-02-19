@@ -104,6 +104,16 @@ export type Notification = {
     link?: string
 }
 
+export type Guilde = {
+    id_guilde: string,
+    nom: string,
+    description: string,
+    created_at: string,
+    avatar_url?: string,
+    banner_url?: string,
+    total_members: number
+}
+
 export type Item = {
     id_item_user: string,
     id_user: string,

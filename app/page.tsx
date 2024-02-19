@@ -8,6 +8,7 @@ import PostsWrapper from '@/components/PostsWrapper';
 import { getAllPosts } from '@/utils/getAllPosts';
 import TopGuildes from '@/components/TopGuildes';
 import TopMembres from '@/components/TopMembres';
+import UserGuildes from '@/components/Home/UserGuildes';
 
 export default async function Index() {
 
@@ -41,17 +42,7 @@ export default async function Index() {
       <div className="hidden lg:flex min-w-[17rem] h-fit">
         {user ?
           (
-            <div className="w-full flex flex-col bg-bgLightCard dark:bg-bgDarkCard text-textDark dark:text-textLight rounded-md text-xl font-semibold h-fit transition-all !duration-500">
-              <Link href={`/${user ? user.username : 'login'}`} className='text-textDark dark:text-textLight dark:hover:bg-[#767676] hover:bg-[#cccccc] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>
-                Ma page
-              </Link>
-              <Link href={`#`} className='text-textDark dark:text-textLight dark:hover:bg-[#767676] hover:bg-[#cccccc] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>
-                Mes Compagnons
-              </Link>
-              <Link href={`#`} className='text-textDark dark:text-textLight dark:hover:bg-[#767676] hover:bg-[#cccccc] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out'>
-                Mes Guildes
-              </Link>
-            </div>
+           <UserGuildes/>
           ) : (
             <div className="w-full flex flex-col bg-bgLightCard dark:bg-bgDarkCard rounded-md text-xl font-semibold h-fit transition-all !duration-500">
               <div className="text-base text-center p-2 text-textDark dark:text-textLight">
