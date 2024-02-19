@@ -1,5 +1,4 @@
 "use server"
-import { getProfileConnected } from "@/utils/getProfileConnected";
 import { cookies } from 'next/headers';
 import { createClient } from "@/utils/supabase/server";
 import { ExtendedPost } from "@/app/types/entities";
@@ -8,7 +7,6 @@ export async function getAnswers(id_post: string) {
     "use server"
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
-    const user = await getProfileConnected()
 
     const { data: posts, error: postsError } = await supabase
         .rpc('get_posts_by_id_parent', { the_id_parent: id_post })

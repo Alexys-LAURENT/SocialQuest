@@ -1,5 +1,4 @@
 "use client"
-
 import { createContext, useState, useContext, Dispatch, SetStateAction } from "react";
 import { DiscussionTab, Message } from "@/app/types/entities";
 import { createClient } from "@/utils/supabase/client";

@@ -9,6 +9,8 @@ import InventaireProvider from '@/app/context/InventaireContext';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import NavBar from '@/components/NavBar/NavBar';
+
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : 'http://localhost:3000'
@@ -26,11 +28,7 @@ export default async function RootLayout({
 }) {
   const profile = await getProfileConnected()
 
-
-  const NavBar = dynamic(() => import('@/components/NavBar/NavBar'));
   const TopLoader = dynamic(() => import('@/components/TopLoader'));
-
-
 
   return (
     <html lang="en" className={`${GeistSans.className} h-full ${profile?.theme || 'dark'}`}>

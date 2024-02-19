@@ -1,4 +1,4 @@
-import { Avatar, Badge, Card } from '@nextui-org/react';
+import { Avatar, Card } from '@nextui-org/react';
 import Link from 'next/link';
 import { getTopMembres } from '@/utils/getTopMembres';
 import Image from 'next/image';

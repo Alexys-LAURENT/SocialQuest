@@ -11,7 +11,6 @@ import TopMembres from '@/components/TopMembres';
 
 export default async function Index() {
 
-  const PostsWrapperSkeleton = dynamic(() => import('@/components/Skeletons/PostsWrapperSkeleton'));
   const PostInputSkeleton = dynamic(() => import('@/components/Skeletons/PostInputSkeleton'));
 
   const user = await getProfileConnected()

@@ -1,9 +1,8 @@
 "use client"
-import { createContext, useEffect, useState } from 'react';
-import { NextReward, Profile } from '@/app/types/entities';
+import { createContext, useState } from 'react';
+import { Profile } from '@/app/types/entities';
 import { createBrowserClient } from '@supabase/ssr';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { getNextRewards } from '@/utils/getNextRewards';
 import dynamic from 'next/dynamic';
 type Content = "User" | "NavMenu";
 

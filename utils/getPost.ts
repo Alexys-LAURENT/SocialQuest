@@ -1,5 +1,4 @@
 "use server"
-import { getProfileConnected } from "@/utils/getProfileConnected";
 import { cookies } from 'next/headers';
 import { createClient } from "@/utils/supabase/server";
 import { ExtendedPost } from "@/app/types/entities";
