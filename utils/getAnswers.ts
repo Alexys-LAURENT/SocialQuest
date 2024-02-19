@@ -10,28 +10,21 @@ export async function getAnswers(id_post: string) {
     const supabase = createClient(cookieStore);
     const user = await getProfileConnected()
 
-    const { data: postsWithLikes, error: err } = await supabase
-        .from('posts')
-        .select(`*, profiles(username, avatar_url, a_propos,banner_url),guildes(nom, avatar_url), likes(id_like, id_user),
-        children:posts(id_post)`)
-        .eq('parent', id_post)
+    const { data: posts, error: postsError } = await supabase
+        .rpc('get_posts_by_id_parent', { the_id_parent: id_post })
 
-    if (err) {
-        console.error(err)
-        return false
+    if (postsError) {
+        console.error(postsError)
+        return null
     }
 
-    // Récupérer le nombre total de likes par post
-    const posts = postsWithLikes?.map(post => {
-        const likesCount = post.likes.length;
-        const answersCount = post.children.length;
-        const userLikedPost = post.likes.some((like: any) => like.id_user === user?.id_user); // Remplacez currentUserID par l'ID de l'utilisateur actuel
-        const createdAtFormated = new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(new Date(post.created_at ?? ''))
 
-        return { ...post, likesCount, answersCount, userLikedPost, createdAtFormated }
-    }) as ExtendedPost[];
+    posts.map((post: ExtendedPost) => {
+        post.createdAtFormated = new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(new Date(post.created_at ?? ''))
+        return post
+    })[0] as ExtendedPost
 
-    posts && posts.sort((a, b) => b.likesCount - a.likesCount)
+    posts && posts.sort((a: any, b: any) => b.likes_count - a.likes_count)
 
     return posts
 }
