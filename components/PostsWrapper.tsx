@@ -1,8 +1,8 @@
 "use client";
 import { ExtendedPost, Profile } from '@/app/types/entities';
-import { Tabs, Tab, select } from '@nextui-org/react';
-import dynamic from 'next/dynamic'
-import { Fragment, use, useEffect, useRef, useState } from 'react'
+import { Tabs, Tab, Spinner } from '@nextui-org/react';
+import dynamic from 'next/dynamic';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import PostsWrapperSkeleton from './Skeletons/PostsWrapperSkeleton';
 import { getPostSuivis } from '@/utils/getPostSuivis';
 import { getPostGuildes } from '@/utils/getPostGuildes';
@@ -16,6 +16,7 @@ const PostsWrapper = ({ user, getPost, postPage, filtre }: { user: Profile | nul
     const [postsSuivis, setPostsSuivis] = useState<ExtendedPost[] | null>(null)
     const [postsGuildes, setPostsGuildes] = useState<ExtendedPost[] | null>(null)
     const [lastScrollDirection, setLastScrollDirection] = useState<'up' | 'down'>('down')
+    const [isSticky, setIsSticky] = useState(false);
     const [selectedKey, setSelectedKey] = useState('MaPage')
 
     const prevScrollY = useRef(0);
@@ -52,6 +53,13 @@ const PostsWrapper = ({ user, getPost, postPage, filtre }: { user: Profile | nul
             const handleScroll = () => {
                 const currentScrollY = mainDiv.scrollTop;
 
+                // Set the sticky status to true when the scroll threshold is reached
+                if (currentScrollY > 350) {
+                    setIsSticky(true);
+                } else {
+                    setIsSticky(false);
+                }
+
                 if (prevScrollY.current < currentScrollY) {
                     setLastScrollDirection('down');
                 } else if (prevScrollY.current > currentScrollY) {
@@ -85,16 +93,19 @@ const PostsWrapper = ({ user, getPost, postPage, filtre }: { user: Profile | nul
 
     const loadPosts = async (id_user: string, key: string) => {
         if (key === selectedKey && key === 'MaPage') {
-            console.log('MaPage', key === selectedKey && key === 'MaPage')
+            document.getElementById('RefreshIconMaPage')?.classList.remove('hidden')
             setPostsRandom(await getPost())
+            document.getElementById('RefreshIconMaPage')?.classList.add('hidden')
         }
         if (key === selectedKey && key === 'Suivis') {
-            console.log('Suivis', key === selectedKey && key === 'Suivis')
+            document.getElementById('RefreshIconSuivis')?.classList.remove('hidden')
             setPostsSuivis(await getPostSuivis(id_user))
+            document.getElementById('RefreshIconSuivis')?.classList.add('hidden')
         }
         if (key === selectedKey && key === 'Guildes') {
-            console.log('Guildes', key === selectedKey && key === 'Guildes')
+            document.getElementById('RefreshIconGuildes')?.classList.remove('hidden')
             setPostsGuildes(await getPostGuildes(id_user))
+            document.getElementById('RefreshIconGuildes')?.classList.add('hidden')
         }
 
         setSelectedKey(key)
@@ -127,8 +138,15 @@ const PostsWrapper = ({ user, getPost, postPage, filtre }: { user: Profile | nul
     if (posts && filtre && user) {
         return (
             <div className={`${postPage ? 'mt-8' : ''} `}>
-                <Tabs aria-label="Filtres" defaultSelectedKey={'MaPage'} onSelectionChange={(key: any) => loadPosts(user.id_user, key)} classNames={{ base: `z-[999] flex justify-center sticky transition-all !duration-250 ${lastScrollDirection === 'down' ? '-top-10' : 'top-1'}` }} selectedKey={selectedKey}>
-                    <Tab key="MaPage" title="Ma page">
+                <Tabs aria-label="Filtres" defaultSelectedKey={'MaPage'} onSelectionChange={(key: any) => loadPosts(user.id_user, key)} disableAnimation={isSticky}
+                    classNames={{
+                        base: `z-[999] flex justify-center sticky transition-all !duration-250 ${lastScrollDirection === 'down' ? '-top-12' : 'top-1'}`
+                    }} selectedKey={selectedKey}>
+                    <Tab key="MaPage" title={selectedKey === 'MaPage' ?
+                        <div className="flex items-center gap-2">
+                            <span>Ma Page</span>
+                            <Spinner id='RefreshIconMaPage' size="sm" className="scale-75 hidden" color="white" />
+                        </div> : "Ma Page"}>
                         <div className="w-full flex flex-col gap-4">
                             {posts?.length !== 0 ? (
                                 posts?.map((post: ExtendedPost) => (
@@ -145,7 +163,11 @@ const PostsWrapper = ({ user, getPost, postPage, filtre }: { user: Profile | nul
                             )}
                         </div>
                     </Tab>
-                    <Tab key="Suivis" title="Suivis">
+                    <Tab key="Suivis" title={selectedKey === 'Suivis' ?
+                        <div className="flex items-center gap-2">
+                            <span>Suivis</span>
+                            <Spinner id='RefreshIconSuivis' size="sm" className="scale-75 hidden" color="white" />
+                        </div> : "Suivis"}>
                         <div className="w-full flex flex-col gap-4">
                             {posts?.length !== 0 ? (
                                 posts?.map((post: ExtendedPost) => (
@@ -162,7 +184,11 @@ const PostsWrapper = ({ user, getPost, postPage, filtre }: { user: Profile | nul
                             )}
                         </div>
                     </Tab>
-                    <Tab key="Guildes" title="Guildes">
+                    <Tab key="Guildes" title={selectedKey === 'Guildes' ?
+                        <div className="flex items-center gap-2">
+                            <span>Guildes</span>
+                            <Spinner id='RefreshIconGuildes' size="sm" className="scale-75 hidden" color="white" />
+                        </div> : "Guildes"}>
                         <div className="w-full flex flex-col gap-4">
                             {posts?.length !== 0 ? (
                                 posts?.map((post: ExtendedPost) => (

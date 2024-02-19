@@ -23,7 +23,7 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
     const supabase = createClient()
 
     useEffect(() => {
-        const getData = async () => setFollow(await doesFollow(post.profiles.id_user, user?.id_user))
+        const getData = async () => setFollow(await doesFollow(post.id_user, user?.id_user))
         getData()
     }, [])
 
@@ -41,11 +41,11 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
 
     const handleFollow = async () => {
         if (!user?.id_user) return router.push('/login')
-        const isDone = await toggleFollow(post.profiles.id_user, follow!, user.id_user)
+        const isDone = await toggleFollow(post.id_user, follow!, user.id_user)
         if (isDone) {
             follow === true ? success('Vous ne suivez plus cet utilisateur') : success('Vous suivez désormais cet utilisateur')
             router.refresh()
-            setFollow(await doesFollow(post.profiles.id_user, user.id_user))
+            setFollow(await doesFollow(post.id_user, user.id_user))
         } else {
             errorToaster('Une erreur est survenue')
         }
@@ -80,15 +80,15 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
             <div className="flex flex-col border border-gray-500 rounded-md p-2 gap-1">
 
                 <div className="flex gap-2 justify-between">
-                    <Image src={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url! || defaultUser.src} alt={post.guildes ? post.guildes.avatar_url! : post.profiles.avatar_url! || defaultUser.src} width={32} height={32} className='min-h-[42px] max-h-[42px] min-w-[42px] max-w-[42px] rounded-full' />
+                    <Image src={post.id_guilde && post.guilde_nom ? post.guilde_avatar_url : post.creator_avatar_url || defaultUser.src} alt={post.id_guilde && post.guilde_nom ? post.guilde_avatar_url : post.creator_avatar_url || defaultUser.src} width={32} height={32} className='min-h-[42px] max-h-[42px] min-w-[42px] max-w-[42px] rounded-full' />
                     <div className="flex items-center justify-between w-full">
                         <div className="flex flex-col">
 
                             <div className="flex gap-1 items-center">
-                                {post.guildes && (
+                                {post.id_guilde && post.guilde_nom && (
                                     <>
-                                        <Link href={`/g/${post.guildes.nom}`} className="text-sm text-textDark dark:text-textLight font-semibold">
-                                            {post.guildes.nom}
+                                        <Link href={`/g/${post.guilde_nom}`} className="text-sm text-textDark dark:text-textLight font-semibold">
+                                            {post.guilde_nom}
                                         </Link>
                                         <div>
                                             •
@@ -97,11 +97,11 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
                                 )}
                                 <PopoverUserProfile post={post} />
                             </div>
-                            <span className='text-tiny dark:text-white/50 text-black/50'>Niveau {post.profiles.niveaux.libelle}</span>
+                            <span className='text-tiny dark:text-white/50 text-black/50'>Niveau {post.creator_niveau_libelle}</span>
                         </div>
                         <div className='flex gap-2 items-center'>
                             {
-                                post.profiles.id_user !== user?.id_user && (
+                                post.id_user !== user?.id_user && (
                                     <Button onClick={() => handleFollow()} className='customButton bg-secondary/70 border-secondary text-textLight'>
                                         {follow ? 'Abonné' : 'Suivre'}
                                     </Button>
