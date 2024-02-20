@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import { CheckboxGroup, Checkbox, Slider, Input, Select, SelectItem } from '@nextui-org/react';
 const page = () => {
   return (

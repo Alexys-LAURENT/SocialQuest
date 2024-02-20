@@ -54,6 +54,3 @@ export default async function RootLayout({
     </html >
   )
 }
-
-
-import React from 'react';

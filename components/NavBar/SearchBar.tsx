@@ -44,10 +44,10 @@ const SearchBar = () => {
     return (
         <Autocomplete
             aria-label="Rechercher"
-            inputProps={{ classNames: {input: "inputFilterNavbar", inputWrapper: "h-10 transition-all !duration-500" }, startContent: <MagnifyingGlassIcon className="w-5 h-5 text-textDark dark:text-textLight !duration-[125ms]" /> }}
+            inputProps={{ classNames: { input: "inputFilterNavbar", inputWrapper: "h-10 transition-all !duration-500" }, startContent: <MagnifyingGlassIcon className="w-5 h-5 text-textDark dark:text-textLight !duration-[125ms]" /> }}
             classNames={{ selectorButton: "hidden" }}
             selectorIcon={null}
-            defaultFilter={()=> true}
+            defaultFilter={() => true}
             scrollShadowProps={{
                 isEnabled: false,
             }}
@@ -63,11 +63,11 @@ const SearchBar = () => {
         >
 
             {isLoading && (
-                <AutocompleteSection title="Utilisateurs" classNames={{group: "flex flex-col gap-1", heading: headingClasses }} showDivider>
+                <AutocompleteSection title="Utilisateurs" classNames={{ group: "flex flex-col gap-1", heading: headingClasses }} showDivider>
                     {
                         [1, 2].map((i) => (
-                        <AutocompleteItem value="Recherche en cours" textValue="Recherche en cours" key={`searchbar-recherche-en-cours-user-${i}`} className="animate-pulse h-12 bg-default-100 data-[hover=true]:bg-default-100">
-                        </AutocompleteItem>
+                            <AutocompleteItem value="Recherche en cours" textValue="Recherche en cours" key={`searchbar-recherche-en-cours-user-${i}`} className="animate-pulse h-12 bg-default-100 data-[hover=true]:bg-default-100">
+                            </AutocompleteItem>
                         ))
                     }
                 </AutocompleteSection>
@@ -75,7 +75,7 @@ const SearchBar = () => {
 
             {profiles && profiles.length > 0 && !isLoading && (
                 <AutocompleteSection title="Utilisateurs" classNames={{ heading: headingClasses }} showDivider>
-                   
+
                     {profiles.map((profile: any) => (
                         <AutocompleteItem as={Link} href={`/${profile.username}`} key={`searchbar-${profile.username}`} value={profile.username} textValue={profile.username}>
                             <div className="w-full h-full">
@@ -83,26 +83,26 @@ const SearchBar = () => {
                                     <Avatar size="sm" src={profile.avatar_url} />
                                     <div className="w-full h-full flex flex-col">
                                         {profile.username}
-                                        <span className="text-tiny text-default-400">Utilisateur . Niveau {profile.niveau}</span>
+                                        <span className="text-tiny text-default-400">Utilisateur • Niveau {profile.niveau}</span>
                                     </div>
                                 </div>
                             </div>
                         </AutocompleteItem>
                     ))}
-        
+
                 </AutocompleteSection>
             )}
 
-           {isLoading && (
-                <AutocompleteSection title="Guildes" classNames={{group: "flex flex-col gap-1", heading: headingClasses }} showDivider>
+            {isLoading && (
+                <AutocompleteSection title="Guildes" classNames={{ group: "flex flex-col gap-1", heading: headingClasses }} showDivider>
                     {
                         [1, 2].map((i) => (
-                        <AutocompleteItem value="Recherche en cours" textValue="Recherche en cours" key={`searchbar-recherche-en-cours-guilde-${i}`} className="animate-pulse h-12 bg-default-100 data-[hover=true]:bg-default-100">
-                        </AutocompleteItem>
+                            <AutocompleteItem value="Recherche en cours" textValue="Recherche en cours" key={`searchbar-recherche-en-cours-guilde-${i}`} className="animate-pulse h-12 bg-default-100 data-[hover=true]:bg-default-100">
+                            </AutocompleteItem>
                         ))
                     }
                 </AutocompleteSection>
-            )} 
+            )}
 
 
             {guildes && guildes.length > 0 && !isLoading && (
@@ -115,7 +115,7 @@ const SearchBar = () => {
                                     <Avatar size="sm" src={guilde.avatar_url} />
                                     <div className="w-full h-full flex flex-col">
                                         {guilde.nom}
-                                        <span className="text-tiny text-default-400">Guilde . {guilde.total_members} membres</span>
+                                        <span className="text-tiny text-default-400">Guilde • {guilde.total_members} membres</span>
                                     </div>
                                 </div>
                             </div>
@@ -128,8 +128,8 @@ const SearchBar = () => {
             {!isLoading && inputValue && (
                 <AutocompleteSection title="Voir plus" classNames={{ heading: headingClasses }} >
                     <AutocompleteItem as={Link} href={`/?q=${inputValue}`} value="Voir plus" textValue="Voir plus" key={`searchbar-voir-plus`}>
-                        <div className="w-full h-full" onClick={()=>setInputValue('')}>
-                        Rechercher {inputValue}
+                        <div className="w-full h-full" onClick={() => setInputValue('')}>
+                            Rechercher {inputValue}
                         </div>
                     </AutocompleteItem>
                 </AutocompleteSection>

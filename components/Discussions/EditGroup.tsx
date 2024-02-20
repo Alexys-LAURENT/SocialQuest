@@ -40,12 +40,12 @@ const EditGroup = ({ profileConnected, selectedCDiscussion, setSelectedDiscussio
 
 
     return (
-        <div className='w-full h-full flex flex-col items-center relative'>
-            <XMarkIcon onClick={() => setIsEditingGroup(false)} className='h-6 w-6 text-white absolute cursor-pointer right-12 top-3 block ' />
+        <div className='w-full h-full flex flex-col items-center relative mt-3'>
+            <XMarkIcon onClick={() => setIsEditingGroup(false)} className='h-6 w-6 text-white absolute cursor-pointer right-5 sm:right-8 top-[0.6rem] block' />
             {isOpen && <DynamicModalComponentAddUsersToDiscussion isOpen={isOpen} onOpenChange={onOpenChange} defaultsProfiles={selectedCDiscussion.profiles as ProfileInDiscussion[]} profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} />}
-            <Tabs aria-label="Options" className=''>
-                <Tab key="Général" title="Général" className='w-full flex justify-center'>
-                    <Card className='w-11/12 min-h-[100px]'>
+            <Tabs aria-label="Options">
+                <Tab key="Général" title="Général" className='w-full flex justify-center px-3 sm:px-6'>
+                    <Card className='w-full min-h-[100px]'>
                         <CardBody className='justify-between'>
                             <div>
 
@@ -58,23 +58,27 @@ const EditGroup = ({ profileConnected, selectedCDiscussion, setSelectedDiscussio
                                     onChange={(e) => setInputValue(e.target.value)}
                                     placeholder='Nom du groupe'
                                     width='100%'
-                                    className=''
                                     labelPlacement='outside'
+                                    classNames={{ label: 'pl-1' }}
                                 />
                             </div>
 
                             <div>
 
                                 <div className='flex w-full gap-3 justify-end my-6'>
-                                    <Button className='w-fit h-full bg-bgLightPopover dark:bg-bgDarkPopover p-3 text-xs sm:text-base'>Annuler</Button>
-                                    <Button className='w-fit h-full bg-blue-500 p-3 text-xs sm:text-base' isDisabled={inputValue.length === 0} onClick={() => updateCurrentSelectedDiscussion(inputValue)}>Enregister</Button>
+                                    <Button className='customButton text-xs sm:text-base' onClick={() => setInputValue(selectedCDiscussion.nom)}>
+                                        Annuler
+                                    </Button>
+                                    <Button className='customButton bg-secondary text-xs sm:text-base' isDisabled={inputValue.length === 0} onClick={() => updateCurrentSelectedDiscussion(inputValue)}>
+                                        Enregister
+                                    </Button>
                                 </div>
 
 
                                 {/* Supprimer */}
                                 <Card className='border rounded-md border-red-500/40 min-h-[58px]'>
                                     <CardBody className=' flex-row items-center justify-between'>
-                                        <label className='text-xs sm:text-base'> Supprimer ce groupe </label>
+                                        <label className='text-xs sm:text-base'> Suppression </label>
 
                                         <Popconfirm
                                             className='relative'
@@ -85,7 +89,7 @@ const EditGroup = ({ profileConnected, selectedCDiscussion, setSelectedDiscussio
                                             cancelText="Non"
                                             okButtonProps={{ className: 'bg-red-500 hover:bg-red-600' }}
                                         >
-                                            <Button className='w-fit h-fit py-1 rounded-md text-red-500 text-xs sm:text-base'>Supprimer le groupe</Button>
+                                            <Button variant='light' color='danger' className='customButton text-danger text-xs sm:text-base'>Supprimer le groupe</Button>
                                         </Popconfirm>
                                     </CardBody>
                                 </Card>
@@ -93,9 +97,9 @@ const EditGroup = ({ profileConnected, selectedCDiscussion, setSelectedDiscussio
                         </CardBody>
                     </Card>
                 </Tab>
-                <Tab key="Membres" title="Membres" className='w-full flex justify-center'>
-                    <Card className='w-11/12 overflow-y-auto max-h-[500px]'>
-                        <CardBody className='gap-3'>
+                <Tab key="Membres" title="Membres" className='w-full flex justify-center px-3 sm:px-6'>
+                    <Card className='w-full'>
+                        <CardBody className='gap-3 overflow-y-auto max-h-[500px] pb-0'>
                             <Card className='min-h-[50px] sm:min-h-[64px]'>
                                 <CardBody className='flex flex-row items-center gap-3'>
                                     <Image src={profileConnected.avatar_url!} alt="group" width={100} height={100} className={`w-6 h-6 sm:w-10 sm:h-10 bg-[#3f3f46] rounded-full ${!profileConnected.avatar_url && "invert"}`} />
@@ -124,12 +128,14 @@ const EditGroup = ({ profileConnected, selectedCDiscussion, setSelectedDiscussio
 
 
 
+                        </CardBody>
+                        <CardBody className=''>
                             <Card className='min-h-[40px]'>
                                 <CardBody className='flex flex-row items-center gap-3 justify-center p-0'> <Button onPress={onOpen} className='w-full h-full bg-transparent p-3 text-xs sm:text-base'>+</Button>
                                 </CardBody>
                             </Card>
-
                         </CardBody>
+
                     </Card>
                 </Tab>
             </Tabs>

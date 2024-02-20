@@ -13,6 +13,7 @@ const ModalComponentAddUsersToDiscussion = ({ isOpen, onOpenChange, defaultsProf
     const [users, setUsers] = useState<Profile[]>([])
     const profilesUsernames = defaultsProfiles.map((profile) => profile.username).join(',')
     const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
+    const [inputValue, setInputValue] = useState<string>('')
     const { addUsersToSelectedDiscussion } = useContext(DiscussionContext)
 
     useEffect(() => {
@@ -38,8 +39,8 @@ const ModalComponentAddUsersToDiscussion = ({ isOpen, onOpenChange, defaultsProf
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <ModalBody>
-                                <Input placeholder='Rechercher un utilisateur' />
+                            <ModalBody className='pt-4 pb-0'>
+                                <Input placeholder='Rechercher un utilisateur' value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
 
                                 <Card>
                                     <CardBody className='flex flex-row items-center gap-1 w-full flex-wrap max-h-[125px]'>
@@ -77,6 +78,7 @@ const ModalComponentAddUsersToDiscussion = ({ isOpen, onOpenChange, defaultsProf
                                     items={users}
                                     onSelectionChange={(keys) => setSelectedKeys(keys as unknown as React.Key[])}
                                     selectedKeys={selectedKeys}
+                                    emptyContent="Aucun utilisateur trouvé"
                                 >
                                     {(item) => item && (
                                         <ListboxItem key={item.id_user} textValue={item.username}>
@@ -93,12 +95,12 @@ const ModalComponentAddUsersToDiscussion = ({ isOpen, onOpenChange, defaultsProf
 
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="danger" variant="light" onPress={onClose} onClick={() => setSelectedKeys([])}>
+                                <Button className='customButton' color="danger" variant="light" onPress={onClose} onClick={() => setSelectedKeys([])}>
                                     Annuler
                                 </Button>
                                 <Button onClick={() => addUsersToSelectedDiscussion(Array.from(selectedKeys) as string[]).then(() => onClose())}
                                     isDisabled={Array.from(selectedKeys).map((key) => users.find((user) => user.id_user === key)).length === 0}
-                                    className={`${Array.from(selectedKeys).map((key) => users.find((user) => user.id_user === key)).length === 0 && "hover:select-none bg-gray-800"} bg-secondary`}>
+                                    className={`${Array.from(selectedKeys).map((key) => users.find((user) => user.id_user === key)).length === 0 && "hover:select-none bg-gray-800"} bg-secondary customButton`}>
                                     Valider
                                 </Button>
                             </ModalFooter>

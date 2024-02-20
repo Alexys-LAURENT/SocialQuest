@@ -1,6 +1,6 @@
 import { ArrowDownTrayIcon } from '@heroicons/react/20/solid';
 import { Image as ImageAntd } from 'antd';
-import Image from 'next/image';
+import ImageNext from 'next/image';
 import { useRef } from 'react';
 
 const ImageAntdPreview = ({ img, onDownload }: { img: string, onDownload: (img: string) => void }) => {
@@ -10,7 +10,13 @@ const ImageAntdPreview = ({ img, onDownload }: { img: string, onDownload: (img: 
         return match ? parseFloat(match[1]) : 0;
     }
 
+    function getTranslateX(transform: string) {
+        const match = transform.match(/translate3d\(\s*([^,]+)\s*,\s*[^,]+\s*,\s*[^,]+\s*\)/i);
+        return match ? parseFloat(match[1]) : 0;
+    }
+
     const translateYRef = useRef(0);
+    const translateXRef = useRef(0);
 
     const handleClickImage = (event: any) => {
         // Check if the device is a touch device
@@ -20,7 +26,7 @@ const ImageAntdPreview = ({ img, onDownload }: { img: string, onDownload: (img: 
             return;
         }
 
-        const threshold = window.innerHeight * 0.2; // 20% of the window height
+        const threshold = window.innerHeight * 0.15; // 15% of the window height
 
         const handlePointerUp = () => {
             if (Math.abs(translateYRef.current) > threshold) {
@@ -36,6 +42,14 @@ const ImageAntdPreview = ({ img, onDownload }: { img: string, onDownload: (img: 
                 if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
                     if (mutation.target instanceof HTMLElement) {
                         translateYRef.current = getTranslateY(mutation.target.style.transform);
+                        translateXRef.current = getTranslateX(mutation.target.style.transform);
+
+                        // Calculate the opacity and scale based on the translateY value
+                        const factor = 2; // Increase this to make the effect slower
+                        const opacity = Math.max(0, 1 - Math.abs(translateYRef.current / factor) / threshold);
+                        // const scale = 1 - Math.abs(translateYRef.current / (factor * 3)) / threshold;
+                        mutation.target.style.opacity = `${opacity}`;
+                        // mutation.target.style.transform = `translate3d(${translateXRef.current}px, ${translateYRef.current}px, 0px) scale3d(${scale}, ${scale}, 1)`;
                     }
                 }
             });
@@ -73,11 +87,11 @@ const ImageAntdPreview = ({ img, onDownload }: { img: string, onDownload: (img: 
                 )
             }}
             placeholder={
-                <Image
+                <ImageNext
                     src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images_posts/${img}`}
                     alt={img}
-                    width={150}
-                    height={150}
+                    width={50}
+                    height={50}
                     className='absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover blur'
                 />
             }

@@ -1,4 +1,4 @@
-import { Avatar, Card } from '@nextui-org/react';
+import { Avatar, Button } from '@nextui-org/react';
 import Link from 'next/link';
 import { getTopGuildes } from '@/utils/getTopGuildes';
 import Image from 'next/image';
@@ -10,7 +10,7 @@ const TopGuildesItems = async () => {
   return (
     <div className="flex flex-col gap-2">
       {topGuildes.map((guilde: any, index: any) => (
-        <Card
+        <Button
           key={`guildes-topItem-${index}-${Math.random}`}
           as={Link}
           className="p-2 bg-tempBgLightSecondary hover:bg-tempLightBorder/50 dark:bg-tempBgDarkSecondary dark:hover:bg-tempDarkHover shadow-none border border-tempLightBorder dark:border-tempDarkBorder rounded-md !transition-all !duration-[125ms] h-auto"
@@ -44,7 +44,7 @@ const TopGuildesItems = async () => {
               )}
             </div>
           </div>
-        </Card>
+        </Button>
       ))}
     </div>
   );

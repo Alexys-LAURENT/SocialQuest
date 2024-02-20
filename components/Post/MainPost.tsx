@@ -1,6 +1,6 @@
 "use client"
 import { useContext, useEffect, useState } from 'react';
-import { Button, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
+import { Button, Popover, PopoverContent, PopoverTrigger, Spinner } from '@nextui-org/react';
 import Link from 'next/link';
 import { EllipsisVerticalIcon, FlagIcon, ShareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { ExtendedPost, Profile } from '@/app/types/entities';
@@ -20,6 +20,7 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
     const router = useRouter()
     const { success, error: errorToaster } = useContext(ToasterContext)
     const [follow, setFollow] = useState<boolean | undefined>(undefined)
+    const [isOpen, setIsOpen] = useState(false)
     const supabase = createClient()
 
     useEffect(() => {
@@ -40,12 +41,11 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
     }
 
     const handleFollow = async () => {
-        if (!user?.id_user) return router.push('/login')
-        const isDone = await toggleFollow(post.id_user, follow!, user.id_user)
+        const isDone = await toggleFollow(post.id_user, follow!, user?.id_user)
         if (isDone) {
             follow === true ? success('Vous ne suivez plus cet utilisateur') : success('Vous suivez désormais cet utilisateur')
             router.refresh()
-            setFollow(await doesFollow(post.id_user, user.id_user))
+            setFollow(await doesFollow(post.id_user, user?.id_user))
         } else {
             errorToaster('Une erreur est survenue')
         }
@@ -53,7 +53,7 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
 
 
     return (
-        <div className="">
+        <div>
             <div className="p-2 cursor-pointer rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover text-sm">
                 <div
                     onClick={() => router.back()}
@@ -102,34 +102,47 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
                         <div className='flex gap-2 items-center'>
                             {
                                 post.id_user !== user?.id_user && (
-                                    <Button onClick={() => handleFollow()} className='customButton bg-secondary/70 border-secondary text-textLight'>
-                                        {follow ? 'Abonné' : 'Suivre'}
+                                    <Button as={!user ? Link : Button} href='/login' onClick={() => user && handleFollow()} className='customButton bg-secondary/70 border-secondary text-textLight'>
+                                        {(follow !== undefined) ? follow ? 'Abonné' : 'Suivre' : <Spinner size='sm' color='white' />}
                                     </Button>
                                 )
                             }
-                            <Popover placement="top" offset={10} shouldBlockScroll={true}>
+                            <Popover placement="top" offset={10} shouldBlockScroll={true} isOpen={isOpen} onOpenChange={(open) => setIsOpen(open)}>
                                 <PopoverTrigger>
-                                    <EllipsisVerticalIcon className="w-5 h-5 text-textDark dark:text-textLight cursor-pointer" />
+                                    <EllipsisVerticalIcon className="w-7 h-7 px-1 text-textDark dark:text-textLight cursor-pointer" />
                                 </PopoverTrigger>
                                 <PopoverContent className="p-0">
                                     <div className="flex flex-col">
-                                        <Button className="flex gap-2 min-w-0 h-7 min-h-0 px-3 rounded-b text-secondary " variant='light'>
+                                        <Button className="flex gap-2 min-w-0 h-7 min-h-0 px-3 rounded-b text-secondary" variant="light"
+                                            // copy post link to clipboard
+                                            onClick={() => {
+                                                navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_APP_URL}/p/${post.id_post}`)
+                                                    .then(() => {
+                                                        success('Lien du post copié dans le presse papier !');
+                                                        setIsOpen(false);
+                                                    })
+                                                    .catch(() => {
+                                                        errorToaster('Erreur lors de la copie du lien dans le presse papier');
+                                                        setIsOpen(false);
+                                                    });
+                                            }}
+                                        >
                                             <ShareIcon className="w-5 h-5" />
-                                            <div className="">
+                                            <div>
                                                 Partager
                                             </div>
                                         </Button>
                                         {user?.id_user === post.id_user ? (
                                             <Button onClick={() => handleDelete(post.id_post)} className="flex gap-2 min-w-0 h-7 min-h-0 px-3 rounded-t" variant='light' color='danger'>
                                                 <TrashIcon className="w-5 h-5" />
-                                                <div className="">
+                                                <div>
                                                     Supprimer
                                                 </div>
                                             </Button>
                                         ) : (
                                             <Button className="flex gap-2 min-w-0 h-7 min-h-0 px-3 rounded-t" variant='light' color='danger'>
                                                 <FlagIcon className="w-5 h-5" />
-                                                <div className="">
+                                                <div>
                                                     Signaler
                                                 </div>
                                             </Button>

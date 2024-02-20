@@ -80,13 +80,27 @@ export default function Post({ user, post }: { user: Profile | null; post: Exten
             onOpenChange={(open) => setIsOpen(open)}
           >
             <PopoverTrigger>
-              <EllipsisVerticalIcon className="w-5 h-5 text-textDark dark:text-textLight cursor-pointer transition-all !duration-[125ms]" />
+              <EllipsisVerticalIcon className="w-7 h-7 px-1 text-textDark dark:text-textLight cursor-pointer transition-all !duration-[125ms]" />
             </PopoverTrigger>
             <PopoverContent className="p-0">
               <div className="flex flex-col">
-                <Button className="flex gap-2 min-w-0 h-7 min-h-0 px-3 rounded-b " variant="light">
+                <Button className="flex gap-2 min-w-0 h-7 min-h-0 px-3 rounded-b text-secondary" variant="light"
+                  // copy post link to clipboard
+                  onClick={() => {
+                    // to finish, doesn't work on all browsers yet, library suggested: clipboard-polyfill
+                    navigator.clipboard && navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_APP_URL}/p/${post.id_post}`)
+                      .then(() => {
+                        success('Lien du post copié dans le presse papier !');
+                        setIsOpen(false);
+                      })
+                      .catch(() => {
+                        error('Erreur lors de la copie du lien dans le presse papier');
+                        setIsOpen(false);
+                      });
+                  }}
+                >
                   <ShareIcon className="w-5 h-5" />
-                  <div className="">Partager</div>
+                  <div>Partager</div>
                 </Button>
                 {user?.id_user === post.id_user ? (
                   <Button
@@ -103,14 +117,14 @@ export default function Post({ user, post }: { user: Profile | null; post: Exten
                     ) : (
                       <>
                         <TrashIcon className="w-5 h-5" />
-                        <div className="">Supprimer</div>
+                        <div>Supprimer</div>
                       </>
                     )}
                   </Button>
                 ) : (
                   <Button className="flex gap-2 min-w-0 h-7 min-h-0 px-3 rounded-t" variant="light" color="danger">
                     <FlagIcon className="w-5 h-5" />
-                    <div className="">Signaler</div>
+                    <div>Signaler</div>
                   </Button>
                 )}
               </div>
@@ -120,9 +134,9 @@ export default function Post({ user, post }: { user: Profile | null; post: Exten
       </div>
 
       <div className="postRedirect flex flex-col px-10 gap-2">
-        <div>
+        <div className='postRedirect'>
           <div
-            className={`postRedirect text-textDark dark:text-textLight text-md text-[18px] font-semibold working-break-words transition-all !duration-[125ms] ${post.titre ? 'mb-1' : ''}`}
+            className={`text-textDark dark:text-textLight text-md text-[18px] font-semibold working-break-words transition-all !duration-[125ms] ${post.titre ? 'mb-1' : ''}`}
           >
             {post.titre}
           </div>

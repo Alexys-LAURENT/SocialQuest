@@ -168,7 +168,7 @@ const MessagesWrapper = () => {
                             className={`w-8 h-8 sm:h-12 sm:w-12 aspect-square rounded-full ${selectedCDiscussion.is_group ? 'invert p-1' : ''} ${selectedCDiscussion.is_group ? (profileConnected.id_user === selectedCDiscussion.created_by ? "cursor-pointer" : "cursor-default") : "cursor-pointer"}`} />
                     )}
 
-                <h1 className='text-md font-semibold text-textDark dark:text-textLight transition-all !duration-[125ms]'>
+                <h1 className={`text-md font-semibold text-textDark dark:text-textLight transition-all !duration-[125ms] ${selectedCDiscussion.is_group ? (profileConnected.id_user === selectedCDiscussion.created_by ? "cursor-pointer" : "cursor-default") : "cursor-pointer"}`} onClick={() => { selectedCDiscussion.is_group && profileConnected.id_user === selectedCDiscussion.created_by && setIsEditingGroup(!isEditingGroup) }}>
                     {selectedCDiscussion.is_group ? selectedCDiscussion.nom : selectedCDiscussion.profiles[0]?.username}
                 </h1>
             </div>

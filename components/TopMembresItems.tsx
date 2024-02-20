@@ -1,4 +1,4 @@
-import { Avatar, Card } from '@nextui-org/react';
+import { Avatar, Button } from '@nextui-org/react';
 import Link from 'next/link';
 import { getTopMembres } from '@/utils/getTopMembres';
 import Image from 'next/image';
@@ -9,7 +9,7 @@ const TopMembresItems = async () => {
   return (
     <div className="flex flex-col gap-2">
       {topMembres.map((membre: any, index: any) => (
-        <Card
+        <Button
           key={`member-topItem-${index}-${Math.random}`}
           as={Link}
           className="p-2 bg-tempBgLightSecondary hover:bg-tempLightBorder/50 dark:bg-tempBgDarkSecondary dark:hover:bg-tempDarkHover shadow-none border border-tempLightBorder dark:border-tempDarkBorder text-sm rounded-md text-textDark dark:text-textLight !transition-all !duration-[125ms] h-auto"
@@ -45,7 +45,7 @@ const TopMembresItems = async () => {
               )}
             </div>
           </div>
-        </Card>
+        </Button>
       ))}
     </div>
   );

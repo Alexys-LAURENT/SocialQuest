@@ -76,7 +76,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
                             }}
                             className="w-max border-1 border-transparent invert dark:invert-0 rounded-[0.65rem] transition-all !duration-[150ms]"
                         >
-                            <Image className="" src={SocialQuestLogo.src} alt="SocialQuest Logo" width={40} height={40} />
+                            <Image src={SocialQuestLogo.src} alt="SocialQuest Logo" width={40} height={40} />
                         </Link>
                     </NavbarBrand>
                 </NavbarItem>
@@ -93,7 +93,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
             </NavbarContent>
 
 
-            <NavbarContent justify="end" className="">
+            <NavbarContent justify="end">
                 {user && (
                     <NavbarItem className="flex min-w-fit items-center rounded-md px-1 sm:px-2 py-1 bg-secondary/30">
                         <div className="flex gap-1" title={`${formatCountText(user.social_coins)} SocialCoins`}>

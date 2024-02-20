@@ -5,7 +5,7 @@ const PostInputSuspenser = async () => {
     const guildesUser = await getGuildesUser()
 
     return (
-        <div className="">
+        <div>
             <PostInput page="index" guildesUser={guildesUser} />
         </div>
     );

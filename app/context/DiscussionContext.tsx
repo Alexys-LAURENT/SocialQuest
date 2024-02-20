@@ -57,7 +57,7 @@ const DiscussionProvider = ({ children }: { children: React.ReactNode }) => {
             ...selectedCDiscussion!,
             profiles: [...selectedCDiscussion!.profiles, ...(newUsers.data || [])]
         })
-        success("Utilisateur(s) ajouté(s) avec succès")
+        success(`Utilisateur${ids.length > 1 ? 's' : ''} ajouté${ids.length > 1 ? 's' : ''} avec succès`)
         router.refresh()
     }
 
