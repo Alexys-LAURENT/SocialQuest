@@ -2,9 +2,9 @@
 
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
-import { Message } from "@/app/types/entities";
+import { DiscussionTab, Message } from "@/app/types/entities";
 
-export async function getMessages(selectedCDiscussion: any) {
+export async function getMessages(selectedCDiscussion: DiscussionTab | null) {
     "use server"
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);

@@ -1,6 +1,6 @@
-import { getProfileConnected } from './getProfileConnected';
-import { createClient } from './supabase/client';
-import { uploadFiles } from './uploadFiles';
+import { getProfileConnected } from '@/utils/getProfileConnected';
+import { createClient } from '@/utils/supabase/client';
+import { uploadFiles } from '@/utils/uploadFiles';
 
 export async function updateAvatar(file: { file: File | undefined }, bucket: string, type: 'profiles' | 'guildes', id_guilde?: string, guilde_avatar_url?: string) {
   const supabase = createClient();

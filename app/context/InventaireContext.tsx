@@ -4,7 +4,7 @@ import { Item } from '@/app/types/entities';
 
 export const InventaireContext = createContext({
     selectedItem: {} as Item,
-    setSelectedItem: (item: any) => { }
+    setSelectedItem: (item: Item) => { }
 });
 
 const InventaireProvider = ({ children }: { children: React.ReactNode }) => {

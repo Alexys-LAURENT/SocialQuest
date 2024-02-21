@@ -5,7 +5,7 @@ import Link from "next/link";
 import SwitchTheme from "@/components/NavBar/SwitchTheme";
 import { Suspense } from "react";
 import NextRewards from "@/components/NextRewards";
-import NextRewardSkeleton from "../Skeletons/NavBar/NextRewardSkeleton";
+import NextRewardSkeleton from "@/components/Skeletons/NavBar/NextRewardSkeleton";
 
 const PopOverUserContent = ({ user, customFunction, signOut }: { user: Profile | null, customFunction: () => void, signOut: () => void }) => {
     const progressValue = (user?.xp! - user?.niveaux.xp_debut!) * 100 / (user?.niveaux.xp_fin! + 1);

@@ -19,7 +19,7 @@ const Form = ({ signIn, signUp, searchParams, }: { signIn: (arg1: FormData) => v
 
     const router = useRouter()
 
-    const loginWithGoogle2 = async (e: any) => {
+    const loginWithGoogle2 = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         const supabase = createClient()
         await supabase.auth.signInWithOAuth({

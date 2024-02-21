@@ -31,8 +31,8 @@ const CropperComponent = ({
       <div className=" aspect-square h-[10vh] rounded-full border-4 border-red overflow-hidden">
         <div className="aspect-square h-full previewCropper "></div>
       </div>
-      <div className="flex flex-col h-full md:max-h-[60vh] items-center justify-center">
-        <div className="w-full md:w-[90vw] md:max-h-[60vh] overflow-hidden">
+      <div className="flex flex-col h-full items-center justify-center">
+        <div className="w-full md:w-[90vw] max-h-[60vh] overflow-hidden">
           <img
             id="image-to-crop"
             src={imageUrl || 'https://raw.githubusercontent.com/roadmanfong/react-cropper/master/example/img/child.jpg'}

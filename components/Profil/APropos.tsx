@@ -117,7 +117,7 @@ const APropos = ({ isUserProfil, user, nextRewards, }: { isUserProfil: boolean; 
                 <div className="flex relative items-center justify-center rounded-md">
                   <Image.PreviewGroup
                     preview={{ toolbarRender: () => <></> }}
-                    items={nextRewards.reduce((acc: any, item: any) => {
+                    items={nextRewards.reduce((acc: string[], item: { items: { nom: string; type: string; damage?: number; id_item: string; image_url: string } }) => {
                       acc.push(item.items.image_url);
                       return acc;
                     }, [])}

@@ -3,7 +3,7 @@ import { ExtendedPost, Profile } from '@/app/types/entities';
 import { Tabs, Tab, Spinner } from '@nextui-org/react';
 import dynamic from 'next/dynamic';
 import { Fragment, useEffect, useRef, useState } from 'react';
-import PostsWrapperSkeleton from './Skeletons/PostsWrapperSkeleton';
+import PostsWrapperSkeleton from '@/components/Skeletons/PostsWrapperSkeleton';
 import { getPostSuivis } from '@/utils/getPostSuivis';
 import { getPostGuildes } from '@/utils/getPostGuildes';
 
@@ -16,7 +16,7 @@ const PostsWrapper = ({
   filtre,
 }: {
   user: Profile | null;
-  getPost: any;
+  getPost: () => Promise<ExtendedPost[]>;
   postPage?: boolean;
   filtre: boolean;
 }) => {
@@ -148,7 +148,7 @@ const PostsWrapper = ({
         <Tabs
           aria-label="Filtres"
           defaultSelectedKey={'MaPage'}
-          onSelectionChange={(key: any) => loadPosts(user.id_user, key)}
+          onSelectionChange={(key: React.Key) => loadPosts(user.id_user, key.toString())}
           disableAnimation={isSticky}
           classNames={{
             base: `z-10 flex justify-center sticky transition-all !duration-250 ${lastScrollDirection === 'down' ? '-top-12' : 'top-1'}`,

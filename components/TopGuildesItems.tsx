@@ -9,7 +9,7 @@ const TopGuildesItems = async () => {
 
   return (
     <div className="flex flex-col gap-2">
-      {topGuildes.map((guilde: any, index: any) => (
+      {topGuildes.map((guilde: { name: string; avatar_url: string; members: number }, index: number) => (
         <Button
           key={`guildes-topItem-${index}-${Math.random}`}
           as={Link}

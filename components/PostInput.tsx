@@ -27,23 +27,23 @@ const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => 
 
   const [titre, setTitre] = useState<string>('');
   const [contenu, setContenu] = useState<string>('');
-  const [guilde, setGuilde] = useState<any>('');
+  const [guilde, setGuilde] = useState<string>('');
   const [imageData, setImageData] = useState<{ file: File; url: string }[]>([]);
   const [isPublishing, setIsPublishing] = useState(false);
 
-  function handleChangeTitle(e: any) {
+  function handleChangeTitle(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.value.length <= limite.titre) {
       setTitre(e.target.value);
     }
   }
 
-  function handleChangeContent(e: any) {
+  function handleChangeContent(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.value.length <= limite.contenu) {
       setContenu(e.target.value);
     }
   }
 
-  async function send(e: any) {
+  async function send(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if ((page !== 'post' && titre === '') || contenu === '') {
       return error(`Veuillez inclure ${page !== 'post' ? 'un titre et' : ''} un contenu`);
@@ -109,8 +109,6 @@ const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => 
         if (e.target) {
           // Lecture terminée
           const imageDataUrl = e.target.result as string;
-          //   setImageData(imageDataUrl);
-          console.log(file);
           setImageData([...(imageData || []), { file: file, url: imageDataUrl }]);
         }
       };

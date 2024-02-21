@@ -5,7 +5,7 @@ import { updateAvatar } from '@/utils/updateAvatar';
 import { ToasterContext } from '@/app/context/ToasterContext';
 import { useRouter } from 'next/navigation';
 
-const GuildUpdateProfilePicture = ({ isGuildCreator, guilde, user }: { isGuildCreator: boolean, guilde: any, user: any }) => {
+const GuildUpdateProfilePicture = ({ isGuildCreator, guilde }: { isGuildCreator: boolean, guilde: { id_guilde?: string, nom?: string, description?: string, avatar_url?: string, created_by?: string, usersCount?: number, isUserInGuilde?: boolean } }) => {
     const [file, setFile] = useState<File>();
     const { success, error } = useContext(ToasterContext);
     const router = useRouter();
@@ -17,8 +17,8 @@ const GuildUpdateProfilePicture = ({ isGuildCreator, guilde, user }: { isGuildCr
                 if (!isUpdated) {
                     return error("Une erreur est survenue lors de l'envoi des images");
                 }
-                success('Avatar modifiée !')
                 router.refresh()
+                success('Avatar modifiée !')
             }
         }
         uploadAvatar()

@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { getUserFriends } from "@/utils/getUserFriends";
 const SearchBar = ({ setListFriends, id_userPageProfile }: { setListFriends: Dispatch<SetStateAction<Profile[]>>, id_userPageProfile: string }) => {
     const [inputValue, setInputValue] = useState('');
-    const handleChange = async (e: any) => {
+    const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
         if (e.target.value.length > 0) {
             const newList = await getUserFriends(id_userPageProfile, e.target.value);

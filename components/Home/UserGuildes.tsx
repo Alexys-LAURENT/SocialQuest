@@ -2,7 +2,7 @@ import { getGuildesUser } from '@/utils/getGuildesUser';
 import { Avatar, Card } from '@nextui-org/react';
 import Link from 'next/link';
 import { formatCount } from '@/utils/formatCount';
-import BtnCreateGuilde from './BtnCreateGuilde';
+import BtnCreateGuilde from '@/components/Home/BtnCreateGuilde';
 
 const UserGuildes = async () => {
   const guildesUser = await getGuildesUser();

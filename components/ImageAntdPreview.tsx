@@ -18,7 +18,7 @@ const ImageAntdPreview = ({ img, onDownload }: { img: string; onDownload: (img: 
   const translateYRef = useRef(0);
   const translateXRef = useRef(0);
 
-  const handleClickImage = (event: any) => {
+  const handleClickImage = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     // Check if the device is a touch device
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
 

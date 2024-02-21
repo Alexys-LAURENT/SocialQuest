@@ -59,7 +59,6 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile |
                 'postgres_changes',
                 { event: '*', schema: 'public', table: 'posts', filter: `parent=eq.${post.id_post}` },
                 (_) => {
-                    console.log('answers changed')
                     async function getAnswersCount() {
                         const { data: answersCount } = await supabase
                             .from('posts')
@@ -85,7 +84,7 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile |
         , [user])
 
 
-    const handletoggleLike = (e: any) => {
+    const handletoggleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if (user === null) {
             router.push('/login');

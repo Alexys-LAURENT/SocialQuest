@@ -9,7 +9,7 @@ import Image from 'next/image'
 
 
 const ModalComponentCreateDiscussion = ({ isOpen, setOpen, onOpenChange, profileConnected, setDiscussions, refetchDiscussions, setSelectedDiscussion }:
-    { isOpen: boolean, setOpen: (open: boolean) => void, onOpenChange: (open: boolean) => void, profileConnected: Profile, setDiscussions: any, refetchDiscussions: any, setSelectedDiscussion: (conversation: DiscussionTab | null) => void }) => {
+    { isOpen: boolean, setOpen: (open: boolean) => void, onOpenChange: (open: boolean) => void, profileConnected: Profile, setDiscussions: (discussions: DiscussionTab[]) => void, refetchDiscussions: () => Promise<DiscussionTab[]>, setSelectedDiscussion: (conversation: DiscussionTab) => void }) => {
     const supabase = createClient()
     const [InputValue, setInputValue] = useState<string>('')
     const [users, setUsers] = useState<Profile[]>([])
@@ -41,7 +41,10 @@ const ModalComponentCreateDiscussion = ({ isOpen, setOpen, onOpenChange, profile
             if (existingDiscussion) {
                 setOpen(false)
                 setInputValue('')
-                setSelectedDiscussion(await refetchDiscussions().then((discussions: DiscussionTab[]) => discussions.find((discussion: DiscussionTab) => discussion.id_discussion === existingDiscussion.id_discussion)))
+                const selectedDiscussion = await refetchDiscussions().then((discussions: DiscussionTab[]) => discussions.find((discussion: DiscussionTab) => discussion.id_discussion === existingDiscussion.id_discussion));
+                if (selectedDiscussion) {
+                    setSelectedDiscussion(selectedDiscussion);
+                }
                 infoToaster('Une discussion existe déjà avec cet utilisateur')
                 return;
             }
@@ -77,7 +80,12 @@ const ModalComponentCreateDiscussion = ({ isOpen, setOpen, onOpenChange, profile
         async function refetchDiscussionsCreate() {
             const refresh = await refetchDiscussions()
             setDiscussions(refresh)
-            setSelectedDiscussion(refresh.find((discussion: DiscussionTab) => discussion.id_discussion === newDiscussion![0].id_discussion))
+            setSelectedDiscussion(
+                refresh.find(
+                    (discussion: DiscussionTab) =>
+                        discussion.id_discussion === (newDiscussion && newDiscussion[0]?.id_discussion)
+                ) as DiscussionTab
+            );
         }
         refetchDiscussionsCreate()
 

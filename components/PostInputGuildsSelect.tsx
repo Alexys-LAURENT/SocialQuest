@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Guilde } from '@/app/types/entities';
 
 
-const PostInputGuildsSelect = ({ setGuilde, guildesUser }: { setGuilde: Dispatch<any>, guildesUser: Guilde[] }) => {
+const PostInputGuildsSelect = ({ setGuilde, guildesUser }: { setGuilde: Dispatch<string>, guildesUser: Guilde[] }) => {
     return (
         <Select
             aria-label='Guilde du post / Pas de guilde'

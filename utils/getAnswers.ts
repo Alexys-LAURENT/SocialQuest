@@ -22,7 +22,7 @@ export async function getAnswers(id_post: string) {
         return post
     })[0] as ExtendedPost
 
-    posts && posts.sort((a: any, b: any) => b.likes_count - a.likes_count)
+    posts && posts.sort((a: ExtendedPost, b: ExtendedPost) => b.likes_count - a.likes_count)
 
     return posts
 }

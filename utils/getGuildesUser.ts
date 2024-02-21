@@ -22,5 +22,6 @@ export async function getGuildesUser() {
         console.log(guildesUserError)
         return null
     }
+
     return guildesUser.map((guilde: any) => guilde.guildes) as Guilde[]
 }

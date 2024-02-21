@@ -37,7 +37,7 @@ const PopoverNotifications = ({ user }: { user: Profile }) => {
         const data = await getUserNotifications(user.id_user);
         if (data !== false) {
             setNotifications(data);
-            setNotificationsNotRead(data.filter((notification: any) => notification.is_read === false));
+            setNotificationsNotRead(data.filter((notification: Notification) => notification.is_read === false));
         }
     }
 

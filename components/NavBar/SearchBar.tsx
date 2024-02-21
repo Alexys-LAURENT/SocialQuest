@@ -13,27 +13,13 @@ const SearchBar = () => {
     const [selectedKey, setSelectedKey] = useState<Key | null | undefined>();
 
     useEffect(() => {
-        // if (timeoutRef.current) {
-        //     clearTimeout(timeoutRef.current);
-        // }
-
-        // timeoutRef.current = setTimeout(async () => {
         const getData = async () => {
             const data = await doSearchByWord(inputValue);
-            // console.log(data);
             setProfiles(data[0]);
             setGuildes(data[1]);
             setIsLoading(false);
         }
         getData();
-        // }, 0);
-
-        // Nettoyer le délai lors du démontage du composant
-        // return () => {
-        //     if (timeoutRef.current) {
-        //         clearTimeout(timeoutRef.current);
-        //     }
-        // };
     }, [inputValue]);
 
     useEffect(() => {

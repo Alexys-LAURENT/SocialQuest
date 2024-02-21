@@ -3,7 +3,7 @@ import { PencilIcon, PlusIcon } from '@heroicons/react/24/outline';
 import React, { ChangeEvent, useContext, useState } from 'react';
 import { ToasterContext } from '@/app/context/ToasterContext';
 import { useDisclosure } from '@nextui-org/react';
-import ModalCropImage from './ModalCropImage';
+import ModalCropImage from '@/components/ModalCropImage';
 import Image from 'next/image';
 
 const UploadFile = ({

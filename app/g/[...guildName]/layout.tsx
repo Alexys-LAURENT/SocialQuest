@@ -6,7 +6,6 @@ import JoinQuitButton from '@/components/guildes/JoinQuitButton';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 import EditGuildButton from '@/components/guildes/EditGuildButton';
 import dynamic from 'next/dynamic'
-import UploadFile from '@/components/UploadFile';
 import GuildUpdateProfilePicture from '@/components/guildes/GuildUpdateProfilePicture';
 
 
@@ -39,7 +38,7 @@ const layout = async ({
             <div className="relative w-full min-h-[7rem] max-w-[1280px]">
                 <div className="flex relative -top-14 md:-top-20 left-10 md:left-20 lg:left-40 gap-2 md:gap-4 transition-all duration-500">
 
-                    <GuildUpdateProfilePicture isGuildCreator={isGuildCreator} guilde={guilde} user={user} />
+                    <GuildUpdateProfilePicture isGuildCreator={isGuildCreator} guilde={guilde} />
 
                     <div className="relative flex flex-col">
                         <p className="absolute w-max text-xl md:text-2xl font-semibold bottom-2 md:bottom-7">

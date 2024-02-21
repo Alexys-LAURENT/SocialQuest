@@ -1,8 +1,8 @@
 "use server"
 
 import { cookies } from "next/headers";
-import { createClient } from "./supabase/server";
-import { getProfileConnected } from "./getProfileConnected";
+import { createClient } from "@/utils/supabase/server";
+import { getProfileConnected } from "@/utils/getProfileConnected";
 
 export async function doesFollow(idUserDoesFollow: string, idUserConnected?: string) {
     "use server"

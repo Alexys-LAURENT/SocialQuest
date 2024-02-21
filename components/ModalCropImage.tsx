@@ -1,5 +1,5 @@
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Spinner } from '@nextui-org/react';
-import CropperComponent from './Home/Cropper';
+import CropperComponent from '@/components/Home/Cropper';
 import { useEffect, useRef, useState } from 'react';
 import { compressImage } from '@/utils/compressImage';
 
@@ -22,7 +22,7 @@ const ModalCropImage = ({
   const cropperRef = useRef<Cropper>();
   const [loading, setLoading] = useState(false);
 
-  function getRoundedCanvas(sourceCanvas: any) {
+  function getRoundedCanvas(sourceCanvas: HTMLCanvasElement) {
     var canvas = document.createElement('canvas');
     var context = canvas.getContext('2d');
     var width = sourceCanvas.width;
@@ -53,7 +53,7 @@ const ModalCropImage = ({
     if (cropperRef.current) {
       setLoading(true);
       var croppedCanvas;
-      var roundedCanvas: any;
+      var roundedCanvas: HTMLCanvasElement;
 
       if (!croppable) {
         return;
@@ -66,7 +66,7 @@ const ModalCropImage = ({
       roundedCanvas = getRoundedCanvas(croppedCanvas);
 
       // Convert to Blob for uploading to supabase
-      roundedCanvas.toBlob((blob: any) => {
+      roundedCanvas.toBlob((blob: Blob | null) => {
         if (blob) {
           const imageFile = new File([blob], `${imageName?.split('.')[0] || 'image'}.webp`, { type: 'image/webp' });
           compressImage(imageFile).then((res) => {

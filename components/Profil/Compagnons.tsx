@@ -23,14 +23,12 @@ const Compagnons = ({
         </div>
       </div>
       <div>
-        {listFriends && listFriends.length !== 0 && (
-          <SearchBarCompagnons setListFriends={setListFriends} id_userPageProfile={pageProfile.id_user} />
-        )}
+        <SearchBarCompagnons setListFriends={setListFriends} id_userPageProfile={pageProfile.id_user} />
       </div>
       <div className="flex flex-col gap-4 overflow-y-auto">
         {listFriends &&
           listFriends.length > 0 &&
-          listFriends.map((user, index) => (
+          listFriends.map((user) => (
             <div
               key={`user-friend-${user.id_user}`}
               className="relative flex min-h-[4.5rem] items-center gap-2 py-2 rounded-md bg-bgLightPopover dark:bg-bgDarkPopover transition-all !duration-500"

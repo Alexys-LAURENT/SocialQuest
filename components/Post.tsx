@@ -36,8 +36,8 @@ export default function Post({ user, post }: { user: Profile | null; post: Exten
     }
   };
 
-  const handleClick = (e: any) => {
-    if (e.target.classList.contains('postRedirect')) {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    if ((e.target as HTMLElement).classList.contains('postRedirect')) {
       const link = document.getElementById(`post-link-${post.id_post}`);
       link?.click();
     }

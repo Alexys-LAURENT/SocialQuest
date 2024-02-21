@@ -1,8 +1,8 @@
 "use server"
 
 import { cookies } from "next/headers"
-import { getProfileConnected } from "./getProfileConnected"
-import { createClient } from "./supabase/server"
+import { getProfileConnected } from "@/utils/getProfileConnected"
+import { createClient } from "@/utils/supabase/server"
 
 export async function doSearchByWord(query: string | undefined) {
     "use server"

@@ -2,7 +2,7 @@ import { Listbox, ListboxItem } from '@nextui-org/react';
 import { HomeIcon, BuildingStorefrontIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import UserGuildes from '../Home/UserGuildes';
+import UserGuildes from '@/components/Home/UserGuildes';
 
 const TopGuildes = dynamic(() => import('@/components/TopGuildes'));
 const TopMembres = dynamic(() => import('@/components/TopMembres'));

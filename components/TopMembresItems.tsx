@@ -8,7 +8,7 @@ const TopMembresItems = async () => {
 
   return (
     <div className="flex flex-col gap-2">
-      {topMembres.map((membre: any, index: any) => (
+      {topMembres.map((membre: { username: string; avatar_url: string; level: number }, index: number) => (
         <Button
           key={`member-topItem-${index}-${Math.random}`}
           as={Link}

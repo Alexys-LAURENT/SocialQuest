@@ -1,18 +1,16 @@
-import { useState } from 'react';
 import Image from 'next/image';
 import { Button, ButtonGroup, Chip, Input } from '@nextui-org/react';
-import { Item, Profile } from '@/app/types/entities';
+import { Item } from '@/app/types/entities';
 import { useRouter } from 'next/navigation';
 import { toggleItemSelected } from '@/utils/toggleItemSelected';
 import { useContext } from 'react';
 import { ToasterContext } from '@/app/context/ToasterContext';
-import dynamic from 'next/dynamic'
 import { toggleFavorite } from '@/utils/toggleFavorite';
 
 
 
 
-const SelectedItemContent = ({ selectedItem, setSelectedItem, isUserInventory }: { selectedItem: Item, setSelectedItem: (item: any) => void, isUserInventory: boolean }) => {
+const SelectedItemContent = ({ selectedItem, setSelectedItem, isUserInventory }: { selectedItem: Item, setSelectedItem: (item: Item) => void, isUserInventory: boolean }) => {
     const router = useRouter()
     const { success, error } = useContext(ToasterContext)
 

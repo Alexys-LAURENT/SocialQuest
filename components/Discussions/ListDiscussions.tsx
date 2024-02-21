@@ -14,7 +14,7 @@ import defaultUser from '@/public/assets/defaultUser.svg'
 const DynamicModalComponentCreateDiscussion = dynamic(() => import('@/components/Discussions/ModalComponentCreateDiscussion'))
 
 
-const ListDiscussions = ({ initDiscussions, refetchDiscussions }: { initDiscussions: DiscussionTab[], refetchDiscussions: any }) => {
+const ListDiscussions = ({ initDiscussions, refetchDiscussions }: { initDiscussions: DiscussionTab[], refetchDiscussions: () => Promise<DiscussionTab[]> }) => {
     const [discussions, setDiscussions] = useState<DiscussionTab[] | null>(initDiscussions);
     const [isOpen, setOpen] = useState(false);
     const onOpenChange = (open: boolean) => setOpen(open);

@@ -6,13 +6,13 @@ import { joinGuild, leaveGuild } from '@/utils/joinGuild';
 import { Profile } from '@/app/types/entities';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-const JoinQuitButton = ({ guilde, user }: { guilde: any, user: Profile | null }) => {
+const JoinQuitButton = ({ guilde, user }: { guilde: { id_guilde?: string, nom?: string, description?: string, avatar_url?: string, created_by?: string, usersCount?: number, isUserInGuilde?: boolean }, user: Profile | null }) => {
     const { success, error } = useContext(ToasterContext)
     const router = useRouter()
 
     const handleJoinGuild = async () => {
         if (!user) { router.push("/login"); return }
-        const res = await joinGuild(user.id_user, guilde!.id_guilde)
+        const res = await joinGuild(user.id_user, guilde.id_guilde!)
         if (res) {
             success("Vous avez rejoint la guilde")
         } else {
@@ -23,7 +23,7 @@ const JoinQuitButton = ({ guilde, user }: { guilde: any, user: Profile | null })
 
     const handleLeaveGuild = async () => {
         if (!user) { router.push("/login"); return }
-        const res = await leaveGuild(user.id_user, guilde!.id_guilde)
+        const res = await leaveGuild(user.id_user, guilde.id_guilde!)
         if (res) {
             success("Vous avez quitté la guilde")
         } else {

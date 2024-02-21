@@ -1,6 +1,6 @@
 'use server';
 import { cookies } from 'next/headers';
-import { createClient } from './supabase/server';
+import { createClient } from '@/utils/supabase/server';
 
 export async function createGuild(nom_guilde: string, avatar_url: string, description_guilde: string) {
   'use server';
