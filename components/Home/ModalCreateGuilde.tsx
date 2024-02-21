@@ -15,9 +15,12 @@ import { uploadFiles } from '@/utils/uploadFiles';
 import { ToasterContext } from '@/app/context/ToasterContext';
 import { createGuild } from '@/utils/createGuild';
 import { useRouter } from 'next/navigation';
+import { getGuildesNameWhereName } from '@/utils/getGuildesNameWhereName';
 
 export const ModalCreateGuilde = ({ isOpen, onOpenChange }: { isOpen: boolean; onOpenChange: () => void }) => {
   const [input, setInput] = useState<string>('');
+  const [isTyping, setIsTyping] = useState<boolean>(false);
+  const [isInputValid, setIsInputValid] = useState<{ value: boolean; reason: string }>();
   const [description, setDescription] = useState<string>('');
   const [file, setFile] = useState<File>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -46,22 +49,64 @@ export const ModalCreateGuilde = ({ isOpen, onOpenChange }: { isOpen: boolean; o
     }
   };
 
+  const handleChangeInputNom = async (inputValue: string) => {
+    setIsTyping(true);
+
+    // set the input value without spaces
+    setInput(inputValue.replace(/\s/g, ''));
+
+    if ((await getGuildesNameWhereName(inputValue)) === false) {
+      setIsInputValid({ value: false, reason: 'Le nom de la guilde est déjà utilisé' });
+      setIsTyping(false);
+      return;
+    }
+
+    setIsInputValid({ value: true, reason: '' });
+    setIsTyping(false);
+  };
+
   return (
     <>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal
+        classNames={{
+          base: 'bg-tempsBgLightSecondary dark:bg-tempBgDark rounded-md border border-tempLightBorder dark:border-tempDarkBorder',
+        }}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        onClose={() => {
+          setInput('');
+          setDescription('');
+          setFile(undefined);
+        }}
+      >
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">Créer une guilde</ModalHeader>
               <ModalBody>
-                <UploadFile file={file} setFile={setFile} />
-                <Input label="Nom de la guilde" value={input} onChange={(e) => setInput(e.target.value)} />
+                <UploadFile file={file} setFile={setFile} className="mx-auto" />
+                <Input
+                  className="bg-transparent"
+                  classNames={{
+                    inputWrapper:
+                      'bg-tempsBgLightSecondary dark:bg-tempBgDark border rounded-md border-tempLightBorder dark:border-tempDarkBorder group-data-[focus=true]:bg-tempBgLightSecondary dark:group-data-[focus=true]:bg-tempBgDark',
+                  }}
+                  label="Nom de la guilde"
+                  value={input}
+                  onChange={(e) => handleChangeInputNom(e.target.value)}
+                  isInvalid={isInputValid ? !isInputValid?.value : false}
+                  errorMessage={isInputValid?.reason}
+                  endContent={
+                    <Spinner size="sm" className={`scale-75 mt-2 ${!isTyping ? 'hidden' : ''} `} color="white" />
+                  }
+                />
                 <Textarea
                   label="Description de la guilde"
                   aria-label="Description"
                   minRows={1}
                   classNames={{
-                    inputWrapper: 'h-auto',
+                    inputWrapper:
+                      'h-auto bg-tempsBgLightSecondary dark:bg-tempBgDark border rounded-md border-tempLightBorder dark:border-tempDarkBorder group-data-[focus=true]:bg-tempBgLightSecondary dark:group-data-[focus=true]:bg-tempBgDark',
                   }}
                   value={description}
                   maxLength={255}
@@ -73,8 +118,8 @@ export const ModalCreateGuilde = ({ isOpen, onOpenChange }: { isOpen: boolean; o
                   Fermer
                 </Button>
                 <Button
-                  disabled={!input || !file || !description}
-                  className="customButton bg-secondary/70 border-secondary"
+                  disabled={!input || !file || !description || loading || !isInputValid?.value || isTyping}
+                  className={`customButton bg-secondary/70 border-secondary ${!input || !file || !description || loading || !isInputValid?.value ? 'bg-secondary/30 border-secondary/30 text-opacity-30' : ''}`}
                   onClick={() => handleCreateGuild(onClose)}
                 >
                   {loading ? <Spinner size="sm" className="scale-75" color="white" /> : 'Creer'}

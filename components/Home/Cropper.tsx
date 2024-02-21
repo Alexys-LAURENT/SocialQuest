@@ -13,7 +13,7 @@ const CropperComponent = ({
   cropperRef: React.MutableRefObject<Cropper | undefined>;
 }) => {
   useLayoutEffect(() => {
-    const cropper = new Cropper(document.getElementById('image-test') as HTMLImageElement, {
+    const cropper = new Cropper(document.getElementById('image-to-crop') as HTMLImageElement, {
       aspectRatio: 1 / 1,
       viewMode: 2,
       guides: false,
@@ -34,10 +34,10 @@ const CropperComponent = ({
       <div className="flex flex-col h-full md:max-h-[60vh] items-center justify-center">
         <div className="w-full md:w-[90vw] md:max-h-[60vh] overflow-hidden">
           <img
-            id="image-test"
+            id="image-to-crop"
             src={imageUrl || 'https://raw.githubusercontent.com/roadmanfong/react-cropper/master/example/img/child.jpg'}
             alt=""
-            className="!w-full !h-full"
+            className="!w-full !h-full opacity-0"
           />
         </div>
       </div>

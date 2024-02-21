@@ -74,8 +74,8 @@ const ModalCropImage = ({
             // get image url from res
             const url = URL.createObjectURL(res);
             setImageCroppedUrl(url);
-            setLoading(false);
             onClose();
+            setLoading(false);
           });
         }
       }, 'image/png');

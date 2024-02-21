@@ -11,11 +11,13 @@ const UploadFile = ({
   setFile,
   width = 'w-24',
   height = 'h-24',
+  className,
 }: {
   file: File | undefined;
   setFile: React.Dispatch<React.SetStateAction<File | undefined>>;
   width?: string;
   height?: string;
+  className?: string;
 }) => {
   const FileUploadRef = React.useRef<HTMLInputElement>(null);
   const { error } = useContext(ToasterContext);
@@ -82,7 +84,7 @@ const UploadFile = ({
         <input type="file" className="hidden" name="" id="" ref={FileUploadRef} onChange={handleFileChange} />
         <div
           onClick={() => FileUploadRef.current?.click()}
-          className={`${width} ${height} relative p-2 flex flex-col justify-center items-center gap-1 bg-tempLightHover dark:bg-tempDarkHover rounded-full border border-dashed cursor-pointer border-white hover:border-secondary`}
+          className={`${width} ${height} ${className} relative p-2 flex flex-col justify-center items-center gap-1 bg-tempBgLightSecondary dark:bg-tempBgDark rounded-full border border-dashed cursor-pointer border-white/80 hover:border-secondary`}
         >
           {imageCroppedUrl && (
             <Image
