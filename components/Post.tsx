@@ -136,7 +136,7 @@ export default function Post({ user, post }: { user: Profile | null; post: Exten
       <div className="postRedirect flex flex-col px-10 gap-2">
         <div className='postRedirect'>
           <div
-            className={`text-textDark dark:text-textLight text-md text-[18px] font-semibold working-break-words transition-all !duration-[125ms] ${post.titre ? 'mb-1' : ''}`}
+            className={`postRedirect text-textDark dark:text-textLight text-md text-[18px] font-semibold working-break-words transition-all !duration-[125ms] ${post.titre ? 'mb-1' : ''}`}
           >
             {post.titre}
           </div>

@@ -6,7 +6,8 @@ import JoinQuitButton from '@/components/guildes/JoinQuitButton';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 import EditGuildButton from '@/components/guildes/EditGuildButton';
 import dynamic from 'next/dynamic'
-import Image from 'next/image';
+import UploadFile from '@/components/UploadFile';
+import GuildUpdateProfilePicture from '@/components/guildes/GuildUpdateProfilePicture';
 
 
 const DynamicPostInput = dynamic(() => import('@/components/PostInput'))
@@ -25,6 +26,7 @@ const layout = async ({
     if (params.guildName[1] && params.guildName[1] !== "activities" && params.guildName[1] !== "guildwars") redirect(`/g/${params.guildName[0]}`)
     const guilde = await getGuildInfos(params.guildName[0])
     const user = await getProfileConnected()
+    const isGuildCreator = guilde?.created_by === user?.id_user
 
     return (
 
@@ -37,7 +39,8 @@ const layout = async ({
             <div className="relative w-full min-h-[7rem] max-w-[1280px]">
                 <div className="flex relative -top-14 md:-top-20 left-10 md:left-20 lg:left-40 gap-2 md:gap-4 transition-all duration-500">
 
-                    <Image src={guilde.avatar_url} className={`h-28 w-28 md:h-40 md:w-40 rounded-full text-large transition-all`} alt={guilde.avatar_url} width={400} height={400} priority quality={100} />
+                    <GuildUpdateProfilePicture isGuildCreator={isGuildCreator} guilde={guilde} user={user} />
+
                     <div className="relative flex flex-col">
                         <p className="absolute w-max text-xl md:text-2xl font-semibold bottom-2 md:bottom-7">
                             {guilde!.nom}

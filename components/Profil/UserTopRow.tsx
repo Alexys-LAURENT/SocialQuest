@@ -1,20 +1,20 @@
 "use client"
 import { Profile } from '@/app/types/entities';
-import Image from 'next/image'
-import defaultUser from '@/public/assets/defaultUser.svg'
 import { Button } from '@nextui-org/react'
 import { ChatBubbleOvalLeftEllipsisIcon } from '@heroicons/react/24/outline'
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ToasterContext } from '@/app/context/ToasterContext'
 import { useRouter } from 'next/navigation'
 import { toggleFollow } from '@/utils/toggleFollow';
-import dynamic from 'next/dynamic'
+import UploadFile from '@/components/UploadFile';
+import { updateAvatar } from '@/utils/updateAvatar';
 
-const DynamicProfilPicture = dynamic(() => import('@/components/Profil/ProfilPicture'))
+
 
 
 const UserTopRow = ({ isUserProfil, pageProfile, profileConnected }: { isUserProfil: boolean, pageProfile: Profile, profileConnected: Profile | null }) => {
     const { success, error } = useContext(ToasterContext)
+    const [file, setFile] = useState<File>();
     const router = useRouter()
 
     const handleFollow = async () => {
@@ -28,11 +28,27 @@ const UserTopRow = ({ isUserProfil, pageProfile, profileConnected }: { isUserPro
         }
     }
 
+    useEffect(() => {
+        const uploadProfilePicture = async () => {
+            if (file) {
+                const isUpdated = await updateAvatar({ file }, 'avatars', 'profiles')
+                if (!isUpdated) {
+                    return error("Une erreur est survenue lors de l'envoi des images");
+                }
+                router.refresh()
+                success('Photo de profil modifiée !')
+            }
+        }
+        uploadProfilePicture()
+    }, [file])
+
+
     return (
         <>
             <div className='relative -top-[40px] sm:-top-[60px] md:-top-[80px] w-full max-w-[1280px] flex items-end px-6 md:px-12'>
-                {isUserProfil && <DynamicProfilPicture isUserProfil={isUserProfil} />}
-                <Image src={pageProfile?.avatar_url || defaultUser.src} alt={pageProfile?.avatar_url! || defaultUser.src} width={160} height={160} className={`${isUserProfil ? 'absolute' : 'flex'}  h-20 w-20 sm:h-28 sm:w-28 md:h-40 md:w-40 rounded-full text-large transition-all `} />
+
+                <UploadFile canEditAvatar={isUserProfil} imageSrc={pageProfile.avatar_url} width='w-20 min-w-[5rem]' height='h-20 min-h-[5rem]' text={'Edit'} file={file} setFile={setFile} className='sm:h-28 sm:w-28 sm:min-h-[7rem] sm:min-w-[7rem] md:h-40 md:w-40 md:min-h-[10rem] md:min-w-[10rem] rounded-full text-large transition-all' />
+
                 <div className='flex justify-between items-center h-unit-10 mb-1 sm:mb-0 ms-2 sm:ms-4  md:mb-7 w-full'>
                     <div className='sm:max-w-[80%]'>
                         <p className=" w-full overflow-hidden text-ellipsis line-clamp-1 text-lg md:text-2xl font-semibold text-textDark dark:text-textLight transition-all !duration-[125ms]">

@@ -165,10 +165,10 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
                         </div>
                         <div className={`flex flex-wrap gap-1 aspect-square rounded-lg overflow-hidden cursor-default ${post.images && post.images.length >= 1 ? 'w-full' : 'w-0'}`}>
                             {
-                                post.images && post.images.length > 0 && post.images.map((img, index) => (
+                                post.images && post.images.length > 0 && post.images.map((img) => (
                                     <div className={`relative flex-1-1 overflow-hidden`} key={`post-${post.id_post}-image-${img}`}>
                                         <ImageAntd
-                                            src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images_posts/${img}`}
+                                            src={img}
                                             alt={img}
                                             width={100}
                                             className='absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover'

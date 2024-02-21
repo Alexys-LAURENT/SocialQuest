@@ -1,4 +1,5 @@
 import { ArrowDownTrayIcon } from '@heroicons/react/20/solid';
+import { EyeIcon } from '@heroicons/react/24/outline';
 import { Image as ImageAntd } from 'antd';
 import ImageNext from 'next/image';
 import { useRef } from 'react';
@@ -46,9 +47,7 @@ const ImageAntdPreview = ({ img, onDownload }: { img: string; onDownload: (img: 
             // Calculate the opacity and scale based on the translateY value
             const factor = 2; // Increase this to make the effect slower
             const opacity = Math.max(0, 1 - Math.abs(translateYRef.current / factor) / threshold);
-            // const scale = 1 - Math.abs(translateYRef.current / (factor * 3)) / threshold;
             mutation.target.style.opacity = `${opacity}`;
-            // mutation.target.style.transform = `translate3d(${translateXRef.current}px, ${translateYRef.current}px, 0px) scale3d(${scale}, ${scale}, 1)`;
           }
         }
       });
@@ -76,7 +75,13 @@ const ImageAntdPreview = ({ img, onDownload }: { img: string; onDownload: (img: 
       className="absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover"
       rootClassName="!h-full !w-full"
       preview={{
-        toolbarRender: (_, {}) => (
+        mask: (
+          <div className='items-center justify-center gap-2 text-white flex'>
+            <EyeIcon className="w-4 h-4 mt-[0.1rem]" />
+            <p>Voir</p>
+          </div>
+        ),
+        toolbarRender: (_, { }) => (
           <ArrowDownTrayIcon
             onClick={() => onDownload(img)}
             className="w-10 h-10 rounded-lg text-white cursor-pointer bg-white/30 p-3"

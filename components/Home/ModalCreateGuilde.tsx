@@ -84,7 +84,7 @@ export const ModalCreateGuilde = ({ isOpen, onOpenChange }: { isOpen: boolean; o
             <>
               <ModalHeader className="flex flex-col gap-1">Créer une guilde</ModalHeader>
               <ModalBody>
-                <UploadFile file={file} setFile={setFile} className="mx-auto" />
+                <UploadFile text={'Ajouter une image'} file={file} setFile={setFile} className="mx-auto" />
                 <Input
                   className="bg-transparent"
                   classNames={{
