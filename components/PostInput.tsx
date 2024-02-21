@@ -110,6 +110,7 @@ const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => 
           // Lecture terminée
           const imageDataUrl = e.target.result as string;
           //   setImageData(imageDataUrl);
+          console.log(file);
           setImageData([...(imageData || []), { file: file, url: imageDataUrl }]);
         }
       };

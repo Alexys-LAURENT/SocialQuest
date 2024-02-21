@@ -12,7 +12,7 @@ const UserGuildes = async () => {
       <h3 className="font-semibold">Guildes</h3>
       <div className="w-full flex flex-col gap-2">
         <BtnCreateGuilde />
-        {guildesUser && guildesUser.length === 0 && <p className="text-tiny text-tempLightHover/60">Aucune guildes</p>}
+        {guildesUser && guildesUser.length === 0 && <p className="text-tiny text-tempLightHover/60">Aucune guilde</p>}
         {guildesUser &&
           guildesUser.length > 0 &&
           guildesUser.map((guilde, index) => (

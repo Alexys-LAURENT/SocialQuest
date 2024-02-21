@@ -9,7 +9,6 @@ import { getAllPosts } from '@/utils/getAllPosts';
 import TopGuildes from '@/components/TopGuildes';
 import TopMembres from '@/components/TopMembres';
 import UserGuildes from '@/components/Home/UserGuildes';
-import CropperComponent from '@/components/Home/Cropper';
 
 export default async function Index() {
   const PostInputSkeleton = dynamic(() => import('@/components/Skeletons/PostInputSkeleton'));
@@ -22,8 +21,6 @@ export default async function Index() {
         <TopGuildes />
         <TopMembres />
       </div>
-
-      <CropperComponent />
 
       <div className={`flex flex-col w-full gap-6 lg:gap-10 `}>
         {user && (

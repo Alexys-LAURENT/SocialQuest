@@ -25,6 +25,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+.cropper-view-box,
+.cropper-face {
+  border-radius: 50%;
+}
+
 input,
 textarea {
   font-size: 16px !important;
@@ -36,8 +41,6 @@ textarea {
     display: none !important;
   }
 }
-
-
 
 /* CUSTOM */
 
@@ -71,7 +74,6 @@ textarea {
   .itemsWrapper {
     grid-template-columns: repeat(auto-fill, minmax(5.15rem, 5.15rem));
   }
-
 }
 
 .working-break-words {
@@ -80,7 +82,7 @@ textarea {
   text-overflow: unset;
 }
 
-div[id*=":"][id*=":"] {
+div[id*=':'][id*=':'] {
   z-index: 5 !important;
 }
 
