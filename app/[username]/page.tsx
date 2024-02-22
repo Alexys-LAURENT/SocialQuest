@@ -11,10 +11,13 @@ import { Suspense } from 'react'
 import CompagnonSkeleton from '@/components/Skeletons/Profil/CompagnonSkeleton'
 
 export default async function Profil({ params }: { params: { username: string } }) {
+  const decodedUsername = decodeURIComponent(params.username);
   const [profileConnected, pageProfile] = await Promise.all([
     getProfileConnected(),
-    getPageProfile(params.username)
+    getPageProfile(decodedUsername)
   ]);
+
+  console.log(decodedUsername)
 
   if (pageProfile === null) {
     notFound()

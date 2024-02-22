@@ -22,18 +22,6 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL('/login', request.url));
     }
 
-    if (request.nextUrl.pathname.startsWith('/g')) {
-      const { data, error } = await supabase
-        .from('guildes')
-        .select('id_guilde')
-        .eq('nom', request.nextUrl.pathname.split('/')[2])
-        .single();
-      if (error || !data) {
-        console.error(error);
-        return NextResponse.redirect(new URL('/', request.url));
-      }
-    }
-
     return response;
   } catch (e) {
     return NextResponse.next({

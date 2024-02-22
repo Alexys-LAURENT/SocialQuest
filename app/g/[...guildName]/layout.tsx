@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { getGuildInfos } from '@/utils/getGuildInfos';
 import JoinQuitButton from '@/components/guildes/JoinQuitButton';
 import { getProfileConnected } from '@/utils/getProfileConnected';
@@ -23,7 +23,12 @@ const layout = async ({
     guildwars: ReactNode
 }) => {
     if (params.guildName[1] && params.guildName[1] !== "activities" && params.guildName[1] !== "guildwars") redirect(`/g/${params.guildName[0]}`)
-    const guilde = await getGuildInfos(params.guildName[0])
+    const decodedGuildName = decodeURIComponent(params.guildName[0]);
+    const guilde = await getGuildInfos(decodedGuildName)
+    if (guilde === null) {
+        notFound()
+    }
+
     const user = await getProfileConnected()
     const isGuildCreator = guilde?.created_by === user?.id_user
 

@@ -69,7 +69,7 @@ const ModalCropImage = ({
       roundedCanvas.toBlob((blob: Blob | null) => {
         if (blob) {
           const imageFile = new File([blob], `${imageName?.split('.')[0] || 'image'}.webp`, { type: 'image/webp' });
-          compressImage(imageFile).then((res) => {
+          compressImage(imageFile, 250).then((res) => {
             setFile(res);
             // get image url from res
             const url = URL.createObjectURL(res);

@@ -17,7 +17,10 @@ export async function getGuildInfos(guilde_name: string) {
         .eq("nom", guilde_name)
         .single()
 
-    if (guildeError) console.error(guildeError)
+    if (guildeError) {
+        console.error(guildeError)
+        return null
+    }
 
     const { data: guildeUsersCount, error } = await supabase
         .from('guildes_users')
