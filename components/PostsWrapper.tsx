@@ -2,7 +2,7 @@
 import { ExtendedPost, Profile } from '@/app/types/entities';
 import { Tabs, Tab, Spinner } from '@nextui-org/react';
 import dynamic from 'next/dynamic';
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, use, useEffect, useRef, useState } from 'react';
 import PostsWrapperSkeleton from '@/components/Skeletons/PostsWrapperSkeleton';
 import { getPostSuivis } from '@/utils/getPostSuivis';
 import { getPostGuildes } from '@/utils/getPostGuildes';
@@ -14,11 +14,13 @@ const PostsWrapper = ({
   getPost,
   postPage,
   filtre,
+  initPosts,
 }: {
   user: Profile | null;
   getPost: () => Promise<ExtendedPost[] | null>;
   postPage?: boolean;
   filtre: boolean;
+  initPosts?: ExtendedPost[] | null;
 }) => {
   const [posts, setPosts] = useState<ExtendedPost[] | null>(null);
   const [postsRandom, setPostsRandom] = useState<ExtendedPost[] | null>(null);
@@ -29,6 +31,11 @@ const PostsWrapper = ({
   const [selectedKey, setSelectedKey] = useState('MaPage');
 
   const prevScrollY = useRef(0);
+
+  if (initPosts && posts === null) {
+    setPosts(initPosts);
+    setPostsRandom(initPosts);
+  }
 
   useEffect(() => {
     const fetchPosts = async () => {

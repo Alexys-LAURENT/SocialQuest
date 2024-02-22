@@ -14,6 +14,7 @@ export default async function Index() {
   const PostInputSkeleton = dynamic(() => import('@/components/Skeletons/PostInputSkeleton'));
 
   const user = await getProfileConnected();
+  const Posts = await getAllPosts();
 
   return (
     <div className={`flex max-w-[1280px] w-full px-2 md:px-4 py-4 gap-6`}>
@@ -29,7 +30,7 @@ export default async function Index() {
           </Suspense>
         )}
 
-        <PostsWrapper user={user} getPost={getAllPosts} filtre={user && user.id_user ? true : false} />
+        <PostsWrapper user={user} initPosts={Posts} getPost={getAllPosts} filtre={user && user.id_user ? true : false} />
       </div>
 
       <div className="sticky top-0  hidden lg:flex min-w-[17rem] h-fit">
