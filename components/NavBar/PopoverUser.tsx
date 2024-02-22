@@ -7,7 +7,7 @@ import { Badge, Popover, PopoverTrigger, PopoverContent } from "@nextui-org/reac
 import Image from "next/image";
 import defaultUser from "@/public/assets/defaultUser.svg";
 
-const PopoverUser = ({ signOut, user }: { signOut: () => void, user: Profile | null }) => {
+const PopoverUser = ({ signOut, user }: { signOut: () => void, user: Profile }) => {
     const [isPopoverUserOpen, setIsPopoverUserOpen] = useState(false);
     const { showDrawer, closeDrawer } = useContext(DrawerContext);
 
