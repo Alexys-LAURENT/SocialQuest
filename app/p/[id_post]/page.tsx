@@ -16,6 +16,8 @@ const page = async ({ params }: { params: { id_post: string } }) => {
         return await getAnswers(params.id_post)
     }
 
+    const answers = await getAnswers(params.id_post)
+
     if (post === null) {
         notFound()
     }
@@ -30,7 +32,7 @@ const page = async ({ params }: { params: { id_post: string } }) => {
                     <MainPost post={post} user={userProfile} />
                     <PostInput id_guilde={undefined} page="post" guildesUser={null} parent={post.id_post} />
 
-                    <PostsWrapper user={userProfile} getPost={getPostAnswers} postPage={true} filtre={false} />
+                    <PostsWrapper user={userProfile} initPosts={answers} getPost={getPostAnswers} postPage={true} filtre={false} />
                 </div>
 
                 <div className="min-w-[0.5rem] sm:min-w-[5rem] md:min-w-[9rem] lg:min-w-[17rem] flex" />

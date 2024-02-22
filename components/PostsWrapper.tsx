@@ -32,9 +32,12 @@ const PostsWrapper = ({
 
   const prevScrollY = useRef(0);
 
+  if (initPosts && filtre && posts === null) {
+    setPostsRandom(initPosts);
+  }
+
   if (initPosts && posts === null) {
     setPosts(initPosts);
-    setPostsRandom(initPosts);
   }
 
   useEffect(() => {
