@@ -1,13 +1,16 @@
-"use server"
+'use server';
 
-import { cookies } from 'next/headers'
-import { createClient } from '@/utils/supabase/server'
+import { cookies } from 'next/headers';
+import { createClient } from '@/utils/supabase/server';
+import { cache } from 'react';
 
-export async function getUserConnected() {
-    "use server"
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+export const getUserConnected = cache(async () => {
+  'use server';
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
 
-    const { data: { user } } = await supabase.auth.getUser()
-    return user
-}
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  return user;
+});
