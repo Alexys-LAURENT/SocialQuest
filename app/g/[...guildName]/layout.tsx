@@ -1,4 +1,4 @@
-import { notFound, redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { ReactNode, Suspense } from 'react';
 import { getGuildInfos } from '@/utils/getGuildInfos';
@@ -23,15 +23,16 @@ const layout = async ({
   guildactivities: ReactNode;
   guildwars: ReactNode;
 }) => {
-    if (params.guildName[1] && params.guildName[1] !== "activities" && params.guildName[1] !== "guildwars") redirect(`/g/${params.guildName[0]}`)
-    const decodedGuildName = decodeURIComponent(params.guildName[0]);
-    const guilde = await getGuildInfos(decodedGuildName)
-    if (guilde === null) {
-        notFound()
-    }
-    const user = await getProfileConnected()
+  if (params.guildName[1] && params.guildName[1] !== 'activities' && params.guildName[1] !== 'guildwars')
+    redirect(`/g/${params.guildName[0]}`);
+  const decodedGuildName = decodeURIComponent(params.guildName[0]);
+  const user = await getProfileConnected();
+  const guilde = await getGuildInfos(decodedGuildName, user?.id_user);
+  if (guilde === null) {
+    notFound();
+  }
 
-    const isGuildCreator = guilde?.created_by === user?.id_user
+  const isGuildCreator = guilde?.created_by === user?.id_user;
 
   return (
     <div className="h-full w-full flex flex-col overflow-y-auto overflow-x-hidden items-center">
