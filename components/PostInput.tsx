@@ -178,12 +178,12 @@ const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => 
               <span className="CharCountContenuNewPost">{contenu.length}</span>/{limite.contenu}
             </div>
           </div>
-          <div className="flex justify-center">
-            <div
-              className={`flex flex-wrap gap-2 aspect-square ${imageData && imageData.length >= 1 ? 'w-full' : 'w-0'}`}
-            >
-              {imageData &&
-                imageData.map((img, index) => (
+          {imageData && imageData.length > 0 && (
+            <div className="flex justify-center">
+              <div
+                className={`flex flex-wrap gap-2 aspect-square ${imageData && imageData.length >= 1 ? 'w-full' : 'w-0'}`}
+              >
+                {imageData.map((img, index) => (
                   <div className="relative flex-1-1 " key={index}>
                     <Image src={img.url} alt="image" objectFit="cover" layout="fill" />
                     <button
@@ -203,8 +203,9 @@ const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => 
                     </button>
                   </div>
                 ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <div className="h-[30px] w-full bg-tempLightBorder dark:bg-[#1f1e1b] rounded-b-md transition-all !duration-500">
           <div className="flex justify-between items-center h-full px-2">
