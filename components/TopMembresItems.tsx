@@ -13,7 +13,7 @@ const TopMembresItems = async () => {
           key={`member-topItem-${index}-${Math.random}`}
           as={Link}
           className="p-2 bg-tempBgLightSecondary hover:bg-tempLightBorder/50 dark:bg-tempBgDarkSecondary dark:hover:bg-tempDarkHover shadow-none border border-tempLightBorder dark:border-tempDarkBorder text-sm rounded-md text-textDark dark:text-textLight !transition-all !duration-[125ms] h-auto"
-          href={membre.username}
+          href={`/${membre.username}`}
         >
           <div className="flex items-center justify-between gap-2 h-full w-full transition-all !duration-500">
             <div className="flex items-center">
@@ -24,9 +24,7 @@ const TopMembresItems = async () => {
                 />
               </div>
               <div className="flex flex-col ml-2 transition-all text-textDark dark:text-textLight">
-                <div className="text-sm">
-                  {membre.username}
-                </div>
+                <div className="text-sm">{membre.username}</div>
                 <div className="text-[0.6rem] text-gray-600 dark:text-gray-400 transition-all">
                   Niveau {membre.level}
                 </div>
@@ -38,7 +36,7 @@ const TopMembresItems = async () => {
                 <Image
                   src={`/assets/medal-${index}.png`}
                   alt={`Rank ${index + 1}`}
-                  className='w-5 h-5'
+                  className="w-5 h-5"
                   width={100}
                   height={100}
                 />
