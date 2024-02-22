@@ -16,7 +16,7 @@ const PostsWrapper = ({
   filtre,
 }: {
   user: Profile | null;
-  getPost: () => Promise<ExtendedPost[]>;
+  getPost: () => Promise<ExtendedPost[] | null>;
   postPage?: boolean;
   filtre: boolean;
 }) => {
