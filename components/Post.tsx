@@ -148,7 +148,7 @@ export default function Post({ user, post }: { user: Profile | null; post: Exten
           >
             {post.images &&
               post.images.length > 0 &&
-              post.images.map((img, index) => (
+              post.images.map((img) => (
                 <div className={`relative flex-1-1 overflow-hidden`} key={`post-${post.id_post}-image-${img}`}>
                   <ImageAntdPreview img={img} onDownload={onDownload} />
                 </div>

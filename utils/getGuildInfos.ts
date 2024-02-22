@@ -17,6 +17,10 @@ export async function getGuildInfos(guilde_name: string, id_user: string | undef
 
   if (guildeError) console.error(guildeError);
 
+    if (guildeError) {
+        console.error(guildeError)
+        return null
+    }
   if (id_user) {
     const { data: isUserInGuilde, error: errorIsUserInGuilde } = await supabase
       .from('guildes_users')

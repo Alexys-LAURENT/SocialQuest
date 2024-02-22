@@ -9,6 +9,7 @@ import PostInputGuildsListBox from '@/components/PostInputGuildsSelect';
 import Image from 'next/image';
 import { uploadFiles } from '@/utils/uploadFiles';
 import { Guilde } from '@/app/types/entities';
+import { compressImage } from '@/utils/compressImage';
 
 interface PostInputProps {
   id_guilde?: string;
@@ -65,7 +66,13 @@ const PostInput = ({ id_guilde, page, guildesUser, parent }: PostInputProps) => 
       data.parent = parent;
     }
 
-    const filesPaths = await uploadFiles(imageData, 'images_posts');
+
+    const compressedImages = await Promise.all(imageData.map(async (image) => {
+      const compressedImage = await compressImage(image.file, 1000);
+      return { file: compressedImage };
+    }));
+
+    const filesPaths = await uploadFiles(compressedImages, 'images_posts');
     if (!filesPaths) {
       return error("Une erreur est survenue lors de l'envoi des images");
     }
