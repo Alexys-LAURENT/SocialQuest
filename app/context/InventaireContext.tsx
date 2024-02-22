@@ -3,12 +3,12 @@ import { createContext, useState } from 'react';
 import { Item } from '@/app/types/entities';
 
 export const InventaireContext = createContext({
-    selectedItem: {} as Item,
-    setSelectedItem: (item: Item) => { }
+    selectedItem: {} as Item | null,
+    setSelectedItem: (item: Item | null) => { }
 });
 
 const InventaireProvider = ({ children }: { children: React.ReactNode }) => {
-    const [selectedItem, setSelectedItem] = useState({} as Item);
+    const [selectedItem, setSelectedItem] = useState<Item | null>(null);
 
     return (
         <InventaireContext.Provider value={{ selectedItem, setSelectedItem }}>
