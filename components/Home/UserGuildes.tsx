@@ -1,22 +1,37 @@
+"use client";
+import { useState, useEffect } from 'react';
 import { getGuildesUser } from '@/utils/getGuildesUser';
-import { Avatar, Card } from '@nextui-org/react';
+import { Avatar, Button, Card } from '@nextui-org/react';
 import Link from 'next/link';
 import { formatCount } from '@/utils/formatCount';
 import BtnCreateGuilde from '@/components/Home/BtnCreateGuilde';
+import { Guilde } from '@/app/types/entities';
+import TopItemsSkeleton from '../Skeletons/TopItemsSkeletons';
 
-const UserGuildes = async () => {
-  const guildesUser = await getGuildesUser();
+const UserGuildes = () => {
+  const [guildesUser, setGuildesUser] = useState<Guilde[] | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getGuildesUser();
+      if (data) {
+        setGuildesUser(data);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="bg-tempBgLightSecondary dark:bg-tempBgDark border border-tempLightBorder dark:border-tempDarkBorder rounded-md p-4 w-full flex flex-col gap-4">
       <h3 className="font-semibold">Guildes</h3>
       <div className="w-full flex flex-col gap-2">
         <BtnCreateGuilde />
+        {!guildesUser && <TopItemsSkeleton number={3} />}
         {guildesUser && guildesUser.length === 0 && <p className="text-tiny text-tempLightHover/60">Aucune guilde</p>}
         {guildesUser &&
           guildesUser.length > 0 &&
           guildesUser.map((guilde, index) => (
-            <Card
+            <Button
               key={`guildes-topItem-${index}-${Math.random}`}
               as={Link}
               className="p-2 bg-tempBgLightSecondary hover:bg-tempLightBorder/50 dark:bg-tempBgDarkSecondary dark:hover:bg-tempDarkHover shadow-none border border-tempLightBorder dark:border-tempDarkBorder rounded-md !transition-all !duration-[125ms] h-auto"
@@ -38,7 +53,7 @@ const UserGuildes = async () => {
                   </div>
                 </div>
               </div>
-            </Card>
+            </Button>
           ))}
       </div>
     </div>

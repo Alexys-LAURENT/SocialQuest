@@ -1,13 +1,26 @@
+"use client";
+import { useState, useEffect } from 'react';
 import { Avatar, Button } from '@nextui-org/react';
 import Link from 'next/link';
 import { getTopGuildes } from '@/utils/getTopGuildes';
 import Image from 'next/image';
 import { formatCount } from '@/utils/formatCount';
+import TopItemsSkeleton from './Skeletons/TopItemsSkeletons';
 
-const TopGuildesItems = async () => {
-  const topGuildes = await getTopGuildes();
+const TopGuildesItems = () => {
+  const [topGuildes, setTopGuildes] = useState([]);
 
-  return (
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getTopGuildes();
+      setTopGuildes(data);
+    };
+    fetchData();
+  }, []);
+
+  return topGuildes.length === 0 ? (
+    <TopItemsSkeleton />
+  ) : (
     <div className="flex flex-col gap-2">
       {topGuildes.map((guilde: { name: string; avatar_url: string; members: number }, index: number) => (
         <Button

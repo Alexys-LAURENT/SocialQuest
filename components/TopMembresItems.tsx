@@ -1,12 +1,25 @@
+"use client"
+import { useState, useEffect } from 'react';
 import { Avatar, Button } from '@nextui-org/react';
 import Link from 'next/link';
 import { getTopMembres } from '@/utils/getTopMembres';
 import Image from 'next/image';
+import TopItemsSkeleton from './Skeletons/TopItemsSkeletons';
 
-const TopMembresItems = async () => {
-  const topMembres = await getTopMembres();
+const TopMembresItems = () => {
+  const [topMembres, setTopMembres] = useState([]);
 
-  return (
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getTopMembres();
+      setTopMembres(data);
+    };
+    fetchData();
+  }, []);
+
+  return topMembres.length === 0 ? (
+    <TopItemsSkeleton />
+  ) : (
     <div className="flex flex-col gap-2">
       {topMembres.map((membre: { username: string; avatar_url: string; level: number }, index: number) => (
         <Button

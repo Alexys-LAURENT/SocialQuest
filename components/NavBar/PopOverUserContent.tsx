@@ -3,13 +3,30 @@ import { Divider, Progress } from '@nextui-org/react';
 import { ArrowRightEndOnRectangleIcon, Cog8ToothIcon, CubeIcon, UserIcon, ClipboardDocumentCheckIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import SwitchTheme from "@/components/NavBar/SwitchTheme";
-import { Suspense } from "react";
 import NextRewards from "@/components/NextRewards";
-import NextRewardSkeleton from "@/components/Skeletons/NavBar/NextRewardSkeleton";
 
 const PopOverUserContent = ({ user, customFunction, signOut }: { user: Profile, customFunction: () => void, signOut: () => void }) => {
     const progressValue = (user?.xp! - user?.niveaux.xp_debut!) * 100 / (user?.niveaux.xp_fin! + 1);
 
+    const formatCount = (count: number) => {
+        if (count >= 1000000) {
+            return (Math.floor(count / 1000000 * 10) / 10).toFixed(1) + 'M'; // convert to M for number from > 1000000
+        } else if (count >= 1000) {
+            return (Math.floor(count / 100) / 10).toFixed(1) + 'k'; // convert to k for number from > 1000 
+        } else {
+            return count;
+        }
+    }
+
+    const formatCountText = (count: number) => {
+        let countStr = count.toString();
+        let index = countStr.length - 3;
+        while (index > 0) {
+            countStr = countStr.substring(0, index) + ',' + countStr.substring(index);
+            index -= 3;
+        }
+        return countStr;
+    }
 
     return (
         <div className="popOverUserContentWrapper w-full px-1 py-2 gap-2 flex flex-col text-textDark dark:text-textLight">
@@ -25,10 +42,12 @@ const PopOverUserContent = ({ user, customFunction, signOut }: { user: Profile, 
                 <Progress aria-label="Level" value={progressValue} title={`${(user?.xp! - user?.niveaux.xp_debut!)} / ${user?.niveaux.xp_fin! + 1} xp`} classNames={{ track: "transition-all !duration-500", indicator: "bg-secondary" }} />
             </div>
 
-            <div className="nextRewardsWrapper flex justify-end items-center gap-1 text-end text-[#979797]">
-                <Suspense fallback={<NextRewardSkeleton />}>
-                    <NextRewards user={user} />
-                </Suspense>
+            <div className="nextRewardsWrapper flex justify-between sm:justify-end items-center gap-1 text-end text-[#979797]">
+                <div className="flex sm:hidden min-w-fit items-center rounded-md px-1 sm:px-2 py-1 bg-secondary/30 gap-1" title={`${formatCountText(user.social_coins)} SocialCoins`}>
+                    <img src="/assets/SocialCoin.png" className="h-4 w-4" alt="" />
+                    <p className="text-xs text-textDark dark:text-textLight transition-all !duration-[125ms]">{formatCount(user.social_coins)}</p>
+                </div>
+                <NextRewards user={user} />
             </div>
 
             <Divider />
@@ -42,18 +61,6 @@ const PopOverUserContent = ({ user, customFunction, signOut }: { user: Profile, 
                 >
                     <UserIcon className="w-5 h-5 text-textDark dark:text-textLight transition-all !duration-[125ms]" />
                     <div className="text-textDark dark:text-textLight transition-all !duration-[125ms] text-sm font-semibold">Profil</div>
-                </Link>
-                <Link
-                    href={`/messages`}
-                    className="px-1 py-1 flex gap-2 items-center dark:hover:bg-tempDarkHover hover:bg-tempLightHover hover:bg-opacity-75 transition-all ease-in-out rounded-md"
-                    onClick={() =>
-                        customFunction()
-                    }
-                >
-                    <div className="relative w-5 h-5 text-textDark dark:text-textLight transition-all !duration-[125ms]">
-                        <PaperAirplaneIcon className="absolute w-5 h-5 bottom-[0.1rem] left-[0.12rem] -rotate-45" />
-                    </div>
-                    <div className="text-textDark dark:text-textLight transition-all !duration-[125ms] text-sm font-semibold">Messages</div>
                 </Link>
                 <Link
                     href={`/missions`}

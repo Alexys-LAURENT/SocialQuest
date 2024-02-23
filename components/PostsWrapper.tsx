@@ -2,7 +2,7 @@
 import { ExtendedPost, Profile } from '@/app/types/entities';
 import { Tabs, Tab, Spinner } from '@nextui-org/react';
 import dynamic from 'next/dynamic';
-import { Fragment, use, useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import PostsWrapperSkeleton from '@/components/Skeletons/PostsWrapperSkeleton';
 import { getPostSuivis } from '@/utils/getPostSuivis';
 import { getPostGuildes } from '@/utils/getPostGuildes';
@@ -162,6 +162,8 @@ const PostsWrapper = ({
           disableAnimation={isSticky}
           classNames={{
             base: `z-10 flex justify-center sticky transition-all !duration-250 ${lastScrollDirection === 'down' ? '-top-12' : 'top-1'}`,
+            tabList: 'bg-tempLightBorder dark:bg-tempDarkBorder transition-all !duration-500 text-textDark dark:text-textLight',
+            cursor: 'transition-all !duration-500',
           }}
           selectedKey={selectedKey}
         >

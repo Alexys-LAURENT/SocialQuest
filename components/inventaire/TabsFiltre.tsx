@@ -47,7 +47,13 @@ const TabsFiltre = ({ inventory, filterParam }: { inventory: AllInventory, filte
 
     return (
         <div className={` ${selectedItem ? "hidden md:flex" : ""} flex w-full h-full gap-6 flex-col  transition-all`}>
-            <Tabs className={`${selectedItem ? "hidden md:flex" : ""}`} aria-label="Options" items={tabsList} classNames={{ panel: "p-0", tab: "text-xs lg:text-sm", tabList: "bg-bgLightCard dark:bg-bgDarkCard transition-all !duration-500 gap-1 lg:gap-2", cursor: "bg-bgLight dark:bg-textDark transition-colors !duration-500" }} onSelectionChange={() => setSelectedItem(null)} defaultSelectedKey={filterParam ? filterParam : "Tout"}>
+            <Tabs className={`${selectedItem ? "hidden md:flex" : ""}`} aria-label="Options" items={tabsList} classNames={{
+                panel: "p-0",
+                tab: "text-xs lg:text-sm",
+                tabList: "bg-tempLightBorder dark:bg-tempDarkBorder transition-all !duration-500 text-textDark dark:text-textLight gap-1 lg:gap-2",
+                cursor: "bg-bgLight dark:bg-textDark transition-colors !duration-500"
+            }}
+                onSelectionChange={() => setSelectedItem(null)} defaultSelectedKey={filterParam ? filterParam : "Tout"}>
                 {(item) => (
                     <Tab className={`${selectedItem ? "hidden md:flex flex-col" : ""}`} key={item.key} title={item.title}>
                         <Card className='bg-transparent shadow-none'>

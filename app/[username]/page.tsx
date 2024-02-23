@@ -17,8 +17,6 @@ export default async function Profil({ params }: { params: { username: string } 
     getPageProfile(decodedUsername)
   ]);
 
-  console.log(decodedUsername)
-
   if (pageProfile === null) {
     notFound()
   }
