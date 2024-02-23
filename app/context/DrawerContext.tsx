@@ -3,18 +3,17 @@ import { createContext, useState } from 'react';
 import { Profile } from '@/app/types/entities';
 import { createBrowserClient } from '@supabase/ssr';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import dynamic from 'next/dynamic';
+import PopOverUserContent from '@/components/NavBar/PopOverUserContent';
+import NavBarMenu from '@/components/NavBar/NavBarMenu';
+import { Drawer } from 'antd';
 type Content = "User" | "NavMenu";
 
 // create a context
 export const DrawerContext = createContext({
     showDrawer: (content: Content) => { },
     closeDrawer: () => { },
+    open: false,
 });
-
-const PopOverUserContent = dynamic(() => import('@/components/NavBar/PopOverUserContent'));
-const NavBarMenu = dynamic(() => import('@/components/NavBar/NavBarMenu'));
-const Drawer = dynamic(() => import('antd').then((mod) => mod.Drawer));
 
 // create a provider function
 const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: Profile | null }) => {
@@ -44,7 +43,7 @@ const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: P
     };
 
     return (
-        <DrawerContext.Provider value={{ showDrawer, closeDrawer }}>
+        <DrawerContext.Provider value={{ showDrawer, closeDrawer, open }}>
             {
                 <Drawer
                     styles={{ wrapper: { height: "auto" } }}

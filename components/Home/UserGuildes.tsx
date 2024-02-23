@@ -8,8 +8,12 @@ import BtnCreateGuilde from '@/components/Home/BtnCreateGuilde';
 import { Guilde } from '@/app/types/entities';
 import TopItemsSkeleton from '../Skeletons/TopItemsSkeletons';
 
-const UserGuildes = () => {
+const UserGuildes = ({ customFunction, initGuildes }: { customFunction?: () => void, initGuildes?: any }) => {
   const [guildesUser, setGuildesUser] = useState<Guilde[] | null>(null);
+
+  if (initGuildes && initGuildes && guildesUser === null) {
+    setGuildesUser(initGuildes);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +25,11 @@ const UserGuildes = () => {
     fetchData();
   }, []);
 
+  const handleClick = (id_guilde: string) => () => {
+    document.getElementById(`Link-userGuilde-${id_guilde}`)?.click();
+    if (customFunction) customFunction();
+  };
+
   return (
     <div className="bg-tempBgLightSecondary dark:bg-tempBgDark border border-tempLightBorder dark:border-tempDarkBorder rounded-md p-4 w-full flex flex-col gap-4">
       <h3 className="font-semibold">Guildes</h3>
@@ -31,31 +40,33 @@ const UserGuildes = () => {
         {guildesUser &&
           guildesUser.length > 0 &&
           guildesUser.map((guilde, index) => (
-            <Button
-              key={`guildes-topItem-${index}-${Math.random}`}
-              as={Link}
-              className="p-2 bg-tempBgLightSecondary hover:bg-tempLightBorder/50 dark:bg-tempBgDarkSecondary dark:hover:bg-tempDarkHover shadow-none border border-tempLightBorder dark:border-tempDarkBorder rounded-md !transition-all !duration-[125ms] h-auto"
-              href={`/g/${guilde.nom}`}
-            >
-              <div className="flex items-center justify-between gap-2 h-full w-full transition-all !duration-500">
-                <div className="flex items-center">
-                  <div className="flex items-center justify-center bg-bgLightPopover dark:bg-bgDarkPopover rounded-full">
-                    <Avatar
-                      src={guilde.avatar_url || ''}
-                      className="rounded-full text-large transition-all w-[35px] h-[35px]"
-                    />
-                  </div>
-                  <div className="flex flex-col ml-2 transition-all text-textDark dark:text-textLight">
-                    <div className="text-sm">{guilde.nom}</div>
-                    <div className="text-[0.6rem] text-gray-600 dark:text-gray-400 transition-all">
-                      {formatCount(guilde.total_members)} membres
+            <div key={`userGuilde-${guilde.id_guilde}-${Math.random}`}>
+              <Link id={`Link-userGuilde-${guilde.id_guilde}`} className='hidden' href={`/g/${guilde.nom}`} />
+              <Button
+                key={`guildes-topItem-${index}-${Math.random}`}
+                className="w-full p-2 bg-tempBgLightSecondary hover:bg-tempLightBorder/50 dark:bg-tempBgDarkSecondary dark:hover:bg-tempDarkHover shadow-none border border-tempLightBorder dark:border-tempDarkBorder rounded-md !transition-all !duration-[125ms] h-auto"
+                onClick={handleClick(guilde.id_guilde)}
+              >
+                <div className="flex items-center justify-between gap-2 h-full w-full transition-all !duration-500">
+                  <div className="flex items-center">
+                    <div className="flex items-center justify-center bg-bgLightPopover dark:bg-bgDarkPopover rounded-full">
+                      <Avatar
+                        src={guilde.avatar_url || ''}
+                        className="rounded-full text-large transition-all w-[35px] h-[35px]"
+                      />
+                    </div>
+                    <div className="flex flex-col ml-2 transition-all text-textDark dark:text-textLight">
+                      <div className="text-sm">{guilde.nom}</div>
+                      <div className="text-[0.6rem] text-gray-600 dark:text-gray-400 transition-all">
+                        {formatCount(guilde.total_members)} membres
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </Button>
+              </Button>
+            </div>
           ))}
-      </div>
+      </div >
     </div>
   );
 };

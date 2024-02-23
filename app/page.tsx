@@ -9,6 +9,9 @@ import { getAllPosts } from '@/utils/getAllPosts';
 import TopGuildes from '@/components/TopGuildes';
 import TopMembres from '@/components/TopMembres';
 import UserGuildes from '@/components/Home/UserGuildes';
+import { getTopGuildes } from '@/utils/getTopGuildes';
+import { getTopMembres } from '@/utils/getTopMembres';
+import { getGuildesUser } from '@/utils/getGuildesUser';
 
 export default async function Index() {
   const PostInputSkeleton = dynamic(() => import('@/components/Skeletons/PostInputSkeleton'));
@@ -16,11 +19,13 @@ export default async function Index() {
   const user = await getProfileConnected();
   const Posts = await getAllPosts();
 
+  const [topGuildes, topMembres, guildesUser] = await Promise.all([getTopGuildes(), getTopMembres(), getGuildesUser()]);
+
   return (
     <div className={`flex max-w-[1280px] w-full px-2 md:px-4 py-4 gap-6`}>
       <div className="hidden md:flex flex-col min-w-[17rem] gap-4 h-fit">
-        <TopGuildes />
-        <TopMembres />
+        <TopGuildes initGuildes={topGuildes} />
+        <TopMembres initMembres={topMembres} />
       </div>
 
       <div className={`flex flex-col w-full gap-6 lg:gap-10 `}>
@@ -35,7 +40,7 @@ export default async function Index() {
 
       <div className="sticky top-0  hidden lg:flex min-w-[17rem] h-fit">
         {user ? (
-          <UserGuildes />
+          <UserGuildes initGuildes={guildesUser} />
         ) : (
           <div className="w-full flex flex-col bg-bgLightCard dark:bg-bgDarkCard rounded-md text-xl font-semibold h-fit transition-all !duration-500">
             <div className="text-base text-center p-2 text-textDark dark:text-textLight">
