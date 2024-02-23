@@ -7,7 +7,8 @@ export const revalidate = 3600;
 
 export async function generateStaticParams() {
   const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
-  const { data: guildNames } = await supabase.from('guildes').select('nom');
+  const results = (await supabase.from('guildes').select('nom')) as unknown as { data: any[] };
+  const guildNames = results?.data;
 
   return guildNames?.map(({ nom }) => ({
     nom,
