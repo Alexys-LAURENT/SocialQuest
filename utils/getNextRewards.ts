@@ -17,16 +17,17 @@ export const getNextRewards = cache(async (current_libelle: number) => {
     .eq('libelle', current_libelle + 1);
 
   if (nextLevelIdError) {
-    console.log(nextLevelIdError);
+    console.log('ErrorGetNextRewards', nextLevelIdError);
     return null;
   }
+
   const { data, error } = await supabase
     .from('items_niveaux')
     .select('items(id_item, nom, type, image_url, damage)')
     .eq('id_niveau', nextLevelId[0].id_niveau);
 
   if (error) {
-    console.log(error);
+    console.log('ErrorGetNextRewards', error);
     return null;
   }
 

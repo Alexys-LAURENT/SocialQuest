@@ -15,12 +15,11 @@ export async function getGuildInfos(guilde_name: string, id_user: string | undef
     .eq('nom', guilde_name)
     .single();
 
-  if (guildeError) console.error(guildeError);
+  if (guildeError) {
+    console.error('ErrorGetGuildInfos', guildeError);
+    return null
+  }
 
-    if (guildeError) {
-        console.error(guildeError)
-        return null
-    }
   if (id_user) {
     const { data: isUserInGuilde, error: errorIsUserInGuilde } = await supabase
       .from('guildes_users')
@@ -28,7 +27,11 @@ export async function getGuildInfos(guilde_name: string, id_user: string | undef
       .eq('id_user', id_user)
       .eq('id_guilde', guilde?.id_guilde);
 
-    if (errorIsUserInGuilde) console.error(errorIsUserInGuilde);
+    if (errorIsUserInGuilde) {
+      console.error('ErrorGetIsUserInGuilde', errorIsUserInGuilde);
+      return null;
+    }
+
     if (isUserInGuilde && isUserInGuilde?.length > 0) {
       is_user_in_guilde = true;
     }

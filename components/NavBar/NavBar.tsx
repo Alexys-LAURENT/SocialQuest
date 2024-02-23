@@ -33,7 +33,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
     const signOut = async () => {
         const { error } = await supabase.auth.signOut();
         if (error) {
-            console.error(error);
+            console.error('Error logging out', error)
             return;
         }
         router.push("/")

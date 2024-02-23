@@ -29,7 +29,7 @@ export async function doSearchByWord(query: string | undefined) {
     const { data: guildes, error: guildesError } = guildesResult;
 
     if (profileError || guildesError) {
-        console.error(profileError, guildesError)
+        console.error('ErrorDoSearchByWord', profileError, guildesError)
         return []
     }
 

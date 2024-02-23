@@ -12,7 +12,7 @@ export async function getPost(id_post: string) {
         .rpc('get_post_by_id_post', { the_id_post: id_post })
 
     if (postError) {
-        console.error(postError)
+        console.error('ErrorGetPost', postError)
         return null
     }
 

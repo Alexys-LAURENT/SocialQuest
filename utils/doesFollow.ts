@@ -18,7 +18,7 @@ export async function doesFollow(idUserDoesFollow: string, idUserConnected?: str
     const { data: isFollowed, error: errorIsFollowed } = await supabase.from('follow').select('id_follow').eq('id_user', idUserConnected || IDUSERCONNECTED).eq('id_followed', idUserDoesFollow)
 
     if (errorIsFollowed) {
-        console.log(errorIsFollowed)
+        console.log('errorDoesFollow', errorIsFollowed)
         return false
     }
     if (isFollowed[0] && isFollowed[0].id_follow !== undefined) {

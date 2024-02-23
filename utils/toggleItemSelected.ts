@@ -17,7 +17,7 @@ export async function toggleItemSelected(id_item_user: string | null, action: 'e
             .eq('id_item_user', id_item_user)
 
         if (error) {
-            console.error(error)
+            console.error('ErrorToggleItemSelected', error)
             return false
         }
 
@@ -31,7 +31,7 @@ export async function toggleItemSelected(id_item_user: string | null, action: 'e
         .eq('id_item_user', id_item_user)
 
     if (error) {
-        console.error(error)
+        console.error('ErrorToggleItemSelected', error)
         return false
     }
 

@@ -10,7 +10,7 @@ export const getGuildesNameWhereName = async (name: string) => {
   const { data, error } = await supabase.from('guildes').select('nom').ilike('nom', name).limit(1);
 
   if (error) {
-    console.error(error);
+    console.error('ErrorGetGuildesNameWhereName', error);
     return false;
   }
   // if the guilde exists return false otherwise true

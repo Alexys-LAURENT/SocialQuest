@@ -174,7 +174,7 @@ const PostsWrapper = ({
               selectedKey === 'MaPage' ? (
                 <div className="flex items-center gap-2">
                   <span>Ma Page</span>
-                  <Spinner id="RefreshIconMaPage" size="sm" className="scale-75 hidden" color="white" />
+                  <Spinner id="RefreshIconMaPage" size="sm" className="scale-75 hidden" color={`${document.documentElement.classList.contains('dark') ? 'white' : 'default'}`} />
                 </div>
               ) : (
                 'Ma Page'
@@ -201,7 +201,7 @@ const PostsWrapper = ({
               selectedKey === 'Suivis' ? (
                 <div className="flex items-center gap-2">
                   <span>Suivis</span>
-                  <Spinner id="RefreshIconSuivis" size="sm" className="scale-75 hidden" color="white" />
+                  <Spinner id="RefreshIconSuivis" size="sm" className="scale-75 hidden" color={`${document.documentElement.classList.contains('dark') ? 'white' : 'default'}`} />
                 </div>
               ) : (
                 'Suivis'
@@ -228,7 +228,7 @@ const PostsWrapper = ({
               selectedKey === 'Guildes' ? (
                 <div className="flex items-center gap-2">
                   <span>Guildes</span>
-                  <Spinner id="RefreshIconGuildes" size="sm" className="scale-75 hidden" color="white" />
+                  <Spinner id="RefreshIconGuildes" size="sm" className="scale-75 hidden" color={`${document.documentElement.classList.contains('dark') ? 'white' : 'default'}`} />
                 </div>
               ) : (
                 'Guildes'

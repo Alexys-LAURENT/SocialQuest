@@ -15,13 +15,14 @@ const UserGuildes = ({ customFunction, initGuildes }: { customFunction?: () => v
     setGuildesUser(initGuildes);
   }
 
+  const fetchData = async () => {
+    const data = await getGuildesUser();
+    if (data) {
+      setGuildesUser(data);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getGuildesUser();
-      if (data) {
-        setGuildesUser(data);
-      }
-    };
     fetchData();
   }, []);
 
@@ -34,7 +35,7 @@ const UserGuildes = ({ customFunction, initGuildes }: { customFunction?: () => v
     <div className="bg-tempBgLightSecondary dark:bg-tempBgDark border border-tempLightBorder dark:border-tempDarkBorder rounded-md p-4 w-full flex flex-col gap-4">
       <h3 className="font-semibold">Guildes</h3>
       <div className="w-full flex flex-col gap-2">
-        <BtnCreateGuilde />
+        <BtnCreateGuilde customFunction={customFunction} fetchData={fetchData} />
         {!guildesUser && <TopItemsSkeleton number={3} />}
         {guildesUser && guildesUser.length === 0 && <p className="text-tiny text-tempLightHover/60">Aucune guilde</p>}
         {guildesUser &&
@@ -56,8 +57,8 @@ const UserGuildes = ({ customFunction, initGuildes }: { customFunction?: () => v
                       />
                     </div>
                     <div className="flex flex-col ml-2 transition-all text-textDark dark:text-textLight">
-                      <div className="text-sm">{guilde.nom}</div>
-                      <div className="text-[0.6rem] text-gray-600 dark:text-gray-400 transition-all">
+                      <div className="text-left text-sm">{guilde.nom}</div>
+                      <div className="text-left text-[0.6rem] text-gray-600 dark:text-gray-400 transition-all">
                         {formatCount(guilde.total_members)} membres
                       </div>
                     </div>

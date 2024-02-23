@@ -12,7 +12,7 @@ export async function removePost(post: ExtendedPost) {
         await Promise.all(post.images.map(async (image) => {
             const { data, error } = await supabase.storage.from('images_posts').remove([image])
             if (error) {
-                console.error(error)
+                console.error('ErrorRemovePost', error)
                 return false
             }
         }))
@@ -21,7 +21,7 @@ export async function removePost(post: ExtendedPost) {
     const { error } = await supabase.from('posts').delete().eq('id_post', post.id_post);
 
     if (error) {
-        console.error(error);
+        console.error('ErrorRemovePost', error)
         return false;
     }
 

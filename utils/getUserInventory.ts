@@ -20,7 +20,7 @@ export async function getUserInventory(username: string) {
         .single();
 
     if (userError) {
-        console.log(userError)
+        console.log('ErrorGetUserInventory', userError)
         return null
     }
 
@@ -31,9 +31,10 @@ export async function getUserInventory(username: string) {
         .eq('id_user', user.id_user);
 
     if (inventaireError) {
-        console.log(inventaireError)
+        console.log('ErrorGetUserInventory', inventaireError)
         return null
     }
+
     return {
         all: inventaire?.sort((a, b) => a.is_favorite ? -1 : 1),
         equiped: inventaire?.filter((item: Item) => item.is_equiped === true),

@@ -14,7 +14,7 @@ export async function getCurrentUserAllDiscussions() {
     const { data: discussions, error } = await supabase.from('discussions_users').select('discussions(id_discussion,nom,is_group,image_url,created_by),profiles(id_user, username, avatar_url)')
 
     if (error) {
-        console.log(error)
+        console.log('ErrorGetCurrentUserAllDiscussions', error)
         return
     }
 

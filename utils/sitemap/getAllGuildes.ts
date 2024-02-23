@@ -7,13 +7,13 @@ export async function getAllGuildes() {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
 
-    const { data: guildes, error: err } = await supabase
+    const { data: guildes, error: error } = await supabase
         .from('guildes')
         .select('nom')
 
 
-    if (err) {
-        console.error(err)
+    if (error) {
+        console.error('ErrorGetAllGuildes', error)
         return []
     }
 

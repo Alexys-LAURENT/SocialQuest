@@ -10,12 +10,12 @@ export async function getTopGuildes() {
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 
-    // get top 5 membres qui ont le plus de follow dans la table follow
+    // get top 5 guildes qui ont le plus de membres
     const { data, error } = await supabase
         .rpc('get_top_guildes')
 
     if (error) {
-        console.error(error)
+        console.error('ErrorGetTopGuildes', error)
         return
     }
 

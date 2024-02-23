@@ -57,7 +57,7 @@ const ModalComponentCreateDiscussion = ({
         .eq('id_user', ids[1]);
 
       if (error1 || error2) {
-        console.log(error1, error2);
+        console.log('errorCreateDiscussion', error1, error2);
         return;
       }
 
@@ -94,14 +94,14 @@ const ModalComponentCreateDiscussion = ({
       .select('*');
 
     if (errorInsertDiscussion) {
-      console.log(errorInsertDiscussion);
+      console.log('errorInsertDiscussion', errorInsertDiscussion);
     }
 
     const { error: errorInsertDiscussionUsers } = await supabase
       .from('discussions_users')
       .insert(ids.map((id) => ({ id_discussion: newDiscussion![0].id_discussion, id_user: id })));
     if (errorInsertDiscussionUsers) {
-      console.log(errorInsertDiscussionUsers);
+      console.log('errorInsertDiscussionUsers', errorInsertDiscussionUsers);
     }
 
     setOpen(false);
@@ -129,7 +129,7 @@ const ModalComponentCreateDiscussion = ({
       setUsers(data.map((follow: any) => follow.profiles) as Profile[]);
     }
     if (error) {
-      console.log(error);
+      console.log('errorGetUsers', error);
     }
   };
 
@@ -143,7 +143,7 @@ const ModalComponentCreateDiscussion = ({
       setUsers(data);
     }
     if (error) {
-      console.log(error);
+      console.log('errorGetUsersByName', error);
     }
   };
 

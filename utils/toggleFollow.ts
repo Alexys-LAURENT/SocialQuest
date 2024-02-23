@@ -20,7 +20,7 @@ export async function toggleFollow(idUserFollowed: string, isFollowedNow: boolea
             .eq('id_user', idUserConnected)
             .eq('id_followed', idUserFollowed)
         if (error) {
-            console.log(error)
+            console.log('ErrorToggleFollow', error)
             return false
         }
         return true
@@ -29,7 +29,7 @@ export async function toggleFollow(idUserFollowed: string, isFollowedNow: boolea
             .from('follow')
             .insert([{ id_user: idUserConnected, id_followed: idUserFollowed }])
         if (error) {
-            console.log(error)
+            console.log('ErrorToggleFollow', error)
             return false
         }
         return true

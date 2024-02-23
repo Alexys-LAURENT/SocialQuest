@@ -7,12 +7,12 @@ export async function getAllUsernames() {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
 
-    const { data: usernames, error: err } = await supabase
+    const { data: usernames, error: error } = await supabase
         .from('profiles')
         .select('username')
 
-    if (err) {
-        console.error(err)
+    if (error) {
+        console.error('ErrorGetAllUsernames', error)
         return []
     }
 

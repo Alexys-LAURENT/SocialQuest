@@ -13,12 +13,12 @@ export async function getGuildeModerators(id_guilde: string) {
     .eq('id_guilde', id_guilde)
     .eq('is_moderator', true)
     .order('is_admin', { ascending: false })) as unknown as {
-    data: { is_admin: boolean; profiles: { username: string; avatar_url: string } }[];
-    error: any;
-  };
+      data: { is_admin: boolean; profiles: { username: string; avatar_url: string } }[];
+      error: any;
+    };
 
   if (error) {
-    console.error(error);
+    console.error('ErrorGetGuildeModerators', error);
     return;
   }
 

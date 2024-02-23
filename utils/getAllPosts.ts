@@ -15,7 +15,7 @@ export async function getAllPosts() {
         .rpc('get_random_posts')
 
     if (postsRandomError) {
-        console.error(postsRandomError)
+        console.error('ErrorGetPostsRandom', postsRandomError)
         return null
     }
 
@@ -36,7 +36,7 @@ export async function getAllPostsFromUser(id_user: string) {
         .rpc('get_all_posts_where_user', { the_id_user: id_user })
 
     if (postsUserError) {
-        console.error(postsUserError)
+        console.error('ErrorGetPostsUser', postsUserError)
         return null
     }
 
@@ -57,7 +57,7 @@ export async function getAllPostsFromGuild(guilde_name: string) {
         .rpc('get_all_posts_where_guild', { the_guild_name: guilde_name })
 
     if (postsGuildError) {
-        console.error(postsGuildError)
+        console.error('ErrorGetPostsGuild', postsGuildError)
         return null
     }
 

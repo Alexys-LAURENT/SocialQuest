@@ -190,7 +190,7 @@ const MessagePopup = ({ id_message, setTooltipDeleteOpen, setIsMobile, handleTog
     function deleteMessage(id_message: string) {
         supabase.from('messages').update({ contenu: "Message supprimé", isDeleted: true }).eq('id_message', id_message).then(({ data, error }) => {
             if (error) {
-                console.error(error);
+                console.error('errorDeleteMessage', error)
                 return;
             }
             setTooltipDeleteOpen({ open: false, key: '' })

@@ -13,7 +13,7 @@ export async function getUserNotifications(id_user: string) {
     const { data, error } = await supabase.from("notifications").select("*").eq("id_user", id_user).order("created_at", { ascending: false }).limit(5)
 
     if (error) {
-        console.error(error)
+        console.error('ErrorGetUserNotifications', error)
         return false
     }
     return data

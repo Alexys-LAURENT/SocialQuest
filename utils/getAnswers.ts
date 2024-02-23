@@ -12,7 +12,7 @@ export async function getAnswers(id_post: string) {
         .rpc('get_posts_by_id_parent', { the_id_parent: id_post })
 
     if (postsError) {
-        console.error(postsError)
+        console.error('ErrorGetAnswers', postsError)
         return null
     }
 

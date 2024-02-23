@@ -14,7 +14,7 @@ export async function getPostSuivis(id_user: string) {
         .rpc('get_posts_by_followed_users')
 
     if (postsError) {
-        console.error(postsError)
+        console.error('ErrorGetPostSuivis', postsError)
         return null
     }
 

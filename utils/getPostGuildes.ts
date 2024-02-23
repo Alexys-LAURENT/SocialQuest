@@ -14,7 +14,7 @@ export async function getPostGuildes(id_user: string) {
         .rpc('get_posts_by_guildes_users')
 
     if (postsError) {
-        console.error(postsError)
+        console.error('ErrorGetPostGuildes', postsError)
         return null
     }
 

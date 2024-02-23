@@ -9,10 +9,10 @@ export async function readUserNotifications(id_user: string) {
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 
-    const { data, error } = await supabase.from("notifications").update({ is_read: true }).eq("id_user", id_user).eq("is_read", false)
+    const { error } = await supabase.from("notifications").update({ is_read: true }).eq("id_user", id_user).eq("is_read", false)
 
     if (error) {
-        console.error(error)
+        console.error('ErrorReadUserNotifications', error)
         return false
     }
 

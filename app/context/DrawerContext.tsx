@@ -27,7 +27,7 @@ const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: P
     const signOut = async () => {
         const { error } = await supabase.auth.signOut();
         if (error) {
-            console.error(error);
+            console.error('Error logging out', error)
             return;
         }
         window.location.href = "/";

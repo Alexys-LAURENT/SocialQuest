@@ -20,7 +20,7 @@ export async function toggleFavorite(selectedItem: Item) {
         .eq("id_user", profileConnected!.id_user)
 
     if (error) {
-        console.error(error)
+        console.error('ErrorToggleFavorite', error)
         return false
     }
 

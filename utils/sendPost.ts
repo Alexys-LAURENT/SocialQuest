@@ -14,7 +14,7 @@ export async function sendPost(data: { id_guilde?: string, titre: string, conten
     ])
 
     if (error) {
-        console.error(error)
+        console.error('ErrorSendPost', error)
         return false
     }
 
@@ -23,7 +23,7 @@ export async function sendPost(data: { id_guilde?: string, titre: string, conten
     const { error: errorUpdateProfile } = await supabase.from('profiles').update({ xp: user!.xp + 1 }).eq('id_user', user!.id_user)
 
     if (errorUpdateProfile) {
-        console.error(errorUpdateProfile)
+        console.error('ErrorSendPost', errorUpdateProfile)
 
     }
 

@@ -28,7 +28,7 @@ const EditGroup = ({ profileConnected, selectedCDiscussion, setSelectedDiscussio
         const supabase = createClient()
         const { error } = await supabase.from('discussions').delete().match({ id_discussion: selectedCDiscussion.id_discussion })
         if (error) {
-            console.log(error);
+            console.log('errorDeleteGroup', error)
             errorToaster('Une erreur est survenue')
         }
         setIsEditingGroup(false)

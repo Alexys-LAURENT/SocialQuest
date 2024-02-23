@@ -15,7 +15,7 @@ export async function createGuild(nom_guilde: string, avatar_url: string, descri
     .single();
 
   if (error) {
-    console.error(error);
+    console.error('ErrorCreateGuild', error);
     return false;
   }
 
@@ -24,7 +24,7 @@ export async function createGuild(nom_guilde: string, avatar_url: string, descri
     .insert([{ id_guilde: data.id_guilde, id_user: data.created_by, is_admin: true, is_moderator: true }]);
 
   if (guildesUsersError) {
-    console.error(guildesUsersError);
+    console.error('ErrorCreateGuildUser', guildesUsersError);
     return false;
   }
 

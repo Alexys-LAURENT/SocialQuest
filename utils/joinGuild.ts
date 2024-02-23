@@ -13,7 +13,7 @@ export async function joinGuild(id_user: string, id_guild: string) {
 
 
     if (error) {
-        console.error(error)
+        console.error('ErrorJoinGuild', error)
         return false
     }
 
@@ -32,7 +32,7 @@ export async function leaveGuild(id_user: string, id_guild: string) {
         .eq('id_user', id_user)
         .eq('id_guilde', id_guild)
     if (error) {
-        console.error(error)
+        console.error('ErrorLeaveGuild', error)
         return false
     }
 

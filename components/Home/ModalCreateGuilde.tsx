@@ -17,7 +17,7 @@ import { createGuild } from '@/utils/createGuild';
 import { useRouter } from 'next/navigation';
 import { getGuildesNameWhereName } from '@/utils/getGuildesNameWhereName';
 
-export const ModalCreateGuilde = ({ isOpen, onOpenChange }: { isOpen: boolean; onOpenChange: () => void }) => {
+export const ModalCreateGuilde = ({ isOpen, onOpenChange, fetchData }: { isOpen: boolean; onOpenChange: () => void; fetchData?: any }) => {
   const [input, setInput] = useState<string>('');
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [isInputValid, setIsInputValid] = useState<{ value: boolean; reason: string }>();
@@ -36,6 +36,7 @@ export const ModalCreateGuilde = ({ isOpen, onOpenChange }: { isOpen: boolean; o
     const isCreated = await createGuild(input, filePath[0], description);
     if (isCreated) {
       success('Guilde créée !');
+      fetchData();
       setLoading(false);
       setInput('');
       setDescription('');

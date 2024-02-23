@@ -19,7 +19,7 @@ export const getGuildesUser = cache(async () => {
     .eq('id_user', user?.id_user);
 
   if (guildesUserError) {
-    console.log(guildesUserError);
+    console.log('ErrorGetGuildesUser', guildesUserError);
     return null;
   }
 

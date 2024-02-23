@@ -15,7 +15,7 @@ export async function switchUserTheme(newTheme: string) {
         .eq("id_user", profileConnected?.id_user);
 
     if (error) {
-        console.log(error);
+        console.log("ErrorSwitchUserTheme", error);
         return error;
     }
 

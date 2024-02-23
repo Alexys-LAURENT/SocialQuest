@@ -17,7 +17,7 @@ export async function getMessages(selectedCDiscussion: DiscussionTab | null) {
         .order('created_at', { ascending: true })
 
     if (error) {
-        console.error(error);
+        console.error('ErrorGetMessages', error)
         return [];
     }
 

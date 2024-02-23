@@ -23,7 +23,7 @@ export const getProfileConnected = cache(async (user?: User | null) => {
       .single();
 
     if (error) {
-      console.log(error);
+      console.log('ErrorGetProfileConnected', error);
       return null;
     }
 

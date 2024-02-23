@@ -47,7 +47,7 @@ const DiscussionProvider = ({ children }: { children: React.ReactNode }) => {
                 id_user: id
             })
             if (error) {
-                console.log(error)
+                console.log('errorAddUserToDiscussion', error)
                 toasterError("Une erreur est survenue lors de l'ajout d'un utilisateur")
             }
         }))
@@ -64,7 +64,7 @@ const DiscussionProvider = ({ children }: { children: React.ReactNode }) => {
     const removeUserFromSelectedDiscussion = async (id: string) => {
         const { error } = await supabase.from('discussions_users').delete().eq('id_user', id).eq('id_discussion', selectedCDiscussion!.id_discussion)
         if (error) {
-            console.log(error)
+            console.log('errorRemoveUserFromSelectedDiscussion', error)
             toasterError("Une erreur est survenue lors de la suppression d'un utilisateur")
         }
         // update state
@@ -79,7 +79,7 @@ const DiscussionProvider = ({ children }: { children: React.ReactNode }) => {
     const updateCurrentSelectedDiscussion = async (nom: string) => {
         const { error } = await supabase.from('discussions').update({ nom }).eq('id_discussion', selectedCDiscussion!.id_discussion)
         if (error) {
-            console.log(error)
+            console.log('errorUupdateCurrentSelectedDiscussion', error)
             toasterError("Une erreur est survenue lors de la mise à jour du nom du groupe")
         }
         // update state

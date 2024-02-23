@@ -15,7 +15,7 @@ export async function getCountGuildeMember(id_guilde: string) {
     .eq('id_guilde', id_guilde);
 
   if (error) {
-    console.error(error);
+    console.error('ErrorGetCountGuildeMember', error);
     return;
   }
 

@@ -6,13 +6,19 @@ import dynamic from 'next/dynamic';
 
 const DynamicModalCreateGuilde = dynamic(() => import('@/components/Home/ModalCreateGuilde'), { ssr: false });
 
-const BtnCreateGuilde = () => {
+const BtnCreateGuilde = ({ customFunction, fetchData }: { customFunction?: () => void, fetchData?: any }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const handleClick = () => {
+    onOpen();
+    if (customFunction) customFunction();
+  };
+
   return (
     <>
       <Button
         as={Card}
-        onPress={onOpen}
+        onPress={handleClick}
         key={`create-guilde`}
         className="cursor-pointer p-2 bg-tempBgLightSecondary items-start hover:bg-tempLightBorder/50 dark:bg-tempBgDarkSecondary dark:hover:bg-tempDarkHover shadow-none border border-tempLightBorder dark:border-tempDarkBorder rounded-md !transition-all !duration-[125ms] h-auto"
       >
@@ -23,7 +29,7 @@ const BtnCreateGuilde = () => {
           </div>
         </div>
       </Button>
-      <DynamicModalCreateGuilde isOpen={isOpen} onOpenChange={onOpenChange} />
+      <DynamicModalCreateGuilde isOpen={isOpen} onOpenChange={onOpenChange} fetchData={fetchData} />
     </>
   );
 };

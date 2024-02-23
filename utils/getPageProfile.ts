@@ -21,7 +21,7 @@ export async function getPageProfile(username: string) {
         .single() as unknown as { data: Profile, error: Error }
 
     if (error) {
-        console.log(error)
+        console.log('ErrorGetPageProfile', error)
         return null
     }
 

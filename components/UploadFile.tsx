@@ -65,7 +65,7 @@ const UploadFile = ({
 
       reader.onerror = (e) => {
         error('Erreur lors de la lecture du fichier');
-        console.error(e);
+        console.error('Error reading the file', e);
       };
 
       reader.readAsDataURL(file); // Lecture du fichier en tant que Data URL

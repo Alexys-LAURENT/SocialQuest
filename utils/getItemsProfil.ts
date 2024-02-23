@@ -15,7 +15,10 @@ export async function getBannieresUser(id_user: string) {
         .eq('id_user', id_user)
         .eq('items.type', 'Bannière')
 
-    if (bannieresError) return console.error(bannieresError)
+    if (bannieresError) {
+        console.error('ErrorGetBannieresUser', bannieresError)
+        return null
+    }
 
     return bannieres.filter((banniere: any) => banniere.items !== null)
 }
@@ -33,7 +36,10 @@ export async function getBadgesUser(id_user: string) {
         .eq('id_user', id_user)
         .eq('items.type', 'Badge')
 
-    if (badgesError) return console.error(badgesError)
+    if (badgesError) {
+        console.error('ErrorGetBadgesUser', badgesError)
+        return null
+    }
 
     return badges.filter((badge: any) => badge.items !== null)
 }

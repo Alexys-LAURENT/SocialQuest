@@ -26,7 +26,7 @@ const ModalComponentAddUsersToDiscussion = ({ isOpen, onOpenChange, defaultsProf
                 setUsers(data)
             }
             if (error) {
-                console.log(error);
+                console.log('errorGetUsers', error)
             }
         }
         getUsers()

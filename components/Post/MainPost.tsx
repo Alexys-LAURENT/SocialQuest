@@ -31,7 +31,7 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
     const handleDelete = (id: string) => {
         supabase.from('posts').delete().eq('id_post', id).then(({ data, error }) => {
             if (error) {
-                console.error(error);
+                console.error('errorDeletePost', error)
                 errorToaster('Erreur lors de la suppression du post')
                 return;
             }

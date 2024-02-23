@@ -16,14 +16,14 @@ export async function updateAvatar(file: { file: File | undefined }, bucket: str
     .remove([guilde_avatar_url?.split('/').pop()! || user?.avatar_url?.split('/').pop()!]);
 
   if (error) {
-    console.error(error);
+    console.error('ErrorUpdateAvatar', error);
     return false
   }
 
   const filePath = await uploadFiles([file], bucket);
 
   if (!filePath) {
-    console.error('Error while uploading file');
+    console.error('ErrorUpdateAvatar', 'filePath error');
     return false;
   }
 
@@ -33,7 +33,7 @@ export async function updateAvatar(file: { file: File | undefined }, bucket: str
     .eq(type === 'profiles' ? 'id_user' : 'id_guilde', id_guilde || user?.id_user);
 
   if (errorUpdate) {
-    console.error(errorUpdate);
+    console.error('ErrorUpdateAvatar', errorUpdate);
     return false;
   }
 

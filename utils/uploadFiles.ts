@@ -31,12 +31,12 @@ export async function uploadFiles(files: { file: File | undefined }[], bucket: s
           FILES_PATH.map(async (path) => {
             const { error } = await supabase.storage.from(bucket).remove([path]);
             if (error) {
-              console.error(error);
+              console.error('ErrorUploadFiles', error);
             }
           }),
         );
 
-        console.error(error);
+        console.error('ErrorUploadFiles', error);
         return false;
       }
     }),

@@ -7,13 +7,13 @@ export async function getAllPosts() {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
 
-    const { data: posts, error: err } = await supabase
+    const { data: posts, error: error } = await supabase
         .from('posts')
         .select('id_post')
 
 
-    if (err) {
-        console.error(err)
+    if (error) {
+        console.error('ErrorGetAllPosts', error)
         return []
     }
 
