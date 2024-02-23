@@ -3,8 +3,9 @@ import { Guilde } from '@/app/types/entities';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 import { createClient } from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
+import { cache } from 'react';
 
-export async function getGuildesUser() {
+export const getGuildesUser = cache(async () => {
   'use server';
 
   const cookieStore = cookies();
@@ -24,3 +25,4 @@ export async function getGuildesUser() {
 
   return guildesUser.map((guilde: any) => guilde.guildes) as Guilde[];
 }
+)
