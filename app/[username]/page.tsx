@@ -7,7 +7,7 @@ import { getAllPostsFromUser } from '@/utils/getAllPosts';
 import { getPageProfile } from '@/utils/getPageProfile';
 import UserTopRow from '@/components/Profil/UserTopRow';
 import CommpagnonsSuspenser from '@/components/Profil/CompagnonsSuspenser';
-import { Suspense } from 'react';
+import { FC, Suspense } from 'react';
 import CompagnonSkeleton from '@/components/Skeletons/Profil/CompagnonSkeleton';
 import { createClient } from '@supabase/supabase-js';
 
@@ -22,8 +22,15 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function Profil({ params }: { params: { username: string } }) {
-  const decodedUsername = decodeURIComponent(params.username);
+type ProfilParams = {
+  params?: {
+    username: string;
+  };
+};
+
+const Profil: React.FC = async (props) => {
+  const { params } = props as ProfilParams;
+  const decodedUsername = decodeURIComponent(params!.username);
   const [profileConnected, pageProfile] = await Promise.all([getProfileConnected(), getPageProfile(decodedUsername)]);
 
   console.log(decodedUsername);
@@ -61,4 +68,6 @@ export default async function Profil({ params }: { params: { username: string } 
       </div>
     </div>
   );
-}
+};
+
+export default Profil;
