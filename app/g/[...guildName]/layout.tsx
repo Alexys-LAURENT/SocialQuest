@@ -40,8 +40,6 @@ export async function generateStaticParams() {
 
   const returnData = params?.concat(paramsWithActivities!, paramsWithGuildWars!);
 
-  console.log(returnData);
-
   return returnData;
 }
 
