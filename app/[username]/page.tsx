@@ -15,7 +15,8 @@ export const revalidate = 3600;
 
 export async function generateStaticParams() {
   const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
-  const { data: usernames } = await supabase.from('profiles').select('username');
+  const results = (await supabase.from('profiles').select('username')) as unknown as { data: any[] };
+  const usernames = results?.data;
 
   return usernames?.map(({ username }) => ({
     username,
