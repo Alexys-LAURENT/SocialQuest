@@ -7,12 +7,30 @@ export const revalidate = 3600;
 
 export async function generateStaticParams() {
   const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
-  const results = (await supabase.from('guildes').select('nom')) as unknown as { data: any[] };
-  const guildNames = results?.data;
+  const results = await supabase.from('guildes').select('nom');
+  const guildNames = results.data;
 
-  return guildNames?.map(({ nom }) => ({
-    nom,
+  if (guildNames?.length === 0) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const params = guildNames?.map(({ nom }) => ({
+    slug: [nom],
   }));
+
+  const paramsWithActivities = guildNames?.map(({ nom }) => ({
+    slug: [nom, 'activities'],
+  }));
+
+  const paramsWithGuildWars = guildNames?.map(({ nom }) => ({
+    slug: [nom, 'guildwars'],
+  }));
+
+  const returnData = params?.concat(paramsWithActivities!, paramsWithGuildWars!);
+
+  return returnData;
 }
 
 const GuildPostsWrapper = async ({ params }: { params: { guildName: string } }) => {
