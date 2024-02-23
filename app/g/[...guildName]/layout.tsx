@@ -9,8 +9,41 @@ import dynamic from 'next/dynamic';
 import GuildUpdateProfilePicture from '@/components/guildes/GuildUpdateProfilePicture';
 import GuildeDescription from '@/components/guildes/GuildeDescription';
 import GuildeModerators from '@/components/guildes/GuildeModerators';
+import { createClient } from '@supabase/supabase-js';
 
 const DynamicPostInput = dynamic(() => import('@/components/PostInput'));
+
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
+  const results = await supabase.from('guildes').select('nom');
+  const guildNames = results.data;
+
+  if (guildNames?.length === 0) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const params = guildNames?.map(({ nom }) => ({
+    guildName: [nom],
+  }));
+
+  const paramsWithActivities = guildNames?.map(({ nom }) => ({
+    guildName: [nom, 'activities'],
+  }));
+
+  const paramsWithGuildWars = guildNames?.map(({ nom }) => ({
+    guildName: [nom, 'guildwars'],
+  }));
+
+  const returnData = params?.concat(paramsWithActivities!, paramsWithGuildWars!);
+
+  console.log(returnData);
+
+  return returnData;
+}
 
 const layout = async ({
   children,
