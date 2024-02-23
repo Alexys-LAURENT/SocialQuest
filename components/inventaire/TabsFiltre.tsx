@@ -51,7 +51,7 @@ const TabsFiltre = ({ inventory, filterParam }: { inventory: AllInventory, filte
                 panel: "p-0",
                 tab: "text-xs lg:text-sm",
                 tabList: "bg-tempLightBorder dark:bg-tempDarkBorder transition-all !duration-500 text-textDark dark:text-textLight gap-1 lg:gap-2",
-                cursor: "bg-bgLight dark:bg-textDark transition-colors !duration-500"
+                cursor: "transition-colors !duration-500"
             }}
                 onSelectionChange={() => setSelectedItem(null)} defaultSelectedKey={filterParam ? filterParam : "Tout"}>
                 {(item) => (

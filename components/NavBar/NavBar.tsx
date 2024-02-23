@@ -123,7 +123,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
                                 <PaperAirplaneIcon className="w-6 h-6 mb-1 -rotate-45 text-textDark dark:text-textLight !duration-[125ms]" />
                             </Link>
                         </NavbarItem>
-                        <NavbarItem>
+                        <NavbarItem className="min-w-[32px]">
                             <PopoverUser signOut={signOut} user={user} />
                         </NavbarItem>
                     </>

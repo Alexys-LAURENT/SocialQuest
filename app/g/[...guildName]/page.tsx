@@ -1,7 +1,6 @@
 import PostsWrapper from '@/components/PostsWrapper';
 import { getAllPostsFromGuild } from '@/utils/getAllPosts';
 import { getProfileConnected } from '@/utils/getProfileConnected';
-import { createClient } from '@supabase/supabase-js';
 
 const GuildPostsWrapper = async ({ params }: { params: { guildName: string } }) => {
   const user = await getProfileConnected();

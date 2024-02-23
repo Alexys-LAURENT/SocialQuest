@@ -9,6 +9,7 @@ import { getPostGuildes } from '@/utils/getPostGuildes';
 
 const Post = dynamic(() => import('@/components/Post'));
 
+
 const PostsWrapper = ({
   user,
   getPost,
@@ -163,7 +164,7 @@ const PostsWrapper = ({
           classNames={{
             base: `z-10 flex justify-center sticky transition-all !duration-250 ${lastScrollDirection === 'down' ? '-top-12' : 'top-1'}`,
             tabList: 'bg-tempLightBorder dark:bg-tempDarkBorder transition-all !duration-500 text-textDark dark:text-textLight',
-            cursor: 'transition-all !duration-500',
+            cursor: 'transition-colors !duration-500',
           }}
           selectedKey={selectedKey}
         >

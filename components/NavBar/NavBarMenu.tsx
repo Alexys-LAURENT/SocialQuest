@@ -1,11 +1,10 @@
 import { Listbox, ListboxItem } from '@nextui-org/react';
 import { HomeIcon, BuildingStorefrontIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import UserGuildes from '@/components/Home/UserGuildes';
+import TopGuildes from '@/components/TopGuildes';
+import TopMembres from '@/components/TopMembres';
 
-const TopGuildes = dynamic(() => import('@/components/TopGuildes'));
-const TopMembres = dynamic(() => import('@/components/TopMembres'));
 const NavBarMenu = ({ customFunction }: { customFunction: () => void }) => {
     return (
         <div className='flex flex-col w-full gap-4'>
@@ -25,9 +24,9 @@ const NavBarMenu = ({ customFunction }: { customFunction: () => void }) => {
                 </ListboxItem>
             </Listbox>
 
-            <TopGuildes />
-            <TopMembres />
-            <UserGuildes />
+            <TopGuildes customFunction={customFunction} />
+            <TopMembres customFunction={customFunction} />
+            <UserGuildes customFunction={customFunction} />
         </div >
     );
 };

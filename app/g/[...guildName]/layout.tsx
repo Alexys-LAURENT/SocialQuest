@@ -59,6 +59,7 @@ const layout = async ({
   const decodedGuildName = decodeURIComponent(params.guildName[0]);
   const user = await getProfileConnected();
   const guilde = await getGuildInfos(decodedGuildName, user?.id_user);
+
   if (guilde === null) {
     notFound();
   }
