@@ -18,8 +18,13 @@ export default async function Index() {
 
   const user = await getProfileConnected();
   const Posts = await getAllPosts();
+  let guildesUser = null;
 
-  const [topGuildes, topMembres, guildesUser] = await Promise.all([getTopGuildes(), getTopMembres(), getGuildesUser()]);
+  const [topGuildes, topMembres] = await Promise.all([getTopGuildes(), getTopMembres()]);
+
+  if (user) {
+    guildesUser = await getGuildesUser();
+  }
 
   return (
     <div className={`flex max-w-[1280px] w-full px-2 md:px-4 py-4 gap-6`}>

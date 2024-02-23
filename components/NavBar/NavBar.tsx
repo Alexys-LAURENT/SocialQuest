@@ -37,7 +37,6 @@ const NavBar = ({ user }: { user: Profile | null }) => {
             return;
         }
         router.push("/")
-        router.refresh()
     }
 
     const formatCount = (count: number) => {
