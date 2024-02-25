@@ -30,7 +30,7 @@ const page = async ({ params }: { params: { id_post: string } }) => {
 
   const answers = await getAnswers(params.id_post);
 
-  if (post === null) {
+  if (post === undefined) {
     notFound();
   }
 

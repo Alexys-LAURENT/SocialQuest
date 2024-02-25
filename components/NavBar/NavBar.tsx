@@ -11,6 +11,10 @@ import { createBrowserClient } from '@supabase/ssr'
 import { DrawerContext } from "@/app/context/DrawerContext";
 import { BuildingStorefrontIcon, MagnifyingGlassIcon, Bars3Icon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import SocialQuestLogo from "@/public/assets/SocialQuestLogoNoBg.png";
+import { formatCount } from "@/utils/formatCount";
+import { formatCountText } from "@/utils/formatCountText";
+
+
 import {
     Navbar,
     NavbarBrand,
@@ -36,27 +40,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
             console.error('Error logging out', error)
             return;
         }
-        router.push("/")
-    }
-
-    const formatCount = (count: number) => {
-        if (count >= 1000000) {
-            return (Math.floor(count / 1000000 * 10) / 10).toFixed(1) + 'M'; // convert to M for number from > 1000000
-        } else if (count >= 1000) {
-            return (Math.floor(count / 100) / 10).toFixed(1) + 'k'; // convert to k for number from > 1000 
-        } else {
-            return count;
-        }
-    }
-
-    const formatCountText = (count: number) => {
-        let countStr = count.toString();
-        let index = countStr.length - 3;
-        while (index > 0) {
-            countStr = countStr.substring(0, index) + ',' + countStr.substring(index);
-            index -= 3;
-        }
-        return countStr;
+        window.location.href = "/";
     }
 
     return activePath !== "/login" ? (
@@ -106,7 +90,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
                         href="/shop"
                         aria-label="Boutique"
                     >
-                        <BuildingStorefrontIcon className="w-6 h-6 text-textDark dark:text-textLight transition-all !duration-500" />
+                        <BuildingStorefrontIcon className="w-6 h-6 text-textDark dark:text-textLight transition-all !duration-500 hover:!duration-250 hover:opacity-60" />
                     </Link>
                 </NavbarItem>
                 {user ? (
@@ -119,7 +103,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
                                 href={`/messages`}
                                 className="items-center"
                             >
-                                <PaperAirplaneIcon className="w-6 h-6 mb-1 -rotate-45 text-textDark dark:text-textLight !duration-[125ms]" />
+                                <PaperAirplaneIcon className="w-6 h-6 mb-1 -rotate-45 text-textDark dark:text-textLight !duration-[125ms] hover:opacity-60" />
                             </Link>
                         </NavbarItem>
                         <NavbarItem className="min-w-[32px]">

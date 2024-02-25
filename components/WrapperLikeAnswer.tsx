@@ -7,6 +7,7 @@ import { ExtendedPost, Profile } from '@/app/types/entities';
 import { ChatBubbleLeftIcon, HeartIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { formatCount } from '@/utils/formatCount';
 
 const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile | null }) => {
     const router = useRouter();
@@ -113,17 +114,6 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile |
         }
 
         setUserLikedPost(!userLikedPost)
-    }
-
-
-    const formatCount = (count: number) => {
-        if (count >= 1000000) {
-            return (Math.floor(count / 1000000 * 10) / 10).toFixed(1) + 'M'; // convert to M for number from > 1000000
-        } else if (count >= 1000) {
-            return (Math.floor(count / 100) / 10).toFixed(1) + 'k'; // convert to k for number from > 1000 
-        } else {
-            return count;
-        }
     }
 
     return (

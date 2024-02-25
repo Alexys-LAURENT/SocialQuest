@@ -18,6 +18,11 @@ const ImageAntdPreview = ({ img, onDownload }: { img: string; onDownload: (img: 
     return match ? parseFloat(match[1]) : 0;
   }
 
+  function getScale(transform: string) {
+    const match = transform.match(/scale3d\(\s*([^,]+)\s*,\s*[^,]+\s*,\s*[^,]+\s*\)/i);
+    return match ? parseFloat(match[1]) : 1;
+  }
+
   const translateYRef = useRef(0);
   const translateXRef = useRef(0);
 
@@ -29,7 +34,7 @@ const ImageAntdPreview = ({ img, onDownload }: { img: string; onDownload: (img: 
       return;
     }
 
-    const threshold = window.innerHeight * 0.15; // 15% of the window height
+    const threshold = window.innerHeight * 0.2; // 20% of the window height
 
     const handlePointerUp = () => {
       if (Math.abs(translateYRef.current) > threshold) {
@@ -46,11 +51,13 @@ const ImageAntdPreview = ({ img, onDownload }: { img: string; onDownload: (img: 
           if (mutation.target instanceof HTMLElement) {
             translateYRef.current = getTranslateY(mutation.target.style.transform);
             translateXRef.current = getTranslateX(mutation.target.style.transform);
+            const scale = getScale(mutation.target.style.transform);
 
-            // Calculate the opacity and scale based on the translateY value
+            // Calculate the opacity and scale based on the translateY value and the scale
             const factor = 2; // Increase this to make the effect slower
-            const opacity = Math.max(0, 1 - Math.abs(translateYRef.current / factor) / threshold);
+            const opacity = Math.max(0, 1 - Math.abs(translateYRef.current / factor) / threshold / scale);
             mutation.target.style.opacity = `${opacity}`;
+
           }
         }
       });
@@ -97,11 +104,11 @@ const ImageAntdPreview = ({ img, onDownload }: { img: string; onDownload: (img: 
           alt={img}
           width={50}
           height={50}
-          className="absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover blur"
+          className="absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover blur-[5px]"
         />
       }
     />
-  );
+  )
 };
 
 export default ImageAntdPreview;

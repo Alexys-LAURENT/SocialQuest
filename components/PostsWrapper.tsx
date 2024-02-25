@@ -1,13 +1,12 @@
 'use client';
 import { ExtendedPost, Profile } from '@/app/types/entities';
 import { Tabs, Tab, Spinner } from '@nextui-org/react';
-import dynamic from 'next/dynamic';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import PostsWrapperSkeleton from '@/components/Skeletons/PostsWrapperSkeleton';
 import { getPostSuivis } from '@/utils/getPostSuivis';
 import { getPostGuildes } from '@/utils/getPostGuildes';
+import Post from '@/components/Post';
 
-const Post = dynamic(() => import('@/components/Post'));
 
 
 const PostsWrapper = ({
@@ -69,6 +68,7 @@ const PostsWrapper = ({
   if (user && filtre === true) {
     useEffect(() => {
       const mainDiv = document.getElementsByTagName('main')[0];
+      let lastDirectionChangeScrollY = 0;
 
       const handleScroll = () => {
         const currentScrollY = mainDiv.scrollTop;
@@ -80,10 +80,13 @@ const PostsWrapper = ({
           setIsSticky(false);
         }
 
-        if (prevScrollY.current < currentScrollY) {
-          setLastScrollDirection('down');
-        } else if (prevScrollY.current > currentScrollY) {
-          setLastScrollDirection('up');
+        if (Math.abs(lastDirectionChangeScrollY - currentScrollY) > 20) {
+          if (lastDirectionChangeScrollY < currentScrollY) {
+            setLastScrollDirection('down');
+          } else if (lastDirectionChangeScrollY > currentScrollY) {
+            setLastScrollDirection('up');
+          }
+          lastDirectionChangeScrollY = currentScrollY;
         }
 
         prevScrollY.current = currentScrollY;
@@ -174,7 +177,7 @@ const PostsWrapper = ({
               selectedKey === 'MaPage' ? (
                 <div className="flex items-center gap-2">
                   <span>Ma Page</span>
-                  <Spinner id="RefreshIconMaPage" size="sm" className="scale-75 hidden" color={`${document.documentElement.classList.contains('dark') ? 'white' : 'default'}`} />
+                  <Spinner id="RefreshIconMaPage" size="sm" className="scale-75 hidden" classNames={{ circle1: 'border-b-textDark dark:border-b-textLight', circle2: 'border-b-textDark dark:border-b-textLight' }} />
                 </div>
               ) : (
                 'Ma Page'
@@ -201,7 +204,7 @@ const PostsWrapper = ({
               selectedKey === 'Suivis' ? (
                 <div className="flex items-center gap-2">
                   <span>Suivis</span>
-                  <Spinner id="RefreshIconSuivis" size="sm" className="scale-75 hidden" color={`${document.documentElement.classList.contains('dark') ? 'white' : 'default'}`} />
+                  <Spinner id="RefreshIconSuivis" size="sm" className="scale-75 hidden" classNames={{ circle1: 'border-b-textDark dark:border-b-textLight', circle2: 'border-b-textDark dark:border-b-textLight' }} />
                 </div>
               ) : (
                 'Suivis'
@@ -228,7 +231,7 @@ const PostsWrapper = ({
               selectedKey === 'Guildes' ? (
                 <div className="flex items-center gap-2">
                   <span>Guildes</span>
-                  <Spinner id="RefreshIconGuildes" size="sm" className="scale-75 hidden" color={`${document.documentElement.classList.contains('dark') ? 'white' : 'default'}`} />
+                  <Spinner id="RefreshIconGuildes" size="sm" className="scale-75 hidden" classNames={{ circle1: 'border-b-textDark dark:border-b-textLight', circle2: 'border-b-textDark dark:border-b-textLight' }} />
                 </div>
               ) : (
                 'Guildes'

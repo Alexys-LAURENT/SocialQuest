@@ -14,6 +14,7 @@ export async function getPageProfile(username: string) {
     const supabase = createClient(cookieStore)
     const user = await getProfileConnected()
 
+
     const { data: profile, error } = await supabase
         .from('profiles')
         .select("*, niveaux(*))")

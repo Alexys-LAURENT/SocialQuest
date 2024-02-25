@@ -56,7 +56,11 @@ export const ModalCreateGuilde = ({ isOpen, onOpenChange, fetchData }: { isOpen:
     // set the input value without spaces
     setInput(inputValue.replace(/\s/g, ''));
 
-    if ((await getGuildesNameWhereName(inputValue)) === false) {
+    if (inputValue.includes(' ')) {
+      error('Le nom de la guilde ne doit pas contenir d\'espaces');
+    }
+
+    if ((await getGuildesNameWhereName(inputValue.replace(/\s/g, ''))) === false) {
       setIsInputValid({ value: false, reason: 'Le nom de la guilde est déjà utilisé' });
       setIsTyping(false);
       return;
@@ -78,6 +82,7 @@ export const ModalCreateGuilde = ({ isOpen, onOpenChange, fetchData }: { isOpen:
           setInput('');
           setDescription('');
           setFile(undefined);
+          setIsInputValid({ value: true, reason: '' });
         }}
       >
         <ModalContent>

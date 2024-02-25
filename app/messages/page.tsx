@@ -1,11 +1,10 @@
 
 import ListDiscussionsSuspenser from '@/components/Discussions/ListDiscussionsSuspenser';
 import ListDiscussionsSkeleton from '@/components/Skeletons/Discussions/listDiscussionSkeleton';
-import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
+import MessagesWrapper from '@/components/Discussions/MessagesWrapper';
 
 
-const MessagesWrapper = dynamic(() => import('@/components/Discussions/MessagesWrapper'));
 
 
 const page = async () => {

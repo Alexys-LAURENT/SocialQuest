@@ -4,29 +4,11 @@ import { ArrowRightEndOnRectangleIcon, Cog8ToothIcon, CubeIcon, UserIcon, Clipbo
 import Link from "next/link";
 import SwitchTheme from "@/components/NavBar/SwitchTheme";
 import NextRewards from "@/components/NextRewards";
+import { formatCount } from "@/utils/formatCount";
+import { formatCountText } from "@/utils/formatCountText";
 
 const PopOverUserContent = ({ user, customFunction, signOut }: { user: Profile, customFunction: () => void, signOut: () => void }) => {
     const progressValue = (user?.xp! - user?.niveaux.xp_debut!) * 100 / (user?.niveaux.xp_fin! + 1);
-
-    const formatCount = (count: number) => {
-        if (count >= 1000000) {
-            return (Math.floor(count / 1000000 * 10) / 10).toFixed(1) + 'M'; // convert to M for number from > 1000000
-        } else if (count >= 1000) {
-            return (Math.floor(count / 100) / 10).toFixed(1) + 'k'; // convert to k for number from > 1000 
-        } else {
-            return count;
-        }
-    }
-
-    const formatCountText = (count: number) => {
-        let countStr = count.toString();
-        let index = countStr.length - 3;
-        while (index > 0) {
-            countStr = countStr.substring(0, index) + ',' + countStr.substring(index);
-            index -= 3;
-        }
-        return countStr;
-    }
 
     return (
         <div className="popOverUserContentWrapper w-full px-1 py-2 gap-2 flex flex-col text-textDark dark:text-textLight">

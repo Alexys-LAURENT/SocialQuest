@@ -16,6 +16,8 @@ import { doesFollow } from '@/utils/doesFollow';
 import { Image as ImageAntd } from 'antd';
 import { ArrowDownTrayIcon } from '@heroicons/react/24/solid';
 import { onDownload } from '@/utils/downloadImage';
+
+
 export default function MainPost({ user, post }: { user: Profile | null, post: ExtendedPost }) {
     const router = useRouter()
     const { success, error: errorToaster } = useContext(ToasterContext)

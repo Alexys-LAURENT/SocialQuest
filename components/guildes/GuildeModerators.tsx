@@ -1,7 +1,7 @@
 import { getGuildeModerators } from '@/utils/getGuildeModerators';
 import { Avatar, Button } from '@nextui-org/react';
 import Link from 'next/link';
-import { formatCount } from '../../utils/formatCount';
+import { formatCount } from '@/utils/formatCount';
 
 const GuildeModerators = async ({ id_guilde }: { id_guilde: string }) => {
   const moderators = await getGuildeModerators(id_guilde);
