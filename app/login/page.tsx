@@ -1,7 +1,7 @@
 import Form from '@/components/Login_Register/Form'
-import { headers, cookies } from 'next/headers'
-import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
+import { checkSignUp } from '@/utils/checkSignUp'
+import { checkSignIn } from '@/utils/checkSignIn'
 
 export default function Login({
   searchParams,
@@ -10,57 +10,18 @@ export default function Login({
 }) {
   const signIn = async (formData: FormData) => {
     'use server'
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
+    const check = await checkSignIn(formData)
 
-    if (error) {
-      console.error('Error signing in', error)
-      return redirect('/login?message=Could not authenticate user')
-    }
-
-    return redirect('/')
+    return redirect(`/login?message=${check}`)
   }
 
   const signUp = async (formData: FormData) => {
     'use server'
 
-    const origin = headers().get('origin')
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
+    const check = await checkSignUp(formData)
 
-    const nom = formData.get('nom') as string
-    const prenom = formData.get('prenom') as string
-    const username = formData.get('username') as string
-
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
-
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          nom,
-          prenom,
-          username,
-        },
-        emailRedirectTo: `${origin}/auth/callback`,
-      },
-    })
-
-    if (error) {
-      console.error('Error signing up', error)
-      return redirect('/login?message=Could not authenticate user')
-    }
-
-    return redirect('/login?message=Check email to continue sign in process')
+    return redirect(`/login?message=${check}`)
   }
 
 

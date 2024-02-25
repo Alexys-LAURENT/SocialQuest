@@ -51,7 +51,7 @@ const TopGuildesItems = ({ customFunction, initGuildes }: { customFunction?: () 
                 <div className="flex flex-col ml-2 transition-all text-textDark dark:text-textLight">
                   <div className="w-[130px] text-left text-sm text-ellipsis overflow-hidden">{guilde.name}</div>
                   <div className="text-[0.6rem] text-left text-gray-600 dark:text-gray-400 transition-all">
-                    {formatCount(guilde.members)} membres
+                    {formatCount(guilde.members)} {guilde.members > 1 ? 'membres' : 'membre'}
                   </div>
                 </div>
               </div>
@@ -62,8 +62,8 @@ const TopGuildesItems = ({ customFunction, initGuildes }: { customFunction?: () 
                     src={`/assets/medal-${index}.png`}
                     alt={`Rank ${index + 1}`}
                     className='min-w-[1.25rem] w-[1.25rem] min-h-[1.25rem] h-[1.25rem]'
-                    width={100}
-                    height={100}
+                    width={30}
+                    height={30}
                   />
                 </div>
               )}

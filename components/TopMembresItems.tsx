@@ -61,8 +61,8 @@ const TopMembresItems = ({ customFunction, initMembres }: { customFunction?: () 
                     src={`/assets/medal-${index}.png`}
                     alt={`Rank ${index + 1}`}
                     className="min-w-[1.25rem] w-[1.25rem] min-h-[1.25rem] h-[1.25rem]"
-                    width={100}
-                    height={100}
+                    width={30}
+                    height={30}
                   />
                 </div>
               )}

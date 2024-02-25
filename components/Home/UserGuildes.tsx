@@ -59,7 +59,7 @@ const UserGuildes = ({ customFunction, initGuildes }: { customFunction?: () => v
                     <div className="flex flex-col ml-2 transition-all text-textDark dark:text-textLight">
                       <div className="text-left text-sm">{guilde.nom}</div>
                       <div className="text-left text-[0.6rem] text-gray-600 dark:text-gray-400 transition-all">
-                        {formatCount(guilde.total_members)} membres
+                        {formatCount(guilde.total_members)} {guilde.total_members > 1 ? 'membres' : 'membre'}
                       </div>
                     </div>
                   </div>

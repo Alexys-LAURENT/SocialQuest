@@ -1,21 +1,149 @@
 'use client'
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Tabs, Tab, Input, Button } from "@nextui-org/react";
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { createClient } from '@/utils/supabase/client';
 import Google_logo from '@/public/assets/Google_logo.png';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { Spinner } from '@nextui-org/react';
+import { getUsernameWhereName } from '@/utils/getUsernameWhereName';
+import { ToasterContext } from '@/app/context/ToasterContext';
 
-const Form = ({ signIn, signUp, searchParams, }: { signIn: (arg1: FormData) => void, signUp: (arg1: FormData) => void, searchParams: { message: string } }) => {
+const Form = ({ signIn, signUp, searchParams }: { signIn: (arg1: FormData) => void, signUp: (arg1: FormData) => void, searchParams: { message: string } }) => {
+    const { error } = useContext(ToasterContext);
 
-    const [isVisibleLogin, setIsVisibleLogin] = useState(false);
-    const [isVisibleRegister1, setIsVisibleRegister1] = useState(false);
-    const [isVisibleRegister2, setIsVisibleRegister2] = useState(false);
+    const [emailInputLogin, setEmailInputLogin] = useState<string>('');
+    const [passwordInputLogin, setPasswordInputLogin] = useState<string>('');
 
-    const toggleVisibilityLogin = () => setIsVisibleLogin(!isVisibleLogin);
-    const toggleVisibilityRegister1 = () => setIsVisibleRegister1(!isVisibleRegister1);
-    const toggleVisibilityRegister2 = () => setIsVisibleRegister2(!isVisibleRegister2);
+    const [isPasswordVisibleLogin, setIsVisibleLogin] = useState(false);
+    const [isPasswordVisibleRegister1, setIsVisibleRegister1] = useState(false);
+    const [isPasswordVisibleRegister2, setIsVisibleRegister2] = useState(false);
+    const [isEmailInvalidLogin, setIsEmailInvalidLogin] = useState(false);
+
+
+    const [firstNameInput, setFirstNameInput] = useState<string>('');
+    const [lastNameInput, setLastNameInput] = useState<string>('');
+    const [emailInputRegister, setEmailInputRegister] = useState<string>('');
+    const [usernameInput, setUsernameInput] = useState<string>('');
+    const [passwordInputRegister1, setPasswordInputRegister1] = useState<string>('');
+    const [passwordInputRegister2, setPasswordInputRegister2] = useState<string>('');
+
+    const [isEmailInvalidRegister, setIsEmailInvalidRegister] = useState(false);
+    const [isUsernameInvalidRegister, setIsUsernameInvalidRegister] = useState({ value: false, reason: '' });
+    const [isPasswordInvalidRegister1, setIsPasswordInvalidRegister1] = useState({ value: false, reason: '' });
+    const [isPasswordInvalidRegister2, setIsPasswordInvalidRegister2] = useState({ value: false, reason: '' });
+
+
+    const [isTyping, setIsTyping] = useState<boolean>(false);
+
+
+    const toggleVisibilityLogin = () => setIsVisibleLogin(!isPasswordVisibleLogin);
+    const toggleVisibilityRegister1 = () => setIsVisibleRegister1(!isPasswordVisibleRegister1);
+    const toggleVisibilityRegister2 = () => setIsVisibleRegister2(!isPasswordVisibleRegister2);
+
+    const isLoginFormValid = () => {
+        return !isEmailInvalidLogin;
+    }
+
+    const isLoginFormFilled = () => {
+        return emailInputLogin.length > 0 && passwordInputLogin.length > 0;
+    }
+
+    const isRegisterFormValid = () => {
+        return !isEmailInvalidRegister && !isUsernameInvalidRegister.value && !isPasswordInvalidRegister1.value && !isPasswordInvalidRegister2.value;
+    }
+
+    const isRegisterFormFilled = () => {
+        return usernameInput.length > 0 && passwordInputRegister1.length > 0 && passwordInputRegister2.length > 0 && emailInputRegister.length > 0 && firstNameInput.length > 0 && lastNameInput.length > 0;
+    }
+
+    const checkEmailValidityLogin = (e: any) => {
+        const email = e.target as HTMLInputElement;
+        setIsEmailInvalidLogin(!email.validity.valid);
+    }
+
+    const checkEmailValidityRegister = (e: any) => {
+        const email = e.target as HTMLInputElement;
+        setIsEmailInvalidRegister(!email.validity.valid);
+    }
+
+    const handleChangeInputNom = async (inputValue: string) => {
+        setUsernameInput(inputValue);
+        setIsTyping(true);
+
+        if (inputValue.includes(' ')) {
+            setUsernameInput(inputValue.replace(/\s/g, ''));
+            error('Le username ne doit pas contenir d\'espaces');
+            setIsTyping(false);
+            return;
+        }
+
+        if ((await getUsernameWhereName(inputValue.replace(/\s/g, ''))) === false) {
+            setIsUsernameInvalidRegister({ value: true, reason: 'Ce username est déjà utilisé' });
+            setIsTyping(false);
+            return;
+        }
+
+        setIsUsernameInvalidRegister({ value: false, reason: '' });
+        setIsTyping(false);
+    }
+
+    const handlePasswordChange = () => {
+        const password1 = document.getElementById('passwordReg1') as HTMLInputElement;
+        const password2 = document.getElementById('passwordReg2') as HTMLInputElement;
+
+        if (password1.value !== password2.value && password1.value.length > 0 && password2.value.length > 0) {
+            setIsPasswordInvalidRegister2({ value: true, reason: 'Les mots de passe ne correspondent pas' });
+        } else {
+            setIsPasswordInvalidRegister2({ value: false, reason: '' });
+        }
+
+        // Check if the password is strong enough (8 characters, capital and lowercase letters, numbers, special characters
+        if ((password1.value.length < 8 || password1.value.includes(' ') || !password1.value.match(/[A-Z]/) || !password1.value.match(/[a-z]/) || !password1.value.match(/[0-9]/) || !password1.value.match(/[^A-Za-z0-9]/)) && password1.value.length > 0) {
+            setIsPasswordInvalidRegister1({ value: true, reason: 'Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre, un caractère spécial et ne doit pas contenir d\'espace' });
+        } else {
+            setIsPasswordInvalidRegister1({ value: false, reason: '' });
+        }
+    }
+
+    const handleRegister = () => {
+        if (!isRegisterFormValid()) {
+            return error('Veuillez remplir tous les champs correctement');
+        }
+
+        if (!isRegisterFormFilled()) {
+            return error('Veuillez remplir tous les champs');
+        }
+
+        const formData = new FormData();
+
+        formData.append('nom', firstNameInput);
+        formData.append('prenom', lastNameInput);
+        formData.append('email', emailInputRegister);
+        formData.append('username', usernameInput);
+        formData.append('password', passwordInputRegister1);
+        formData.append('password2', passwordInputRegister2);
+
+        signUp(formData);
+    }
+
+    const handleLogin = () => {
+        if (!isLoginFormValid()) {
+            return error('Veuillez remplir tous les champs correctement');
+        }
+
+        if (!isLoginFormFilled()) {
+            return error('Veuillez remplir tous les champs');
+        }
+
+        const formData = new FormData();
+
+        formData.append('email', emailInputLogin);
+        formData.append('password', passwordInputLogin);
+
+        signIn(formData);
+    }
 
     const router = useRouter()
 
@@ -28,6 +156,10 @@ const Form = ({ signIn, signUp, searchParams, }: { signIn: (arg1: FormData) => v
                 redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
             }
         })
+    }
+
+    const handleSelectionChange = () => {
+        router.push('/login');
     }
 
     return (
@@ -54,32 +186,42 @@ const Form = ({ signIn, signUp, searchParams, }: { signIn: (arg1: FormData) => v
                     Retour
                 </div>
             </div>
+
             <div className="flex flex-col items-center w-full h-full gap-4">
                 <h1 className='mb-8 text-3xl sm:text-5xl text-textLight font-bold'>SOCIAL QUEST</h1>
 
-                <Tabs aria-label="Options" defaultSelectedKey="Se Connecter">
+                <Tabs aria-label="Options" defaultSelectedKey="Se Connecter" onSelectionChange={handleSelectionChange}>
                     <Tab key="Se Connecter" title="Se Connecter" className="text-textLight w-full max-w-lg correctOutlineNone">
                         <form
                             className="animate-in flex flex-col w-full justify-center gap-6 text-foreground items-center"
-                            action={signIn}
+                            action={() => handleLogin()}
                         >
-                            <Input type="email" placeholder='Email' name='email' label='Email' labelPlacement='outside' required />
+                            <Input id='emailLogin' type="email" placeholder='Email' name='email' label='Email' labelPlacement='outside' required
+                                value={emailInputLogin}
+                                isInvalid={isEmailInvalidLogin}
+                                onBlur={(e) => checkEmailValidityLogin(e)}
+                                errorMessage={isEmailInvalidLogin ? "Veuillez entrer une adresse email valide" : ""}
+                                onChange={(e) => setEmailInputLogin(e.target.value)}
+                            />
                             <Input
                                 placeholder="Mot de passe"
                                 id='password'
                                 label='Mot de passe'
                                 labelPlacement='outside'
                                 name="password"
+                                required
+                                value={passwordInputLogin}
                                 endContent={
                                     <button className="focus:outline-none h-5 w-5" type="button" onClick={toggleVisibilityLogin}>
-                                        {isVisibleLogin ? (
+                                        {isPasswordVisibleLogin ? (
                                             <EyeSlashIcon className="text-2xl text-default-400 pointer-events-none" />
                                         ) : (
                                             <EyeIcon className="text-2xl text-default-400 pointer-events-none" />
                                         )}
                                     </button>
                                 }
-                                type={isVisibleLogin ? "text" : "password"}
+                                type={isPasswordVisibleLogin ? "text" : "password"}
+                                onChange={(e) => { setPasswordInputLogin(e.target.value) }}
                             />
                             <Button className=" customButton bg-secondary/70 text-2xl font-semibold !w-[90%]" type='submit'>
                                 Se connecter
@@ -102,31 +244,59 @@ const Form = ({ signIn, signUp, searchParams, }: { signIn: (arg1: FormData) => v
                             )}
                         </form>
                     </Tab>
-                    <Tab key="S'inscrire" title="S'inscrire" className="text-textLight w-full max-w-lg">
+
+                    <Tab key="S'inscrire" title="S'inscrire" className="text-textLight w-full max-w-2xl">
                         <form
                             className="animate-in flex flex-col w-full justify-center gap-6 text-foreground items-center"
-                            action={signUp}
+                            action={() => handleRegister()}
                         >
-                            <Input placeholder='Nom' name='nom' label='Nom' labelPlacement='outside' required />
-                            <Input placeholder='Prénom' name='prenom' label='Prénom' labelPlacement='outside' required />
-                            <Input type="email" placeholder='Email' name='email' label='Email' labelPlacement='outside' required />
-                            <Input placeholder='Username' name='username' label='Username' labelPlacement='outside' required />
+                            <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <Input placeholder='Nom' name='nom' label='Nom' labelPlacement='outside' required
+                                    value={firstNameInput}
+                                    onChange={(e) => setFirstNameInput(e.target.value)}
+                                />
+                                <Input placeholder='Prénom' name='prenom' label='Prénom' labelPlacement='outside' required
+                                    value={lastNameInput}
+                                    onChange={(e) => setLastNameInput(e.target.value)}
+                                />
+                                <Input type="email" placeholder='Email' name='email' label='Email' labelPlacement='outside' required
+                                    value={emailInputRegister}
+                                    isInvalid={isEmailInvalidRegister}
+                                    onBlur={(e) => checkEmailValidityRegister(e)}
+                                    errorMessage={isEmailInvalidRegister ? "Veuillez entrer une adresse email valide" : ""}
+                                    onChange={(e) => setEmailInputRegister(e.target.value)}
+                                />
+                                <Input placeholder='Username' name='username' label='Username' labelPlacement='outside' required
+                                    isInvalid={isUsernameInvalidRegister.value}
+                                    value={usernameInput}
+                                    onChange={(e) => handleChangeInputNom(e.target.value)}
+                                    endContent={
+                                        <Spinner size="sm" className={`scale-75 ${!isTyping ? 'hidden' : ''} `} color="white" />
+                                    }
+                                    errorMessage={isUsernameInvalidRegister.reason}
+                                />
+                            </div>
                             <Input
                                 placeholder="Mot de passe"
                                 id='passwordReg1'
                                 name="password"
                                 label='Mot de passe'
                                 labelPlacement='outside'
+                                value={passwordInputRegister1}
                                 endContent={
                                     <button className="focus:outline-none h-5 w-5" type="button" onClick={toggleVisibilityRegister1}>
-                                        {isVisibleRegister1 ? (
+                                        {isPasswordVisibleRegister1 ? (
                                             <EyeSlashIcon className="text-2xl text-default-400 pointer-events-none" />
                                         ) : (
                                             <EyeIcon className="text-2xl text-default-400 pointer-events-none" />
                                         )}
                                     </button>
                                 }
-                                type={isVisibleRegister1 ? "text" : "password"}
+                                type={isPasswordVisibleRegister1 ? "text" : "password"}
+                                isInvalid={isPasswordInvalidRegister1.value}
+                                errorMessage={isPasswordInvalidRegister1.reason}
+                                onChange={(e) => { setPasswordInputRegister1(e.target.value) }}
+                                onBlur={handlePasswordChange}
                             />
                             <Input
                                 placeholder="Confirmer le mot de passe"
@@ -134,16 +304,21 @@ const Form = ({ signIn, signUp, searchParams, }: { signIn: (arg1: FormData) => v
                                 name="password2"
                                 label='Confirmer le mot de passe'
                                 labelPlacement='outside'
+                                value={passwordInputRegister2}
                                 endContent={
                                     <button className="focus:outline-none h-5 w-5" type="button" onClick={toggleVisibilityRegister2}>
-                                        {isVisibleRegister2 ? (
+                                        {isPasswordVisibleRegister2 ? (
                                             <EyeSlashIcon className="text-2xl text-default-400 pointer-events-none" />
                                         ) : (
                                             <EyeIcon className="text-2xl text-default-400 pointer-events-none" />
                                         )}
                                     </button>
                                 }
-                                type={isVisibleRegister2 ? "text" : "password"}
+                                type={isPasswordVisibleRegister2 ? "text" : "password"}
+                                isInvalid={isPasswordInvalidRegister2.value}
+                                errorMessage={isPasswordInvalidRegister2.reason}
+                                onChange={(e) => { setPasswordInputRegister2(e.target.value) }}
+                                onBlur={handlePasswordChange}
                             />
                             <Button className="customButton bg-secondary/70 border-secondary text-2xl font-semibold !w-[90%]" type='submit'>
                                 S'inscrire
