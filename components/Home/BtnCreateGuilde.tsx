@@ -20,7 +20,7 @@ const BtnCreateGuilde = ({ customFunction, fetchData }: { customFunction?: () =>
         as={Card}
         onPress={handleClick}
         key={`create-guilde`}
-        className="cursor-pointer p-2 bg-tempBgLightSecondary items-start hover:bg-tempLightBorder/50 dark:bg-tempBgDarkSecondary dark:hover:bg-tempDarkHover shadow-none border border-tempLightBorder dark:border-tempDarkBorder rounded-md !transition-all !duration-[125ms] h-auto"
+        className="cursor-pointer p-2 bg-tempBgLightSecondary items-start hover:bg-tempLightBorder/50 dark:bg-tempBgDarkSecondary dark:hover:bg-tempDarkHover shadow-none border border-tempLightBorder dark:border-tempDarkBorder rounded-md !transition-all !duration-[125ms] h-auto min-h-[42px]"
       >
         <div className="flex items-center">
           <PlusIcon className="w-6 h-6" />

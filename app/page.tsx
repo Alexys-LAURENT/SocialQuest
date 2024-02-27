@@ -9,21 +9,20 @@ import { getAllPosts } from '@/utils/getAllPosts';
 import TopGuildes from '@/components/TopGuildes';
 import TopMembres from '@/components/TopMembres';
 import UserGuildes from '@/components/Home/UserGuildes';
+import { getGuildesUser } from '@/utils/getGuildesUser';
 import { getTopGuildes } from '@/utils/getTopGuildes';
 import { getTopMembres } from '@/utils/getTopMembres';
-import { getGuildesUser } from '@/utils/getGuildesUser';
 
 export default async function Index() {
   const PostInputSkeleton = dynamic(() => import('@/components/Skeletons/PostInputSkeleton'));
 
   const user = await getProfileConnected();
-  const Posts = await getAllPosts();
   let guildesUser = null;
 
   const [topGuildes, topMembres] = await Promise.all([getTopGuildes(), getTopMembres()]);
 
   if (user) {
-    guildesUser = await getGuildesUser();
+    guildesUser = await getGuildesUser(0);
   }
 
   return (
@@ -40,14 +39,14 @@ export default async function Index() {
           </Suspense>
         )}
 
-        <PostsWrapper user={user} initPosts={Posts} getPost={getAllPosts} filtre={user && user.id_user ? true : false} />
+        <PostsWrapper user={user} getPost={getAllPosts} filtre={user && user.id_user ? true : false} />
       </div>
 
-      <div className="sticky top-0  hidden lg:flex min-w-[17rem] h-fit">
+      <div className="sticky top-0 hidden lg:flex min-w-[17rem] max-w-[17rem] h-fit">
         {user ? (
-          <UserGuildes initGuildes={guildesUser} />
+          <UserGuildes initGuildes={guildesUser} maxHeight={true} />
         ) : (
-          <div className="w-full flex flex-col bg-bgLightCard dark:bg-bgDarkCard rounded-md text-xl font-semibold h-fit transition-all !duration-500">
+          <div className="w-full flex flex-col bg-tempBgLightSecondary dark:bg-tempBgDark border dark:border-tempDarkBorder border-tempLightBorder rounded-md transition-all !duration-500 font-semibold h-fit">
             <div className="text-base text-center p-2 text-textDark dark:text-textLight">
               Connectez-vous pour profiter pleinement de votre expérience sur notre site !
             </div>
@@ -56,7 +55,7 @@ export default async function Index() {
               as={Link}
               href="/login"
               variant="flat"
-              className="!w-[85%] customButton bg-secondary/70 border-secondary mx-auto mb-3 text-textLight"
+              className="!w-[85%] customButton bg-secondary/70 border-secondary mx-auto mb-3 text-textLight text-base"
             >
               Connexion
             </Button>

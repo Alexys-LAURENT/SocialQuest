@@ -22,9 +22,15 @@ const TopMembresItems = ({ customFunction, initMembres }: { customFunction?: () 
   }, []);
 
 
-  const handleClick = (usename: string) => () => {
-    document.getElementById(`Link-topMembre-${usename}`)?.click();
-    if (customFunction) customFunction();
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, username: string) => {
+    e.preventDefault();
+
+    if (customFunction) {
+      customFunction();
+    }
+
+    document.getElementById(`guildes-topMembres-${username}`)?.click();
+
   };
 
   return topMembres.length === 0 ? (
@@ -33,11 +39,13 @@ const TopMembresItems = ({ customFunction, initMembres }: { customFunction?: () 
     <div className="w-full flex flex-col gap-2">
       {topMembres.map((membre: { username: string; avatar_url: string; level: number }, index: number) => (
         <div key={`topMembre-${membre.username}-${Math.random}`}>
-          <Link id={`Link-topMembre-${membre.username}`} className='hidden' href={`/${membre.username}`} />
+          <Link id={`guildes-topMembres-${membre.username}`} href={`/${membre.username}`} />
           <Button
+            as={Link}
+            href={`/${membre.username}`}
             key={`member-topItem-${index}-${Math.random}`}
             className="w-full p-2 bg-tempBgLightSecondary hover:bg-tempLightBorder/50 dark:bg-tempBgDarkSecondary dark:hover:bg-tempDarkHover shadow-none border border-tempLightBorder dark:border-tempDarkBorder text-sm rounded-md text-textDark dark:text-textLight !transition-all !duration-[125ms] h-auto "
-            onClick={handleClick(membre.username)}
+            onClick={(e) => handleClick(e, membre.username)}
           >
             <div className="flex items-center justify-between gap-2 h-full w-full transition-all !duration-500">
               <div className={`flex items-center overflow-hidden ${index < 3 ? 'w-10/12' : 'w-full'}`}>

@@ -74,7 +74,7 @@ const PopoverUser = ({ signOut, user }: { signOut: () => void, user: Profile }) 
                         </Badge>
                     </div>
                 </PopoverTrigger>
-                <PopoverContent className="bg-white dark:bg-tempBgDark border rounded-md border-white/30 transition-all !duration-500">
+                <PopoverContent>
                     <PopOverUserContent user={user} customFunction={() => {
                         setIsPopoverUserOpen(false);
                         closeDrawer();

@@ -14,13 +14,11 @@ const PostsWrapper = ({
   getPost,
   postPage,
   filtre,
-  initPosts,
 }: {
   user: Profile | null;
   getPost: () => Promise<ExtendedPost[] | null>;
   postPage?: boolean;
   filtre: boolean;
-  initPosts?: ExtendedPost[] | null;
 }) => {
   const [posts, setPosts] = useState<ExtendedPost[] | null>(null);
   const [postsRandom, setPostsRandom] = useState<ExtendedPost[] | null>(null);
@@ -31,14 +29,6 @@ const PostsWrapper = ({
   const [selectedKey, setSelectedKey] = useState('MaPage');
 
   const prevScrollY = useRef(0);
-
-  if (initPosts && filtre && posts === null) {
-    setPostsRandom(initPosts);
-  }
-
-  if (initPosts && posts === null) {
-    setPosts(initPosts);
-  }
 
   useEffect(() => {
     const fetchPosts = async () => {
