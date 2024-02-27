@@ -1,8 +1,8 @@
-import { getGuildesUser } from '@/utils/getGuildesUser';
+import { getGuildesUserPostInput } from '@/utils/getGuildesUserPostInput';
 import PostInput from '@/components/PostInput';
 
 const PostInputSuspenser = async () => {
-    const guildesUser = await getGuildesUser()
+    const guildesUser = await getGuildesUserPostInput()
 
     return (
         <div>
