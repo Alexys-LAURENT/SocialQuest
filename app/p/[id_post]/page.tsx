@@ -28,8 +28,6 @@ const page = async ({ params }: { params: { id_post: string } }) => {
     return await getAnswers(params.id_post);
   };
 
-  const answers = await getAnswers(params.id_post);
-
   if (post === undefined) {
     notFound();
   }
@@ -45,7 +43,6 @@ const page = async ({ params }: { params: { id_post: string } }) => {
 
           <PostsWrapper
             user={userProfile}
-            initPosts={answers}
             getPost={getPostAnswers}
             postPage={true}
             filtre={false}
