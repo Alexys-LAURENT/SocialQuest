@@ -49,10 +49,10 @@ const UserGuildes = ({ customFunction, initGuildes, maxHeight }: { customFunctio
   const loadLess = async () => {
     if (!guildesUser) return;
     if (isLoading) return;
-    if (guildesUser.length < 4) {
-      setGuildesUser(guildesUser);
-    } else {
+    if (guildesUser.slice(0, guildesUser.length - 4).length < 4) {
       setGuildesUser(guildesUser.slice(0, 4));
+    } else {
+      setGuildesUser(guildesUser.slice(0, guildesUser.length - 4));
     }
     setIsLast(false);
   }

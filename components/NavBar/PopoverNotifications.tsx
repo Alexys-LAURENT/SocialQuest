@@ -7,6 +7,7 @@ import { getUserNotifications } from "@/utils/getUserNotifications";
 import { createClient } from "@/utils/supabase/client";
 import { readUserNotifications } from "@/utils/readUserNotifications";
 import { Notification } from "@/app/types/entities";
+import PopoverNotificationSkeleton from "@/components/Skeletons/NavBar/PopoverNotificationsSkeleton";
 import dynamic from 'next/dynamic';
 
 const DynamicNotificationsListBox = dynamic(() => import('@/components/NavBar/NotificationsListBox'))
@@ -16,13 +17,12 @@ const PopoverNotifications = ({ user }: { user: Profile }) => {
     const [notificationsNotRead, setNotificationsNotRead] = useState<Notification[]>([]);
     const supabase = createClient();
     useEffect(() => {
-        getNotifications();
 
         const notificationsChannel = supabase.channel(`notifications:${user.id_user}`)
             .on(
                 'postgres_changes',
                 { event: '*', schema: 'public', table: 'notifications', filter: `id_user=eq.${user.id_user}` },
-                (payload) => {
+                (_) => {
                     getNotifications()
                 }
             )
@@ -42,7 +42,7 @@ const PopoverNotifications = ({ user }: { user: Profile }) => {
     }
 
     return (
-        <Popover placement="bottom" offset={20} classNames={{ base: " w-[18.5rem]" }} onClose={() => notificationsNotRead.length > 0 && readUserNotifications(user.id_user)}>
+        <Popover placement="bottom" offset={20} classNames={{ base: " w-[18.5rem]" }} onClose={() => notificationsNotRead.length > 0 && readUserNotifications(user.id_user)} onOpenChange={(open) => open && getNotifications()} >
             <PopoverTrigger>
                 <div className="flex items-center cursor-pointer">
                     <Badge content={notificationsNotRead.length} color="danger" className={`text-xs`} classNames={{ badge: `${notificationsNotRead.length > 0 ? "" : "opacity-0"}` }}>
@@ -59,13 +59,7 @@ const PopoverNotifications = ({ user }: { user: Profile }) => {
                         )
                         :
                         (
-                            <div className="w-full flex flex-col gap-3 py-3">
-                                <div className="w-full h-7 rounded-md animate-pulse bg-bgDarkSecondary/60"></div>
-                                <div className="w-full h-7 rounded-md animate-pulse bg-bgDarkSecondary/60"></div>
-                                <div className="w-full h-7 rounded-md animate-pulse bg-bgDarkSecondary/60"></div>
-                                <div className="w-full h-7 rounded-md animate-pulse bg-bgDarkSecondary/60"></div>
-
-                            </div>
+                            <PopoverNotificationSkeleton />
                         )
                 }
             </PopoverContent>
