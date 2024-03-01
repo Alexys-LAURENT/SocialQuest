@@ -116,6 +116,7 @@ export type Item = {
   id_item: string;
   is_favorite?: boolean;
   is_equiped: boolean;
+  count: number;
   items: {
     nom: string;
     id_item: string;

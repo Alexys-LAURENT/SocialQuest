@@ -33,11 +33,24 @@ export async function getUserInventory(username: string) {
     return null;
   }
 
+  // Créer un objet temporaire pour stocker les occurrences des id_item
+  const tempItems: Record<string, Item> = {};
+  inventaire.forEach((item) => {
+    if (!tempItems[item.id_item]) {
+      tempItems[item.id_item] = { ...item, count: 1 };
+    } else {
+      tempItems[item.id_item].count++;
+    }
+  });
+
+  // Transformer l'objet temporaire en array
+  const updatedInventory = Object.values(tempItems);
+
   return {
-    all: inventaire?.sort((a, b) => (a.is_favorite ? -1 : 1)),
-    equiped: inventaire?.filter((item: Item) => item.is_equiped === true),
-    banners: inventaire?.filter((item: Item) => item.items.type === 'Bannière'),
-    badges: inventaire?.filter((item: Item) => item.items.type === 'Badge'),
-    items: inventaire?.filter((item: Item) => item.items.type === 'Arme'),
+    all: updatedInventory?.sort((a, b) => (a.is_favorite ? -1 : 1)),
+    equiped: updatedInventory?.filter((item: Item) => item.is_equiped === true),
+    banners: updatedInventory?.filter((item: Item) => item.items.type === 'Bannière'),
+    badges: updatedInventory?.filter((item: Item) => item.items.type === 'Badge'),
+    items: updatedInventory?.filter((item: Item) => item.items.type === 'Arme'),
   } as unknown as { all: Item[]; equiped: Item[]; banners: Item[]; badges: Item[]; items: Item[] };
 }

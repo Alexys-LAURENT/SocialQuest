@@ -32,7 +32,7 @@ const SelectedItemContent = ({
   };
 
   return (
-    <div className="flex flex-col justify-between h-full overflow-y-auto">
+    <div className="flex flex-col justify-between h-full overflow-y-auto bg-tempBgLightSecondary dark:bg-tempBgDarkSecondary border border-tempLightBorder dark:border-tempDarkBorder rounded-md">
       <div className="flex flex-row flex-wrap md:flex-col gap-4 p-4 w-full">
         <div className="relative flex aspect-square w-4/12 min-w-[140px] md:w-full overflow-hidden rounded-lg bg-black/20 ">
           <Image
@@ -71,7 +71,7 @@ const SelectedItemContent = ({
             {selectedItem.items.type !== 'Badge' && <EquiperBtn SelectedItem={selectedItem} />}
             <Button
               onClick={() => toggleFav()}
-              className={`px-3 min-w-0 transition-all !duration-500 ${selectedItem.items.type === 'Badge' ? 'w-full' : ''}`}
+              className={`px-3 customButton !w-full min-w-0 transition-all !duration-500 ${selectedItem.items.type === 'Badge' ? 'w-full' : ''}`}
             >
               {selectedItem.items.type === 'Badge' && (selectedItem.is_favorite ? 'Désépingler' : 'Épingler')}
               {selectedItem.is_favorite ? (
@@ -100,7 +100,9 @@ const SelectedItemContent = ({
         )}
       </div>
 
-      <SellItemSection success={success} error={error} selectedItem={selectedItem} />
+      {isUserInventory && (
+        <SellItemSection key={`${selectedItem}`} success={success} error={error} selectedItem={selectedItem} />
+      )}
     </div>
   );
 };
