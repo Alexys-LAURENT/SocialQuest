@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 
 
 const page = () => {
+    const [user, setUser] = useState<any>(null);
     const [password, setPassword] = useState<string>('');
     const [passwordConfirmation, setPasswordConfirmation] = useState<string>('');
 
@@ -34,11 +35,16 @@ const page = () => {
     const supabase = createClient();
 
     useLayoutEffect(() => {
-        const user = getProfileConnected();
-
-        if (!user) {
-            return router.push('/login');
+        const checkUser = async () => {
+            const userCheck = await getProfileConnected();
+            if (!userCheck) {
+                return router.push('/login');
+            } else {
+                setUser(userCheck);
+            }
         }
+
+        checkUser();
 
     }, []);
 
@@ -47,7 +53,6 @@ const page = () => {
 
         if (!isValid()) return;
 
-        const user = await getProfileConnected();
         if (!user) {
             return router.push('/login');
         }
@@ -96,7 +101,7 @@ const page = () => {
         }
     }
 
-    return (
+    return user ? (
         <div className={`flex flex-col max-w-2xl w-full px-2 md:px-4 py-4 gap-6`}>
 
             <h1 className="text-center text-3xl font-bold text-default-900">Réinitialisation du mot de passe</h1>
@@ -153,7 +158,11 @@ const page = () => {
                 {!isLoading ? "Confirmer" : <Spinner color="white" />}
             </Button>
         </div>
-    );
+    ) : (
+        <div className={`flex flex-col max-w-2xl w-full h-full px-2 md:px-4 py-4 gap-6 items-center justify-center`}>
+            <Spinner size="lg" color="white" />
+        </div>
+    )
 };
 
 export default page;
