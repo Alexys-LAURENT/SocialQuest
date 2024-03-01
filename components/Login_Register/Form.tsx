@@ -206,7 +206,7 @@ const Form = ({ signIn, signUp, searchParams }: { signIn: (arg1: FormData) => vo
                                 errorMessage={isEmailInvalidLogin ? "Veuillez entrer une adresse email valide" : ""}
                                 onChange={(e) => setEmailInputLogin(e.target.value)}
                             />
-                            <div className="w-full">
+                            <div className="w-full flex flex-col gap-1">
                                 <Input
                                     placeholder="Mot de passe"
                                     id='password'

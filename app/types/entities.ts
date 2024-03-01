@@ -4,6 +4,7 @@ export type Profile = {
   username: string;
   prenom: string;
   nom: string;
+  email: string;
   a_propos?: string;
   avatar_url?: string;
   xp: number;

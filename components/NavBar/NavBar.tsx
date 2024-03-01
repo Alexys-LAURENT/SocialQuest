@@ -43,7 +43,7 @@ const NavBar = ({ user }: { user: Profile | null }) => {
         window.location.href = "/";
     }
 
-    return activePath !== "/login" ? (
+    return activePath !== "/login" && activePath !== "/resetPassword" ? (
         <Navbar maxWidth="2xl" className="py-2 bg-bgLight dark:bg-tempBgDark transition-all !duration-500" position="sticky" classNames={{ wrapper: "px-4 sm:px-6" }}>
             <NavbarContent justify="start">
                 <NavbarItem className="flex md:hidden" onClick={() => showDrawer('NavMenu')}>

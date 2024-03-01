@@ -14,8 +14,8 @@ export const ModalForgotPassword = ({ isOpen, setIsOpen }: { isOpen: boolean, se
 
     const handleSendEmail = async () => {
         setIsLoading(true);
-        const { data: dataEmail, error: errorEmail } = await supabase.auth.resetPasswordForEmail(email, {
-            redirectTo: process.env.NEXT_PUBLIC_APP_URL
+        const { error: errorEmail } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/resetPassword`
         })
 
         if (errorEmail) {
@@ -24,7 +24,10 @@ export const ModalForgotPassword = ({ isOpen, setIsOpen }: { isOpen: boolean, se
             return;
         }
 
+        setEmail('');
+        setIsOpen(false);
         setIsLoading(false);
+        success('Un email de récupération de mot de passe a été envoyé');
     }
 
     const checkEmailValidity = (e: any) => {
