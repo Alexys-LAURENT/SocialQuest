@@ -9,9 +9,12 @@ import { useRouter } from 'next/navigation';
 import { Spinner } from '@nextui-org/react';
 import { getUsernameWhereName } from '@/utils/getUsernameWhereName';
 import { ToasterContext } from '@/app/context/ToasterContext';
+import { ModalForgotPassword } from '@/components/Login_Register/ModalForgotPassword';
 
 const Form = ({ signIn, signUp, searchParams }: { signIn: (arg1: FormData) => void, signUp: (arg1: FormData) => void, searchParams: { message: string } }) => {
     const { error } = useContext(ToasterContext);
+
+    const [isModalForgotPasswordOpen, setIsModalForgotPasswordOpen] = useState(false);
 
     const [emailInputLogin, setEmailInputLogin] = useState<string>('');
     const [passwordInputLogin, setPasswordInputLogin] = useState<string>('');
@@ -203,26 +206,37 @@ const Form = ({ signIn, signUp, searchParams }: { signIn: (arg1: FormData) => vo
                                 errorMessage={isEmailInvalidLogin ? "Veuillez entrer une adresse email valide" : ""}
                                 onChange={(e) => setEmailInputLogin(e.target.value)}
                             />
-                            <Input
-                                placeholder="Mot de passe"
-                                id='password'
-                                label='Mot de passe'
-                                labelPlacement='outside'
-                                name="password"
-                                required
-                                value={passwordInputLogin}
-                                endContent={
-                                    <button className="focus:outline-none h-5 w-5" type="button" onClick={toggleVisibilityLogin}>
-                                        {isPasswordVisibleLogin ? (
-                                            <EyeSlashIcon className="text-2xl text-default-400 pointer-events-none" />
-                                        ) : (
-                                            <EyeIcon className="text-2xl text-default-400 pointer-events-none" />
-                                        )}
-                                    </button>
-                                }
-                                type={isPasswordVisibleLogin ? "text" : "password"}
-                                onChange={(e) => { setPasswordInputLogin(e.target.value) }}
-                            />
+                            <div className="w-full flex flex-col gap-1">
+                                <Input
+                                    placeholder="Mot de passe"
+                                    id='password'
+                                    label='Mot de passe'
+                                    labelPlacement='outside'
+                                    name="password"
+                                    required
+                                    value={passwordInputLogin}
+                                    endContent={
+                                        <button className="focus:outline-none h-5 w-5" type="button" onClick={toggleVisibilityLogin}>
+                                            {isPasswordVisibleLogin ? (
+                                                <EyeSlashIcon className="text-2xl text-default-400 pointer-events-none" />
+                                            ) : (
+                                                <EyeIcon className="text-2xl text-default-400 pointer-events-none" />
+                                            )}
+                                        </button>
+                                    }
+                                    type={isPasswordVisibleLogin ? "text" : "password"}
+                                    onChange={(e) => { setPasswordInputLogin(e.target.value) }}
+                                />
+                                <div className="w-full text-end">
+                                    <div
+                                        className="text-xs text-neutral-400 hover:underline hover:text-neutral-300 transition-all !duration-500 cursor-pointer"
+                                        onClick={() => setIsModalForgotPasswordOpen(true)}
+                                    >
+                                        Mot de passe oublié ?
+                                    </div>
+                                    <ModalForgotPassword isOpen={isModalForgotPasswordOpen} setIsOpen={setIsModalForgotPasswordOpen} />
+                                </div>
+                            </div>
                             <Button className=" customButton bg-secondary/70 text-2xl font-semibold !w-[90%]" type='submit'>
                                 Se connecter
                             </Button>

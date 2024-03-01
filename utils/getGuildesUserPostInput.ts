@@ -3,7 +3,6 @@ import { Guilde } from '@/app/types/entities';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 import { createClient } from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
-import { cache } from 'react';
 
 export const getGuildesUserPostInput = async () => {
     'use server';
@@ -23,6 +22,5 @@ export const getGuildesUserPostInput = async () => {
         return null;
     }
 
-    return guildesUser as unknown as Guilde[];
-
+    return guildesUser.map((guildeUser: any) => guildeUser.guildes) as Guilde[];
 }
