@@ -127,3 +127,11 @@ export type Item = {
     description: string;
   };
 };
+
+export type shopSearchParmas = {
+  name?: string;
+  pmin?: number;
+  pmax?: number;
+  order?: string;
+  type?: string | string[];
+};
