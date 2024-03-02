@@ -162,3 +162,9 @@ export type latestSale = {
     nom: string;
   };
 };
+
+export type bestSellingItem = {
+  nom: string;
+  image_url: string;
+  description: string;
+};

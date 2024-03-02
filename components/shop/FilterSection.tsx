@@ -58,7 +58,16 @@ const FilterSection = ({ searchParams }: { searchParams: shopSearchParmas }) => 
         >
           Filtrer
         </Button>
-        <Button className="!w-full customButton bg-transparent"> Supprimer les filtres</Button>
+        <Button
+          className="!w-full customButton bg-transparent"
+          onClick={() => {
+            setSelectedPrice([]);
+            setSelectedType([]);
+            router.push('/shop');
+          }}
+        >
+          Supprimer les filtres
+        </Button>
       </div>
     </div>
   );
