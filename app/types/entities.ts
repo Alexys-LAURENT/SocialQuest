@@ -152,3 +152,13 @@ export type itemShop = {
     description: string;
   };
 };
+
+export type latestSale = {
+  prix: number;
+  timestamp: string;
+  item_infos: {
+    id_item: string;
+    image_url: string;
+    nom: string;
+  };
+};
