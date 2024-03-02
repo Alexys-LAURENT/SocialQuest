@@ -129,9 +129,26 @@ export type Item = {
 };
 
 export type shopSearchParmas = {
-  name?: string;
-  pmin?: number;
-  pmax?: number;
-  order?: string;
+  name?: string | string[];
+  price: string | string[];
+  order?: string | string[];
   type?: string | string[];
+};
+
+export type itemShop = {
+  seller_infos: {
+    id_user: string;
+    username: string;
+    avatar_url: string;
+  };
+  timestamp: string;
+  prix: number;
+  item_infos: {
+    id_item: string;
+    type: string;
+    image_url: string;
+    damage: number | null;
+    nom: string;
+    description: string;
+  };
 };

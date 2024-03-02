@@ -15,7 +15,7 @@ const page = async ({ searchParams }: { searchParams: shopSearchParmas }) => {
 
       <LatestSales />
 
-      <ShopSection searchParams={searchParams} />
+      <ShopSection searchParams={searchParams} initialShopItems={initialShopItems} />
     </div>
   );
 };
