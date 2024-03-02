@@ -7,7 +7,7 @@ import { createClient } from '@/utils/supabase/client';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 import { Message } from '@/app/types/entities';
 import MessageInput from '@/components/Discussions/MessageInput';
-import { Avatar, ScrollShadow } from '@nextui-org/react';
+import { Avatar, ScrollShadow, Spinner } from '@nextui-org/react';
 import defaultGroup from '@/public/assets/defaultGroup.svg'
 import Link from 'next/link';
 import dynamic from 'next/dynamic'
@@ -158,14 +158,14 @@ const MessagesWrapper = () => {
                             alt="group"
                             width={50}
                             height={50}
-                            className={`w-8 h-8 sm:h-12 sm:w-12 bg-[#3f3f46] rounded-full ${selectedCDiscussion.is_group ? 'invert p-1' : ''} ${selectedCDiscussion.is_group ? (profileConnected.id_user === selectedCDiscussion.created_by ? "cursor-pointer" : "cursor-default") : "cursor-pointer"}`}
-                            onClick={() => { selectedCDiscussion.is_group && profileConnected.id_user === selectedCDiscussion.created_by && setIsEditingGroup(!isEditingGroup) }}
+                            className={`w-8 h-8 sm:h-12 sm:w-12 bg-[#3f3f46] rounded-full ${selectedCDiscussion.is_group ? 'invert p-1' : ''} ${selectedCDiscussion.is_group ? "cursor-pointer" : "cursor-default"}`}
+                            onClick={() => setIsEditingGroup(!isEditingGroup)}
                         />
                     ) : (
                         <Avatar as={Link}
                             href={`${selectedCDiscussion.profiles[0]?.username}`}
                             src={getImageUrl()}
-                            className={`w-8 h-8 sm:h-12 sm:w-12 aspect-square rounded-full ${selectedCDiscussion.is_group ? 'invert p-1' : ''} ${selectedCDiscussion.is_group ? (profileConnected.id_user === selectedCDiscussion.created_by ? "cursor-pointer" : "cursor-default") : "cursor-pointer"}`} />
+                            className={`w-8 h-8 sm:h-12 sm:w-12 aspect-square rounded-full ${selectedCDiscussion.is_group ? 'invert p-1' : ''} cursor-pointer`} />
                     )}
 
                 <h1 className={`text-md font-semibold text-textDark dark:text-textLight transition-all !duration-[125ms] ${selectedCDiscussion.is_group ? (profileConnected.id_user === selectedCDiscussion.created_by ? "cursor-pointer" : "cursor-default") : "cursor-pointer"}`} onClick={() => { selectedCDiscussion.is_group && profileConnected.id_user === selectedCDiscussion.created_by && setIsEditingGroup(!isEditingGroup) }}>
@@ -174,7 +174,7 @@ const MessagesWrapper = () => {
             </div>
             <div className='relative w-full px-2 h-full max-h-[calc(100%-50px)] sm:max-h-[calc(100%-100px)] flex flex-col items-center '>
                 {isEditingGroup ? (
-                    <DynamicEditGroup profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} setSelectedDiscussion={setSelectedDiscussion} setIsEditingGroup={setIsEditingGroup} />
+                    <DynamicEditGroup profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} setSelectedDiscussion={setSelectedDiscussion} setIsEditingGroup={setIsEditingGroup} isCreator={selectedCDiscussion.created_by === profileConnected.id_user} />
                 ) : (
                     <>
                         <ScrollShadow id='messages_container' className='relative w-full h-full overflow-y-auto' size={isMobile ? 0 : 50} offset={5}>
@@ -191,9 +191,13 @@ const MessagesWrapper = () => {
 
                                     <DynamicMessageCard item={item} index={index} profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} tooltipDeleteOpen={tooltipDeleteOpen} setTooltipDeleteOpen={setTooltipDeleteOpen} tooltipOthersOpen={tooltipOthersOpen} setTooltipOthersOpen={setTooltipOthersOpen} tooltipUserOpen={tooltipUserOpen} setTooltipUserOpen={setTooltipUserOpen} nextMessage={{ id_user: messages[index + 1]?.id_user, timestamp: messages[index + 1]?.created_at }} prevMessage={{ id_user: messages[index - 1]?.id_user, timestamp: messages[index - 1]?.created_at }} />
                                 </Fragment>
-                            )) : (
+                            )) : messages && messages.length === 0 ? (
                                 <div className='flex flex-col items-center justify-center h-full'>
                                     <h1 className='text-md font-semibold'>Aucun message</h1>
+                                </div>
+                            ) : (
+                                <div className='flex flex-col items-center justify-center h-full'>
+                                    <Spinner size='lg' color='white' />
                                 </div>
                             )}
                         </ScrollShadow>

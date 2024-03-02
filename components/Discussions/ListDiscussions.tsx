@@ -85,7 +85,7 @@ const ListDiscussions = ({ initDiscussions, refetchDiscussions }: { initDiscussi
             {discussions.map((item: DiscussionTab, index: number) => (
                 <Card key={`ListDiscussions-${item.id_discussion}`} className={`rounded-md min-h-[55px] ${selectedCDiscussion?.id_discussion === item?.id_discussion ? 'bg-secondary' : ''} `}>
                     <CardBody className='flex-row p-0' >
-                        <Button onClick={() => [setIsEditingGroup(false), setComponentReloaded(true), setSelectedDiscussion(item)]} className='w-full h-full p-2 bg-transparent flex justify-start'>
+                        <Button onClick={() => [setMessages(null), setIsEditingGroup(false), setComponentReloaded(true), setSelectedDiscussion(item)]} className='w-full h-full p-2 bg-transparent flex justify-start'>
                             <div className='aspect-square max-w-[40px] min-w-[40px] flex'>
                                 {item?.is_group === false ?
                                     <Image src={item?.profiles[0].avatar_url || defaultUser.src} alt="group" width={50} height={50} className={`w-10 h-10 bg-[#3f3f46] rounded-full`} />

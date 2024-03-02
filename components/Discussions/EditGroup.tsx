@@ -16,8 +16,8 @@ const DynamicModalComponentAddUsersToDiscussion = dynamic(() => import('@/compon
 
 
 
-const EditGroup = ({ profileConnected, selectedCDiscussion, setSelectedDiscussion, setIsEditingGroup }: {
-    profileConnected: Profile, selectedCDiscussion: DiscussionTab, setSelectedDiscussion: (discussion: DiscussionTab | null) => void, setIsEditingGroup: (isEditingGroup: boolean) => void
+const EditGroup = ({ profileConnected, selectedCDiscussion, setSelectedDiscussion, setIsEditingGroup, isCreator }: {
+    profileConnected: Profile, selectedCDiscussion: DiscussionTab, setSelectedDiscussion: (discussion: DiscussionTab | null) => void, setIsEditingGroup: (isEditingGroup: boolean) => void, isCreator: boolean
 }) => {
     const [inputValue, setInputValue] = useState<string>(selectedCDiscussion.nom)
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -39,7 +39,7 @@ const EditGroup = ({ profileConnected, selectedCDiscussion, setSelectedDiscussio
     const cancel = () => { };
 
 
-    return (
+    return isCreator ? (
         <div className='w-full h-full flex flex-col items-center relative mt-3'>
             <XMarkIcon onClick={() => setIsEditingGroup(false)} className='h-6 w-6 text-white absolute cursor-pointer right-5 sm:right-8 top-[0.6rem] block' />
             {isOpen && <DynamicModalComponentAddUsersToDiscussion isOpen={isOpen} onOpenChange={onOpenChange} defaultsProfiles={selectedCDiscussion.profiles as ProfileInDiscussion[]} profileConnected={profileConnected} selectedCDiscussion={selectedCDiscussion} />}
@@ -140,7 +140,54 @@ const EditGroup = ({ profileConnected, selectedCDiscussion, setSelectedDiscussio
                 </Tab>
             </Tabs>
         </div>
-    );
+    ) : (
+        <div className='w-full h-full flex flex-col items-center relative mt-3'>
+            <XMarkIcon onClick={() => setIsEditingGroup(false)} className='h-6 w-6 text-white absolute cursor-pointer right-5 sm:right-8 top-[0.6rem] block' />
+            <Tabs aria-label="Options">
+                <Tab key="Général" title="Général" className='w-full flex justify-center px-3 sm:px-6'>
+                    <Card className='w-full min-h-[100px]'>
+                        <CardBody className='justify-between'>
+                            <div>
+                                <div className='w-full py-4 h-auto flex justify-center items-center'>
+                                    <Image src={selectedCDiscussion.image_url ? selectedCDiscussion.image_url : defaultGroup.src} alt="group" width={100} height={100} className={`p-1 w-14 h-14 sm:w-24 sm:h-24 bg-[#3f3f46] rounded-full ${!selectedCDiscussion.image_url && "invert"}`} />
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                    <span className='text-xs sm:text-base pl-1'>Nom du groupe</span>
+                                    <div className='text-xs sm:text-base bg-default-200 p-2 rounded-xl'>{selectedCDiscussion.nom}</div>
+                                </div>
+                            </div>
+
+
+                        </CardBody>
+                    </Card>
+                </Tab>
+                <Tab key="Membres" title="Membres" className='w-full flex justify-center px-3 sm:px-6'>
+                    <Card className='w-full'>
+                        <CardBody className='gap-3 overflow-y-auto max-h-[500px]'>
+                            <Card className='min-h-[50px] sm:min-h-[64px]'>
+                                <CardBody className='flex flex-row items-center gap-3'>
+                                    <Image src={profileConnected.avatar_url!} alt="group" width={100} height={100} className={`w-6 h-6 sm:w-10 sm:h-10 bg-[#3f3f46] rounded-full ${!profileConnected.avatar_url && "invert"}`} />
+                                    <span className='text-xs sm:text-base'>{profileConnected.username} (vous)</span>
+                                </CardBody>
+                            </Card>
+                            {
+                                selectedCDiscussion.profiles.map((profile) => (
+                                    <Card key={`EditGroup-${profile.id_user}`} className='min-h-[50px] sm:min-h-[64px]'>
+                                        <CardBody className='flex flex-row items-center justify-between'>
+                                            <div className='flex flex-row items-center gap-3 '>
+                                                <Image src={profile.avatar_url ? profile.avatar_url : defaultUser.src} alt="group" width={100} height={100} className={`w-6 h-6 sm:w-10 sm:h-10 bg-[#3f3f46] rounded-full`} />
+                                                <span className='text-xs sm:text-base'>{profile.username}</span>
+                                            </div>
+                                        </CardBody>
+                                    </Card>
+                                ))
+                            }
+                        </CardBody>
+                    </Card>
+                </Tab>
+            </Tabs>
+        </div>
+    )
 };
 
 export default EditGroup;
