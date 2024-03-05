@@ -47,14 +47,11 @@ export async function getItemsInSalesBySearchParams(searchParams: shopSearchParm
   }
 
   if (searchParams.order && typeof searchParams.order === 'string') {
-    console.log(searchParams.order);
     switch (searchParams.order) {
       case 'pasc':
-        console.log('pasc');
         query.order('prix', { ascending: true });
         break;
       case 'pdesc':
-        console.log('pdesc');
         query.order('prix', { ascending: false });
         break;
       default:
@@ -80,6 +77,17 @@ export async function getItemsInSalesBySearchParams(searchParams: shopSearchParm
     return [];
   }
 
+  const dataWithTimestampFormatted = data.map((item: any) => {
+    item.timestampFormatted = new Intl.DateTimeFormat('fr-FR', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    }).format(new Date(item.timestamp));
+    return item;
+  });
+
   function sortByItemName(dataArray: any, order: 'za' | 'az') {
     const sortedArray = [...dataArray]; // Créer une copie du tableau pour éviter de modifier l'original
 
@@ -99,11 +107,11 @@ export async function getItemsInSalesBySearchParams(searchParams: shopSearchParm
   }
 
   if (searchParams.order && typeof searchParams.order === 'string' && searchParams.order === 'az') {
-    return sortByItemName(data, 'az') as unknown as itemShop[];
+    return sortByItemName(dataWithTimestampFormatted, 'az') as unknown as itemShop[];
   }
 
   if (searchParams.order && typeof searchParams.order === 'string' && searchParams.order === 'za') {
-    return sortByItemName(data, 'za') as unknown as itemShop[];
+    return sortByItemName(dataWithTimestampFormatted, 'za') as unknown as itemShop[];
   }
-  return data as unknown as itemShop[];
+  return dataWithTimestampFormatted as unknown as itemShop[];
 }

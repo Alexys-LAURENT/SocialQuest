@@ -165,7 +165,7 @@ const ModalComponentCreateDiscussion = ({
         closeButton={<></>}
         className="rounded-b-none max-w-none sm:max-w-md sm:rounded-b-xl"
         classNames={{
-          base: 'bg-tempsBgLightSecondary dark:bg-tempBgDark rounded-md border border-tempLightBorder dark:border-tempDarkBorder',
+          base: 'bg-tempBgLightSecondary dark:bg-tempBgDark rounded-md border border-tempLightBorder dark:border-tempDarkBorder',
           wrapper: 'w-full',
         }}
       >

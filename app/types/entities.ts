@@ -142,6 +142,7 @@ export type itemShop = {
     avatar_url: string;
   };
   timestamp: string;
+  timestampFormatted?: string;
   prix: number;
   item_infos: {
     id_item: string;

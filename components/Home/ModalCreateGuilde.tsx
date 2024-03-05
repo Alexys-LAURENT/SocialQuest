@@ -17,7 +17,15 @@ import { createGuild } from '@/utils/createGuild';
 import { useRouter } from 'next/navigation';
 import { getGuildesNameWhereName } from '@/utils/getGuildesNameWhereName';
 
-export const ModalCreateGuilde = ({ isOpen, onOpenChange, fetchData }: { isOpen: boolean; onOpenChange: () => void; fetchData?: any }) => {
+export const ModalCreateGuilde = ({
+  isOpen,
+  onOpenChange,
+  fetchData,
+}: {
+  isOpen: boolean;
+  onOpenChange: () => void;
+  fetchData?: any;
+}) => {
   const [input, setInput] = useState<string>('');
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [isInputValid, setIsInputValid] = useState<{ value: boolean; reason: string }>();
@@ -57,7 +65,7 @@ export const ModalCreateGuilde = ({ isOpen, onOpenChange, fetchData }: { isOpen:
     setInput(inputValue.replace(/\s/g, ''));
 
     if (inputValue.includes(' ')) {
-      error('Le nom de la guilde ne doit pas contenir d\'espaces');
+      error("Le nom de la guilde ne doit pas contenir d'espaces");
     }
 
     if ((await getGuildesNameWhereName(inputValue.replace(/\s/g, ''))) === false) {
@@ -74,7 +82,7 @@ export const ModalCreateGuilde = ({ isOpen, onOpenChange, fetchData }: { isOpen:
     <>
       <Modal
         classNames={{
-          base: 'bg-tempsBgLightSecondary dark:bg-tempBgDark rounded-md border border-tempLightBorder dark:border-tempDarkBorder',
+          base: 'bg-tempBgLightSecondary dark:bg-tempBgDark rounded-md border border-tempLightBorder dark:border-tempDarkBorder',
         }}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
