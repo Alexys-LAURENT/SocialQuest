@@ -117,6 +117,7 @@ export type Item = {
   id_item: string;
   is_favorite?: boolean;
   is_equiped: boolean;
+  count: number;
   items: {
     nom: string;
     id_item: string;
@@ -126,4 +127,46 @@ export type Item = {
     damage?: number;
     description: string;
   };
+};
+
+export type shopSearchParmas = {
+  name?: string | string[];
+  price: string | string[];
+  order?: string | string[];
+  type?: string | string[];
+};
+
+export type itemShop = {
+  seller_infos: {
+    id_user: string;
+    username: string;
+    avatar_url: string;
+  };
+  timestamp: string;
+  timestampFormatted?: string;
+  prix: number;
+  item_infos: {
+    id_item: string;
+    type: string;
+    image_url: string;
+    damage: number | null;
+    nom: string;
+    description: string;
+  };
+};
+
+export type latestSale = {
+  prix: number;
+  timestamp: string;
+  item_infos: {
+    id_item: string;
+    image_url: string;
+    nom: string;
+  };
+};
+
+export type bestSellingItem = {
+  nom: string;
+  image_url: string;
+  description: string;
 };
