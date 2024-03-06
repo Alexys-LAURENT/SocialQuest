@@ -1,5 +1,5 @@
 'use client';
-import { Button, Card, CardBody, Input } from '@nextui-org/react';
+import { Button, Card, CardBody, Input, Spinner } from '@nextui-org/react';
 import Image from 'next/image';
 import { Item } from '@/app/types/entities';
 import { useEffect, useState } from 'react';
@@ -12,10 +12,14 @@ const SellItemSection = ({
   success,
   error,
   selectedItem,
+  averagePrice,
+  loadingAvg,
 }: {
   success: (message: string) => void;
   error: (message: string) => void;
   selectedItem: Item;
+  averagePrice: number | null;
+  loadingAvg: boolean;
 }) => {
   const [sales, setSales] = useState<any[]>([]);
   const [price, setPrice] = useState<number>();
@@ -55,7 +59,7 @@ const SellItemSection = ({
 
   return (
     <div className="m-2 p-4 gap-4 flex flex-col bg-tempBgLightSecondary dark:bg-tempBgDark border border-tempLightBorder dark:border-tempDarkBorder rounded-md">
-      <p className="text-3xl font-bold text-center pb-4 text-textDark dark:text-textLight transition-all !duration-[125ms]">
+      <p className="text-xl font-bold text-center text-textDark dark:text-textLight transition-all !duration-[125ms]">
         Marché
       </p>
 
@@ -82,10 +86,20 @@ const SellItemSection = ({
       </div>
 
       <p className="flex gap-1 text-sm text-textDark dark:text-textLight transition-all !duration-[125ms]">
-        Prix moyen sur le marché :{' '}
-        <span className="flex flex-row items-center gap-1 text-textDark dark:text-textLight transition-all !duration-[125ms]">
-          125 <Image src="/assets/SocialCoin.png" width={16} height={16} alt="SocialCoin" />
-        </span>
+        Prix moyen :
+        {loadingAvg ? (
+          <Spinner size="sm" color="white" className="scale-75" />
+        ) : (
+          <span className="flex flex-row items-center gap-1 text-textDark dark:text-textLight transition-all !duration-[125ms]">
+            {averagePrice !== null ? (
+              <>
+                {averagePrice} <Image src="/assets/SocialCoin.png" width={16} height={16} alt="SocialCoin" />
+              </>
+            ) : (
+              'Aucune vente'
+            )}{' '}
+          </span>
+        )}
       </p>
 
       <Input
