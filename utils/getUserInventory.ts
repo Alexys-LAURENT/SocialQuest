@@ -41,6 +41,8 @@ export async function getUserInventory(username: string) {
     } else {
       tempItems[item.id_item].count++;
     }
+    if (item.is_favorite) tempItems[item.id_item].is_favorite = true;
+    if (item.is_equiped) tempItems[item.id_item].is_equiped = true;
   });
 
   // Transformer l'objet temporaire en array
