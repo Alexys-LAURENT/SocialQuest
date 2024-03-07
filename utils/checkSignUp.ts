@@ -54,7 +54,6 @@ export async function checkSignUp(formData: FormData) {
         nom,
         prenom,
         username,
-        email,
       },
       emailRedirectTo: `${origin}/auth/callback`,
     },

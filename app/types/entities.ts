@@ -111,6 +111,18 @@ export type Guilde = {
   total_members: number;
 };
 
+export type GuildePage = {
+  isUserInGuilde: boolean;
+  id_guilde: string;
+  nom: string;
+  description: string;
+  avatar_url: string;
+  created_by: string;
+};
+
+export type Moderator = { is_admin: boolean; username: string; avatar_url: string };
+export type Member = { is_moderator: boolean; id_user: string; username: string; avatar_url: string };
+
 export type Item = {
   id_item_user: string;
   id_user: string;

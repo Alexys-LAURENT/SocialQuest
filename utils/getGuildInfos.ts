@@ -1,4 +1,5 @@
 'use server';
+import { GuildePage } from '@/app/types/entities';
 import { createClient } from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 
@@ -17,7 +18,7 @@ export async function getGuildInfos(guilde_name: string, id_user: string | undef
 
   if (guildeError) {
     console.error('ErrorGetGuildInfos', guildeError);
-    return null
+    return null;
   }
 
   if (id_user) {
@@ -37,5 +38,5 @@ export async function getGuildInfos(guilde_name: string, id_user: string | undef
     }
   }
 
-  return { ...guilde, isUserInGuilde: is_user_in_guilde };
+  return { ...guilde, isUserInGuilde: is_user_in_guilde } as GuildePage;
 }

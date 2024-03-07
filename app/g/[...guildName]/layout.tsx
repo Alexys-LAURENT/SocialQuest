@@ -46,12 +46,10 @@ export async function generateStaticParams() {
 const layout = async ({
   children,
   params,
-  guildactivities,
   guildwars,
 }: {
   children: ReactNode;
   params: { guildName: string };
-  guildactivities: ReactNode;
   guildwars: ReactNode;
 }) => {
   if (params.guildName[1] && params.guildName[1] !== 'activities' && params.guildName[1] !== 'guildwars')
@@ -84,7 +82,7 @@ const layout = async ({
             </div>
             <span className="sm:flex items-center hidden gap-4">
               {guilde.created_by === user?.id_user ? (
-                <EditGuildButton />
+                <EditGuildButton guilde={guilde} />
               ) : (
                 <JoinQuitButton guilde={guilde} user={user} />
               )}
@@ -93,7 +91,11 @@ const layout = async ({
         </div>
 
         <div className=" w-full max-w-[1280px] px-6 md:px-12 flex flex-row justify-end my-4 sm:my-2 gap-2 sm:gap-4 sm:hidden -top-[40px] sm:-top-[60px] md:-top-[80px] relative">
-          {guilde.created_by === user?.id_user ? <EditGuildButton /> : <JoinQuitButton guilde={guilde} user={user} />}
+          {guilde.created_by === user?.id_user ? (
+            <EditGuildButton guilde={guilde} />
+          ) : (
+            <JoinQuitButton guilde={guilde} user={user} />
+          )}
         </div>
       </>
 
@@ -108,12 +110,6 @@ const layout = async ({
               Feed
             </Link>
             <Link
-              href={`/g/${params.guildName[0]}/activities`}
-              className="hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out"
-            >
-              Activités
-            </Link>
-            <Link
               href={`/g/${params.guildName[0]}/guildwars`}
               className="hover:bg-[#767676] hover:bg-opacity-75 py-1 px-2 rounded-md transition-all ease-in-out"
             >
@@ -124,7 +120,6 @@ const layout = async ({
 
         <div className="flex flex-col w-full gap-10">
           {!params.guildName[1] && user && <DynamicPostInput id_guilde={guilde!.id_guilde} />}
-          {params.guildName[1] === 'activities' && guildactivities}
           {params.guildName[1] === 'guildwars' && guildwars}
           {!params.guildName[1] && children}
         </div>
