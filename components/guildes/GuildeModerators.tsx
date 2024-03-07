@@ -2,6 +2,7 @@ import { getGuildeModerators } from '@/utils/getGuildeModerators';
 import { Avatar, Button } from '@nextui-org/react';
 import Link from 'next/link';
 import { formatCount } from '@/utils/formatCount';
+import { Moderator } from '@/app/types/entities';
 
 const GuildeModerators = async ({ id_guilde }: { id_guilde: string }) => {
   const moderators = await getGuildeModerators(id_guilde);
@@ -13,7 +14,7 @@ const GuildeModerators = async ({ id_guilde }: { id_guilde: string }) => {
       </div>
       <div className="w-full flex flex-col gap-2">
         {moderators &&
-          moderators.map((moderator: { is_admin: boolean; username: string; avatar_url: string }) => (
+          moderators.map((moderator: Moderator) => (
             <Button
               key={`${id_guilde}-moderator-${moderator.username}`}
               as={Link}

@@ -1,8 +1,9 @@
 'use server';
 import { cookies } from 'next/headers';
+import { Moderator } from '@/app/types/entities';
 import { createClient } from './supabase/server';
 
-export async function getGuildeModerators(id_guilde: string) {
+export const getGuildeModerators = async (id_guilde: string) => {
   'use server';
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
@@ -13,9 +14,9 @@ export async function getGuildeModerators(id_guilde: string) {
     .eq('id_guilde', id_guilde)
     .eq('is_moderator', true)
     .order('is_admin', { ascending: false })) as unknown as {
-      data: { is_admin: boolean; profiles: { username: string; avatar_url: string } }[];
-      error: any;
-    };
+    data: { is_admin: boolean; profiles: { username: string; avatar_url: string } }[];
+    error: any;
+  };
 
   if (error) {
     console.error('ErrorGetGuildeModerators', error);
@@ -28,5 +29,5 @@ export async function getGuildeModerators(id_guilde: string) {
     avatar_url: item.profiles.avatar_url,
   }));
 
-  return moderators;
-}
+  return moderators as Moderator[];
+};
