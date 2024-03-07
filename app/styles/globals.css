@@ -20,6 +20,36 @@
   }
 }
 
+.heart-container {
+  position: absolute;
+  animation: heartAnimation 0.8s ease-out;
+  /* Ajuste la durée de l'animation selon tes besoins */
+}
+
+@keyframes heartAnimation {
+  0% {
+    transform: translateY(0) scale(8);
+
+    opacity: 1;
+  }
+
+  33% {
+    transform: translateY(0) scale(5);
+    opacity: 1;
+  }
+
+  66% {
+    transform: translateY(0) scale(6);
+    opacity: 1;
+  }
+
+
+  100% {
+    transform: translateY(-150px) scale(6);
+    opacity: 0;
+  }
+}
+
 * {
   outline: none !important;
   -webkit-tap-highlight-color: transparent;

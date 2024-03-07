@@ -12,7 +12,7 @@ const GuildPostsWrapper = async ({ params }: { params: { guildName: string } }) 
 
   return (
     <div>
-      <PostsWrapper getPost={getAllPostsGuild} user={user} filtre={false} />
+      <PostsWrapper getPost={getAllPostsGuild} user={user} filtre={false} displayAnswerTo={true} />
     </div>
   );
 };

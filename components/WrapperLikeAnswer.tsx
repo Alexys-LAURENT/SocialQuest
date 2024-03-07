@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { formatCount } from '@/utils/formatCount';
 
-const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile | null }) => {
+const WrapperLikeAnswer = ({ post, user, likePost }: { post: ExtendedPost, user: Profile | null, likePost: () => Promise<void> }) => {
     const router = useRouter();
     const [likesCount, setLikesCount] = useState(post.likes_count)
     const [answersCount, setAnswersCount] = useState(post.answers_count)
@@ -98,21 +98,7 @@ const WrapperLikeAnswer = ({ post, user }: { post: ExtendedPost, user: Profile |
 
     const toggleLike = async () => {
 
-        if (userLikedPost) {
-            // Unlike
-            await supabase
-                .from('likes')
-                .delete()
-                .match({ id_user: user!.id_user, id_post: post.id_post }) // Utiliser l'ID de l'utilisateur connecté
-
-        } else {
-            // Like
-            await supabase
-                .from('likes')
-                .insert({ id_user: user!.id_user, id_post: post.id_post }) // Utiliser l'ID de l'utilisateur connecté
-
-        }
-
+        await likePost()
         setUserLikedPost(!userLikedPost)
     }
 
