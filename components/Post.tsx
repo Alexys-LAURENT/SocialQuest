@@ -47,7 +47,6 @@ export default function Post({ user, post, displayAnswerTo }: { user: Profile | 
     const x = e.clientX - boundingBox.left; // Coordonnée x relative à la div
     const y = e.clientY - boundingBox.top; // Coordonnée y relative à la div
 
-    console.log(x, y);
     const heartId = nextHeartId;
 
     setHearts((prevHearts) => [
