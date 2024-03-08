@@ -1,15 +1,14 @@
-import Posts from '@/components/Profil/Posts';
 import Infos from '@/components/Profil/Infos';
 import { notFound } from 'next/navigation';
-import { ExtendedPost } from '@/app/types/entities';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 import { getAllPostsFromUser } from '@/utils/getAllPosts';
 import { getPageProfile } from '@/utils/getPageProfile';
 import UserTopRow from '@/components/Profil/UserTopRow';
 import CommpagnonsSuspenser from '@/components/Profil/CompagnonsSuspenser';
-import { FC, Suspense } from 'react';
+import { Suspense } from 'react';
 import CompagnonSkeleton from '@/components/Skeletons/Profil/CompagnonSkeleton';
 import { createClient } from '@supabase/supabase-js';
+import PostsWrapper from '@/components/PostsWrapper';
 
 export const revalidate = 3600;
 
@@ -29,17 +28,22 @@ type ProfilParams = {
   };
 };
 
+
 const Profil: React.FC = async (props) => {
   const { params } = props as ProfilParams;
   const decodedUsername = decodeURIComponent(params!.username);
   const [profileConnected, pageProfile] = await Promise.all([getProfileConnected(), getPageProfile(decodedUsername)]);
 
+  const getPostsUser = async () => {
+    "use server"
+    const posts = await getAllPostsFromUser(pageProfile?.id_user ?? '');
+    return posts;
+  }
 
   if (pageProfile === null) {
     notFound();
   }
 
-  const posts = await getAllPostsFromUser(pageProfile?.id_user ?? '');
   const isUserProfil = pageProfile?.id_user === (profileConnected?.id_user ?? '');
 
   return (
@@ -63,7 +67,9 @@ const Profil: React.FC = async (props) => {
           <div className="text-2xl w-full font-semibold text-start text-textDark dark:text-textLight transition-all !duration-[125ms]">
             {isUserProfil ? 'Mes Posts' : 'Posts'}
           </div>
-          <Posts userProfile={profileConnected} isUserProfil={isUserProfil} posts={posts as ExtendedPost[]} />
+          <div className="w-full max-w-[656px]">
+            <PostsWrapper user={profileConnected} getPost={getPostsUser} filtre={false} displayAnswerTo={true} />
+          </div>
         </div>
       </div>
     </div>

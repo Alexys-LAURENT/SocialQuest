@@ -24,7 +24,7 @@ export type Post = {
   id_post: string;
   id_user: string;
   id_guilde?: string;
-  parent?: string;
+  parent_post_id?: string;
   titre?: string;
   contenu: string;
   created_at?: string;
@@ -44,6 +44,7 @@ export type ExtendedPost = Post & {
   user_liked_post: boolean;
   answers_count: number;
   createdAtFormated: string;
+  parent_post_username?: string;
 };
 
 export type DiscussionTab = {

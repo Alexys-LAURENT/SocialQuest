@@ -85,6 +85,7 @@ const ImageAntdPreview = ({ img, onDownload }: { img: string; onDownload: (img: 
       className="absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover"
       rootClassName="!h-full !w-full"
       preview={{
+        className: 'preview-image',
         mask: (
           <div className='items-center justify-center gap-2 text-white flex'>
             <EyeIcon className="w-4 h-4 mt-[0.1rem]" />

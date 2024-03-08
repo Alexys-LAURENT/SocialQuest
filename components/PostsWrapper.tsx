@@ -14,11 +14,13 @@ const PostsWrapper = ({
   getPost,
   postPage,
   filtre,
+  displayAnswerTo,
 }: {
   user: Profile | null;
-  getPost: () => Promise<ExtendedPost[] | null>;
+  getPost: () => Promise<ExtendedPost[] | null>,
   postPage?: boolean;
   filtre: boolean;
+  displayAnswerTo?: boolean;
 }) => {
   const [posts, setPosts] = useState<ExtendedPost[] | null>(null);
   const [postsRandom, setPostsRandom] = useState<ExtendedPost[] | null>(null);
@@ -134,7 +136,7 @@ const PostsWrapper = ({
         {posts?.length !== 0 ? (
           posts?.map((post: ExtendedPost) => (
             <Fragment key={`post-${post.id_post}`}>
-              <Post key={post.id_post} post={post} user={user} />
+              <Post key={post.id_post} post={post} user={user} displayAnswerTo={displayAnswerTo} />
             </Fragment>
           ))
         ) : (
@@ -178,7 +180,7 @@ const PostsWrapper = ({
               {posts?.length !== 0 ? (
                 posts?.map((post: ExtendedPost) => (
                   <Fragment key={`post-${post.id_post}`}>
-                    <Post key={post.id_post} post={post} user={user} />
+                    <Post key={post.id_post} post={post} user={user} displayAnswerTo={displayAnswerTo} />
                   </Fragment>
                 ))
               ) : (
@@ -205,7 +207,7 @@ const PostsWrapper = ({
               {posts?.length !== 0 ? (
                 posts?.map((post: ExtendedPost) => (
                   <Fragment key={`post-${post.id_post}`}>
-                    <Post key={post.id_post} post={post} user={user} />
+                    <Post key={post.id_post} post={post} user={user} displayAnswerTo={displayAnswerTo} />
                   </Fragment>
                 ))
               ) : (
@@ -232,7 +234,7 @@ const PostsWrapper = ({
               {posts?.length !== 0 ? (
                 posts?.map((post: ExtendedPost) => (
                   <Fragment key={`post-${post.id_post}`}>
-                    <Post key={post.id_post} post={post} user={user} />
+                    <Post key={post.id_post} post={post} user={user} displayAnswerTo={displayAnswerTo} />
                   </Fragment>
                 ))
               ) : (

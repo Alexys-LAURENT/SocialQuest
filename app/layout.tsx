@@ -36,7 +36,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   <InventaireProvider>
                     <NavBar user={profile} />
                     <TopLoader />
-                    <main className={`h-full w-full flex flex-col items-center overflow-y-auto`}>{children}</main>
+                    <main className={`h-full w-full flex flex-col items-center overflow-y-auto overflow-x-hidden`}>{children}</main>
                   </InventaireProvider>
                 </DiscussionProvider>
               </ModalItemInfoProvider>

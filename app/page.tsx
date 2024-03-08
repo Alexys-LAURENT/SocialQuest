@@ -39,7 +39,7 @@ export default async function Index() {
           </Suspense>
         )}
 
-        <PostsWrapper user={user} getPost={getAllPosts} filtre={user && user.id_user ? true : false} />
+        <PostsWrapper user={user} getPost={getAllPosts} filtre={user && user.id_user ? true : false} displayAnswerTo={true} />
       </div>
 
       <div className="sticky top-0 hidden lg:flex min-w-[17rem] max-w-[17rem] h-fit">

@@ -39,7 +39,7 @@ const page = async ({ params }: { params: { id_post: string } }) => {
 
         <div className="flex flex-col w-full gap-4 mb-5">
           <MainPost post={post} user={userProfile} />
-          <PostInput id_guilde={undefined} page="post" guildesUser={null} parent={post.id_post} />
+          <PostInput id_guilde={post.id_guilde} page="post" guildesUser={null} parent={post.id_post} />
 
           <PostsWrapper
             user={userProfile}

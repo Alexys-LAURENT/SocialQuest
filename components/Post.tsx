@@ -1,8 +1,8 @@
 'use client';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Button, Popover, PopoverContent, PopoverTrigger, Spinner } from '@nextui-org/react';
 import Link from 'next/link';
-import { EllipsisVerticalIcon, FlagIcon, ShareIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { EllipsisVerticalIcon, FlagIcon, HeartIcon, ShareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { ExtendedPost, Profile } from '@/app/types/entities';
 import PopoverUserProfile from '@/components/PopoverUserProfile';
 import WrapperLikeAnswer from '@/components/WrapperLikeAnswer';
@@ -13,14 +13,23 @@ import defaultUser from '@/public/assets/defaultUser.svg';
 import { removePost } from '@/utils/removePost';
 import { onDownload } from '@/utils/downloadImage';
 import ImageAntdPreview from '@/components/ImageAntdPreview';
+import { createClient } from '@/utils/supabase/client';
 
-export default function Post({ user, post }: { user: Profile | null; post: ExtendedPost }) {
+export default function Post({ user, post, displayAnswerTo }: { user: Profile | null; post: ExtendedPost, displayAnswerTo?: boolean }) {
   const router = useRouter();
   const { success, error } = useContext(ToasterContext);
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
 
+  // listen for mouse movement
+  const handleMouseMove = (e: MouseEvent) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    console.log(x, y);
+  };
+
+  window.addEventListener('click', handleMouseMove);
 
   const handleDelete = async () => {
     if (isLoading) return;
@@ -36,16 +45,102 @@ export default function Post({ user, post }: { user: Profile | null; post: Exten
     }
   };
 
+  const supabase = createClient();
+
+  const clickCount = useRef(0);
+  const clickTimer = useRef<NodeJS.Timeout | null>(null);
+  const [hearts, setHearts] = useState<{ x: number; y: number; id: number }[]>([]);
+  const [nextHeartId, setNextHeartId] = useState(1);
+
+  const showHeart = (e: any) => {
+    const boundingBox = e.currentTarget.getBoundingClientRect(); // Obtient la position de la div par rapport à la fenêtre
+    const x = e.clientX - boundingBox.left; // Coordonnée x relative à la div
+    const y = e.clientY - boundingBox.top; // Coordonnée y relative à la div
+
+    console.log(x, y);
+    const heartId = nextHeartId;
+
+    setHearts((prevHearts) => [
+      ...prevHearts,
+      { x, y, id: heartId },
+    ]);
+    setNextHeartId((prevId) => prevId + 1);
+
+    setTimeout(() => {
+      setHearts((prevHearts) => prevHearts.filter((heart) => heart.id !== heartId));
+    }, 780); // ajuste la durée d'affichage du cœur selon tes besoins
+  };
+
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    if ((e.target as HTMLElement).classList.contains('postRedirect')) {
-      const link = document.getElementById(`post-link-${post.id_post}`);
-      link?.click();
+
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+
+    if (!isTouchDevice) {
+      clickCount.current = 0;
+      return document.getElementById(`post-link-${post.id_post}`)?.click();
+    }
+
+    let parent = e.target as HTMLElement | null;
+    while (parent) {
+      if (parent.classList.contains('ant-image-preview-root') || parent.classList.contains('ant-image-preview-close')) {
+        return;
+      }
+      parent = parent.parentElement;
+    }
+
+    clickCount.current++;
+
+    if (clickCount.current === 1) {
+      clickTimer.current = setTimeout(() => {
+        // Si c'est un simple clic, effectue la redirection
+        if ((e.target as HTMLElement).classList.contains('postRedirect')) {
+          const link = document.getElementById(`post-link-${post.id_post}`);
+          clickCount.current = 0;
+          link?.click();
+        }
+
+        clickCount.current = 0;
+      }, 200); // ajuste la durée du double clic selon tes besoins
+    } else if (clickCount.current === 2) {
+
+      // Si c'est un double clic, like le post
+      likePost();
+      !post.user_liked_post && showHeart(e);
+      clickCount.current = 0;
+      clearTimeout(clickTimer.current!);
     }
   };
 
+  const likePost = async () => {
+    if (post.user_liked_post) {
+      // Unlike
+      await supabase
+        .from('likes')
+        .delete()
+        .match({ id_user: user!.id_user, id_post: post.id_post }) // Utiliser l'ID de l'utilisateur connecté
+
+    } else {
+      // Like
+      await supabase
+        .from('likes')
+        .insert({ id_user: user!.id_user, id_post: post.id_post }) // Utiliser l'ID de l'utilisateur connecté
+
+    }
+    post.user_liked_post = !post.user_liked_post;
+  };
+
+  useEffect(() => {
+    return () => {
+      // Assure-toi de nettoyer le timer lors du démontage du composant
+      if (clickTimer.current) {
+        clearTimeout(clickTimer.current);
+      }
+    };
+  }, []);
+
   return (
     <div
-      className="postRedirect flex flex-col border border-tempLightBorder dark:border-tempDarkBorder bg-tempBgLightSecondary dark:bg-tempBgDarkSecondary hover:bg-tempLightHover/20 dark:hover:bg-tempDarkHover/20 rounded-md p-2 gap-1 cursor-pointer transition-all !duration-500"
+      className="postRedirect relative flex flex-col border border-tempLightBorder dark:border-tempDarkBorder bg-tempBgLightSecondary dark:bg-tempBgDarkSecondary hover:bg-tempLightHover/20 dark:hover:bg-tempDarkHover/20 rounded-md p-2 gap-1 cursor-pointer transition-all !duration-500"
       onClick={(e) => handleClick(e)}
     >
       <Link id={`post-link-${post.id_post}`} href={`/p/${post.id_post}`} className="hidden" />
@@ -156,8 +251,30 @@ export default function Post({ user, post }: { user: Profile | null; post: Exten
           </div>
         </div>
 
+        {displayAnswerTo && post.parent_post_id && (
+          <div className="flex items-center gap-2 text-textDark dark:text-textLight">
+            <Link href={`/p/${post.parent_post_id}`} className='flex gap-1'>
+              <div className="text-xs text-default-500">En réponse à</div>
+              <div className="text-xs text-blue-500 font-semibold hover:underline">@{post.parent_post_username}</div>
+            </Link>
+          </div>
+        )}
+
+        {hearts.map((heart) => (
+          <div
+            key={heart.id}
+            className="heart-container !z-[1000000]"
+            style={{
+              top: `${heart.y}px`,
+              left: `${heart.x}px`,
+            }}
+          >
+            <HeartIcon className={`w-5 h-5 text-red-500 fill-red-500`} style={{ transform: `rotate(${Math.random() * 30 - 15}deg)` }} />
+          </div>
+        ))}
+
         <div className="postRedirect flex md:flex-row gap-2 flex-col-reverse justify-between">
-          <WrapperLikeAnswer post={post} user={user} />
+          <WrapperLikeAnswer post={post} user={user} likePost={likePost} />
           <div className="text-slate-400 text-xs flex items-end">{post.createdAtFormated}</div>
         </div>
       </div>
