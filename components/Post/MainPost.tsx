@@ -54,6 +54,26 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
     }
 
 
+
+    const likePost = async () => {
+        if (post.user_liked_post) {
+            // Unlike
+            await supabase
+                .from('likes')
+                .delete()
+                .match({ id_user: user!.id_user, id_post: post.id_post }) // Utiliser l'ID de l'utilisateur connecté
+
+        } else {
+            // Like
+            await supabase
+                .from('likes')
+                .insert({ id_user: user!.id_user, id_post: post.id_post }) // Utiliser l'ID de l'utilisateur connecté
+
+        }
+        post.user_liked_post = !post.user_liked_post;
+    };
+
+
     return (
         <div>
             <div className="p-2 cursor-pointer rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover text-sm">
@@ -192,7 +212,7 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
                     </div>
 
                     <div className="flex md:flex-row gap-2 flex-col-reverse justify-between">
-                        <WrapperLikeAnswer post={post} user={user} />
+                        <WrapperLikeAnswer post={post} user={user} likePost={likePost} />
                         <div className="text-slate-400 text-xs flex items-end">
                             {post.createdAtFormated}
                         </div>
