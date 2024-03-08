@@ -21,16 +21,6 @@ export default function Post({ user, post, displayAnswerTo }: { user: Profile | 
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-
-  // listen for mouse movement
-  const handleMouseMove = (e: MouseEvent) => {
-    const x = e.clientX;
-    const y = e.clientY;
-    console.log(x, y);
-  };
-
-  window.addEventListener('click', handleMouseMove);
-
   const handleDelete = async () => {
     if (isLoading) return;
     setIsLoading(true);
@@ -75,7 +65,7 @@ export default function Post({ user, post, displayAnswerTo }: { user: Profile | 
 
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
 
-    if (!isTouchDevice) {
+    if (!isTouchDevice && (e.target as HTMLElement).classList.contains('postRedirect')) {
       clickCount.current = 0;
       return document.getElementById(`post-link-${post.id_post}`)?.click();
     }
@@ -102,6 +92,10 @@ export default function Post({ user, post, displayAnswerTo }: { user: Profile | 
         clickCount.current = 0;
       }, 200); // ajuste la durée du double clic selon tes besoins
     } else if (clickCount.current === 2) {
+      //check si il y a un user connecté
+      if (!user) {
+        return document.getElementById('redirect-login')?.click();
+      }
 
       // Si c'est un double clic, like le post
       likePost();
@@ -143,6 +137,7 @@ export default function Post({ user, post, displayAnswerTo }: { user: Profile | 
       className="postRedirect relative flex flex-col border border-tempLightBorder dark:border-tempDarkBorder bg-tempBgLightSecondary dark:bg-tempBgDarkSecondary hover:bg-tempLightHover/20 dark:hover:bg-tempDarkHover/20 rounded-md p-2 gap-1 cursor-pointer transition-all !duration-500"
       onClick={(e) => handleClick(e)}
     >
+      <Link id={`redirect-login`} href={`/login`} className="hidden" />
       <Link id={`post-link-${post.id_post}`} href={`/p/${post.id_post}`} className="hidden" />
       <div className="flex gap-2">
         <Image
