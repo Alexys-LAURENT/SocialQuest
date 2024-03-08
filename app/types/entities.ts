@@ -182,3 +182,45 @@ export type bestSellingItem = {
   image_url: string;
   description: string;
 };
+
+export type GuildWar = {
+  id_guild_war: string;
+  requested_at: string;
+  responsed_at?: string;
+  status: 'En attente' | 'En cours' | 'Refusé' | 'Terminé';
+  item_1: {
+    nom: string;
+    image_url: string;
+    rarete: string;
+  };
+  item_2?: {
+    nom: string;
+    image_url: string;
+    rarete: string;
+  };
+  item_3?: {
+    nom: string;
+    image_url: string;
+    rarete: string;
+  };
+  item_4?: {
+    nom: string;
+    image_url: string;
+    rarete: string;
+  };
+  item_5?: {
+    nom: string;
+    image_url: string;
+    rarete: string;
+  };
+  guild_who_asked_infos: {
+    id_guilde: string;
+    nom: string;
+    avatar_url: string;
+  };
+  guild_who_received_infos: {
+    id_guilde: string;
+    nom: string;
+    avatar_url: string;
+  };
+};

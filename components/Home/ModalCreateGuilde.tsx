@@ -67,8 +67,8 @@ export const ModalCreateGuilde = ({
     if (inputValue.includes(' ')) {
       error("Le nom de la guilde ne doit pas contenir d'espaces");
     }
-
-    if ((await getGuildesNameWhereName(inputValue.replace(/\s/g, ''))) === false) {
+    const is_named_used = await getGuildesNameWhereName(inputValue.replace(/\s/g, ''), false);
+    if (is_named_used === false) {
       setIsInputValid({ value: false, reason: 'Le nom de la guilde est déjà utilisé' });
       setIsTyping(false);
       return;
