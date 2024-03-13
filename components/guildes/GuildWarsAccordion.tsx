@@ -22,13 +22,13 @@ const GuildWarsAccordion = ({
   let sections = [
     {
       key: 'guildWarsEnCours',
-      title: 'Combat(s) en cours',
+      title: 'Combats en cours',
       data: guildWarsEnCours,
       noDataMessage: 'Aucun combat de guilde en cours',
     },
     {
       key: 'guildWarsTermines',
-      title: 'Combat(s) terminé(s)',
+      title: 'Combats terminés',
       data: guildWarsTermines,
       noDataMessage: 'Aucun combat de guilde terminé',
     },

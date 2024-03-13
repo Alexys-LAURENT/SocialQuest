@@ -25,9 +25,9 @@ const GuildWarCard = ({ guildWar, to_answer }: { guildWar: GuildWar; to_answer: 
   return (
     <div
       onClick={() => showGuildWarsInfo(guildWar)}
-      className="cursor-pointer w-full flex flex-col h-[150px] bg-tempBgLightSecondary dark:bg-tempBgDark border border-tempLightBorder dark:border-tempDarkBorder rounded-md"
+      className="px-10 cursor-pointer w-full flex flex-col h-[150px] bg-tempBgLightSecondary dark:bg-tempBgDark border border-tempLightBorder dark:border-tempDarkBorder rounded-md"
     >
-      <div className="h-4/6 flex items-end mb-2 justify-around px-10 w-full ">
+      <div className="h-4/6 flex items-end mb-2 justify-around w-full ">
         <div className="flex flex-col gap-2 items-center justify-center">
           <Image
             src={guildWar.guild_who_asked_infos.avatar_url}

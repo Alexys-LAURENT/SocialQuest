@@ -21,7 +21,7 @@ const GuildeDescription = async ({
         <Divider className="my-2" />
         <div className="flex flex-col">
           <p className="text-md font-semibold">{formatCount(users_count)}</p>
-          <span className="text-tiny opacity-60">membres</span>
+          <span className="text-tiny opacity-60">membre{users_count > 1 && 's'}</span>
         </div>
       </div>
     </div>

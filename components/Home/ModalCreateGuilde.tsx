@@ -136,7 +136,7 @@ export const ModalCreateGuilde = ({
                   className={`customButton bg-secondary/70 border-secondary ${!input || !file || !description || loading || !isInputValid?.value ? 'bg-secondary/30 border-secondary/30 text-opacity-30' : ''}`}
                   onClick={() => handleCreateGuild(onClose)}
                 >
-                  {loading ? <Spinner size="sm" className="scale-75" color="white" /> : 'Creer'}
+                  {loading ? <Spinner size="sm" className="scale-75" color="white" /> : 'Créer'}
                 </Button>
               </ModalFooter>
             </>

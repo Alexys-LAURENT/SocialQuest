@@ -7,7 +7,6 @@ import { User } from '@supabase/supabase-js';
 
 const GuildWarsSuspenser = async ({ guilde, user }: { guilde: GuildePage; user: User | null }) => {
   const guildWars = await getGuildWarsByGuildId(guilde!.id_guilde, guilde!.created_by === user?.id);
-  console.log(guildWars);
   const myGuildWars = guildWars.filter(
     (guildWar) => guildWar.guild_who_asked_infos.id_guilde === guilde!.id_guilde && guildWar.status === 'En attente',
   );
@@ -17,16 +16,20 @@ const GuildWarsSuspenser = async ({ guilde, user }: { guilde: GuildePage; user: 
   const guildWarsEnCours = guildWars.filter((guildWar) => guildWar.status === 'En cours');
   const guildWarsTermines = guildWars.filter((guildWar) => guildWar.status === 'Terminé');
 
+  // filter before
+  const filteredGuildWars = guildWars.filter((guildWar) => {
+    return guildWar.guild_who_asked_infos.id_guilde === guilde!.id_guilde;
+  });
+
+
   //   map all guildWars to check if the user have already asked for a guildWar in the current month by using momentjs
-  const isPossible = guildWars
-    .filter((guildWar) => {
-      guildWar.guild_who_asked_infos.id_guilde === guilde!.id_guilde;
-    })
+  const isPossible = filteredGuildWars.length > 0 ? !filteredGuildWars
     .map((guildWar) => {
       const date = moment(guildWar.requested_at);
       return date.month() === moment().month() && date.year() === moment().year();
     })
-    .includes(true);
+    .includes(true) : true;
+
 
   return (
     <>

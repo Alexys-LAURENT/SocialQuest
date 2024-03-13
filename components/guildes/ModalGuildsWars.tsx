@@ -43,74 +43,72 @@ const ModalGuildsWars = ({ guilde, user }: { guilde: GuildePage; user: User }) =
 
   return (
     <>
-      {isOpen && (
-        <DynamicModal
-          classNames={{
-            base: 'bg-tempBgLightSecondary dark:bg-tempBgDark rounded-md border border-tempLightBorder dark:border-tempDarkBorder',
-          }}
-          closeButton={<></>}
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-          size="2xl"
-        >
-          <DynamicModalContent>
-            {(onClose) => (
-              <>
-                <DynamicModalBody className="md:mt-10">
-                  {content === 'create' && (
-                    <CreateGuildWarForm
-                      guilde={guilde}
-                      user={user}
-                      selectedGuild={selectedGuild}
-                      setSelectedGuild={setSelectedGuild}
-                    />
-                  )}
-                  {content === 'create' && guildWarGains && (
+      <DynamicModal
+        classNames={{
+          base: 'm-0 border-b-none sm:border-md bg-tempBgLightSecondary dark:bg-tempBgDark rounded-md border border-tempLightBorder dark:border-tempDarkBorder',
+        }}
+        closeButton={<></>}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        size="2xl"
+      >
+        <DynamicModalContent>
+          {(onClose) => (
+            <>
+              <DynamicModalBody className="md:mt-10">
+                {content === 'create' && (
+                  <CreateGuildWarForm
+                    guilde={guilde}
+                    user={user}
+                    selectedGuild={selectedGuild}
+                    setSelectedGuild={setSelectedGuild}
+                  />
+                )}
+                {content === 'create' && guildWarGains && (
+                  <div className="flex flex-col gap-4">
+                    <p className="text-center text-xl font-bold">Récompenses :</p>
                     <div className="flex flex-col gap-4">
-                      <p className="text-center text-xl font-bold">Récompenses :</p>
-                      <div className="flex flex-col gap-4">
-                        {guildWarGains.map((item, i) => (
-                          <div key={i} className="flex flex-row gap-4 items-center">
-                            <Image src={item.image_url} alt={item.nom} width={50} height={50} />
-                            <p>{item.nom}</p>
-                            <Chip>{item.rarete}</Chip>
-                          </div>
-                        ))}
-                      </div>
+                      {guildWarGains.map((item, i) => (
+                        <div key={i} className="flex flex-row gap-4 items-center">
+                          <Image src={item.image_url} alt={item.nom} width={50} height={50} />
+                          <p>{item.nom}</p>
+                          <Chip>{item.rarete}</Chip>
+                        </div>
+                      ))}
                     </div>
-                  )}
-                  {content === 'info' && <GuildWarInfos />}
-                </DynamicModalBody>
-                <DynamicModalFooter>
-                  {!guildWarGains && (
-                    <Button className="customButton bg-tempLightBorder dark:bg-tempDarkBorder" onPress={onClose}>
-                      Fermer
-                    </Button>
-                  )}
+                  </div>
+                )}
+                {content === 'info' && <GuildWarInfos />}
+              </DynamicModalBody>
+              <DynamicModalFooter>
+                {!guildWarGains && (
+                  <Button className="customButton bg-tempLightBorder dark:bg-tempDarkBorder" onPress={onClose}>
+                    Fermer
+                  </Button>
+                )}
 
-                  {content === 'create' && !guildWarGains && (
-                    <Button
-                      className="customButton bg-secondary/70 border-secondary !text-white "
-                      onPress={() => handleCreateGuildWar()}
-                    >
-                      Demander un combat
-                    </Button>
-                  )}
+                {content === 'create' && !guildWarGains && (
+                  <Button
+                    className="customButton bg-secondary/70 border-secondary !text-white "
+                    onPress={() => handleCreateGuildWar()}
+                  >
+                    Demander un combat
+                  </Button>
+                )}
 
-                  {content === 'create' && guildWarGains && (
-                    <Button
-                      className="customButton bg-secondary/70 border-secondary !text-white "
-                      onPress={() => handleClose(onClose)}
-                    >
-                      Valider
-                    </Button>
-                  )}
-                </DynamicModalFooter>
-              </>
-            )}
-          </DynamicModalContent>
-        </DynamicModal>
-      )}
+                {content === 'create' && guildWarGains && (
+                  <Button
+                    className="customButton bg-secondary/70 border-secondary !text-white "
+                    onPress={() => handleClose(onClose)}
+                  >
+                    Valider
+                  </Button>
+                )}
+              </DynamicModalFooter>
+            </>
+          )}
+        </DynamicModalContent>
+      </DynamicModal>
     </>
   );
 };
