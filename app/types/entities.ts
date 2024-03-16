@@ -188,6 +188,8 @@ export type GuildWar = {
   requested_at: string;
   responsed_at?: string;
   status: 'En attente' | 'En cours' | 'Refusé' | 'Terminé';
+  participationsGuildWhoAsk: any[];
+  participationsGuildWhoReceived: any[];
   item_1: {
     nom: string;
     image_url: string;

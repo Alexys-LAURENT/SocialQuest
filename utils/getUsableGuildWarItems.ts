@@ -21,6 +21,5 @@ export async function getUsableGuildWarItems() {
         return null
     }
 
-
     return items.filter((item: any) => item.items)
 }

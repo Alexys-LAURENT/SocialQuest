@@ -45,7 +45,7 @@ const ModalGuildsWars = ({ guilde, user }: { guilde: GuildePage; user: User }) =
     <>
       <DynamicModal
         classNames={{
-          base: 'm-0 border-b-none sm:border-md bg-tempBgLightSecondary dark:bg-tempBgDark rounded-md border border-tempLightBorder dark:border-tempDarkBorder',
+          base: 'm-0 !rounded-b-none sm:!rounded-b-md bg-tempBgLightSecondary dark:bg-tempBgDark rounded-md border border-tempLightBorder dark:border-tempDarkBorder',
         }}
         closeButton={<></>}
         isOpen={isOpen}
@@ -78,7 +78,7 @@ const ModalGuildsWars = ({ guilde, user }: { guilde: GuildePage; user: User }) =
                     </div>
                   </div>
                 )}
-                {content === 'info' && <GuildWarInfos />}
+                {content === 'info' && <GuildWarInfos user={user} guilde={guilde} />}
               </DynamicModalBody>
               <DynamicModalFooter>
                 {!guildWarGains && (
