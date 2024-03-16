@@ -25,27 +25,33 @@ const GuildWarInfos = ({ user, guilde }: { user: any; guilde: any }) => {
     (item) => item !== null,
   );
 
+  const getParticipations = async () => {
+    const participations = await getParticipationsUsers(guildWar!.id_guild_war);
+    setParticipationsUser(participations);
+
+  };
+
+  const getItems = async () => {
+    const usableItems = await getUsableGuildWarItems();
+
+    // Remove duplicates and add count property to each item
+    const uniqueItems = usableItems?.reduce((acc, curr) => {
+      const existingItem = acc.find((item: any) => item.items.id === curr.items.id);
+      if (existingItem) {
+        existingItem.count++;
+      } else {
+        acc.push({ ...curr, count: 1 });
+      }
+      return acc;
+    }, []);
+
+    setItemsAvailableUser(uniqueItems);
+  }
+
+
   user && useEffect(() => {
-    const getInfos = async () => {
-      const participations = await getParticipationsUsers(guildWar!.id_guild_war);
-      setParticipationsUser(participations);
-      const usableItems = await getUsableGuildWarItems();
-
-      // Remove duplicates and add count property to each item
-      const uniqueItems = usableItems?.reduce((acc, curr) => {
-        const existingItem = acc.find((item: any) => item.items.id === curr.items.id);
-        if (existingItem) {
-          existingItem.count++;
-        } else {
-          acc.push({ ...curr, count: 1 });
-        }
-        return acc;
-      }, []);
-
-      setItemsAvailableUser(uniqueItems);
-    };
-
-    getInfos();
+    getParticipations();
+    getItems();
   }, [guildWar]);
 
 
@@ -56,18 +62,7 @@ const GuildWarInfos = ({ user, guilde }: { user: any; guilde: any }) => {
 
   const handleParticiper = async () => {
     await participationGuildWar(guilde.id_guilde, guildWar.id_guild_war, itemsSelectedNewParticipation);
-    setParticipationsUser([
-      {
-        id_user: user.id,
-        items: [
-          itemsSelectedNewParticipation[0].items,
-          itemsSelectedNewParticipation[1]?.items || null,
-          itemsSelectedNewParticipation[2]?.items || null,
-          itemsSelectedNewParticipation[3]?.items || null,
-          itemsSelectedNewParticipation[4]?.items || null,
-        ]
-      },
-    ]);
+    await getParticipations();
     setItemsSelectedNewParticipation([]);
     router.refresh();
   }
@@ -115,7 +110,7 @@ const GuildWarInfos = ({ user, guilde }: { user: any; guilde: any }) => {
                               ? guildWar.guild_who_asked_infos.nom
                               : guildWar.participationsGuildWhoReceived.find(participation => participation.id_user === user.id)
                                 ? guildWar.guild_who_received_infos.nom
-                                : 'inconnu')
+                                : guilde.nom)
                             + " "
                           }
                         </span>
@@ -123,14 +118,32 @@ const GuildWarInfos = ({ user, guilde }: { user: any; guilde: any }) => {
                       </div>
                       <div className="flex flex-wrap w-full justify-between">
                         {participationsUser[0].items.filter((item: any) => item !== null).map((item: any, index: number) => (
-                          <div key={`CardParticipationGuildWarsDone${guildWar.id_guild_war}-${index}`} className="relative cursor-pointer aspect-square rounded-md overflow-hidden hover:opacity-70 transition-all w-16 h-16 sm:w-20 sm:h-20 border border-dashed">
-                            <Image
+                          <div key={`CardParticipationGuildWarsDone${guildWar.id_guild_war}-${index}`} className="relative cursor-pointer aspect-square rounded-md overflow-hidden w-16 h-16 sm:w-20 sm:h-20 border border-dashed">
+                            <Popover key={`CardParticipationGuildWars${guildWar.id_guild_war}-${index}`} >
+                              <PopoverTrigger>
+                                <div className="relative aspect-square rounded-md overflow-hidden w-16 h-16 sm:w-20 sm:h-20 border border-dashed">
+                                  <Image
+                                    className="absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover"
+                                    src={item?.image_url}
+                                    alt="Item"
+                                    width={100}
+                                    height={100}
+                                  />
+                                </div>
+                              </PopoverTrigger>
+                              <PopoverContent className='min-w-[125px] gap-2 p-2 bg-tempBgLightSecondary dark:bg-tempBgDark border border-tempLightBorder dark:border-tempDarkBorder rounded-md'>
+                                <Chip>{item?.rarete}</Chip>
+                                <p>{item?.nom}</p>
+                                <p>{item?.damage} dégats</p>
+                              </PopoverContent>
+                            </Popover>
+                            {/* <Image
                               className="absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover"
                               src={item?.image_url}
                               alt="Item"
                               width={100}
                               height={100}
-                            />
+                            /> */}
                           </div>
                         ))}
                         {participationsUser && participationsUser[0].items.filter((item: any) => item !== null).length < 5 && [...Array(5 - participationsUser[0].items.filter((item: any) => item !== null).length)].map((_, index) => (
@@ -168,7 +181,7 @@ const GuildWarInfos = ({ user, guilde }: { user: any; guilde: any }) => {
                                 width={100}
                                 height={100}
                               />
-                              <XMarkIcon className="absolute opacity-0 group-hover:opacity-100 transition-all !duration-150 top-5 left-5 w-10 h-10" />
+                              <XMarkIcon className="absolute opacity-0 group-hover:opacity-100 transition-all !duration-150 top-3 left-3 sm:top-5 sm:left-5 w-10 h-10" />
                             </div>
                           ))}
                         {itemsSelectedNewParticipation.length < 5 && [...Array(5 - itemsSelectedNewParticipation.length)].map((_, index) => (
