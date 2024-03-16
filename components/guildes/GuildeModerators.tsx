@@ -10,7 +10,7 @@ const GuildeModerators = async ({ id_guilde }: { id_guilde: string }) => {
   return (
     <div className="p-2 w-full h-fit flex flex-col gap-2 bg-tempBgLightSecondary dark:bg-tempBgDark border border-tempLightBorder dark:border-tempDarkBorder rounded-md">
       <div className="text-lg font-semibold">
-        <h4>Modérateurs ({formatCount(moderators!.length)})</h4>
+        <h4>Modérateur{moderators!.length > 1 && 's'} ({formatCount(moderators!.length)})</h4>
       </div>
       <div className="w-full flex flex-col gap-2">
         {moderators &&

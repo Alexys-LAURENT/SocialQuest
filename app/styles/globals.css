@@ -72,6 +72,179 @@ textarea {
   }
 }
 
+/* ---------- Begin .rotating-border ---------- */
+@-webkit-keyframes spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.rotating-border-light {
+  --border-radius: 1rem;
+  --border-size: 0.25rem;
+  --border-bg: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
+  --padding: 1rem;
+
+  position: relative;
+  overflow: hidden;
+  font-size: 2rem;
+  padding: calc(var(--padding) + var(--border-size));
+  border-radius: var(--border-radius);
+  display: inline-block
+}
+
+.rotating-border-light::before {
+  content: '';
+  display: block;
+  background: var(--border-bg);
+  width: calc(100% * 1.41421356237);
+  padding-bottom: calc(100% * 1.41421356237);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 100%;
+  z-index: -2;
+  -webkit-animation: spin 7s linear infinite;
+  animation: spin 7s linear infinite;
+}
+
+.rotating-border-light::after {
+  content: '';
+  position: absolute;
+  top: var(--border-size);
+  right: var(--border-size);
+  bottom: var(--border-size);
+  left: var(--border-size);
+  background: #f6f6f6;
+  z-index: -1;
+  border-radius: calc(var(--border-radius) - var(--border-size));
+}
+
+.rotating-border-dark {
+  --border-radius: 1rem;
+  --border-size: 0.25rem;
+  --border-bg: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
+  --padding: 1rem;
+
+
+  position: relative;
+  overflow: hidden;
+  font-size: 2rem;
+  padding: calc(var(--padding) + var(--border-size));
+  border-radius: var(--border-radius);
+  display: inline-block
+}
+
+.rotating-border-dark::before {
+  filter: blur(2px);
+  opacity: 0.75;
+  content: '';
+  display: block;
+  background: var(--border-bg);
+  width: calc(100% * 1.41421356237);
+  padding-bottom: calc(100% * 1.41421356237);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 100%;
+  z-index: -2;
+  -webkit-animation: spin 7s linear infinite;
+  animation: spin 7s linear infinite;
+}
+
+.rotating-border-dark::after {
+  content: '';
+  position: absolute;
+  top: var(--border-size);
+  right: var(--border-size);
+  bottom: var(--border-size);
+  left: var(--border-size);
+  background: #09090b;
+  z-index: -1;
+  border-radius: calc(var(--border-radius) - var(--border-size));
+}
+
+/* ---------- End .rotating-border ---------- */
+
+/* ---------- Begin customizing .rotating-border ---------- */
+.rotating-border--Légendaire {
+  --border-bg: conic-gradient(#fbbc05 0.0turn, #fbbc05 0.125turn,
+      #ba8c03 0.125turn, #ba8c03 0.25turn,
+      #fbbc05 0.25turn, #fbbc05 0.375turn,
+      #ba8c03 0.375turn, #ba8c03 0.5turn,
+      #fbbc05 0.5turn, #fbbc05 0.625turn,
+      #ba8c03 0.625turn, #ba8c03 0.75turn,
+      #fbbc05 0.75turn, #fbbc05 0.875turn,
+      #ba8c03 0.875turn, #ba8c03 1.0turn);
+
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 2;
+}
+
+.rotating-border--Épic {
+  --border-bg: conic-gradient(#b505fb 0.0turn, #b505fb 0.125turn,
+      #8f03ba 0.125turn, #8f03ba 0.25turn,
+      #b505fb 0.25turn, #b505fb 0.375turn,
+      #8f03ba 0.375turn, #8f03ba 0.5turn,
+      #b505fb 0.5turn, #b505fb 0.625turn,
+      #8f03ba 0.625turn, #8f03ba 0.75turn,
+      #b505fb 0.75turn, #b505fb 0.875turn,
+      #8f03ba 0.875turn, #8f03ba 1.0turn);
+
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 2;
+}
+
+.rotating-border--Rare {
+  --border-bg: conic-gradient(#2205fb 0.0turn, #2205fb 0.125turn,
+      #1803ba 0.125turn, #1803ba 0.25turn,
+      #2205fb 0.25turn, #2205fb 0.375turn,
+      #1803ba 0.375turn, #1803ba 0.5turn,
+      #2205fb 0.5turn, #2205fb 0.625turn,
+      #1803ba 0.625turn, #1803ba 0.75turn,
+      #2205fb 0.75turn, #2205fb 0.875turn,
+      #1803ba 0.875turn, #1803ba 1.0turn);
+
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 2;
+}
+
+.rotating-border--Commun {
+  --border-bg: conic-gradient(#05fb22 0.0turn, #05fb22 0.125turn,
+      #03ba12 0.125turn, #03ba12 0.25turn,
+      #05fb22 0.25turn, #05fb22 0.375turn,
+      #03ba12 0.375turn, #03ba12 0.5turn,
+      #05fb22 0.5turn, #05fb22 0.625turn,
+      #03ba12 0.625turn, #03ba12 0.75turn,
+      #05fb22 0.75turn, #05fb22 0.875turn,
+      #03ba12 0.875turn, #03ba12 1.0turn);
+
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 2;
+}
+
+/* ---------- End customizing .rotating-border ---------- */
+
 /* CUSTOM */
 
 .customButton {
@@ -81,7 +254,7 @@ textarea {
   padding-bottom: 0.3rem !important;
   padding-left: 0.75rem !important;
   padding-right: 0.75rem !important;
-  height: fit-content !important;
+  height: fit-content;
   width: fit-content;
   border-width: 2px;
 }

@@ -11,6 +11,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import NavBar from '@/components/NavBar/NavBar';
 import ModalItemInfoProvider from './context/ModalItemInfosContext';
+import ModalGuildsWarsProvider from './context/ModalGuildsWarsContext';
 
 const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
 
@@ -32,13 +33,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <ToasterProvider>
             <DrawerProvider user={profile}>
               <ModalItemInfoProvider>
-                <DiscussionProvider>
-                  <InventaireProvider>
-                    <NavBar user={profile} />
-                    <TopLoader />
-                    <main className={`h-full w-full flex flex-col items-center overflow-y-auto overflow-x-hidden`}>{children}</main>
-                  </InventaireProvider>
-                </DiscussionProvider>
+                <ModalGuildsWarsProvider>
+                  <DiscussionProvider>
+                    <InventaireProvider>
+                      <NavBar user={profile} />
+                      <TopLoader />
+                      <main className={`h-full w-full flex flex-col items-center overflow-y-auto`}>{children}</main>
+                    </InventaireProvider>
+                  </DiscussionProvider>
+                </ModalGuildsWarsProvider>
               </ModalItemInfoProvider>
             </DrawerProvider>
           </ToasterProvider>

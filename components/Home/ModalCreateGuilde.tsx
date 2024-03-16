@@ -67,8 +67,8 @@ export const ModalCreateGuilde = ({
     if (inputValue.includes(' ')) {
       error("Le nom de la guilde ne doit pas contenir d'espaces");
     }
-
-    if ((await getGuildesNameWhereName(inputValue.replace(/\s/g, ''))) === false) {
+    const is_named_used = await getGuildesNameWhereName(inputValue.replace(/\s/g, ''), false);
+    if (is_named_used === false) {
       setIsInputValid({ value: false, reason: 'Le nom de la guilde est déjà utilisé' });
       setIsTyping(false);
       return;
@@ -136,7 +136,7 @@ export const ModalCreateGuilde = ({
                   className={`customButton bg-secondary/70 border-secondary ${!input || !file || !description || loading || !isInputValid?.value ? 'bg-secondary/30 border-secondary/30 text-opacity-30' : ''}`}
                   onClick={() => handleCreateGuild(onClose)}
                 >
-                  {loading ? <Spinner size="sm" className="scale-75" color="white" /> : 'Creer'}
+                  {loading ? <Spinner size="sm" className="scale-75" color="white" /> : 'Créer'}
                 </Button>
               </ModalFooter>
             </>

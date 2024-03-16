@@ -58,13 +58,16 @@ const ModalEditGuild = ({
         size="full"
         scrollBehavior="inside"
         classNames={{
-          base: 'bg-tempBgLightSecondary dark:bg-tempBgDark rounded-md border border-tempLightBorder dark:border-tempDarkBorder',
+          base: 'max-h-none bg-tempBgLightSecondary dark:bg-tempBgDark rounded-md border border-tempLightBorder dark:border-tempDarkBorder',
         }}
       >
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Modifier . {guilde.nom}</ModalHeader>
+              <ModalHeader className="font-normal flex gap-1">
+                Modifier la guilde
+                <span className="font-bold">{guilde.nom}</span>
+              </ModalHeader>
               <ModalBody>
                 <Tabs aria-label="Options">
                   <Tab key="Description" title="Description">
@@ -144,7 +147,7 @@ const ModalEditGuild = ({
                     )}
                   </Tab>
                   <Tab key="Modérateurs" title="Modérateurs">
-                    {moderators?.length === 0 && <h3>Il n'y a pas de modérateur dans la guilde.</h3>}
+                    {moderators?.length === 0 && <h3>Il n'y a pas de modérateurs dans la guilde.</h3>}
                     {moderators && moderators.length > 0 && (
                       <Accordion defaultExpandedKeys={[`group-${getGroupTitle(moderators[0][0].username)}`]}>
                         {moderators && moderators.length > 0 ? (
