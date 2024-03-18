@@ -99,10 +99,9 @@ const TabsFiltre = ({ inventory, filterParam }: { inventory: AllInventory; filte
                       <Image
                         src={unItem.items.image_url}
                         alt={unItem.items.nom}
-                        fill
-                        objectFit="cover"
-                        sizes="100%"
-                        className="drop-shadow-xl"
+                        width={100}
+                        height={100}
+                        className="absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover drop-shadow-xl"
                         loading="lazy"
                       />
                     </div>

@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import Crown from '@/public/assets/crown.png';
 import { formatCount } from '@/utils/formatCount';
 
-const GuildWarCard = ({ guildWar, to_answer }: { guildWar: GuildWar; to_answer: boolean }) => {
+const GuildWarCard = ({ guilde, guildWar, to_answer }: { guilde: any; guildWar: GuildWar; to_answer: boolean }) => {
   const { showGuildWarsInfo } = useContext(ModalGuildsWarsContext);
   const { success, error } = useContext(ToasterContext);
   const router = useRouter();
@@ -55,7 +55,7 @@ const GuildWarCard = ({ guildWar, to_answer }: { guildWar: GuildWar; to_answer: 
           />
           <p>{guildWar.guild_who_asked_infos.nom}</p>
           <Image
-            className={`absolute rotate-[25deg] -right-2 -top-4 ${percentage <= 50 ? 'hidden' : ''}`}
+            className={`absolute rotate-[25deg] -right-2 -top-[0.87rem] ${damageGuildWhoAsk <= damageGuildWhoReceived ? 'hidden' : ''}`}
             src={Crown.src}
             alt="crown"
             width={40}
@@ -91,7 +91,7 @@ const GuildWarCard = ({ guildWar, to_answer }: { guildWar: GuildWar; to_answer: 
           />
           <p>{guildWar.guild_who_received_infos.nom}</p>
           <Image
-            className={`absolute rotate-[25deg] -right-2 -top-4 ${percentage >= 50 ? 'hidden' : ''}`}
+            className={`absolute rotate-[25deg] -right-2 -top-[0.87rem] ${damageGuildWhoAsk >= damageGuildWhoReceived ? 'hidden' : ''}`}
             src={Crown.src}
             alt="crown"
             width={40}

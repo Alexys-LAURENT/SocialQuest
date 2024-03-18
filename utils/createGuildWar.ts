@@ -33,7 +33,6 @@ export default async function createGuildWar(id_guild_who_asked: string, id_guil
     console.error(error);
     return false;
   }
-  console.error('success rpc');
 
   const allItems = Object.values(data)
     .flat()

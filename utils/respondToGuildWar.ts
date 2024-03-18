@@ -9,7 +9,10 @@ export async function respondToGuildWar(response: 'accept' | 'refuse', id_guild_
 
   const responseDb = response === 'accept' ? 'En cours' : 'Refusé';
 
-  const { error } = await supabase.from('guilds_wars').update({ status: responseDb }).eq('id_guild_war', id_guild_war);
+  const { error } = await supabase
+    .from('guilds_wars')
+    .update({ status: responseDb, responsed_at: new Date() })
+    .eq('id_guild_war', id_guild_war);
 
   if (error) {
     console.log('error respondToGuildWar');

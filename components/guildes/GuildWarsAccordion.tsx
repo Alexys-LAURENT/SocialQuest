@@ -56,7 +56,7 @@ const GuildWarsAccordion = ({
           <div className="w-full flex flex-col gap-4">
             {section.data && section.data.length > 0 ? (
               section.data.map((guildWar, i) => (
-                <GuildWarCard key={i} guildWar={guildWar} to_answer={section.key === 'otherGuildWars'} />
+                <GuildWarCard guilde={guilde} key={i} guildWar={guildWar} to_answer={section.key === 'otherGuildWars'} />
               ))
             ) : (
               <div className="w-full flex items-center justify-center">

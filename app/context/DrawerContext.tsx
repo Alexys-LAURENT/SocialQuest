@@ -110,7 +110,7 @@ const DrawerProvider = ({ children, user }: { children: React.ReactNode, user: P
                             <PopOverUserContent customFunction={closeDrawer} user={user} signOut={signOut} />
                         </>
                     )}
-                    {content === "NavMenu" && <NavBarMenu customFunction={closeDrawer} />}
+                    {content === "NavMenu" && <NavBarMenu customFunction={closeDrawer} user={user} />}
 
                 </Drawer>
             }

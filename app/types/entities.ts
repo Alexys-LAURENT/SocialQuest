@@ -195,26 +195,31 @@ export type GuildWar = {
     nom: string;
     image_url: string;
     rarete: string;
+    type: string;
   };
   item_2?: {
     nom: string;
     image_url: string;
     rarete: string;
+    type: string;
   };
   item_3?: {
     nom: string;
     image_url: string;
     rarete: string;
+    type: string;
   };
   item_4?: {
     nom: string;
     image_url: string;
     rarete: string;
+    type: string;
   };
   item_5?: {
     nom: string;
     image_url: string;
     rarete: string;
+    type: string;
   };
   guild_who_asked_infos: {
     id_guilde: string;

@@ -4,7 +4,7 @@ import ShopItem from './ShopItem';
 const ItemsWrapper = ({ initialShopItems }: { initialShopItems: itemShop[] }) => {
   return (
     <div
-      className={`flex w-full ${initialShopItems.length === 0 ? 'min-h-[339px]' : ''} overflow-hidden gap-2 p-4 flex-wrap `}
+      className={`flex w-full ${initialShopItems.length === 0 ? 'min-h-[299px] lg:min-h-[339px]' : ''} overflow-hidden gap-2 p-4 flex-wrap `}
     >
       {initialShopItems &&
         initialShopItems.length > 0 &&
