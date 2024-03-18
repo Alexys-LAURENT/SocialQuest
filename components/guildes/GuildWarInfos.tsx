@@ -119,7 +119,7 @@ const GuildWarInfos = ({ user, guilde }: { user: any; guilde: any }) => {
                       <div className="flex flex-wrap w-full justify-between">
                         {participationsUser[0].items.filter((item: any) => item !== null).map((item: any, index: number) => (
                           <div key={`CardParticipationGuildWarsDone${guildWar.id_guild_war}-${index}`} className="relative cursor-pointer aspect-square rounded-md overflow-hidden w-16 h-16 sm:w-20 sm:h-20 border border-dashed">
-                            <Popover key={`CardParticipationGuildWars${guildWar.id_guild_war}-${index}`} >
+                            <Popover key={`CardParticipationGuildWars${guildWar.id_guild_war}-${index}`} triggerScaleOnOpen={false}>
                               <PopoverTrigger>
                                 <div className="relative aspect-square rounded-md overflow-hidden w-16 h-16 sm:w-20 sm:h-20 border border-dashed">
                                   <Image
@@ -137,13 +137,6 @@ const GuildWarInfos = ({ user, guilde }: { user: any; guilde: any }) => {
                                 <p>{item?.damage} dégats</p>
                               </PopoverContent>
                             </Popover>
-                            {/* <Image
-                              className="absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover"
-                              src={item?.image_url}
-                              alt="Item"
-                              width={100}
-                              height={100}
-                            /> */}
                           </div>
                         ))}
                         {participationsUser && participationsUser[0].items.filter((item: any) => item !== null).length < 5 && [...Array(5 - participationsUser[0].items.filter((item: any) => item !== null).length)].map((_, index) => (
@@ -223,8 +216,8 @@ const GuildWarInfos = ({ user, guilde }: { user: any; guilde: any }) => {
               .map((item, i) => (
                 <Popover key={`CardRewardsGuildWars${guildWar.id_guild_war}-${i}`}>
                   <PopoverTrigger>
-                    <div key={`CardRewardsGuildWars${guildWar.id_guild_war}-${i}`} className={`relative cursor-pointer aspect-square ${document.getElementsByTagName('html')[0].classList.contains('dark') ? 'rotating-border-dark' : 'rotating-border-light'} rotating-border--${item?.rarete} rounded-md hover:opacity-70 transition-all w-20 h-20`}>
-                      <Image className="absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover" src={item!.image_url} alt="Banniere" width={100} height={100} />
+                    <div key={`CardRewardsGuildWars${guildWar.id_guild_war}-${i}`} className={`relative cursor-pointer aspect-square ${item?.type === 'Arzme' ? 'border-gray-500 border-4' : document.getElementsByTagName('html')[0].classList.contains('dark') ? `rotating-border-dark rotating-border--${item?.rarete}` : `rotating-border-light rotating-border--${item?.rarete}`} rounded-2xl overflow-hidden hover:opacity-70 transition-all w-20 h-20`}>
+                      <Image className="absolute rounded-2xl p-1 top-0 left-0 right-0 bottom-0 w-full !h-full object-cover" src={item!.image_url} alt="Banniere" width={100} height={100} />
                     </div>
                   </PopoverTrigger>
                   <PopoverContent className='min-w-[125px] gap-2 p-2 bg-tempBgLightSecondary dark:bg-tempBgDark border border-tempLightBorder dark:border-tempDarkBorder rounded-md'>

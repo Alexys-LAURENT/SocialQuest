@@ -4,8 +4,9 @@ import Link from 'next/link';
 import UserGuildes from '@/components/Home/UserGuildes';
 import TopGuildes from '@/components/TopGuildes';
 import TopMembres from '@/components/TopMembres';
+import { Profile } from '@/app/types/entities';
 
-const NavBarMenu = ({ customFunction }: { customFunction: () => void }) => {
+const NavBarMenu = ({ customFunction, user }: { customFunction: () => void, user: Profile | null }) => {
     return (
         <div className='flex flex-col w-full gap-4'>
             <Listbox
@@ -26,7 +27,7 @@ const NavBarMenu = ({ customFunction }: { customFunction: () => void }) => {
 
             <TopGuildes customFunction={customFunction} />
             <TopMembres customFunction={customFunction} />
-            <UserGuildes customFunction={customFunction} />
+            {user && <UserGuildes customFunction={customFunction} />}
         </div >
     );
 };

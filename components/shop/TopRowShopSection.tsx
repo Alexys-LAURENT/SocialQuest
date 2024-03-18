@@ -21,6 +21,8 @@ const TopRowShopSection = ({ searchParams }: { searchParams: shopSearchParmas })
   const seearchParams = useSearchParams();
   const router = useRouter();
 
+  console.log('searchParams', searchParams);
+
   const handleSubmitInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       const currentSearchParams = new URLSearchParams(seearchParams.toString());
@@ -36,17 +38,17 @@ const TopRowShopSection = ({ searchParams }: { searchParams: shopSearchParmas })
   };
 
   return (
-    <div className="w-full p-4 flex flex-col sm:flex-row items-center justify-between">
+    <div className="w-full p-4 flex flex-col lg:flex-row items-center justify-between">
       <Input
         onKeyDown={(e) => {
           handleSubmitInput(e);
         }}
-        className="w-full sm:w-7/12 !min-h-10 !h-10"
+        className="w-full lg:w-7/12 !min-h-10 !h-10"
         classNames={{ inputWrapper: '!min-h-10 !h-10' }}
         defaultValue={typeof searchParams.name === 'string' ? searchParams.name : ''}
         placeholder="Rechercher un item"
       />
-      <div className="flex items-center w-full sm:w-3/12">
+      <div className="flex items-center w-full lg:w-4/12">
         <label htmlFor="" className="flex text-tiny w-[80px]">
           Trier par:
         </label>
@@ -54,12 +56,12 @@ const TopRowShopSection = ({ searchParams }: { searchParams: shopSearchParmas })
           onChange={(e) => {
             handleSelectChange(e.target.value);
           }}
+          fullWidth
           aria-label="Trier par"
           variant="underlined"
           placeholder="Choisir un filtre"
-          classNames={{ trigger: 'border-none py-0' }}
           multiple={false}
-          defaultSelectedKeys={[getDefaultValue(typeof searchParams.order === 'string' ? searchParams.order : '')]}
+          defaultSelectedKeys={searchParams.order !== undefined && searchParams.order !== '' ? [getDefaultValue(typeof searchParams.order === 'string' ? searchParams.order : undefined)] : undefined}
         >
           <SelectItem key="pasc" value="pasc">
             Prix (croissant)
