@@ -12,8 +12,11 @@ import UserGuildes from '@/components/Home/UserGuildes';
 import { getGuildesUser } from '@/utils/getGuildesUser';
 import { getTopGuildes } from '@/utils/getTopGuildes';
 import { getTopMembres } from '@/utils/getTopMembres';
+import { getPostsHome } from '@/utils/getInitPostsHome';
+
 
 export default async function Index() {
+  const postsInit = await getPostsHome(0, 10);
   const PostInputSkeleton = dynamic(() => import('@/components/Skeletons/PostInputSkeleton'));
 
   const user = await getProfileConnected();
@@ -39,7 +42,7 @@ export default async function Index() {
           </Suspense>
         )}
 
-        <PostsWrapper user={user} getPost={getAllPosts} filtre={user && user.id_user ? true : false} displayAnswerTo={true} />
+        <PostsWrapper user={user} getPost={getAllPosts} filtre={user && user.id_user ? true : false} displayAnswerTo={true} postsInit={postsInit} />
       </div>
 
       <div className="sticky top-0 hidden lg:flex min-w-[17rem] max-w-[17rem] h-fit">

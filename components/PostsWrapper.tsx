@@ -6,37 +6,82 @@ import PostsWrapperSkeleton from '@/components/Skeletons/PostsWrapperSkeleton';
 import { getPostSuivis } from '@/utils/getPostSuivis';
 import { getPostGuildes } from '@/utils/getPostGuildes';
 import Post from '@/components/Post';
-
-
+import { debounce } from 'lodash';
+import { getPostsHome } from '@/utils/getInitPostsHome';
 
 const PostsWrapper = ({
+  postsInit,
   user,
   getPost,
   postPage,
   filtre,
   displayAnswerTo,
 }: {
+  postsInit?: ExtendedPost[] | null;
   user: Profile | null;
   getPost: () => Promise<ExtendedPost[] | null>,
   postPage?: boolean;
   filtre: boolean;
   displayAnswerTo?: boolean;
 }) => {
-  const [posts, setPosts] = useState<ExtendedPost[] | null>(null);
+  const [posts, setPosts] = useState<ExtendedPost[] | null>(postsInit || null);
   const [postsRandom, setPostsRandom] = useState<ExtendedPost[] | null>(null);
   const [postsSuivis, setPostsSuivis] = useState<ExtendedPost[] | null>(null);
   const [postsGuildes, setPostsGuildes] = useState<ExtendedPost[] | null>(null);
   const [lastScrollDirection, setLastScrollDirection] = useState<'up' | 'down'>('down');
   const [isSticky, setIsSticky] = useState(false);
   const [selectedKey, setSelectedKey] = useState('MaPage');
+  const [offset, setOffset] = useState(10)
+  const limit = 5;
+  const [isInView, setIsInView] = useState(false)
+  const [isFetching, setIsFetching] = useState(false)
+  const [isLastsPosts, setIsLastsPosts] = useState(false)
 
+  const containerRef = useRef(null)
   const prevScrollY = useRef(0);
 
+  const handleScroll = () => {
+    if (containerRef.current && typeof window !== 'undefined') {
+      const container = containerRef.current as HTMLElement; // Add type assertion
+      const { bottom } = container.getBoundingClientRect();
+      const { innerHeight } = window;
+      setIsInView((prev) => bottom - 1000 <= innerHeight);
+    }
+  }
+
   useEffect(() => {
-    const fetchPosts = async () => {
-      setPostsRandom(await getPost());
-    };
-    fetchPosts();
+    if (isInView) {
+      setIsFetching(true)
+      setOffset((prev) => prev + limit)
+      getPostsHome(offset, limit).then((data) => {
+        if (data?.length === 0) {
+          setIsLastsPosts(true)
+        } else {
+          setPosts((prev) => [...(prev || []), ...data || []])
+        }
+        setIsFetching(false)
+      })
+    }
+  }, [isInView])
+
+  useEffect(() => {
+    const mainDiv = document.getElementsByTagName('main')[0];
+    const handleDebouncedScroll = debounce(() => handleScroll(), 0)
+    mainDiv.addEventListener('scroll', handleDebouncedScroll)
+    return () => {
+      mainDiv.removeEventListener('scroll', handleDebouncedScroll)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (postsInit) {
+      setPosts(postsInit);
+    } else {
+      const fetchPosts = async () => {
+        setPostsRandom(await getPost());
+      };
+      fetchPosts();
+    }
   }, []);
 
   useEffect(() => {
@@ -150,7 +195,7 @@ const PostsWrapper = ({
 
   if (posts && filtre && user) {
     return (
-      <div className={`${postPage ? 'mt-8' : ''} `}>
+      <div ref={containerRef} className={`${postPage ? 'mt-8' : ''} `}>
         <Tabs
           aria-label="Filtres"
           defaultSelectedKey={'MaPage'}
@@ -245,6 +290,8 @@ const PostsWrapper = ({
             </div>
           </Tab>
         </Tabs>
+        {isFetching && <div className="flex justify-center mt-4"><Spinner size="md" color="white" /></div>}
+        {isLastsPosts && <div className="text-center text-textDark dark:text-textLight font-semibold text-lg mt-4">Vous avez atteint la fin des posts</div>}
       </div>
     );
   }
