@@ -5,7 +5,7 @@ import { getProfileConnected } from "@/utils/getProfileConnected";
 import { getPageProfile } from "@/utils/getPageProfile";
 import { notFound } from 'next/navigation'
 
-const page = async ({ params, searchParams }: { params: { username: string }, searchParams: { q: string } }) => {
+const page = async ({ params, searchParams }: { params: { username: string }, searchParams: { q: string, new_items: string } }) => {
 
     const [inventory, pageProfile, profileConnected] = await Promise.all([
         getUserInventory(params.username),
@@ -25,7 +25,7 @@ const page = async ({ params, searchParams }: { params: { username: string }, se
             {/* content */}
             <div className="flex w-full h-full gap-4 lg:gap-8 max-w-[1280px] p-1 md:ps-8 md:pe-2 md:pb-2">
 
-                <TabsFiltre inventory={inventory} filterParam={searchParams.q} />
+                <TabsFiltre inventory={inventory} filterParam={searchParams.q} newitemsParam={searchParams.new_items} />
 
                 <SelectedItem isUserInventory={isUserInventory} />
             </div>

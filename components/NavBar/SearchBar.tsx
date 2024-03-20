@@ -1,7 +1,7 @@
 import { Autocomplete, AutocompleteItem, AutocompleteSection, Avatar } from '@nextui-org/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { doSearchByWord } from '@/utils/doSearchByWord';
-import { Key, useEffect, useState } from 'react';
+import { Key, use, useEffect, useState } from 'react';
 import Link from 'next/link';
 const SearchBar = ({ closeSearchBarMobile }: { closeSearchBarMobile?: () => void }) => {
   const headingClasses = 'flex w-full py-1.5 px-2 bg-default-100 font-bold text-sm rounded-small';
@@ -29,13 +29,14 @@ const SearchBar = ({ closeSearchBarMobile }: { closeSearchBarMobile?: () => void
 
   return (
     <Autocomplete
+      onKeyDown={(e: any) => e.continuePropagation()}
       listboxProps={{ emptyContent: 'Aucun résultat' }}
       aria-label="Rechercher"
       inputProps={{
         classNames: { input: 'inputFilterNavbar', inputWrapper: 'h-10 transition-all !duration-500' },
         startContent: <MagnifyingGlassIcon className="w-5 h-5 text-textDark dark:text-textLight !duration-[125ms]" />,
       }}
-      classNames={{ selectorButton: 'hidden' }}
+      classNames={{ selectorButton: 'hidden', clearButton: 'clearButton' }}
       selectorIcon={null}
       defaultFilter={() => true}
       scrollShadowProps={{

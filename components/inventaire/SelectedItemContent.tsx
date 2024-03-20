@@ -47,7 +47,7 @@ const SelectedItemContent = ({
   return (
     <div className="flex flex-col justify-between h-full overflow-y-auto bg-tempBgLightSecondary dark:bg-tempBgDarkSecondary border border-tempLightBorder dark:border-tempDarkBorder rounded-md">
       <div className="flex flex-row flex-wrap md:flex-col gap-4 p-4 w-full">
-        <div className="relative flex aspect-square w-4/12 min-w-[140px] md:w-full overflow-hidden rounded-lg bg-black/20 ">
+        <div className="relative flex aspect-square w-4/12 min-w-[140px] md:w-full overflow-hidden rounded-lg bg-black/20 !outline !outline-1 !outline-default-200 ">
           <Image
             className="object-cover"
             src={selectedItem.items.image_url}

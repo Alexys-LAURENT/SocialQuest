@@ -1,6 +1,6 @@
 'use client';
 import { Item } from '@/app/types/entities';
-import { Tab, Tabs } from '@nextui-org/react';
+import { Chip, Tab, Tabs } from '@nextui-org/react';
 import Image from 'next/image';
 import { useContext } from 'react';
 import { InventaireContext } from '@/app/context/InventaireContext';
@@ -14,8 +14,9 @@ type AllInventory = null | {
   items: Item[];
 };
 
-const TabsFiltre = ({ inventory, filterParam }: { inventory: AllInventory; filterParam: string }) => {
+const TabsFiltre = ({ inventory, filterParam, newitemsParam }: { inventory: AllInventory; filterParam: string; newitemsParam: string }) => {
   const { selectedItem, setSelectedItem } = useContext(InventaireContext);
+
 
   const tabsList = [
     {
@@ -63,13 +64,13 @@ const TabsFiltre = ({ inventory, filterParam }: { inventory: AllInventory; filte
       >
         {(item) => (
           <Tab className={`${selectedItem ? 'hidden md:flex flex-col' : ''}`} key={item.key} title={item.title}>
-            <div className="p-1 w-full grid itemsWrapper justify-start gap-3 overflow-y-auto transition-all duration-500 ease-in-out">
-              {item.data!.length > 0 ? (
-                item.data?.map((unItem: Item) => {
+            {item.data!.length > 0 ? (
+              <div className="p-1 w-full grid itemsWrapper justify-start gap-3 overflow-y-auto transition-all duration-500 ease-in-out">
+                {item.data?.map((unItem: Item) => {
                   return (
                     <div
                       key={`TabsFiltre-${unItem.items.id_item}-${Math.random()}`}
-                      className={`cursor-pointer relative aspect-square overflow-hidden rounded-lg ${selectedItem && selectedItem.items && selectedItem.id_item_user === unItem.id_item_user ? 'border-2 border-secondary' : ''}`}
+                      className={`cursor-pointer relative aspect-square overflow-hidden rounded-lg ${selectedItem && selectedItem.items && selectedItem.id_item_user === unItem.id_item_user ? '!outline !outline-2 !outline-secondary' : '!outline !outline-1 !outline-default-200'}`}
                       onClick={() => {
                         selectedItem?.id_item_user === unItem.id_item_user
                           ? setSelectedItem(null)
@@ -92,6 +93,10 @@ const TabsFiltre = ({ inventory, filterParam }: { inventory: AllInventory; filte
                         <CheckCircleIcon className="absolute top-1 left-1 z-50 w-4 h-4 lg:w-[1.2rem] lg:h-[1.2rem] fill-secondary" />
                       )}
 
+                      {newitemsParam && newitemsParam.includes(unItem.id_item.toString()) &&
+                        <Chip color="danger" classNames={{ content: 'p-0' }} className="px-1 h-fit text-[10px] absolute top-[0.15rem] left-6 lg:left-8 z-50">New !</Chip>
+                      }
+
                       <div className="absolute rounded-full bg-gray-400/60  font-semibold bottom-1 right-1 w-5 h-5 z-50 flex justify-center items-center text-tiny">
                         {unItem.count}
                       </div>
@@ -106,13 +111,14 @@ const TabsFiltre = ({ inventory, filterParam }: { inventory: AllInventory; filte
                       />
                     </div>
                   );
-                })
-              ) : (
-                <div className="flex justify-center items-center w-full h-full text-textDark dark:text-textLight">
-                  Aucun item
-                </div>
-              )}
-            </div>
+                }
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center w-full h-full text-textDark dark:text-textLight">
+                Aucun item
+              </div>
+            )}
           </Tab>
         )}
       </Tabs>
