@@ -13,7 +13,7 @@ const PostInputGuildsSelect = ({ setGuilde, guildesUser }: { setGuilde: Dispatch
             variant='underlined'
             placeholder="Pas de guilde"
             className="w-full"
-            classNames={{ trigger: "bg-transparent transition-all !duration-500 group-data-[focus=true]:bg-opacity-30 data-[hover=true]:bg-opacity-30 rounded-none", popoverContent: "h-44 bg-bgLight dark:bg-tempBgDark rounded-t-none border dark:border-tempDarkBorder border-tempLightBorder", selectorIcon: "text-textDark dark:text-textLight transition-all !duration-[250ms]" }}
+            classNames={{ trigger: "bg-transparent transition-all !duration-500 group-data-[focus=true]:bg-opacity-30 data-[hover=true]:bg-opacity-30 rounded-none", popoverContent: "max-h-[11rem] bg-bgLight dark:bg-tempBgDark rounded-t-none border dark:border-tempDarkBorder border-tempLightBorder", selectorIcon: "text-textDark dark:text-textLight transition-all !duration-[250ms]" }}
             onChange={(e) => setGuilde(e.target.value)}
         >
 
