@@ -13,9 +13,8 @@ import Image from 'next/image';
 import defaultUser from '@/public/assets/defaultUser.svg'
 import { toggleFollow } from '@/utils/toggleFollow';
 import { doesFollow } from '@/utils/doesFollow';
-import { Image as ImageAntd } from 'antd';
-import { ArrowDownTrayIcon } from '@heroicons/react/24/solid';
 import { onDownload } from '@/utils/downloadImage';
+import ImageAntdPreview from '../ImageAntdPreview';
 
 
 export default function MainPost({ user, post }: { user: Profile | null, post: ExtendedPost }) {
@@ -189,22 +188,7 @@ export default function MainPost({ user, post }: { user: Profile | null, post: E
                             {
                                 post.images && post.images.length > 0 && post.images.map((img) => (
                                     <div className={`relative flex-1-1 overflow-hidden`} key={`post-${post.id_post}-image-${img}`}>
-                                        <ImageAntd
-                                            src={img}
-                                            alt={img}
-                                            width={100}
-                                            className='absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover'
-                                            rootClassName='!h-full !w-full'
-                                            preview={{
-                                                toolbarRender: (
-                                                    _,
-                                                    {
-                                                    },
-                                                ) => (
-                                                    <ArrowDownTrayIcon onClick={() => onDownload(img)} className="w-10 h-10 rounded-lg text-white cursor-pointer bg-white/30 p-3" />
-                                                )
-                                            }}
-                                        />
+                                        <ImageAntdPreview img={img} onDownload={onDownload} />
                                     </div>
                                 ))
                             }

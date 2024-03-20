@@ -97,8 +97,10 @@ export default function Post({ user, post, displayAnswerTo }: { user: Profile | 
       }
 
       // Si c'est un double clic, like le post
-      likePost();
-      !post.user_liked_post && showHeart(e);
+      if (!post.user_liked_post) {
+        likePost();
+      }
+      showHeart(e);
       clickCount.current = 0;
       clearTimeout(clickTimer.current!);
     }
