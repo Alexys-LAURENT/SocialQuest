@@ -23,7 +23,7 @@ const SearchBar = ({ closeSearchBarMobile }: { closeSearchBarMobile?: () => void
   }, [inputValue]);
 
   useEffect(() => {
-    setSelectedKey(null);
+    setSelectedKey(undefined);
     setInputValue('');
   }, [selectedKey]);
 
