@@ -29,6 +29,7 @@ const SearchBar = ({ closeSearchBarMobile }: { closeSearchBarMobile?: () => void
 
   return (
     <Autocomplete
+      listboxProps={{ emptyContent: 'Aucun résultat' }}
       aria-label="Rechercher"
       inputProps={{
         classNames: { input: 'inputFilterNavbar', inputWrapper: 'h-10 transition-all !duration-500' },
