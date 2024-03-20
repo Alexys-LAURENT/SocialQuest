@@ -1,6 +1,5 @@
 'use client';
 import { Button, Card, useDisclosure } from '@nextui-org/react';
-import React from 'react';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import dynamic from 'next/dynamic';
 

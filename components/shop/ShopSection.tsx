@@ -1,4 +1,3 @@
-import React from 'react';
 import TopRowShopSection from '@/components/shop/TopRowShopSection';
 import FilterSection from '@/components/shop/FilterSection';
 import ItemsWrapper from '@/components/shop/ItemsWrapper';

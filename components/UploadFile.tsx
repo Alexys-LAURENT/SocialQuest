@@ -1,6 +1,6 @@
 'use client';
 import { PencilIcon, PlusIcon } from '@heroicons/react/24/outline';
-import React, { ChangeEvent, useContext, useState } from 'react';
+import { ChangeEvent, useContext, useRef, useState } from 'react';
 import { ToasterContext } from '@/app/context/ToasterContext';
 import { useDisclosure } from '@nextui-org/react';
 import ModalCropImage from '@/components/ModalCropImage';
@@ -25,7 +25,7 @@ const UploadFile = ({
   height?: string;
   className?: string;
 }) => {
-  const FileUploadRef = React.useRef<HTMLInputElement>(null);
+  const FileUploadRef = useRef<HTMLInputElement>(null);
   const { error } = useContext(ToasterContext);
   // imageUrl = image loaded by the user
   const [imageUrl, setImageUrl] = useState<string>();
