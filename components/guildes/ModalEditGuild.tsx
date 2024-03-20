@@ -20,8 +20,7 @@ import {
 import { Textarea } from '@nextui-org/react';
 import { GuildePage, Member } from '@/app/types/entities';
 import Image from 'next/image';
-import { EllipsisVerticalIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { updateGuildDescription } from '@/utils/updateGuildDescription';
+import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
 
 const ModalEditGuild = ({
   isOpen,

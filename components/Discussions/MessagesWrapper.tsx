@@ -5,7 +5,6 @@ import { DiscussionContext } from '@/app/context/DiscussionContext';
 import { ArrowDownIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { createClient } from '@/utils/supabase/client';
 import { getProfileConnected } from '@/utils/getProfileConnected';
-import { Message } from '@/app/types/entities';
 import MessageInput from '@/components/Discussions/MessageInput';
 import { Avatar, ScrollShadow, Spinner } from '@nextui-org/react';
 import defaultGroup from '@/public/assets/defaultGroup.svg'

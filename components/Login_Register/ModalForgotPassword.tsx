@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Input, Button, Spinner } from '@nextui-org/react';
+import { Modal, ModalContent, ModalHeader, ModalBody, Input, Button, Spinner } from '@nextui-org/react';
 import { createClient } from '@/utils/supabase/client';
 import { ToasterContext } from '@/app/context/ToasterContext';
 

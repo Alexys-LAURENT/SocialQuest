@@ -6,7 +6,6 @@ import {
   CubeIcon,
   UserIcon,
   ClipboardDocumentCheckIcon,
-  PaperAirplaneIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import SwitchTheme from '@/components/NavBar/SwitchTheme';

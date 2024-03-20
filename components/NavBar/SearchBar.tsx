@@ -10,7 +10,7 @@ const SearchBar = ({ closeSearchBarMobile }: { closeSearchBarMobile?: () => void
   const [guildes, setGuildes] = useState<any>([]);
   const [profiles, setProfiles] = useState<any>([]);
   // const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const [selectedKey, setSelectedKey] = useState<Key | null | undefined>();
+  const [selectedKey, setSelectedKey] = useState<Key | undefined>();
 
   useEffect(() => {
     const getData = async () => {

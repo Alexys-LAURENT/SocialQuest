@@ -1,6 +1,6 @@
 'use client';
 import PopOverUserContent from '@/components/NavBar/PopOverUserContent';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { Profile } from '@/app/types/entities';
 import { DrawerContext } from '@/app/context/DrawerContext';
 import { Badge, Popover, PopoverTrigger, PopoverContent } from '@nextui-org/react';

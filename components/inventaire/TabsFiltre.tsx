@@ -1,8 +1,8 @@
 'use client';
 import { Item } from '@/app/types/entities';
-import { Badge, Tab, Tabs } from '@nextui-org/react';
+import { Tab, Tabs } from '@nextui-org/react';
 import Image from 'next/image';
-import { useContext, useMemo } from 'react';
+import { useContext } from 'react';
 import { InventaireContext } from '@/app/context/InventaireContext';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 

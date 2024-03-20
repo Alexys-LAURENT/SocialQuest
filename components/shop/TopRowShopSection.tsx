@@ -21,8 +21,6 @@ const TopRowShopSection = ({ searchParams }: { searchParams: shopSearchParmas })
   const seearchParams = useSearchParams();
   const router = useRouter();
 
-  console.log('searchParams', searchParams);
-
   const handleSubmitInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       const currentSearchParams = new URLSearchParams(seearchParams.toString());
