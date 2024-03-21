@@ -1,18 +1,18 @@
+import EternalMissionsWrapper from '@/components/Missions/EternalMissionsWrapper';
 import HebdoCaroussel from '@/components/Missions/HebdoCaroussel';
+import { getEternalMissions, getHebdoMissions } from '@/utils/getMissions';
+const page = async () => {
+  const hebdoMissions = await getHebdoMissions();
+  const eternalMissions = await getEternalMissions();
+  return (
+    <div className="h-full w-full flex flex-col gap-10 overflow-y-auto overflow-x-hidden items-center">
+      <div className="relative w-full  bg-cover bg-center transition-all max-w-[1280px]">
+        <HebdoCaroussel missions={hebdoMissions} />
+      </div>
 
-const page = () => {
-    return (
-        <div className="h-full w-full flex flex-col overflow-y-auto overflow-x-hidden items-center">
-            <div className="relative w-full min-h-[10rem] md:min-h-[18rem]  bg-cover bg-center transition-all max-w-[1280px]">
-                <HebdoCaroussel />
-            </div>
-
-            {/* content */}
-            <div className="relative w-full min-h-[7rem] max-w-[1280px]">
-
-            </div>
-        </div>
-    );
+      <EternalMissionsWrapper eternalMissions={eternalMissions} />
+    </div>
+  );
 };
 
 export default page;
