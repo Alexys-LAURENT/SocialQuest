@@ -6,11 +6,14 @@ const page = async () => {
   const eternalMissions = await getEternalMissions();
   return (
     <div className="h-full w-full flex flex-col gap-10 overflow-y-auto overflow-x-hidden items-center">
-      <div className="relative w-full  bg-cover bg-center transition-all max-w-[1280px]">
+      <div className="flex flex-col w-full max-w-[1280px] gap-4">
+        <h2 className="text-xl font-semibold">Missions de la semaine</h2>
         <HebdoCaroussel missions={hebdoMissions} />
       </div>
-
-      <EternalMissionsWrapper eternalMissions={eternalMissions} />
+      <div className="flex flex-col w-full max-w-[1280px] gap-4">
+        <h2 className="text-xl font-semibold">Toutes les missions</h2>
+        <EternalMissionsWrapper eternalMissions={eternalMissions} />
+      </div>
     </div>
   );
 };
