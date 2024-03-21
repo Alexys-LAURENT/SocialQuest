@@ -232,3 +232,31 @@ export type GuildWar = {
     avatar_url: string;
   };
 };
+
+export type HebdoMission = {
+  id_mission_de_la_semaine: string;
+  started_at: string;
+  ends_at: string;
+  goal: number;
+  current: number;
+  libelle: string;
+  rpc_name: string;
+  items_info: MissionItemInfos[];
+  done: boolean;
+};
+
+export type EternalMission = {
+  id_missions: string;
+  goal: number;
+  current: number;
+  libelle: string;
+  rpc_name: string;
+  items_info: MissionItemInfos[];
+  done: boolean;
+};
+
+export type MissionItemInfos = {
+  nom: string;
+  type: string;
+  image_url: string;
+};
