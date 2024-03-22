@@ -1,7 +1,6 @@
 import Infos from '@/components/Profil/Infos';
 import { notFound } from 'next/navigation';
 import { getProfileConnected } from '@/utils/getProfileConnected';
-import { getAllPostsFromUser } from '@/utils/getAllPosts';
 import { getPageProfile } from '@/utils/getPageProfile';
 import UserTopRow from '@/components/Profil/UserTopRow';
 import CommpagnonsSuspenser from '@/components/Profil/CompagnonsSuspenser';
@@ -9,6 +8,7 @@ import { Suspense } from 'react';
 import CompagnonSkeleton from '@/components/Skeletons/Profil/CompagnonSkeleton';
 import { createClient } from '@supabase/supabase-js';
 import PostsWrapper from '@/components/PostsWrapper';
+import { getPostsProfil } from '@/utils/getPostsProfil';
 
 export const revalidate = 3600;
 
@@ -30,24 +30,23 @@ type ProfilParams = {
 
 
 const Profil: React.FC = async (props) => {
+
+
   const { params } = props as ProfilParams;
   const decodedUsername = decodeURIComponent(params!.username);
   const [profileConnected, pageProfile] = await Promise.all([getProfileConnected(), getPageProfile(decodedUsername)]);
 
-  const getPostsUser = async () => {
-    "use server"
-    const posts = await getAllPostsFromUser(pageProfile?.id_user ?? '');
-    return posts;
-  }
 
   if (pageProfile === null) {
     notFound();
   }
 
+  const postsInit = await getPostsProfil(pageProfile.id_user, 0, 10);
+
   const isUserProfil = pageProfile?.id_user === (profileConnected?.id_user ?? '');
 
   return (
-    <div className="h-full w-full flex flex-col overflow-y-auto overflow-x-hidden items-center">
+    <div className="h-full w-full flex flex-col items-center">
       <div
         className="relative w-full min-h-[10rem] md:min-h-[18rem] bg-secondary/10 bg-cover bg-center transition-all"
         style={{ backgroundImage: `url(${pageProfile.banner_url})` }}
@@ -68,7 +67,7 @@ const Profil: React.FC = async (props) => {
             {isUserProfil ? 'Mes Posts' : 'Posts'}
           </div>
           <div className="w-full max-w-[656px]">
-            <PostsWrapper user={profileConnected} getPost={getPostsUser} filtre={false} displayAnswerTo={true} />
+            <PostsWrapper user={profileConnected} filtre={false} displayAnswerTo={true} page={"profil"} postsInit={postsInit} profilePageId={pageProfile.id_user} />
           </div>
         </div>
       </div>

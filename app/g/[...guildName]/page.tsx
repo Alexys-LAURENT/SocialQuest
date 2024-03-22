@@ -1,18 +1,14 @@
 import PostsWrapper from '@/components/PostsWrapper';
-import { getAllPostsFromGuild } from '@/utils/getAllPosts';
+import { getPostsGuilde } from '@/utils/getPostsGuilde';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 
 const GuildPostsWrapper = async ({ params }: { params: { guildName: string } }) => {
   const user = await getProfileConnected();
-
-  const getAllPostsGuild = async () => {
-    'use server';
-    return await getAllPostsFromGuild(params.guildName[0]);
-  };
+  const postsInit = await getPostsGuilde(params.guildName[0], 0, 10);
 
   return (
     <div>
-      <PostsWrapper getPost={getAllPostsGuild} user={user} filtre={false} displayAnswerTo={true} />
+      <PostsWrapper user={user} filtre={false} displayAnswerTo={true} page={'guilde'} postsInit={postsInit} guildeName={params.guildName[0]} />
     </div>
   );
 };
