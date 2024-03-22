@@ -13,6 +13,7 @@
     "@react-stately/data": "^3.11.0",
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "^2.39.8",
+    "@types/lodash": "^4.17.0",
     "@vercel/analytics": "^1.1.2",
     "@vercel/speed-insights": "^1.0.6",
     "antd": "^5.12.5",
