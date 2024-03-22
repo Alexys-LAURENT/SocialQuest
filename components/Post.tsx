@@ -21,8 +21,6 @@ export default function Post({ user, post, displayAnswerTo }: { user: Profile | 
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log(post)
-
   const handleDelete = async () => {
     if (isLoading) return;
     setIsLoading(true);
