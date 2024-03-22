@@ -1,5 +1,4 @@
 import { getPost } from '@/utils/getPost';
-import { getAnswers } from '@/utils/getAnswers';
 import MainPost from '@/components/Post/MainPost';
 import { getProfileConnected } from '@/utils/getProfileConnected';
 import { ExtendedPost } from '@/app/types/entities';
@@ -7,6 +6,7 @@ import { notFound } from 'next/navigation';
 import PostsWrapper from '@/components/PostsWrapper';
 import PostInput from '@/components/PostInput';
 import { createClient } from '@supabase/supabase-js';
+import { getPostAnswers } from '@/utils/getPostAnswers';
 
 export const revalidate = 3600;
 
@@ -23,10 +23,7 @@ export async function generateStaticParams() {
 const page = async ({ params }: { params: { id_post: string } }) => {
   const userProfile = await getProfileConnected();
   const post = (await getPost(params.id_post)) as ExtendedPost;
-  const getPostAnswers = async () => {
-    'use server';
-    return await getAnswers(params.id_post);
-  };
+  const postsInit = await getPostAnswers(params.id_post, 0, 10);
 
   if (post === undefined) {
     notFound();
@@ -43,9 +40,11 @@ const page = async ({ params }: { params: { id_post: string } }) => {
 
           <PostsWrapper
             user={userProfile}
-            getPost={getPostAnswers}
             postPage={true}
             filtre={false}
+            page="post"
+            postsInit={postsInit}
+            postId={params.id_post}
           />
         </div>
 

@@ -65,7 +65,7 @@ const layout = async ({
   const isGuildCreator = guilde?.created_by === user?.id_user;
 
   return (
-    <div className="h-full w-full flex flex-col overflow-y-auto overflow-x-hidden items-center">
+    <div className="h-full w-full flex flex-col items-center">
       <div
         className="relative w-full min-h-[10rem] md:min-h-[18rem] bg-white bg-cover bg-center transition-all"
         style={{ backgroundImage: "url('/assets/Jane.png')" }}

@@ -2,67 +2,145 @@
 import { ExtendedPost, Profile } from '@/app/types/entities';
 import { Tabs, Tab, Spinner } from '@nextui-org/react';
 import { Fragment, useEffect, useRef, useState } from 'react';
-import PostsWrapperSkeleton from '@/components/Skeletons/PostsWrapperSkeleton';
-import { getPostSuivis } from '@/utils/getPostSuivis';
-import { getPostGuildes } from '@/utils/getPostGuildes';
 import Post from '@/components/Post';
-
-
+import { debounce } from 'lodash';
+import { getPostsHome } from '@/utils/getPostsHome';
+import { getPostsProfil } from '@/utils/getPostsProfil';
+import { getPostsGuilde } from '@/utils/getPostsGuilde';
+import { getPostAnswers } from '@/utils/getPostAnswers';
 
 const PostsWrapper = ({
+  page,
+  postsInit,
   user,
-  getPost,
+  profilePageId,
+  guildeName,
+  postId,
   postPage,
   filtre,
   displayAnswerTo,
 }: {
+  page: string;
+  postsInit: any;
   user: Profile | null;
-  getPost: () => Promise<ExtendedPost[] | null>,
+  profilePageId?: string;
+  guildeName?: string;
+  postId?: string;
   postPage?: boolean;
   filtre: boolean;
   displayAnswerTo?: boolean;
 }) => {
-  const [posts, setPosts] = useState<ExtendedPost[] | null>(null);
-  const [postsRandom, setPostsRandom] = useState<ExtendedPost[] | null>(null);
-  const [postsSuivis, setPostsSuivis] = useState<ExtendedPost[] | null>(null);
-  const [postsGuildes, setPostsGuildes] = useState<ExtendedPost[] | null>(null);
+  const [postsRandom, setPostsRandom] = useState<any | null>({ data: postsInit.postsRandom, isLastPostRandom: postsInit.postsRandomLast })
+  const [postsSuivis, setPostsSuivis] = useState<any | null>({ data: postsInit.postsSuivis, isLastPostSuivis: postsInit.postsSuivisLast })
+  const [postsGuildes, setPostsGuildes] = useState<any | null>({ data: postsInit.postsGuildes, isLastPostGuildes: postsInit.postsGuildesLast })
+  const [offsetRandom, setOffsetRandom] = useState(10)
+  const [offsetSuivis, setOffsetSuivis] = useState(10)
+  const [offsetGuildes, setOffsetGuildes] = useState(10)
+
+  const [postsProfil, setPostsProfil] = useState<any | null>({ data: postsInit.postsProfil, isLastPostProfil: postsInit.postsProfilLast })
+  const [offsetProfil, setOffsetProfil] = useState(10)
+
+  const [postsGuilde, setPostsGuilde] = useState<any | null>({ data: postsInit.postsGuilde, isLastPostGuilde: postsInit.postsGuildeLast })
+  const [offsetGuilde, setOffsetGuilde] = useState(10)
+
+  const [postAnswers, setPostAnswers] = useState<any | null>({ data: postsInit.postAnswers, isLastPostAnswer: postsInit.postAnswersLast })
+  const [offsetAnswer, setOffsetAnswer] = useState(10)
+
+  const limit = 5;
+
+  const [isInView, setIsInView] = useState(false)
+  const [isFetching, setIsFetching] = useState(false)
+
   const [lastScrollDirection, setLastScrollDirection] = useState<'up' | 'down'>('down');
   const [isSticky, setIsSticky] = useState(false);
   const [selectedKey, setSelectedKey] = useState('MaPage');
 
+  const containerRef = useRef(null)
   const prevScrollY = useRef(0);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      setPostsRandom(await getPost());
-    };
-    fetchPosts();
-  }, []);
+    // console.log(postsRandom.isLastPostRandom)
+  }, [postsRandom])
+
+  const handleScroll = () => {
+    if (containerRef.current && typeof window !== 'undefined') {
+      const container = containerRef.current as HTMLElement;
+      const { bottom } = container.getBoundingClientRect();
+      const { innerHeight } = window;
+      setIsInView((prev) => bottom - 200 <= innerHeight);
+    }
+  }
 
   useEffect(() => {
-    if (postsRandom && selectedKey === 'MaPage') {
-      setPosts(postsRandom);
+    if (isInView) {
+      setIsFetching(true)
+
+      page === "home" && selectedKey === 'MaPage' && getPostsHome(offsetRandom, offsetSuivis, offsetGuildes, limit, "random").then((data) => {
+        setOffsetRandom(offsetRandom + limit)
+        if (data) {
+          setPostsRandom({ data: [...postsRandom.data, ...data.postsRandom], isLastPostRandom: data.postsRandomLast });
+        }
+        setIsFetching(false)
+      })
+
+      page === "home" && selectedKey === 'Suivis' && getPostsHome(offsetRandom, offsetSuivis, offsetGuildes, limit, "suivis").then((data) => {
+        setOffsetSuivis(offsetSuivis + limit)
+        if (data) {
+          setPostsSuivis({ data: [...postsSuivis.data, ...data.postsSuivis], isLastPostSuivis: data.postsSuivisLast });
+        }
+        setIsFetching(false)
+      })
+
+      page === "home" && selectedKey === 'Guildes' && getPostsHome(offsetRandom, offsetSuivis, offsetGuildes, limit, "guildes").then((data) => {
+        setOffsetGuildes(offsetGuildes + limit)
+        if (data) {
+          setPostsGuildes({ data: [...postsGuildes.data, ...data.postsGuildes], isLastPostGuildes: data.postsGuildesLast });
+        }
+        setIsFetching(false)
+      })
+
+      page === "profil" && getPostsProfil(profilePageId!, offsetProfil, limit).then((data) => {
+        setOffsetProfil(offsetProfil + limit)
+        if (data) {
+          setPostsProfil({ data: [...postsProfil.data, ...data.postsProfil], isLastPostProfil: data.postsProfilLast });
+        }
+        setIsFetching(false)
+      })
+
+      page === "guilde" && getPostsGuilde(guildeName!, offsetGuilde, limit).then((data) => {
+        setOffsetGuilde(offsetGuilde + limit)
+        if (data) {
+          setPostsGuilde({ data: [...postsGuilde.data, ...data.postsGuilde], isLastPostGuilde: data.postsGuildeLast });
+        }
+        setIsFetching(false)
+      })
+
+      page === "post" && getPostAnswers(postId!, offsetAnswer, limit).then((data) => {
+        setOffsetAnswer(offsetAnswer + limit)
+        if (data) {
+          setPostAnswers({ data: [...postAnswers.data, ...data.postAnswers], isLastPostAnswer: data.postAnswersLast });
+        }
+        setIsFetching(false)
+      })
+
     }
-  }, [postsRandom, selectedKey]);
+  }, [isInView])
 
   useEffect(() => {
-    if (postsSuivis && selectedKey === 'Suivis') {
-      setPosts(postsSuivis);
+    const mainDiv = document.getElementsByTagName('main')[0];
+    const handleDebouncedScroll = debounce(() => handleScroll(), 0)
+    mainDiv.addEventListener('scroll', handleDebouncedScroll)
+    return () => {
+      mainDiv.removeEventListener('scroll', handleDebouncedScroll)
     }
-  }, [postsSuivis, selectedKey]);
-
-  useEffect(() => {
-    if (postsGuildes && selectedKey === 'Guildes') {
-      setPosts(postsGuildes);
-    }
-  }, [postsGuildes, selectedKey]);
+  }, [])
 
   if (user && filtre === true) {
     useEffect(() => {
       const mainDiv = document.getElementsByTagName('main')[0];
       let lastDirectionChangeScrollY = 0;
 
-      const handleScroll = () => {
+      const handleScrollFiltre = () => {
         const currentScrollY = mainDiv.scrollTop;
 
         // Set the sticky status to true when the scroll threshold is reached
@@ -84,86 +162,60 @@ const PostsWrapper = ({
         prevScrollY.current = currentScrollY;
       };
 
-      mainDiv.addEventListener('scroll', handleScroll);
+      mainDiv.addEventListener('scroll', handleScrollFiltre);
 
       return () => {
-        mainDiv.removeEventListener('scroll', handleScroll);
+        mainDiv.removeEventListener('scroll', handleScrollFiltre);
       };
-    }, []);
-
-    useEffect(() => {
-      const fetchPostsSuivis = async () => {
-        setPostsSuivis(await getPostSuivis(user.id_user));
-      };
-      fetchPostsSuivis();
-    }, []);
-
-    useEffect(() => {
-      const fetchPostsGuildes = async () => {
-        setPostsGuildes(await getPostGuildes(user.id_user));
-      };
-      fetchPostsGuildes();
     }, []);
   }
 
-  const loadPosts = async (id_user: string, key: string) => {
+  const handleKeyChange = async (key: string) => {
     if (key === selectedKey && key === 'MaPage') {
       document.getElementById('RefreshIconMaPage')?.classList.remove('hidden');
-      setPostsRandom(await getPost());
+      setOffsetRandom(10)
+      const posts = await getPostsHome(0, offsetSuivis, offsetGuildes, 10, "random")
+      setPostsRandom({ data: posts!.postsRandom, isLastPostRandom: posts!.postsRandomLast });
       document.getElementById('RefreshIconMaPage')?.classList.add('hidden');
     }
+
     if (key === selectedKey && key === 'Suivis') {
       document.getElementById('RefreshIconSuivis')?.classList.remove('hidden');
-      setPostsSuivis(await getPostSuivis(id_user));
+      setOffsetSuivis(10)
+      const posts = await getPostsHome(offsetRandom, 0, offsetGuildes, 10, "suivis")
+      setPostsSuivis({ data: posts!.postsSuivis, isLastPostSuivis: posts!.postsSuivisLast });
       document.getElementById('RefreshIconSuivis')?.classList.add('hidden');
     }
+
     if (key === selectedKey && key === 'Guildes') {
       document.getElementById('RefreshIconGuildes')?.classList.remove('hidden');
-      setPostsGuildes(await getPostGuildes(id_user));
+      setOffsetGuildes(10)
+      const posts = await getPostsHome(offsetRandom, offsetSuivis, 0, 10, "guildes")
+      setPostsGuildes({ data: posts!.postsGuildes, isLastPostGuildes: posts!.postsGuildesLast });
       document.getElementById('RefreshIconGuildes')?.classList.add('hidden');
     }
 
     setSelectedKey(key);
   };
 
-  if (posts === null) {
-    return <PostsWrapperSkeleton postPage={postPage} />;
-  }
 
-  if (posts && filtre === false) {
-    return (
-      <div className={`w-full flex flex-col gap-4 ${postPage ? 'mt-8' : ''}`}>
-        {posts?.length !== 0 ? (
-          posts?.map((post: ExtendedPost) => (
-            <Fragment key={`post-${post.id_post}`}>
-              <Post key={post.id_post} post={post} user={user} displayAnswerTo={displayAnswerTo} />
-            </Fragment>
-          ))
-        ) : (
-          <div className="flex flex-col items-center justify-center gap-2">
-            <div className="text-2xl font-semibold">{postPage ? 'Aucune réponse 😢' : 'Aucun post 😢'}</div>
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  if (posts && filtre && user) {
-    return (
-      <div className={`${postPage ? 'mt-8' : ''} `}>
-        <Tabs
-          aria-label="Filtres"
-          defaultSelectedKey={'MaPage'}
-          onSelectionChange={(key: React.Key) => loadPosts(user.id_user, key.toString())}
-          disableAnimation={isSticky}
-          classNames={{
-            base: `z-10 flex justify-center sticky transition-all !duration-250 ${lastScrollDirection === 'down' ? '-top-12' : 'top-1'}`,
-            tabList: 'bg-tempLightBorder dark:bg-tempDarkBorder transition-all !duration-500 text-textDark dark:text-textLight',
-            cursor: 'transition-colors !duration-500',
-          }}
-          selectedKey={selectedKey}
-        >
+  return (
+    <div ref={containerRef} className={`${postPage ? 'mt-8' : ''} `}>
+      <Tabs
+        aria-label="Filtres"
+        defaultSelectedKey={page === "home" || !user ? 'MaPage' : page === "profil" ? 'Profil' : page === "guilde" ? 'Guilde' : 'Post'}
+        onSelectionChange={(key: React.Key) => handleKeyChange(key.toString())}
+        disableAnimation={isSticky}
+        classNames={{
+          base: `z-10 flex justify-center sticky transition-all !duration-250 ${lastScrollDirection === 'down' ? '-top-12' : 'top-1'}`,
+          tabList: `bg-tempLightBorder dark:bg-tempDarkBorder transition-all !duration-500 text-textDark dark:text-textLight ${page === "profil" || page === "guilde" || page === "post" || !user ? 'hidden' : ''}`,
+          cursor: 'transition-colors !duration-500',
+        }}
+        selectedKey={selectedKey}
+      >
+        {page === "home" && (
           <Tab
+            className={`${!user && 'py-0'}`}
             key="MaPage"
             title={
               selectedKey === 'MaPage' ? (
@@ -177,19 +229,22 @@ const PostsWrapper = ({
             }
           >
             <div className="w-full flex flex-col gap-4">
-              {posts?.length !== 0 ? (
-                posts?.map((post: ExtendedPost) => (
+              {postsRandom?.data?.length !== 0 ? (
+                postsRandom?.data?.map((post: ExtendedPost) => (
                   <Fragment key={`post-${post.id_post}`}>
                     <Post key={post.id_post} post={post} user={user} displayAnswerTo={displayAnswerTo} />
                   </Fragment>
                 ))
               ) : (
                 <div className="flex flex-col items-center justify-center gap-2">
-                  <div className="text-2xl font-semibold">{postPage ? 'Aucune réponse 😢' : 'Aucun post 😢'}</div>
+                  <div className="text-2xl font-semibold">Aucun post 😢</div>
                 </div>
               )}
             </div>
           </Tab>
+        )}
+
+        {page === "home" && (
           <Tab
             key="Suivis"
             title={
@@ -204,19 +259,22 @@ const PostsWrapper = ({
             }
           >
             <div className="w-full flex flex-col gap-4">
-              {posts?.length !== 0 ? (
-                posts?.map((post: ExtendedPost) => (
+              {postsSuivis?.data?.length !== 0 ? (
+                postsSuivis?.data?.map((post: ExtendedPost) => (
                   <Fragment key={`post-${post.id_post}`}>
                     <Post key={post.id_post} post={post} user={user} displayAnswerTo={displayAnswerTo} />
                   </Fragment>
                 ))
               ) : (
                 <div className="flex flex-col items-center justify-center gap-2">
-                  <div className="text-2xl font-semibold">{postPage ? 'Aucune réponse 😢' : 'Aucun post 😢'}</div>
+                  <div className="text-2xl font-semibold">Aucun post 😢</div>
                 </div>
               )}
             </div>
           </Tab>
+        )}
+
+        {page === "home" && (
           <Tab
             key="Guildes"
             title={
@@ -231,23 +289,96 @@ const PostsWrapper = ({
             }
           >
             <div className="w-full flex flex-col gap-4">
-              {posts?.length !== 0 ? (
-                posts?.map((post: ExtendedPost) => (
+              {postsGuildes?.data?.length !== 0 ? (
+                postsGuildes?.data?.map((post: ExtendedPost) => (
                   <Fragment key={`post-${post.id_post}`}>
                     <Post key={post.id_post} post={post} user={user} displayAnswerTo={displayAnswerTo} />
                   </Fragment>
                 ))
               ) : (
                 <div className="flex flex-col items-center justify-center gap-2">
-                  <div className="text-2xl font-semibold">{postPage ? 'Aucune réponse 😢' : 'Aucun post 😢'}</div>
+                  <div className="text-2xl font-semibold">Aucun post 😢</div>
                 </div>
               )}
             </div>
           </Tab>
-        </Tabs>
-      </div>
-    );
-  }
+        )}
+
+        {page === "profil" && (
+          <Tab
+            key="Profil"
+            title={"Profil"}
+          >
+            <div className="w-full flex flex-col gap-4">
+              {postsProfil?.data?.length !== 0 ? (
+                postsProfil?.data?.map((post: ExtendedPost) => (
+                  <Fragment key={`post-${post.id_post}`}>
+                    <Post key={post.id_post} post={post} user={user} displayAnswerTo={displayAnswerTo} />
+                  </Fragment>
+                ))
+              ) : (
+                <div className="flex flex-col items-center justify-center gap-2">
+                  <div className="text-2xl font-semibold">Aucun post 😢</div>
+                </div>
+              )}
+            </div>
+          </Tab>
+        )}
+
+        {page === "guilde" && (
+          <Tab
+            key="Guilde"
+            title={"Guilde"}
+          >
+            <div className="w-full flex flex-col gap-4">
+              {postsGuilde?.data?.length !== 0 ? (
+                postsGuilde?.data?.map((post: ExtendedPost) => (
+                  <Fragment key={`post-${post.id_post}`}>
+                    <Post key={post.id_post} post={post} user={user} displayAnswerTo={displayAnswerTo} />
+                  </Fragment>
+                ))
+              ) : (
+                <div className="flex flex-col items-center justify-center gap-2">
+                  <div className="text-2xl font-semibold">Aucun post 😢</div>
+                </div>
+              )}
+            </div>
+          </Tab>
+        )}
+
+        {page === "post" && (
+          <Tab
+            key="Post"
+            title={"Post"}
+          >
+            <div className="w-full flex flex-col gap-4">
+              {postAnswers?.data?.length !== 0 ? (
+                postAnswers?.data?.map((post: ExtendedPost) => (
+                  <Fragment key={`post-${post.id_post}`}>
+                    <Post key={post.id_post} post={post} user={user} displayAnswerTo={displayAnswerTo} />
+                  </Fragment>
+                ))
+              ) : (
+                <div className="flex flex-col items-center justify-center gap-2">
+                  <div className="text-2xl font-semibold">Aucune réponse 😢</div>
+                </div>
+              )}
+            </div>
+          </Tab>
+        )}
+
+      </Tabs>
+
+      {isFetching && <div className="flex justify-center mt-4"><Spinner size="md" color="white" /></div>}
+
+      {selectedKey === 'MaPage' && postsRandom.isLastPostRandom && postsRandom.data.length > 0 && <div className="text-center text-textDark dark:text-textLight font-semibold text-lg mt-4">Vous avez atteint la fin des posts</div>}
+      {selectedKey === 'Suivis' && postsSuivis.isLastPostSuivis && postsSuivis.data.length > 0 && <div className="text-center text-textDark dark:text-textLight font-semibold text-lg mt-4">Vous avez atteint la fin des posts</div>}
+      {selectedKey === 'Guildes' && postsGuildes.isLastPostGuildes && postsGuildes.data.length > 0 && <div className="text-center text-textDark dark:text-textLight font-semibold text-lg mt-4">Vous avez atteint la fin des posts</div>}
+      {selectedKey === 'Profil' && postsProfil.isLastPostProfil && postsProfil.data.length > 0 && <div className="text-center text-textDark dark:text-textLight font-semibold text-lg mt-4">Vous avez atteint la fin des posts</div>}
+      {selectedKey === 'Guilde' && postsGuilde.isLastPostGuilde && postsGuilde.data.length > 0 && <div className="text-center text-textDark dark:text-textLight font-semibold text-lg mt-4">Vous avez atteint la fin des posts</div>}
+      {selectedKey === 'Post' && postAnswers.isLastPostAnswer && postAnswers.data.length > 0 && <div className="text-center text-textDark dark:text-textLight font-semibold text-lg mt-4">Vous avez atteint la fin des réponses</div>}
+    </div>
+  );
 };
 
 export default PostsWrapper;
