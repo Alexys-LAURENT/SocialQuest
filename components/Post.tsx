@@ -21,6 +21,8 @@ export default function Post({ user, post, displayAnswerTo }: { user: Profile | 
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  console.log(post)
+
   const handleDelete = async () => {
     if (isLoading) return;
     setIsLoading(true);
@@ -246,7 +248,6 @@ export default function Post({ user, post, displayAnswerTo }: { user: Profile | 
               ))}
           </div>
         </div>
-
         {displayAnswerTo && post.parent_post_id && (
           <div className="flex items-center gap-2 text-textDark dark:text-textLight">
             <Link href={`/p/${post.parent_post_id}`} className='flex gap-1'>

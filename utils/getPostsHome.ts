@@ -22,7 +22,7 @@ export const getPostsHome = cache(async (offsetRandom: number, offsetSuivis: num
 
     if (type === undefined || type === 'random') {
         const { data: newPostsRandom, error: postsRandomError } = await supabase
-            .rpc('get_random_posts_home_init', { the_offset: offsetRandom, the_limit: limit })
+            .rpc('get_random_posts', { the_offset: offsetRandom, the_limit: limit })
 
         if (postsRandomError) {
             console.error('ErrorGetPostsRandom', postsRandomError)
