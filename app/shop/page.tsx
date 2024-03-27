@@ -12,7 +12,7 @@ const page = async ({ searchParams }: { searchParams: shopSearchParmas }) => {
 
   return (
     <div className={`flex flex-col max-w-[1280px] w-full px-2 md:px-4 py-4 gap-6`}>
-      <div className="w-full h-28  dark:bg-tempDarkHover bg-tempDarkHover/20 rounded-md"></div>
+      {/* <div className="w-full h-28  dark:bg-tempDarkHover bg-tempDarkHover/20 rounded-md"></div> */}
 
       <MostBuyedItems bestSellingItems={bestSellingItems} />
 
