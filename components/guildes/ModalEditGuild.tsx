@@ -112,7 +112,7 @@ const ModalEditGuild = ({
                                                 className="w-full hover:bg-white/5 cursor-pointer p-1 rounded-md"
                                                 onClick={() => handleToggleModStatus(membre.id_user, 'unmod')}
                                               >
-                                                Rétirer modérateur
+                                                Retirer modérateur
                                               </div>
                                             ) : (
                                               <div
