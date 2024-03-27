@@ -105,39 +105,43 @@ const ModalEditGuild = ({
                                       <Image src={membre.avatar_url} alt={membre.username} width={100} height={100} />
                                     }
                                     endContent={
-                                      <Popover placement="right">
-                                        <PopoverTrigger className="cursor-pointer">
-                                          <EllipsisVerticalIcon className="h-6 w-6" />
-                                        </PopoverTrigger>
-                                        <PopoverContent className=" rounded-md p-1">
-                                          <div className="w-full flex flex-col">
-                                            {role === 'creator' && (
-                                              membre.is_moderator ? (
+                                      (!membre.is_moderator || role === 'creator') ? (
+                                        <Popover placement="right">
+                                          <PopoverTrigger className="cursor-pointer">
+                                            <EllipsisVerticalIcon className="h-6 w-6" />
+                                          </PopoverTrigger>
+                                          <PopoverContent className=" rounded-md p-1">
+                                            <div className="w-full flex flex-col">
+                                              {role === 'creator' && (
+                                                membre.is_moderator ? (
+                                                  <div
+                                                    className="w-full hover:bg-white/5 cursor-pointer p-1 rounded-md"
+                                                    onClick={() => handleToggleModStatus(membre.id_user, 'unmod')}
+                                                  >
+                                                    Retirer modérateur
+                                                  </div>
+                                                ) : (
+                                                  <div
+                                                    className="w-full hover:bg-white/5 cursor-pointer p-1 rounded-md"
+                                                    onClick={() => handleToggleModStatus(membre.id_user, 'mod')}
+                                                  >
+                                                    Passer modérateur
+                                                  </div>
+                                                )
+
+                                              )}
+                                              {(!membre.is_moderator || role === 'creator') && (
                                                 <div
-                                                  className="w-full hover:bg-white/5 cursor-pointer p-1 rounded-md"
-                                                  onClick={() => handleToggleModStatus(membre.id_user, 'unmod')}
+                                                  className="w-full hover:bg-white/5 cursor-pointer p-1 rounded-md text-danger"
+                                                  onClick={() => handleRemoveUserFromGuild(membre.id_user)}
                                                 >
-                                                 Retirer modérateur
+                                                  Supprimer de la guilde
                                                 </div>
-                                              ) : (
-                                                <div
-                                                  className="w-full hover:bg-white/5 cursor-pointer p-1 rounded-md"
-                                                  onClick={() => handleToggleModStatus(membre.id_user, 'mod')}
-                                                >
-                                                  Passer modérateur
-                                                </div>
-                                              )
-                                               
-                                            )}
-                                            <div
-                                              className="w-full hover:bg-white/5 cursor-pointer p-1 rounded-md text-danger"
-                                              onClick={() => handleRemoveUserFromGuild(membre.id_user)}
-                                            >
-                                              Supprimer de la guilde
+                                              )}
                                             </div>
-                                          </div>
-                                        </PopoverContent>
-                                      </Popover>
+                                          </PopoverContent>
+                                        </Popover>
+                                      ) : null
                                     }
                                   >
                                     {membre.username}
@@ -147,7 +151,7 @@ const ModalEditGuild = ({
                             </AccordionItem>
                           ))
                         ) : (
-                          <div className="">IMPOSSIBLE</div>
+                          <div className=""></div>
                         )}
                       </Accordion>
                     )}
@@ -207,7 +211,7 @@ const ModalEditGuild = ({
                               </AccordionItem>
                             ))
                           ) : (
-                            <div className="">IMPOSSIBLE</div>
+                            <div className=""></div>
                           )}
                         </Accordion>
                       )}
