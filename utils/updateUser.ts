@@ -18,10 +18,10 @@ export async function updateUser(profileConnected: any, nom: string, prenom: str
     return false;
   }
 
-  const { data: profile, error: profileError } = await supabase
+  const { error: profileError } = await supabase
 
     .from('profiles')
-    .update({ nom: nom, prenom: prenom, email: email })
+    .update({ nom: nom, prenom: prenom })
     .eq('id_user', profileConnected?.id_user);
 
   if (profileError) {
@@ -29,8 +29,5 @@ export async function updateUser(profileConnected: any, nom: string, prenom: str
     return false;
   }
 
-  console.log(profile);
-
-  console.log('Données utilisateur mises à jour avec succès:', data);
   return true;
 }

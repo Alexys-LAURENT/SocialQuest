@@ -22,6 +22,10 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL('/login', request.url));
     }
 
+    if (!session.data.session && request.nextUrl.pathname.startsWith('/parametres')) {
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
+
     return response;
   } catch (e) {
     return NextResponse.next({
