@@ -144,9 +144,9 @@ export default function Post({ user, post, displayAnswerTo }: { user: Profile | 
         <Image
           src={post.id_guilde ? post.guilde_avatar_url : post.creator_avatar_url || defaultUser.src}
           alt={post.id_guilde ? post.guilde_avatar_url : post.creator_avatar_url || defaultUser.src}
-          width={32}
-          height={32}
-          className="min-h-[32px] min-w-[32px] rounded-full"
+          width={60}
+          height={60}
+          className="h-[32px] w-[32px] rounded-full object-cover"
         />
         <div className="postRedirect flex items-center justify-between w-full">
           <div className="flex items-center gap-1">
