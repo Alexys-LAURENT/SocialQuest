@@ -24,7 +24,7 @@ const UserTopRow = ({
 
   const handleFollow = async () => {
     if (!profileConnected?.id_user) return router.push('/login');
-    const isDone = await toggleFollow(pageProfile?.id_user, pageProfile?.isFollowed!, profileConnected?.id_user);
+    const isDone = await toggleFollow(pageProfile.id_user, pageProfile.isFollowed!, profileConnected?.id_user);
     if (isDone) {
       pageProfile.isFollowed === true
         ? success('Vous ne suivez plus cet utilisateur')
@@ -64,17 +64,22 @@ const UserTopRow = ({
           className="sm:h-28 sm:w-28 sm:min-h-[7rem] sm:min-w-[7rem] md:h-40 md:w-40 md:min-h-[10rem] md:min-w-[10rem] rounded-full text-large transition-all"
         />
 
-        <div className="flex justify-between items-center h-unit-10 mb-1 sm:mb-0 ms-2 sm:ms-4  md:mb-7 w-full">
+        <div className="flex justify-between items-center h-unit-10 mb-1 sm:mb-2 ms-2 sm:ms-4 md:mb-7 w-full">
           <div className="sm:max-w-[80%]">
-            <p className=" w-full overflow-hidden text-ellipsis line-clamp-1 text-lg md:text-2xl font-semibold text-textDark dark:text-textLight transition-all !duration-[125ms]">
-              {pageProfile?.username}
-            </p>
+            <div className="pt-3 sm:pt-0 flex flex-col w-full overflow-hidden text-ellipsis line-clamp-1 text-lg md:text-2xl font-semibold text-textDark dark:text-textLight transition-all !duration-[125ms]">
+              <div className="">
+                {pageProfile.username}
+              </div>
+              <div className="flex text-xs">
+                {pageProfile.followers_count[0]?.count} abonnés • {pageProfile.following_count[0]?.count} abonnements
+              </div>
+            </div>
           </div>
           {pageProfile.id_user !== profileConnected?.id_user && (
             <span className="sm:flex items-center hidden gap-4">
-              <Button className="bg-bgLight customButton">
+              {/* <Button className="bg-bgLight customButton">
                 <ChatBubbleOvalLeftEllipsisIcon className="text-bgDarkPopover h-[20px]" />
-              </Button>
+              </Button> */}
 
               <Button onClick={() => handleFollow()} className="bg-secondary customButton text-textLight">
                 {pageProfile.isFollowed ? 'Abonné' : 'Suivre'}
@@ -89,9 +94,9 @@ const UserTopRow = ({
             {pageProfile.isFollowed ? 'Abonné' : 'Suivre'}
           </Button>
 
-          <Button className="bg-bgLight customButton !min-w-0">
+          {/* <Button className="bg-bgLight customButton !min-w-0">
             <ChatBubbleOvalLeftEllipsisIcon className="text-bgDarkPopover h-[20px]" />
-          </Button>
+          </Button> */}
         </div>
       )}
     </>

@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 
 const DynamicModalEditGuild = dynamic(() => import('@/components/guildes/ModalEditGuild'));
 
-const EditGuildButton = ({ guilde }: { guilde: GuildePage }) => {
+const EditGuildButton = ({ guilde, role }: { guilde: GuildePage, role: string }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [members, setMembers] = useState<Member[][] | undefined>();
   const [moderators, setModerators] = useState<Member[][] | undefined>();
@@ -91,7 +91,7 @@ const EditGuildButton = ({ guilde }: { guilde: GuildePage }) => {
   return (
     <>
       <Button onPress={onOpen} className="customButton bg-secondary/70 border-secondary text-white">
-        Éditer la guilde
+        {role === 'creator' ? 'Éditer la guilde' : 'Modérer la guilde'}
       </Button>
       {isOpen && (
         <DynamicModalEditGuild
@@ -103,6 +103,7 @@ const EditGuildButton = ({ guilde }: { guilde: GuildePage }) => {
           handleRemoveUserFromGuild={handleRemoveUserFromGuild}
           handleToggleModStatus={handleToggleModStatus}
           handleValidateEditGuild={handleValidateEditGuild}
+          role={role}
         />
       )}
     </>
