@@ -40,8 +40,9 @@ const ParametresForm = ({
 
     const isUpdated = await updateUserData(nom, prenom, email);
     if (isUpdated) {
-      return success(`Données mises à jour avec succès${initEmail !== email ? '. Votre email a été modifié, veuillez vérifier les boites de réception de votre ancien et nouveau email pour confirmer le changement.' : ''}`);
-
+      return success(
+        `Données mises à jour avec succès${initEmail !== email ? '. Votre email a été modifié, veuillez vérifier les boites de réception de votre ancien et nouveau email pour confirmer le changement.' : ''}`,
+      );
     } else {
       return error('Erreur lors de la mise à jour des données');
     }
@@ -52,7 +53,7 @@ const ParametresForm = ({
 
     if (username.includes(' ')) {
       setUsername(username.replace(/\s/g, ''));
-      error('Le username ne doit pas contenir d\'espaces');
+      error("Le username ne doit pas contenir d'espaces");
       setIsTypingUsername(false);
       return;
     }
@@ -67,13 +68,12 @@ const ParametresForm = ({
 
     setIsUsernameInvalid({ value: false, reason: '' });
     setIsTypingUsername(false);
-  }
+  };
 
   const handleEmailChange = async (email: string) => {
-
     if (email.includes(' ')) {
       setEmail(email.replace(/\s/g, ''));
-      error('L\'email ne doit pas contenir d\'espaces');
+      error("L'email ne doit pas contenir d'espaces");
       setIsTypingEmail(false);
       return;
     }
@@ -99,7 +99,6 @@ const ParametresForm = ({
 
     setIsEmailInvalid({ value: false, reason: '' });
   };
-
 
   const isValidEmail = (email: string) => {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
@@ -143,7 +142,7 @@ const ParametresForm = ({
               label="Nom"
               value={nom}
               labelPlacement="outside"
-              placeholder='Nom'
+              placeholder="Nom"
               onChange={(e) => setNom(e.target.value)}
             />
             <Input
@@ -151,7 +150,7 @@ const ParametresForm = ({
               label="Prénom"
               value={prenom}
               labelPlacement="outside"
-              placeholder='Prénom'
+              placeholder="Prénom"
               onChange={(e) => setPrenom(e.target.value)}
             />
             <Input
@@ -163,9 +162,7 @@ const ParametresForm = ({
               placeholder="Email"
               onChange={(e) => handleEmailChange(e.target.value)}
               onBlur={() => checkInvalidEmail(email)}
-              endContent={
-                <Spinner size="sm" className={`scale-75 ${!isTypingEmail ? 'hidden' : ''} `} color="white" />
-              }
+              endContent={<Spinner size="sm" className={`scale-75 ${!isTypingEmail ? 'hidden' : ''} `} color="white" />}
             />
             <Input
               isInvalid={isUsernameInvalid.value}
@@ -182,14 +179,17 @@ const ParametresForm = ({
           </CardBody>
           <Divider />
           <CardFooter>
-            <CardBody className="flex flex-col justify-between items-center bg-red-700/50 gap-4 rounded-sm">
+            <CardBody className="flex flex-col justify-between items-center bg-red-700/20 gap-4 rounded-md">
               <div className="flex justify-between items-center gap-4">
                 <div className="flex flex-col gap-4">
                   <h3 className="text-xl">Supprimer votre profil</h3>
                   <h1 className="text-base">Voulez-vous vraiment supprimer votre profil</h1>
                   <h1 className="text-base">Attention, cette action est irréversible !</h1>
                 </div>
-                <Button onClick={handleDeleteProfile} className="customButton bg-danger/70 border-danger !text-textLight">
+                <Button
+                  onClick={handleDeleteProfile}
+                  className="customButton bg-danger/70 border-danger !text-textLight"
+                >
                   Supprimer Mon Profil
                 </Button>
               </div>
@@ -197,7 +197,7 @@ const ParametresForm = ({
           </CardFooter>
         </Card>
       </div>
-      <div className='mt-4'>
+      <div className="mt-4">
         <form>
           <div className="flex justify-end">
             <Button
