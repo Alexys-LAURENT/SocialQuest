@@ -17,7 +17,7 @@ export async function getPageProfile(username: string) {
 
     const { data: profile, error } = await supabase
         .from('profiles')
-        .select("*, niveaux(*))")
+        .select("*, niveaux(*), followers_count:follow!follow_id_followed_fkey(count), following_count:follow!follow_id_user_fkey(count)")
         .eq('username', username)
         .single() as unknown as { data: Profile, error: Error }
 

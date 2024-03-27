@@ -63,6 +63,7 @@ const layout = async ({
   }
 
   const isGuildCreator = guilde?.created_by === user?.id_user;
+  const isGuildModerator = guilde?.moderators?.some((moderator) => moderator.id_user === user?.id_user);
 
   return (
     <div className="h-full w-full flex flex-col items-center">
@@ -81,20 +82,22 @@ const layout = async ({
               </p>
             </div>
             <span className="sm:flex items-center hidden gap-4">
-              {guilde.created_by === user?.id_user ? (
-                <EditGuildButton guilde={guilde} />
-              ) : (
+              {!isGuildCreator && (
                 <JoinQuitButton guilde={guilde} user={user} />
+              )}
+              {(isGuildCreator || isGuildModerator) && (
+                <EditGuildButton guilde={guilde} role={isGuildCreator ? 'creator' : 'moderator'} />
               )}
             </span>
           </div>
         </div>
 
         <div className=" w-full max-w-[1280px] px-6 md:px-12 flex flex-row justify-end my-4 sm:my-2 gap-2 sm:gap-4 sm:hidden -top-[40px] sm:-top-[60px] md:-top-[80px] relative">
-          {guilde.created_by === user?.id_user ? (
-            <EditGuildButton guilde={guilde} />
-          ) : (
+          {!isGuildCreator && (
             <JoinQuitButton guilde={guilde} user={user} />
+          )}
+          {(isGuildCreator || isGuildModerator) && (
+            <EditGuildButton guilde={guilde} role={isGuildCreator ? 'creator' : 'moderator'} />
           )}
         </div>
       </>

@@ -18,6 +18,8 @@ export type Profile = {
     id_niveau: string;
   };
   isFollowed?: boolean;
+  followers_count: { count: number }[];
+  following_count: { count: number }[];
 };
 
 export type Post = {
@@ -120,6 +122,11 @@ export type GuildePage = {
   avatar_url: string;
   banner_url: string;
   created_by: string;
+  moderators: [
+    {
+      id_user: string;
+    },
+  ];
 };
 
 export type Moderator = { is_admin: boolean; username: string; avatar_url: string };
