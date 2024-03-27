@@ -1,6 +1,6 @@
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Spinner } from '@nextui-org/react';
 import CropperComponent from '@/components/Home/Cropper';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { compressImage } from '@/utils/compressImage';
 
 const ModalCropImage = ({
@@ -10,6 +10,7 @@ const ModalCropImage = ({
   imageName,
   setFile,
   setImageCroppedUrl,
+  aspect,
 }: {
   isOpen: boolean;
   onOpenChange: () => void;
@@ -17,6 +18,7 @@ const ModalCropImage = ({
   imageUrl: string;
   setFile: React.Dispatch<React.SetStateAction<File | undefined>>;
   setImageCroppedUrl: React.Dispatch<React.SetStateAction<string | undefined>>;
+  aspect: 'avatar' | 'banner';
 }) => {
   const [croppable, setCroppable] = useState(false);
   const cropperRef = useRef<Cropper>();
@@ -63,13 +65,17 @@ const ModalCropImage = ({
       croppedCanvas = cropperRef.current.getCroppedCanvas();
 
       // Round
-      roundedCanvas = getRoundedCanvas(croppedCanvas);
+      if (aspect === 'avatar') {
+        roundedCanvas = getRoundedCanvas(croppedCanvas);
+      } else {
+        roundedCanvas = croppedCanvas;
+      }
 
       // Convert to Blob for uploading to supabase
       roundedCanvas.toBlob((blob: Blob | null) => {
         if (blob) {
           const imageFile = new File([blob], `${imageName?.split('.')[0] || 'image'}.webp`, { type: 'image/webp' });
-          compressImage(imageFile, 300).then((res) => {
+          compressImage(imageFile, aspect === 'avatar' ? 300 : 1300).then((res) => {
             setFile(res);
             // get image url from res
             const url = URL.createObjectURL(res);
@@ -89,7 +95,12 @@ const ModalCropImage = ({
             <>
               <ModalHeader className="flex flex-col gap-1">Redimensionner votre image</ModalHeader>
               <ModalBody>
-                <CropperComponent imageUrl={imageUrl} setCroppable={setCroppable} cropperRef={cropperRef} />
+                <CropperComponent
+                  imageUrl={imageUrl}
+                  setCroppable={setCroppable}
+                  cropperRef={cropperRef}
+                  aspect={aspect}
+                />
               </ModalBody>
               <ModalFooter>
                 <div className="resultImage"></div>

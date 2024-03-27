@@ -31,6 +31,7 @@ export const ModalCreateGuilde = ({
   const [isInputValid, setIsInputValid] = useState<{ value: boolean; reason: string }>();
   const [description, setDescription] = useState<string>('');
   const [file, setFile] = useState<File>();
+  const [bannerfile, setBannerFile] = useState<File>();
   const [loading, setLoading] = useState<boolean>(false);
   const { error, success } = useContext(ToasterContext);
   const router = useRouter();
@@ -41,7 +42,11 @@ export const ModalCreateGuilde = ({
     if (!filePath) {
       return error("Une erreur est survenue lors de l'envoi des images");
     }
-    const isCreated = await createGuild(input, filePath[0], description);
+    const bannerPath = await uploadFiles([{ file: bannerfile }], 'guildes_avatars');
+    if (!bannerPath) {
+      return error("Une erreur est survenue lors de l'envoi des images");
+    }
+    const isCreated = await createGuild(input, filePath[0], bannerPath[0], description);
     if (isCreated) {
       success('Guilde créée !');
       fetchData();
@@ -98,7 +103,20 @@ export const ModalCreateGuilde = ({
             <>
               <ModalHeader className="flex flex-col gap-1">Créer une guilde</ModalHeader>
               <ModalBody>
-                <UploadFile text={'Ajouter une image'} file={file} setFile={setFile} className="mx-auto" />
+                <UploadFile
+                  text={'Ajouter une bannière'}
+                  file={bannerfile}
+                  setFile={setBannerFile}
+                  className="mx-auto"
+                  aspect="banner"
+                />
+                <UploadFile
+                  text={'Ajouter une image'}
+                  file={file}
+                  setFile={setFile}
+                  className="mx-auto"
+                  aspect="avatar"
+                />
                 <Input
                   className="bg-transparent"
                   classNames={{
@@ -132,8 +150,10 @@ export const ModalCreateGuilde = ({
                   Fermer
                 </Button>
                 <Button
-                  disabled={!input || !file || !description || loading || !isInputValid?.value || isTyping}
-                  className={`customButton bg-secondary/70 border-secondary ${!input || !file || !description || loading || !isInputValid?.value ? 'bg-secondary/30 border-secondary/30 text-opacity-30' : ''}`}
+                  disabled={
+                    !input || !file || !bannerfile || !description || loading || !isInputValid?.value || isTyping
+                  }
+                  className={`customButton bg-secondary/70 border-secondary ${!input || !file || !bannerfile || !description || loading || !isInputValid?.value ? 'bg-secondary/30 border-secondary/30 text-opacity-30' : ''}`}
                   onClick={() => handleCreateGuild(onClose)}
                 >
                   {loading ? <Spinner size="sm" className="scale-75" color="white" /> : 'Créer'}

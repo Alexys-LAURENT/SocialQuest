@@ -12,7 +12,7 @@ export async function getGuildInfos(guilde_name: string, id_user: string | undef
 
   const { data: guilde, error: guildeError } = await supabase
     .from('guildes')
-    .select('id_guilde,nom,description,avatar_url,created_by')
+    .select('id_guilde,nom,description,avatar_url,banner_url,created_by')
     .eq('nom', guilde_name)
     .single();
 

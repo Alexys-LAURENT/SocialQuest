@@ -15,6 +15,7 @@ const UploadFile = ({
   width = 'w-24',
   height = 'h-24',
   className,
+  aspect,
 }: {
   canEditAvatar?: boolean;
   imageSrc?: string;
@@ -24,6 +25,7 @@ const UploadFile = ({
   width?: string;
   height?: string;
   className?: string;
+  aspect: 'avatar' | 'banner';
 }) => {
   const FileUploadRef = useRef<HTMLInputElement>(null);
   const { error } = useContext(ToasterContext);
@@ -85,42 +87,42 @@ const UploadFile = ({
           imageName={file?.name}
           setFile={setFile}
           setImageCroppedUrl={setImageCroppedUrl}
+          aspect={aspect}
         />
       )}
 
-
-      {canEditAvatar === undefined || canEditAvatar ?
+      {canEditAvatar === undefined || canEditAvatar ? (
         <>
           <input type="file" className="hidden" name="" id="" ref={FileUploadRef} onChange={handleFileChange} />
           <div
             onClick={() => FileUploadRef.current?.click()}
-            className={`${width} ${height} ${className} group relative p-2 flex flex-col justify-center items-center gap-1 bg-tempBgLightSecondary dark:bg-tempBgDark rounded-full ${canEditAvatar ? 'hover:!outline-dashed hover:!outline-[0.2px]' : 'border border-dashed'} cursor-pointer border-white/80 hover:border-secondary`}
+            className={`${width} ${height} ${className} group relative p-2 flex flex-col justify-center items-center gap-1 bg-tempBgLightSecondary dark:bg-tempBgDark ${aspect === 'avatar' ? 'rounded-full' : 'w-[200px] md:w-[300px]'} ${canEditAvatar ? 'hover:!outline-dashed hover:!outline-[0.2px]' : 'border border-dashed'} cursor-pointer border-white/80 hover:border-secondary`}
           >
             {(imageCroppedUrl || imageSrc) && (
               <Image
                 alt="Avatar"
                 src={imageCroppedUrl || imageSrc || ''}
-                className={`absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover rounded-full group-hover:!opacity-70 transition-all`}
+                className={`absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover ${aspect === 'avatar' ? 'rounded-full' : ''} group-hover:!opacity-70 transition-all`}
                 width={100}
                 height={100}
               />
             )}
 
-            {(canEditAvatar || !file && !imageCroppedUrl) &&
-              <div className={`flex flex-col gap-1 z-10 transition-all ${canEditAvatar ? 'opacity-0 group-hover:opacity-100' : ''}`}>
-                {canEditAvatar ?
-                  <PencilIcon className="w-5 h-5 mx-auto" />
-                  :
-                  <PlusIcon className="w-5 h-5 mx-auto" />
-                }
-                <span className={`${canEditAvatar ? 'text-tempDarkHover dark:text-tempLightHover text-tiny' : 'dark:text-tempLightHover/50 text-tempDarkHover/50 text-[10px]'} text-center break-words`}>
+            {(canEditAvatar || (!file && !imageCroppedUrl)) && (
+              <div
+                className={`flex flex-col gap-1 z-10 transition-all ${canEditAvatar ? 'opacity-0 group-hover:opacity-100' : ''}`}
+              >
+                {canEditAvatar ? <PencilIcon className="w-5 h-5 mx-auto" /> : <PlusIcon className="w-5 h-5 mx-auto" />}
+                <span
+                  className={`${canEditAvatar ? 'text-tempDarkHover dark:text-tempLightHover text-tiny' : 'dark:text-tempLightHover/50 text-tempDarkHover/50 text-[10px]'} text-center break-words`}
+                >
                   {text}
                 </span>
               </div>
-            }
+            )}
           </div>
         </>
-        :
+      ) : (
         <div
           className={`${width} ${height} ${className} relative p-2 flex flex-col justify-center items-center gap-1 bg-tempBgLightSecondary dark:bg-tempBgDark rounded-full`}
         >
@@ -132,7 +134,7 @@ const UploadFile = ({
             height={100}
           />
         </div>
-      }
+      )}
     </>
   );
 };

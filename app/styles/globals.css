@@ -48,7 +48,6 @@
     opacity: 1;
   }
 
-
   100% {
     transform: translateY(-150px) scale(6);
     opacity: 0;
@@ -60,9 +59,8 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.cropper-view-box,
-.cropper-face {
-  border-radius: 50%;
+.aspect-banner {
+  aspect-ratio: 3/1;
 }
 
 input,
@@ -109,7 +107,7 @@ textarea {
   font-size: 2rem;
   padding: calc(var(--padding) + var(--border-size));
   border-radius: var(--border-radius);
-  display: inline-block
+  display: inline-block;
 }
 
 .rotating-border-light::before {
@@ -146,13 +144,12 @@ textarea {
   --border-bg: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
   --padding: 1rem;
 
-
   position: relative;
   overflow: hidden;
   font-size: 2rem;
   padding: calc(var(--padding) + var(--border-size));
   border-radius: var(--border-radius);
-  display: inline-block
+  display: inline-block;
 }
 
 .rotating-border-dark::before {
@@ -189,14 +186,24 @@ textarea {
 
 /* ---------- Begin customizing .rotating-border ---------- */
 .rotating-border--Légendaire {
-  --border-bg: conic-gradient(#fbbc05 0.0turn, #fbbc05 0.125turn,
-      #ba8c03 0.125turn, #ba8c03 0.25turn,
-      #fbbc05 0.25turn, #fbbc05 0.375turn,
-      #ba8c03 0.375turn, #ba8c03 0.5turn,
-      #fbbc05 0.5turn, #fbbc05 0.625turn,
-      #ba8c03 0.625turn, #ba8c03 0.75turn,
-      #fbbc05 0.75turn, #fbbc05 0.875turn,
-      #ba8c03 0.875turn, #ba8c03 1.0turn);
+  --border-bg: conic-gradient(
+    #fbbc05 0turn,
+    #fbbc05 0.125turn,
+    #ba8c03 0.125turn,
+    #ba8c03 0.25turn,
+    #fbbc05 0.25turn,
+    #fbbc05 0.375turn,
+    #ba8c03 0.375turn,
+    #ba8c03 0.5turn,
+    #fbbc05 0.5turn,
+    #fbbc05 0.625turn,
+    #ba8c03 0.625turn,
+    #ba8c03 0.75turn,
+    #fbbc05 0.75turn,
+    #fbbc05 0.875turn,
+    #ba8c03 0.875turn,
+    #ba8c03 1turn
+  );
 
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -204,14 +211,24 @@ textarea {
 }
 
 .rotating-border--Épic {
-  --border-bg: conic-gradient(#b505fb 0.0turn, #b505fb 0.125turn,
-      #8f03ba 0.125turn, #8f03ba 0.25turn,
-      #b505fb 0.25turn, #b505fb 0.375turn,
-      #8f03ba 0.375turn, #8f03ba 0.5turn,
-      #b505fb 0.5turn, #b505fb 0.625turn,
-      #8f03ba 0.625turn, #8f03ba 0.75turn,
-      #b505fb 0.75turn, #b505fb 0.875turn,
-      #8f03ba 0.875turn, #8f03ba 1.0turn);
+  --border-bg: conic-gradient(
+    #b505fb 0turn,
+    #b505fb 0.125turn,
+    #8f03ba 0.125turn,
+    #8f03ba 0.25turn,
+    #b505fb 0.25turn,
+    #b505fb 0.375turn,
+    #8f03ba 0.375turn,
+    #8f03ba 0.5turn,
+    #b505fb 0.5turn,
+    #b505fb 0.625turn,
+    #8f03ba 0.625turn,
+    #8f03ba 0.75turn,
+    #b505fb 0.75turn,
+    #b505fb 0.875turn,
+    #8f03ba 0.875turn,
+    #8f03ba 1turn
+  );
 
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -219,14 +236,24 @@ textarea {
 }
 
 .rotating-border--Rare {
-  --border-bg: conic-gradient(#2205fb 0.0turn, #2205fb 0.125turn,
-      #1803ba 0.125turn, #1803ba 0.25turn,
-      #2205fb 0.25turn, #2205fb 0.375turn,
-      #1803ba 0.375turn, #1803ba 0.5turn,
-      #2205fb 0.5turn, #2205fb 0.625turn,
-      #1803ba 0.625turn, #1803ba 0.75turn,
-      #2205fb 0.75turn, #2205fb 0.875turn,
-      #1803ba 0.875turn, #1803ba 1.0turn);
+  --border-bg: conic-gradient(
+    #2205fb 0turn,
+    #2205fb 0.125turn,
+    #1803ba 0.125turn,
+    #1803ba 0.25turn,
+    #2205fb 0.25turn,
+    #2205fb 0.375turn,
+    #1803ba 0.375turn,
+    #1803ba 0.5turn,
+    #2205fb 0.5turn,
+    #2205fb 0.625turn,
+    #1803ba 0.625turn,
+    #1803ba 0.75turn,
+    #2205fb 0.75turn,
+    #2205fb 0.875turn,
+    #1803ba 0.875turn,
+    #1803ba 1turn
+  );
 
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -234,14 +261,24 @@ textarea {
 }
 
 .rotating-border--Commun {
-  --border-bg: conic-gradient(#05fb22 0.0turn, #05fb22 0.125turn,
-      #03ba12 0.125turn, #03ba12 0.25turn,
-      #05fb22 0.25turn, #05fb22 0.375turn,
-      #03ba12 0.375turn, #03ba12 0.5turn,
-      #05fb22 0.5turn, #05fb22 0.625turn,
-      #03ba12 0.625turn, #03ba12 0.75turn,
-      #05fb22 0.75turn, #05fb22 0.875turn,
-      #03ba12 0.875turn, #03ba12 1.0turn);
+  --border-bg: conic-gradient(
+    #05fb22 0turn,
+    #05fb22 0.125turn,
+    #03ba12 0.125turn,
+    #03ba12 0.25turn,
+    #05fb22 0.25turn,
+    #05fb22 0.375turn,
+    #03ba12 0.375turn,
+    #03ba12 0.5turn,
+    #05fb22 0.5turn,
+    #05fb22 0.625turn,
+    #03ba12 0.625turn,
+    #03ba12 0.75turn,
+    #05fb22 0.75turn,
+    #05fb22 0.875turn,
+    #03ba12 0.875turn,
+    #03ba12 1turn
+  );
 
   text-transform: uppercase;
   letter-spacing: 0.1em;

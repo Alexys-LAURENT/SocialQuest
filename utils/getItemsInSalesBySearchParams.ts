@@ -12,7 +12,7 @@ export async function getItemsInSalesBySearchParams(searchParams: shopSearchParm
   let query = supabase
     .from('vendre')
     .select(
-      'seller_infos:profiles!inner(id_user, username, avatar_url), timestamp, prix, item_infos:items!inner(id_item, type, image_url, damage, nom, description)',
+      'seller_infos:profiles!inner(id_user, username, avatar_url), timestamp, prix, item_infos:items!inner(id_item, type, image_url, damage, nom, description,rarete)',
     )
     .not('seller_infos.id_user', 'eq', userConnected ? userConnected.id : '');
 

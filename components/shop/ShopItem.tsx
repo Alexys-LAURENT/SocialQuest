@@ -36,7 +36,9 @@ const ShopItem = ({ item }: { item: itemShop }) => {
           height={400}
           className={`${item.item_infos.type === 'Badge' ? 'p-2 md:p-8' : ''} rounded-md absolute top-0 left-0 right-0 bottom-0 w-full !h-full object-cover`}
         />
-        <Chip className="text-[10px] p-[2px] md:py-1 h-fit md:text-tiny absolute top-2 right-2">Rare</Chip>
+        <Chip className="text-[10px] p-[2px] md:py-1 h-fit md:text-tiny absolute top-2 right-2">
+          {item.item_infos.rarete}
+        </Chip>
       </div>
       <div className="flex flex-col gap-1 w-full  mt-2">
         <div className="w-full flex gap-1 items-center">

@@ -7,29 +7,49 @@ const CropperComponent = ({
   imageUrl,
   setCroppable,
   cropperRef,
+  aspect,
 }: {
   imageUrl?: string;
   setCroppable: React.Dispatch<React.SetStateAction<boolean>>;
   cropperRef: React.MutableRefObject<Cropper | undefined>;
+  aspect: 'avatar' | 'banner';
 }) => {
   useLayoutEffect(() => {
     const cropper = new Cropper(document.getElementById('image-to-crop') as HTMLImageElement, {
-      aspectRatio: 1 / 1,
+      aspectRatio: aspect === 'avatar' ? 1 / 1 : 3 / 1,
       viewMode: 2,
       guides: false,
       minCanvasHeight: 0,
       ready: function () {
         cropperRef.current = cropper;
         setCroppable(true);
+        resize();
       },
       preview: '.previewCropper',
     });
   }, []);
 
+  function resize() {
+    const cropperViewBox = document.querySelector('.cropper-view-box') as HTMLElement;
+    const cropperFace = document.querySelector('.cropper-face') as HTMLElement;
+    if (aspect === 'avatar') {
+      // set the border radius of class cropper-view-box to 100%
+      cropperViewBox.style.borderRadius = '50%';
+      cropperFace.style.borderRadius = '50%';
+    } else {
+      cropperViewBox.style.borderRadius = '0px';
+      cropperFace.style.borderRadius = '0px';
+    }
+  }
+
   return (
     <div className="w-full h-full flex flex-col justify-between items-center">
-      <div className=" aspect-square h-[10vh] rounded-full border-4 border-red overflow-hidden">
-        <div className="aspect-square h-full previewCropper "></div>
+      <div
+        className={` ${aspect === 'avatar' ? 'aspect-square rounded-full' : 'aspect-banner'} h-[10vh] border-4 border-red overflow-hidden`}
+      >
+        <div
+          className={`${aspect === 'avatar' ? 'aspect-square rounded-full' : 'aspect-banner'}  previewCropper `}
+        ></div>
       </div>
       <div className="flex flex-col h-full items-center justify-center">
         <div className="w-full md:w-[90vw] max-h-[60vh] overflow-hidden">

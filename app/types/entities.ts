@@ -118,6 +118,7 @@ export type GuildePage = {
   nom: string;
   description: string;
   avatar_url: string;
+  banner_url: string;
   created_by: string;
 };
 
@@ -165,6 +166,7 @@ export type itemShop = {
     damage: number | null;
     nom: string;
     description: string;
+    rarete: string;
   };
 };
 

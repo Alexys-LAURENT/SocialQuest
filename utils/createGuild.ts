@@ -2,14 +2,19 @@
 import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
 
-export async function createGuild(nom_guilde: string, avatar_url: string, description_guilde: string) {
+export async function createGuild(
+  nom_guilde: string,
+  avatar_url: string,
+  banner_url: string,
+  description_guilde: string,
+) {
   'use server';
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
   const { data, error } = await supabase
     .from('guildes')
-    .insert([{ nom: nom_guilde, avatar_url, description: description_guilde }])
+    .insert([{ nom: nom_guilde, avatar_url, banner_url, description: description_guilde }])
     .select()
     .limit(1)
     .single();
