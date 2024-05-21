@@ -8,6 +8,7 @@ import { getPostsHome } from '@/utils/getPostsHome';
 import { getPostsProfil } from '@/utils/getPostsProfil';
 import { getPostsGuilde } from '@/utils/getPostsGuilde';
 import { getPostAnswers } from '@/utils/getPostAnswers';
+import AdPost from './AdPost';
 
 const PostsWrapper = ({
   page,
@@ -57,6 +58,43 @@ const PostsWrapper = ({
 
   const containerRef = useRef(null)
   const prevScrollY = useRef(0);
+
+
+  const Adpost = {
+    id_post: 'ad',
+    id_user: '274dea91-d2c3-4540-8f5f-dfd68f14f96f',
+    parent_post_id: undefined,
+    titre: 'Minecraft: Build. Explore. Survive.',
+    contenu:
+      `
+      Your world. Your rules.
+
+      Create, explore, and survive in the infinite world of Minecraft. Build anything you can imagine, from cozy cottages to epic castles. Delve into unexplored lands, encounter unique creatures, and uncover hidden treasures.
+      Minecraft: Where Imagination Meets Adventure
+
+      Play Now: https://www.minecraft.net/
+      `,
+    created_at: '2024-05-21T19:27:03.160411+00:00',
+    id_guilde: undefined,
+    images: ["https://sm.ign.com/t/ign_za/cover/m/minecraft/minecraft_tchj.1200.jpg"],
+    creator_id_user: '274dea91-d2c3-4540-8f5f-dfd68f14f96f',
+    creator_username: 'jblasio0',
+    creator_avatar_url:
+      'https://robohash.org/sunthicsimilique.png?size=200x100&set=set1',
+    creator_a_propos:
+      'Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue.',
+    creator_banner_url:
+      'https://rwfqowdxozczhnhxrkyd.supabase.co/storage/v1/object/public/assets/Bannieres/dog_family.png?t=2024-03-26T17%3A29%3A47.463Z',
+    creator_niveau_libelle: 15,
+    guilde_nom: 'LeagueOfLegends',
+    guilde_avatar_url:
+      'https://rwfqowdxozczhnhxrkyd.supabase.co//storage/v1/object/public/guildes_avatars/image.0.16852455294115543.webp',
+    likes_count: 0,
+    user_liked_post: false,
+    answers_count: 0,
+    parent_post_username: undefined,
+    createdAtFormated: '21 mai 2024, 21:27'
+  }
 
   useEffect(() => {
     // console.log(postsRandom.isLastPostRandom)
@@ -229,42 +267,16 @@ const PostsWrapper = ({
             }
           >
             <div className="w-full flex flex-col gap-4">
-              {postsRandom?.data?.length !== 0 ? (
-                postsRandom?.data?.map((post: ExtendedPost) => (
-                  <Fragment key={`post-${post.id_post}`}>
-                    <Post key={post.id_post} post={post} user={user} displayAnswerTo={displayAnswerTo} />
-                  </Fragment>
-                ))
-              ) : (
-                <div className="flex flex-col items-center justify-center gap-2">
-                  <div className="text-2xl font-semibold">Aucun post 😢</div>
-                </div>
-              )}
-            </div>
-          </Tab>
-        )}
-
-        {page === "home" && (
-          <Tab
-            key="Suivis"
-            title={
-              selectedKey === 'Suivis' ? (
-                <div className="flex items-center gap-2">
-                  <span>Suivis</span>
-                  <Spinner id="RefreshIconSuivis" size="sm" className="scale-75 hidden" classNames={{ circle1: 'border-b-textDark dark:border-b-textLight', circle2: 'border-b-textDark dark:border-b-textLight' }} />
-                </div>
-              ) : (
-                'Suivis'
-              )
-            }
-          >
-            <div className="w-full flex flex-col gap-4">
-              {postsSuivis?.data?.length !== 0 ? (
-                postsSuivis?.data?.map((post: ExtendedPost) => (
-                  <Fragment key={`post-${post.id_post}`}>
-                    <Post key={post.id_post} post={post} user={user} displayAnswerTo={displayAnswerTo} />
-                  </Fragment>
-                ))
+              {postsRandom?.data?.length > 0 ? (
+                <Fragment>
+                  <Post key={postsRandom.data[0].id_post} post={postsRandom.data[0]} user={user} displayAnswerTo={displayAnswerTo} />
+                  <AdPost key={'postsRandom.data[0].id_post'} post={Adpost} user={user} displayAnswerTo={displayAnswerTo} />
+                  {postsRandom.data.slice(1).map((post: ExtendedPost) => (
+                    <Fragment key={`post-${post.id_post}`}>
+                      <Post key={post.id_post} post={post} user={user} displayAnswerTo={displayAnswerTo} />
+                    </Fragment>
+                  ))}
+                </Fragment>
               ) : (
                 <div className="flex flex-col items-center justify-center gap-2">
                   <div className="text-2xl font-semibold">Aucun post 😢</div>
