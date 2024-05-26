@@ -288,6 +288,36 @@ const PostsWrapper = ({
 
         {page === "home" && (
           <Tab
+            key="Suivis"
+            title={
+              selectedKey === 'Suivis' ? (
+                <div className="flex items-center gap-2">
+                  <span>Suivis</span>
+                  <Spinner id="RefreshIconSuivis" size="sm" className="scale-75 hidden" classNames={{ circle1: 'border-b-textDark dark:border-b-textLight', circle2: 'border-b-textDark dark:border-b-textLight' }} />
+                </div>
+              ) : (
+                'Suivis'
+              )
+            }
+          >
+            <div className="w-full flex flex-col gap-4">
+              {postsSuivis?.data?.length !== 0 ? (
+                postsSuivis?.data?.map((post: ExtendedPost) => (
+                  <Fragment key={`post-${post.id_post}`}>
+                    <Post key={post.id_post} post={post} user={user} displayAnswerTo={displayAnswerTo} />
+                  </Fragment>
+                ))
+              ) : (
+                <div className="flex flex-col items-center justify-center gap-2">
+                  <div className="text-2xl font-semibold">Aucun post 😢</div>
+                </div>
+              )}
+            </div>
+          </Tab>
+        )}
+
+        {page === "home" && (
+          <Tab
             key="Guildes"
             title={
               selectedKey === 'Guildes' ? (
