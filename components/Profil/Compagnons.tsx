@@ -1,7 +1,7 @@
 'use client';
+import { Profile } from '@/app/types/entities';
 import SearchBarCompagnons from '@/components/Profil/SearchBarCompagnons';
 import { Avatar, Link } from '@nextui-org/react';
-import { Profile } from '@/app/types/entities';
 import { useState } from 'react';
 
 const Compagnons = ({
@@ -28,32 +28,25 @@ const Compagnons = ({
         {listFriends &&
           listFriends.length > 0 &&
           listFriends.map((user) => (
-            <div
+            <Link
+              href={`/${user.username}`}
               key={`user-friend-${user.id_user}`}
               className="relative flex min-h-[3.5rem] items-center gap-2 py-2 rounded-md bg-bgLightPopover dark:bg-bgDarkPopover transition-all !duration-500"
             >
               <div className="flex items-center px-2">
-                <div className="flex items-center justify-center bg-bgLightPopover dark:bg-bgDarkPopover rounded-full w-10 h-10">
-                  <Avatar
-                    as={Link}
-                    src={(user && user.avatar_url) || ''}
-                    className="rounded-full text-large transition-all"
-                    href={`#`}
-                  />
+                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-bgLightPopover dark:bg-bgDarkPopover">
+                  <Avatar src={(user && user.avatar_url) || ''} className="transition-all rounded-full text-large" />
                 </div>
                 <div className="flex flex-col ml-2 text-textLight">
-                  <Link
-                    className="text-sm text-textDark dark:text-textLight transition-all !duration-[125ms]"
-                    href={`#`}
-                  >
+                  <div className="text-sm text-textDark dark:text-textLight transition-all !duration-[125ms]">
                     {user && user.username}
-                  </Link>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         {listFriends && listFriends.length === 0 && (
-          <div className="dark:text-tempTextLight text-center">Aucun compagnon</div>
+          <div className="text-center dark:text-tempTextLight">Aucun compagnon</div>
         )}
       </div>
     </div>

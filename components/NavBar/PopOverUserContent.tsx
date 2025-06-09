@@ -1,18 +1,18 @@
 import { Profile } from '@/app/types/entities';
-import { Divider, Progress } from '@nextui-org/react';
-import {
-  ArrowRightEndOnRectangleIcon,
-  Cog8ToothIcon,
-  CubeIcon,
-  UserIcon,
-  ClipboardDocumentCheckIcon,
-} from '@heroicons/react/24/outline';
-import Link from 'next/link';
 import SwitchTheme from '@/components/NavBar/SwitchTheme';
 import NextRewards from '@/components/NextRewards';
 import { formatCount } from '@/utils/formatCount';
 import { formatCountText } from '@/utils/formatCountText';
+import {
+  ArrowRightEndOnRectangleIcon,
+  ClipboardDocumentCheckIcon,
+  Cog8ToothIcon,
+  CubeIcon,
+  UserIcon,
+} from '@heroicons/react/24/outline';
+import { Divider, Progress } from '@nextui-org/react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const PopOverUserContent = ({
   user,
@@ -23,12 +23,13 @@ const PopOverUserContent = ({
   customFunction: () => void;
   signOut: () => void;
 }) => {
-  const progressValue = ((user?.xp! - user?.niveaux.xp_debut!) * 100) / (user?.niveaux.xp_fin! + 1);
+  const progressValue =
+    ((user?.xp! - user?.niveaux.xp_debut!) * 100) / (user?.niveaux.xp_fin! - user?.niveaux.xp_debut!);
 
   return (
-    <div className="popOverUserContentWrapper w-full px-1 py-2 gap-2 flex flex-col text-textDark dark:text-textLight">
+    <div className="flex flex-col w-full gap-2 px-1 py-2 popOverUserContentWrapper text-textDark dark:text-textLight">
       <div>
-        <span className="mb-2 block font-semibold">Connecté en tant que: @{user?.username}</span>
+        <span className="block mb-2 font-semibold">Connecté en tant que: @{user?.username}</span>
         <Divider />
       </div>
       <div className="levelWrapper">
@@ -39,14 +40,14 @@ const PopOverUserContent = ({
         <Progress
           aria-label="Level"
           value={progressValue}
-          title={`${user?.xp! - user?.niveaux.xp_debut!} / ${user?.niveaux.xp_fin! + 1} xp`}
+          title={`${user?.xp!} / ${user?.niveaux.xp_fin! + 1} xp`}
           classNames={{ track: 'transition-all !duration-500', indicator: 'bg-secondary' }}
         />
       </div>
 
       <div className="nextRewardsWrapper flex justify-between sm:justify-end items-center gap-1 text-end text-[#979797]">
         <div
-          className="flex sm:hidden min-w-fit items-center rounded-md px-1 sm:px-2 py-1 bg-secondary/30 gap-1"
+          className="flex items-center gap-1 px-1 py-1 rounded-md sm:hidden min-w-fit sm:px-2 bg-secondary/30"
           title={`${formatCountText(user.social_coins)} SocialCoins`}
         >
           <Image src="/assets/SocialCoin.png" alt="SocialCoin" width={16} height={16} />
@@ -61,7 +62,7 @@ const PopOverUserContent = ({
       <div className="flex flex-col text-lg select-none">
         <Link
           href={`/${user?.username}`}
-          className="px-1 py-1 flex gap-2 items-center dark:hover:bg-tempDarkHover hover:bg-tempLightHover hover:bg-opacity-75 transition-all ease-in-out rounded-md"
+          className="flex items-center gap-2 px-1 py-1 transition-all ease-in-out rounded-md dark:hover:bg-tempDarkHover hover:bg-tempLightHover hover:bg-opacity-75"
           onClick={() => customFunction()}
         >
           <UserIcon className="w-5 h-5 text-textDark dark:text-textLight transition-all !duration-[125ms]" />
@@ -71,7 +72,7 @@ const PopOverUserContent = ({
         </Link>
         <Link
           href={`/missions`}
-          className="px-1 py-1 flex gap-2 items-center dark:hover:bg-tempDarkHover hover:bg-tempLightHover hover:bg-opacity-75 transition-all ease-in-out rounded-md"
+          className="flex items-center gap-2 px-1 py-1 transition-all ease-in-out rounded-md dark:hover:bg-tempDarkHover hover:bg-tempLightHover hover:bg-opacity-75"
           onClick={() => customFunction()}
         >
           <ClipboardDocumentCheckIcon className="w-5 h-5 text-textDark dark:text-textLight transition-all !duration-[125ms]" />
@@ -81,7 +82,7 @@ const PopOverUserContent = ({
         </Link>
         <Link
           href="/parametres"
-          className="px-1 py-1 flex gap-2 items-center dark:hover:bg-tempDarkHover hover:bg-tempLightHover hover:bg-opacity-75 transition-all ease-in-out rounded-md"
+          className="flex items-center gap-2 px-1 py-1 transition-all ease-in-out rounded-md dark:hover:bg-tempDarkHover hover:bg-tempLightHover hover:bg-opacity-75"
           onClick={() => customFunction()}
         >
           <Cog8ToothIcon className="w-5 h-5 text-textDark dark:text-textLight transition-all !duration-[125ms]" />
@@ -91,7 +92,7 @@ const PopOverUserContent = ({
         </Link>
         <Link
           href={`/${user?.username}/inventaire`}
-          className="px-1 py-1 flex gap-2 items-center dark:hover:bg-tempDarkHover hover:bg-tempLightHover hover:bg-opacity-75 transition-all ease-in-out rounded-md"
+          className="flex items-center gap-2 px-1 py-1 transition-all ease-in-out rounded-md dark:hover:bg-tempDarkHover hover:bg-tempLightHover hover:bg-opacity-75"
           onClick={() => customFunction()}
         >
           <CubeIcon className="w-5 h-5 text-textDark dark:text-textLight transition-all !duration-[125ms]" />
@@ -104,7 +105,7 @@ const PopOverUserContent = ({
 
         <Link
           href="/"
-          className="px-1 py-1 flex gap-2 items-center dark:hover:bg-tempDarkHover hover:bg-tempLightHover hover:bg-opacity-75 transition-all ease-in-out rounded-md cursor-pointer"
+          className="flex items-center gap-2 px-1 py-1 transition-all ease-in-out rounded-md cursor-pointer dark:hover:bg-tempDarkHover hover:bg-tempLightHover hover:bg-opacity-75"
           onClick={() => {
             customFunction();
             signOut();

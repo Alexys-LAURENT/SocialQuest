@@ -1,14 +1,14 @@
-import Infos from '@/components/Profil/Infos';
-import { notFound } from 'next/navigation';
-import { getProfileConnected } from '@/utils/getProfileConnected';
-import { getPageProfile } from '@/utils/getPageProfile';
-import UserTopRow from '@/components/Profil/UserTopRow';
-import CommpagnonsSuspenser from '@/components/Profil/CompagnonsSuspenser';
-import { Suspense } from 'react';
-import CompagnonSkeleton from '@/components/Skeletons/Profil/CompagnonSkeleton';
-import { createClient } from '@supabase/supabase-js';
 import PostsWrapper from '@/components/PostsWrapper';
+import CommpagnonsSuspenser from '@/components/Profil/CompagnonsSuspenser';
+import Infos from '@/components/Profil/Infos';
+import UserTopRow from '@/components/Profil/UserTopRow';
+import CompagnonSkeleton from '@/components/Skeletons/Profil/CompagnonSkeleton';
+import { getPageProfile } from '@/utils/getPageProfile';
 import { getPostsProfil } from '@/utils/getPostsProfil';
+import { getProfileConnected } from '@/utils/getProfileConnected';
+import { createClient } from '@supabase/supabase-js';
+import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
 
 export const revalidate = 3600;
 
@@ -22,20 +22,9 @@ export async function generateStaticParams() {
   }));
 }
 
-type ProfilParams = {
-  params?: {
-    username: string;
-  };
-};
-
-
-const Profil: React.FC = async (props) => {
-
-
-  const { params } = props as ProfilParams;
-  const decodedUsername = decodeURIComponent(params!.username);
+const Page = async ({ params }: { params: { username: string } }) => {
+  const decodedUsername = decodeURIComponent(params.username);
   const [profileConnected, pageProfile] = await Promise.all([getProfileConnected(), getPageProfile(decodedUsername)]);
-
 
   if (pageProfile === null) {
     notFound();
@@ -46,7 +35,7 @@ const Profil: React.FC = async (props) => {
   const isUserProfil = pageProfile?.id_user === (profileConnected?.id_user ?? '');
 
   return (
-    <div className="h-full w-full flex flex-col items-center">
+    <div className="flex flex-col items-center w-full h-full">
       <div
         className="relative w-full min-h-[10rem] md:min-h-[18rem] bg-secondary/10 bg-cover bg-center transition-all"
         style={{ backgroundImage: `url(${pageProfile.banner_url})` }}
@@ -55,19 +44,26 @@ const Profil: React.FC = async (props) => {
       <UserTopRow isUserProfil={isUserProfil} profileConnected={profileConnected} pageProfile={pageProfile} />
 
       <div className="flex flex-col w-full px-2 sm:px-6 md:px-12 max-w-[1280px] pb-6 -top-[60px] md:-top-[80px] relative">
-        <div className="flex flex-col-reverse gap-6 sm:gap-12 lg:flex-row my-6 md:my-12">
+        <div className="flex flex-col-reverse gap-6 my-6 sm:gap-12 lg:flex-row md:my-12">
           <Suspense fallback={<CompagnonSkeleton isUserProfil={isUserProfil} />}>
             <CommpagnonsSuspenser isUserProfil={isUserProfil} pageProfile={pageProfile} />
           </Suspense>
           <Infos isUserProfil={isUserProfil} user={pageProfile} />
         </div>
 
-        <div className="flex flex-col w-full gap-6 rounded-md transition-all items-center ">
+        <div className="flex flex-col items-center w-full gap-6 transition-all rounded-md ">
           <div className="text-2xl w-full font-semibold text-start text-textDark dark:text-textLight transition-all !duration-[125ms]">
             {isUserProfil ? 'Mes Posts' : 'Posts'}
           </div>
           <div className="w-full max-w-[656px]">
-            <PostsWrapper user={profileConnected} filtre={false} displayAnswerTo={true} page={"profil"} postsInit={postsInit} profilePageId={pageProfile.id_user} />
+            <PostsWrapper
+              user={profileConnected}
+              filtre={false}
+              displayAnswerTo={true}
+              page={'profil'}
+              postsInit={postsInit}
+              profilePageId={pageProfile.id_user}
+            />
           </div>
         </div>
       </div>
@@ -75,4 +71,4 @@ const Profil: React.FC = async (props) => {
   );
 };
 
-export default Profil;
+export default Page;
