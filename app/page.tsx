@@ -1,18 +1,17 @@
-import dynamic from 'next/dynamic';
-import Link from 'next/link';
-import { getProfileConnected } from '@/utils/getProfileConnected';
-import { Suspense } from 'react';
-import { Button } from '@nextui-org/react';
 import PostInputSuspenser from '@/components/Home/PostInputSuspenser';
+import UserGuildes from '@/components/Home/UserGuildes';
 import PostsWrapper from '@/components/PostsWrapper';
 import TopGuildes from '@/components/TopGuildes';
 import TopMembres from '@/components/TopMembres';
-import UserGuildes from '@/components/Home/UserGuildes';
 import { getGuildesUser } from '@/utils/getGuildesUser';
+import { getPostsHome } from '@/utils/getPostsHome';
+import { getProfileConnected } from '@/utils/getProfileConnected';
 import { getTopGuildes } from '@/utils/getTopGuildes';
 import { getTopMembres } from '@/utils/getTopMembres';
-import { getPostsHome } from '@/utils/getPostsHome';
-
+import { Button } from '@nextui-org/react';
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
+import { Suspense } from 'react';
 
 export default async function Index() {
   const postsInit = await getPostsHome(0, 0, 0, 10);
@@ -41,7 +40,13 @@ export default async function Index() {
           </Suspense>
         )}
 
-        <PostsWrapper user={user} filtre={user && user.id_user ? true : false} displayAnswerTo={true} postsInit={postsInit} page={"home"} />
+        <PostsWrapper
+          user={user}
+          filtre={user && user.id_user ? true : false}
+          displayAnswerTo={true}
+          postsInit={postsInit}
+          page={'home'}
+        />
       </div>
 
       <div className="sticky top-0 hidden lg:flex min-w-[17rem] max-w-[17rem] h-fit">
@@ -49,7 +54,7 @@ export default async function Index() {
           <UserGuildes initGuildes={guildesUser} maxHeight={true} />
         ) : (
           <div className="w-full flex flex-col bg-tempBgLightSecondary dark:bg-tempBgDark border dark:border-tempDarkBorder border-tempLightBorder rounded-md transition-all !duration-500 font-semibold h-fit">
-            <div className="text-base text-center p-2 text-textDark dark:text-textLight">
+            <div className="p-2 text-base text-center text-textDark dark:text-textLight">
               Connectez-vous pour profiter pleinement de votre expérience sur notre site !
             </div>
 
